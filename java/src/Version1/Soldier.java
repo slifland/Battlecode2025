@@ -2,7 +2,7 @@ package Version1;
 
 import battlecode.common.*;
 
-import static Version0.RobotPlayer.rng;
+import static Version1.RobotPlayer.rng;
 
 enum states {
     ruin, explore, attack

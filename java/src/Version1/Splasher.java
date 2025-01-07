@@ -5,8 +5,8 @@ import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 
-import static Version0.RobotPlayer.directions;
-import static Version0.RobotPlayer.rng;
+import static Version1.RobotPlayer.directions;
+import static Version1.RobotPlayer.rng;
 
 public class Splasher {
     private static MapLocation home;

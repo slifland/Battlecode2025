@@ -2,7 +2,7 @@ package Version1;
 
 import battlecode.common.*;
 
-import static Version0.RobotPlayer.*;
+import static Version1.RobotPlayer.*;
 
 public class Mopper {
     /**
