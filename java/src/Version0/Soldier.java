@@ -26,10 +26,15 @@ public class Soldier {
             Direction dir = rc.getLocation().directionTo(targetLoc);
             if (rc.canMove(dir))
                 rc.move(dir);
+            int towerType = rng.nextInt(10);
             // Mark the pattern we need to draw to build a tower here if we haven't already.
             MapLocation shouldBeMarked = curRuin.getMapLocation().subtract(dir);
-            if (rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+            if ((towerType > 3 || RobotPlayer.turnCount < 400) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
                 rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
+                System.out.println("Trying to build a tower at " + targetLoc);
+            }
+            else if (rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
+                rc.markTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
                 System.out.println("Trying to build a tower at " + targetLoc);
             }
             // Fill in any spots in the pattern with the appropriate paint, but first try to paint ur own tile so u can stay alive longer.
@@ -40,7 +45,7 @@ public class Soldier {
                     rc.attack(currentTile.getMapLocation(), useSecondaryColor);
             }
             else {
-                for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 8)) {
+                for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 20)) {
                     if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY) {
                         boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
                         if (rc.canAttack(patternTile.getMapLocation()))
@@ -51,6 +56,11 @@ public class Soldier {
             // Complete the ruin if we can.
             if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
                 rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
+                rc.setTimelineMarker("Tower built", 0, 255, 0);
+                System.out.println("Built a tower at " + targetLoc + "!");
+            }
+            else if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
+                rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
                 rc.setTimelineMarker("Tower built", 0, 255, 0);
                 System.out.println("Built a tower at " + targetLoc + "!");
             }
