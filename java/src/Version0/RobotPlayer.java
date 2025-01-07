@@ -17,6 +17,7 @@ public class RobotPlayer {
      * these variables are static, in Battlecode they aren't actually shared between your robots.
      */
     static int turnCount = 0;
+    static int soldiers = 0;
 
     /**
      * A random number generator.
@@ -112,16 +113,17 @@ public class RobotPlayer {
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
         // Pick a random robot type to build.
-        int robotType = rng.nextInt(3);
-        if (robotType == 0 && rc.canBuildRobot(UnitType.SOLDIER, nextLoc)){
+        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers != 6){
             rc.buildRobot(UnitType.SOLDIER, nextLoc);
             System.out.println("BUILT A SOLDIER");
+            soldiers++;
         }
-        else if (robotType == 1 && rc.canBuildRobot(UnitType.MOPPER, nextLoc)){
+        if (rc.canBuildRobot(UnitType.MOPPER, nextLoc)){
             rc.buildRobot(UnitType.MOPPER, nextLoc);
             System.out.println("BUILT A MOPPER");
+            soldiers = 0;
         }
-        else if (robotType == 2 && rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
+        else if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
             // rc.buildRobot(UnitType.SPLASHER, nextLoc);
             // System.out.println("BUILT A SPLASHER");
             rc.setIndicatorString("SPLASHER NOT IMPLEMENTED YET");
@@ -133,7 +135,14 @@ public class RobotPlayer {
             System.out.println("Tower received message: '#" + m.getSenderID() + " " + m.getBytes());
         }
 
-        // TODO: can we attack other bots?
+        //try and attack if we can
+        RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+        for(RobotInfo robot : enemyRobots) {
+            if(rc.canAttack(robot.getLocation())) {
+                rc.attack(robot.getLocation());
+            }
+        }
+        if(enemyRobots.length != 0) rc.attack(null);
     }
 
 

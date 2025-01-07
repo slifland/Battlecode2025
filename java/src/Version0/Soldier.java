@@ -13,6 +13,7 @@ public class Soldier {
     public static void runSoldier(RobotController rc) throws GameActionException {
         // Sense information about all visible nearby tiles.
         MapInfo[] nearbyTiles = rc.senseNearbyMapInfos();
+        RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         // Search for a nearby ruin to complete.
         MapInfo curRuin = null;
         for (MapInfo tile : nearbyTiles){
@@ -31,12 +32,20 @@ public class Soldier {
                 rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
                 System.out.println("Trying to build a tower at " + targetLoc);
             }
-            // Fill in any spots in the pattern with the appropriate paint.
-            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 8)){
-                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY){
-                    boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
-                    if (rc.canAttack(patternTile.getMapLocation()))
-                        rc.attack(patternTile.getMapLocation(), useSecondaryColor);
+            // Fill in any spots in the pattern with the appropriate paint, but first try to paint ur own tile so u can stay alive longer.
+            MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
+            if(!currentTile.getPaint().isAlly() && currentTile.getMark() != currentTile.getPaint()){
+                boolean useSecondaryColor = currentTile.getMark() == PaintType.ALLY_SECONDARY;
+                if (rc.canAttack(currentTile.getMapLocation()))
+                    rc.attack(currentTile.getMapLocation(), useSecondaryColor);
+            }
+            else {
+                for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 8)) {
+                    if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY) {
+                        boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
+                        if (rc.canAttack(patternTile.getMapLocation()))
+                            rc.attack(patternTile.getMapLocation(), useSecondaryColor);
+                    }
                 }
             }
             // Complete the ruin if we can.
@@ -46,6 +55,7 @@ public class Soldier {
                 System.out.println("Built a tower at " + targetLoc + "!");
             }
         }
+
 
         // Move and attack randomly if no objective.
         Direction dir = directions[rng.nextInt(directions.length)];
@@ -58,6 +68,28 @@ public class Soldier {
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
         if (!currentTile.getPaint().isAlly() && rc.canAttack(rc.getLocation())){
             rc.attack(rc.getLocation());
+        }
+        //otherwise, if we have a lot of paint, just paint something
+        else if (rc.getPaint() > 100) {
+            for(MapInfo loc : rc.senseNearbyMapInfos(nextLoc, rc.getType().actionRadiusSquared)){
+                if(loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation())){
+                    rc.attack(loc.getMapLocation());
+                }
+            }
+        }
+        //check for towers
+        for(RobotInfo enemy : enemyRobots) {
+            if(enemy.getType().isTowerType()) {
+                if(rc.canAttack(enemy.getLocation())) {
+                    rc.attack(enemy.getLocation());
+                }
+            }
+        }
+        //lets try and transfer some paint, if we can
+        for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
+            if(ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
+                rc.transferPaint(ally.getLocation(), -50);
+            }
         }
     }
 }
