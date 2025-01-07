@@ -326,7 +326,7 @@ public class BFS
         return null;
     }
 
-    public static void BFS(RobotController rc, MapLocation destination) throws GameActionException
+    public static void moveTowards(RobotController rc, MapLocation destination) throws GameActionException
     {
         MapLocation start = rc.getLocation();
         lookup = new Direction[7][7];
