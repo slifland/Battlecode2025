@@ -326,7 +326,7 @@ public class BFS
         return null;
     }
 
-    public static void moveTowards(RobotController rc, MapLocation destination) throws GameActionException
+    public static Direction moveTowards(RobotController rc, MapLocation destination) throws GameActionException
     {
         MapLocation start = rc.getLocation();
         lookup = new Direction[7][7];
@@ -3846,498 +3846,499 @@ public class BFS
             }
         }
 
-        switch(closestIndex)
-        {
-            case 0:
-            {
-                Direction dirToMove = dirToMove(0);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
+        return dirToMove(closestIndex);
 
-            case 1:
-            {
-                Direction dirToMove = dirToMove(1);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 2:
-            {
-                Direction dirToMove = dirToMove(2);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 3:
-            {
-                Direction dirToMove = dirToMove(3);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 4:
-            {
-                Direction dirToMove = dirToMove(4);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 5:
-            {
-                Direction dirToMove = dirToMove(5);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 6:
-            {
-                Direction dirToMove = dirToMove(6);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 7:
-            {
-                Direction dirToMove = dirToMove(7);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 8:
-            {
-                Direction dirToMove = dirToMove(8);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 9:
-            {
-                Direction dirToMove = dirToMove(9);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 10:
-            {
-                Direction dirToMove = dirToMove(10);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 11:
-            {
-                Direction dirToMove = dirToMove(11);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 12:
-            {
-                Direction dirToMove = dirToMove(12);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 13:
-            {
-                Direction dirToMove = dirToMove(13);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 14:
-            {
-                Direction dirToMove = dirToMove(14);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 15:
-            {
-                Direction dirToMove = dirToMove(15);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 16:
-            {
-                Direction dirToMove = dirToMove(16);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 17:
-            {
-                Direction dirToMove = dirToMove(17);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 18:
-            {
-                Direction dirToMove = dirToMove(18);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 19:
-            {
-                Direction dirToMove = dirToMove(19);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 20:
-            {
-                Direction dirToMove = dirToMove(20);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 21:
-            {
-                Direction dirToMove = dirToMove(21);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 22:
-            {
-                Direction dirToMove = dirToMove(22);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 23:
-            {
-                Direction dirToMove = dirToMove(23);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 24:
-            {
-                Direction dirToMove = dirToMove(24);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 25:
-            {
-                Direction dirToMove = dirToMove(25);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 26:
-            {
-                Direction dirToMove = dirToMove(26);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 27:
-            {
-                Direction dirToMove = dirToMove(27);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 28:
-            {
-                Direction dirToMove = dirToMove(28);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 29:
-            {
-                Direction dirToMove = dirToMove(29);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 30:
-            {
-                Direction dirToMove = dirToMove(30);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 31:
-            {
-                Direction dirToMove = dirToMove(31);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 32:
-            {
-                Direction dirToMove = dirToMove(32);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 33:
-            {
-                Direction dirToMove = dirToMove(33);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 34:
-            {
-                Direction dirToMove = dirToMove(34);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 35:
-            {
-                Direction dirToMove = dirToMove(35);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 36:
-            {
-                Direction dirToMove = dirToMove(36);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 37:
-            {
-                Direction dirToMove = dirToMove(37);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 38:
-            {
-                Direction dirToMove = dirToMove(38);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 39:
-            {
-                Direction dirToMove = dirToMove(39);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 40:
-            {
-                Direction dirToMove = dirToMove(40);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 41:
-            {
-                Direction dirToMove = dirToMove(41);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 42:
-            {
-                Direction dirToMove = dirToMove(42);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 43:
-            {
-                Direction dirToMove = dirToMove(43);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 44:
-            {
-                Direction dirToMove = dirToMove(44);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 45:
-            {
-                Direction dirToMove = dirToMove(45);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 46:
-            {
-                Direction dirToMove = dirToMove(46);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 47:
-            {
-                Direction dirToMove = dirToMove(47);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-            case 48:
-            {
-                Direction dirToMove = dirToMove(48);
-                if(rc.canMove(dirToMove))
-                {
-                    rc.move(dirToMove);
-                }
-                break;
-            }
-
-        }
+//        switch(closestIndex)
+//        {
+//            case 0:
+//            {
+//                Direction dirToMove = dirToMove(0);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 1:
+//            {
+//                Direction dirToMove = dirToMove(1);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 2:
+//            {
+//                Direction dirToMove = dirToMove(2);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 3:
+//            {
+//                Direction dirToMove = dirToMove(3);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 4:
+//            {
+//                Direction dirToMove = dirToMove(4);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 5:
+//            {
+//                Direction dirToMove = dirToMove(5);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 6:
+//            {
+//                Direction dirToMove = dirToMove(6);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 7:
+//            {
+//                Direction dirToMove = dirToMove(7);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 8:
+//            {
+//                Direction dirToMove = dirToMove(8);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 9:
+//            {
+//                Direction dirToMove = dirToMove(9);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 10:
+//            {
+//                Direction dirToMove = dirToMove(10);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 11:
+//            {
+//                Direction dirToMove = dirToMove(11);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 12:
+//            {
+//                Direction dirToMove = dirToMove(12);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 13:
+//            {
+//                Direction dirToMove = dirToMove(13);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 14:
+//            {
+//                Direction dirToMove = dirToMove(14);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 15:
+//            {
+//                Direction dirToMove = dirToMove(15);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 16:
+//            {
+//                Direction dirToMove = dirToMove(16);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 17:
+//            {
+//                Direction dirToMove = dirToMove(17);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 18:
+//            {
+//                Direction dirToMove = dirToMove(18);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 19:
+//            {
+//                Direction dirToMove = dirToMove(19);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 20:
+//            {
+//                Direction dirToMove = dirToMove(20);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 21:
+//            {
+//                Direction dirToMove = dirToMove(21);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 22:
+//            {
+//                Direction dirToMove = dirToMove(22);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 23:
+//            {
+//                Direction dirToMove = dirToMove(23);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 24:
+//            {
+//                Direction dirToMove = dirToMove(24);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 25:
+//            {
+//                Direction dirToMove = dirToMove(25);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 26:
+//            {
+//                Direction dirToMove = dirToMove(26);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 27:
+//            {
+//                Direction dirToMove = dirToMove(27);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 28:
+//            {
+//                Direction dirToMove = dirToMove(28);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 29:
+//            {
+//                Direction dirToMove = dirToMove(29);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 30:
+//            {
+//                Direction dirToMove = dirToMove(30);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 31:
+//            {
+//                Direction dirToMove = dirToMove(31);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 32:
+//            {
+//                Direction dirToMove = dirToMove(32);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 33:
+//            {
+//                Direction dirToMove = dirToMove(33);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 34:
+//            {
+//                Direction dirToMove = dirToMove(34);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 35:
+//            {
+//                Direction dirToMove = dirToMove(35);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 36:
+//            {
+//                Direction dirToMove = dirToMove(36);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 37:
+//            {
+//                Direction dirToMove = dirToMove(37);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 38:
+//            {
+//                Direction dirToMove = dirToMove(38);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 39:
+//            {
+//                Direction dirToMove = dirToMove(39);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 40:
+//            {
+//                Direction dirToMove = dirToMove(40);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 41:
+//            {
+//                Direction dirToMove = dirToMove(41);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 42:
+//            {
+//                Direction dirToMove = dirToMove(42);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 43:
+//            {
+//                Direction dirToMove = dirToMove(43);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 44:
+//            {
+//                Direction dirToMove = dirToMove(44);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 45:
+//            {
+//                Direction dirToMove = dirToMove(45);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 46:
+//            {
+//                Direction dirToMove = dirToMove(46);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 47:
+//            {
+//                Direction dirToMove = dirToMove(47);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//
+//            case 48:
+//            {
+//                Direction dirToMove = dirToMove(48);
+//                if(rc.canMove(dirToMove))
+//                {
+//                    rc.move(dirToMove);
+//                }
+//                break;
+//            }
+//        }
     }
 }
