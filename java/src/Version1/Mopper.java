@@ -3,7 +3,7 @@ package Version1;
 import battlecode.common.*;
 
 import static Version1.RobotPlayer.*;
-//test comment
+
 public class Mopper {
     /**
      * Run a single turn for a Mopper.
