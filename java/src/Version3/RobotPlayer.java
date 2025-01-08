@@ -18,6 +18,7 @@ public class RobotPlayer {
      */
     static int turnCount = 0;
     static int soldiers = 0;
+    static int splashers = 0;
 
     /**
      * A random number generator.
@@ -74,12 +75,10 @@ public class RobotPlayer {
                 Communication.sendRuinLocations(rc); //Scan for rune locations and send messages
                 Communication.receiveRuinLocations(rc);
                 Utilities.attemptCompleteResourcePattern(rc);
-
-
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;
-                    case SPLASHER: Splasher.runSplasher(rc); // Consider upgrading examplefuncsplayer to use splashers!
+                    case SPLASHER: Splasher.runSplasher(rc); break; // Consider upgrading examplefuncsplayer to use splashers!
                     default: runTower(rc); break;
                     }
                 }
@@ -122,20 +121,25 @@ public class RobotPlayer {
         MapLocation nextLoc = rc.getLocation().add(dir);
         int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
         // Pick a random robot type to build.
-        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio){
-            rc.buildRobot(UnitType.SOLDIER, nextLoc);
-            System.out.println("BUILT A SOLDIER");
-            soldiers++;
+        if(rc.getRoundNum() > 150 && splashers == 0) {
+            if(rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
+                rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                splashers++;
+            }
         }
-        if (rc.canBuildRobot(UnitType.MOPPER, nextLoc)){
-            rc.buildRobot(UnitType.MOPPER, nextLoc);
-            System.out.println("BUILT A MOPPER");
-            soldiers = 0;
+        else {
+            if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
+                rc.buildRobot(UnitType.SOLDIER, nextLoc);
+                System.out.println("BUILT A SOLDIER");
+                soldiers++;
+            }
+            if (rc.canBuildRobot(UnitType.MOPPER, nextLoc)) {
+                rc.buildRobot(UnitType.MOPPER, nextLoc);
+                System.out.println("BUILT A MOPPER");
+                soldiers = 0;
+            }
         }
-        else if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
-            // rc.buildRobot(UnitType.SPLASHER, nextLoc);
-            // System.out.println("BUILT A SPLASHER");
-        }
+
 
         // Read incoming messages
 //        Message[] messages = rc.readMessages(-1);

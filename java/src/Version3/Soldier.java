@@ -9,10 +9,7 @@ enum states {
 }
 
 public class Soldier {
-    /**
-     * Run a single turn for a Soldier.
-     * This code is wrapped inside the infinite loop in run(), so it is called once per turn.
-     */
+
     //keeps track of the soldiers current objective - starts as going to a random place on map, can change
     private static MapLocation curObjective = null;
 
@@ -138,7 +135,7 @@ public class Soldier {
                 if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
                     boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
                     Direction d = BFS.moveTowards(rc, patternTile.getMapLocation());
-                    if(rc.canMove(d)) rc.move(d);
+                    if(d != null && rc.canMove(d)) rc.move(d);
                     if (rc.canAttack(patternTile.getMapLocation()))
                         rc.attack(patternTile.getMapLocation(), useSecondaryColor);
                 }
