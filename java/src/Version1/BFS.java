@@ -577,7 +577,7 @@ public class BFS
         exists48 = rc.onTheMap(l48) && rc.sensePassability(l48) && !rc.canSenseRobotAtLocation(l48);
 
         int closestDistance = Integer.MAX_VALUE;
-        int closestIndex = -1;
+        int closestIndex = 0;
         if(exists24)
         {
             if(exists16 && dist24 + 1 < dist16)

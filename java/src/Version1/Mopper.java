@@ -157,7 +157,7 @@ public class Mopper {
                 }
             }
             Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
-            if(rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
+            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
                 rc.move(dir);
             }
         }
@@ -172,7 +172,7 @@ public class Mopper {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
         Direction dir = BFS.moveTowards(rc, curObjective);
-        if(rc.canMove(dir)) {
+        if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
     }
