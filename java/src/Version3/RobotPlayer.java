@@ -19,6 +19,7 @@ public class RobotPlayer {
     static int turnCount = 0;
     static int soldiers = 0;
     static int splashers = 0;
+    static int totalBuilt = 0;
 
     /**
      * A random number generator.
@@ -121,24 +122,28 @@ public class RobotPlayer {
         MapLocation nextLoc = rc.getLocation().add(dir);
         int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
         // Pick a random robot type to build.
-        if(rc.getRoundNum() > 150 && splashers == 0) {
-            if(rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
-                rc.buildRobot(UnitType.SPLASHER, nextLoc);
-                splashers++;
-            }
-        }
-        else {
+//        if(rc.getRoundNum() > 150 && splashers == 0) {
+//            if(rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
+//                rc.buildRobot(UnitType.SPLASHER, nextLoc);
+//                splashers++;
+//            }
+//        }
+       // else {
+        if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 2000) {
             if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                 rc.buildRobot(UnitType.SOLDIER, nextLoc);
                 System.out.println("BUILT A SOLDIER");
                 soldiers++;
+                totalBuilt++;
             }
             if (rc.canBuildRobot(UnitType.MOPPER, nextLoc)) {
                 rc.buildRobot(UnitType.MOPPER, nextLoc);
                 System.out.println("BUILT A MOPPER");
                 soldiers = 0;
+                totalBuilt++;
             }
         }
+       // }
 
 
         // Read incoming messages
