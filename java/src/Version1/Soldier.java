@@ -5,7 +5,7 @@ import battlecode.common.*;
 import static Version1.RobotPlayer.rng;
 
 enum states {
-    ruin, explore, attack, refill
+    ruin, explore, attack, refill, wallHug
 }
 
 public class Soldier {
@@ -19,6 +19,7 @@ public class Soldier {
     //state tracker - prevState used for when refilling
     private static states state;
     private static states prevState;
+
 
     private static MapLocation nearestPaintTower = null;
 
@@ -155,6 +156,8 @@ public class Soldier {
         }
     }
 
+
+
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
@@ -178,7 +181,7 @@ public class Soldier {
             state = states.refill;
             return;
         }
-        if(state == states.refill && rc.getPaint() > 50) {
+        if(state == states.refill && (rc.getPaint() > 50 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
             return;

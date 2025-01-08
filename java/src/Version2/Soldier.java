@@ -5,7 +5,7 @@ import battlecode.common.*;
 import static Version2.RobotPlayer.rng;
 
 enum states {
-    ruin, explore, attack, refill
+    ruin, explore, attack, refill, wallHug
 }
 
 public class Soldier {
@@ -19,7 +19,10 @@ public class Soldier {
     //state tracker - prevState used for when refilling
     private static states state;
     private static states prevState;
-
+    //used for hugging the wall
+    private static boolean adjacentEdge = false;
+    private static boolean clockwise;
+    //used for refilling
     private static MapLocation nearestPaintTower = null;
 
     //information updated each turn
@@ -44,6 +47,9 @@ public class Soldier {
                 break;
             case refill:
                 refill(rc);
+                break;
+            case wallHug:
+                wallHug(rc);
                 break;
             default:
                 break;
@@ -91,7 +97,7 @@ public class Soldier {
         dir = rc.getLocation().directionTo(curObjective);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
-        if (rc.getRoundNum() < 400 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if (rc.getRoundNum() < 350 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
         else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
@@ -132,12 +138,20 @@ public class Soldier {
                 rc.attack(rc.getLocation());
             }
         }
+        if(!rc.canSenseLocation(curObjective)) {
+            Direction dir = BFS.moveTowards(rc, curObjective);
+            if(dir != null && rc.canMove(dir)) {
+                rc.move(dir);
+            }
+        }
         if(rc.canAttack(curObjective)) {
             rc.attack(curObjective);
         }
+
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
             curObjective = null;
         }
+
     }
 
     //tries to return to nearest paint tower to refill
@@ -152,6 +166,150 @@ public class Soldier {
             if (dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
+        }
+    }
+    //attempts to find and then follow a wall in a random direction, filling in paint as it goes - goes back to refill as necessary
+    public static void wallHug(RobotController rc) throws GameActionException {
+        //find the closest wall to you, and set that as your current objective
+        if(curObjective == null) {
+            curObjective = findClosestWall(rc);
+        }
+        if(adjacentEdge || (rc.getLocation().distanceSquaredTo(curObjective) <= 2)) {
+            adjacentEdge = true;
+            if(clockwise) moveBestClockwiseDirection(rc);
+            else moveBestCounterClockwiseDirection(rc);
+            curObjective = rc.getLocation();
+            if(clockwise) rc.setIndicatorString("clockwise");
+            else rc.setIndicatorString("reverse");
+        }
+        else {
+            rc.setIndicatorLine(rc.getLocation(), curObjective, 100, 0, 100);
+            Direction dir = BFS.moveTowards(rc, curObjective);
+            if(dir != null && rc.canMove(dir)) {
+                rc.move(dir);
+            }
+        }
+    }
+
+    //moves the best counter clockwise direction for this robot
+    private static void moveBestCounterClockwiseDirection(RobotController rc) throws GameActionException {
+        Direction dir = null;
+        int curX = rc.getLocation().x;
+        int mapWidth = rc.getMapWidth() - 1;
+        int curY = rc.getLocation().y;
+        int mapHeight = rc.getMapHeight() - 1;
+        //top edge, go west if possible, then south
+        if(mapHeight - curY <= 4) {
+            if(rc.canMove(Direction.WEST)) {
+                rc.move(Direction.WEST);
+            }
+            else if(rc.canMove(Direction.SOUTH)) {
+                rc.move(Direction.SOUTH);
+            }
+        }
+        //right edge, go south if possible, then east
+        else if(mapWidth - curX <= 4) {
+            if(rc.canMove(Direction.NORTH)) {
+                rc.move(Direction.NORTH);
+            }
+            else if(rc.canMove(Direction.EAST)) {
+                rc.move(Direction.EAST);
+            }
+        }
+        //bottom edge - go east if possible, then north
+        else if (curY <= 4) {
+            if(rc.canMove(Direction.EAST)) {
+                rc.move(Direction.EAST);
+            }
+            else if(rc.canMove(Direction.NORTH)) {
+                rc.move(Direction.NORTH);
+            }
+        }
+        // left edge - go north if possible, then west
+        else {
+            if(rc.canMove(Direction.SOUTH)) {
+                rc.move(Direction.SOUTH);
+            }
+            else if(rc.canMove(Direction.WEST)) {
+                rc.move(Direction.WEST);
+            }
+        }
+    }
+
+    //determines the best clockwise direction to go
+    private static void moveBestClockwiseDirection(RobotController rc) throws GameActionException {
+        Direction dir = null;
+        int curX = rc.getLocation().x;
+        int mapWidth = rc.getMapWidth() - 1;
+        int curY = rc.getLocation().y;
+        int mapHeight = rc.getMapHeight() - 1;
+        //top edge, go east if possible, then south
+        if(mapHeight - curY <= 4) {
+            if(rc.canMove(Direction.EAST)) {
+                rc.move(Direction.EAST);
+            }
+            else if(rc.canMove(Direction.SOUTH)) {
+                rc.move(Direction.SOUTH);
+            }
+        }
+        //right edge, go south if possible, then west
+        else if(mapWidth - curX <= 4) {
+            if(rc.canMove(Direction.SOUTH)) {
+                rc.move(Direction.SOUTH);
+            }
+            else if(rc.canMove(Direction.WEST)) {
+                rc.move(Direction.WEST);
+            }
+        }
+        //bottom edge - go west if possible, then north
+        else if (curY <= 4) {
+            if(rc.canMove(Direction.WEST)) {
+                rc.move(Direction.WEST);
+            }
+            else if(rc.canMove(Direction.NORTH)) {
+                rc.move(Direction.NORTH);
+            }
+        }
+        // left edge - go north if possible, then east
+        else {
+            if(rc.canMove(Direction.NORTH)) {
+                rc.move(Direction.NORTH);
+            }
+            else if(rc.canMove(Direction.EAST)) {
+                rc.move(Direction.EAST);
+            }
+        }
+    }
+
+    //determines the closest wall to this robot
+    private static MapLocation findClosestWall(RobotController rc) throws GameActionException {
+        int curX = rc.getLocation().x;
+        int mapWidth = rc.getMapWidth() - 2;
+        int mapWidthHalf = mapWidth / 2;
+        int closestX;
+        if (curX > mapWidthHalf) {
+            closestX = mapWidth;
+        }
+        else {
+            closestX = 0;
+        }
+        int curY = rc.getLocation().y;
+        int mapHeight = rc.getMapHeight() - 2;
+        int mapHeightHalf = mapHeight / 2;
+        int closestY;
+        if (curY > mapHeightHalf) {
+            closestY = mapHeight;
+        }
+        else {
+            closestY = 0;
+        }
+        int diffX = Math.abs(closestX - curX);
+        int diffY = Math.abs(closestY - curY);
+        if(diffX < diffY) {
+            return new MapLocation(closestX, curY);
+        }
+        else {
+            return new MapLocation(curX, closestY);
         }
     }
 
@@ -178,13 +336,21 @@ public class Soldier {
             state = states.refill;
             return;
         }
-        if(state == states.refill && rc.getPaint() > 50) {
+        if(state == states.refill && (rc.getPaint() > 50 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
             return;
         }
         else if(state == states.refill) return;
         if(curObjective == null) {
+            int ran = rng.nextInt(10);
+            if(ran < 2 && rc.getRoundNum() > 200) {
+                state = states.wallHug;
+                curObjective = null;
+                ran = rng.nextInt(2);
+                clockwise = ran == 0;
+                return;
+            }
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             state = states.explore;
         }
