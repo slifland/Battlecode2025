@@ -60,13 +60,13 @@ public class Soldier {
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
         if (!currentTile.getPaint().isAlly() && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
-            rc.attack(rc.getLocation());
+            rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
         }
         //otherwise, if we have a lot of paint, just paint something
         else if (rc.getPaint() > 100) {
             for(MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)){
                 if(loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()){
-                    rc.attack(loc.getMapLocation());
+                    rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
                     rc.setIndicatorString(state.toString() + " : " + loc.toString());
                 }
             }
@@ -135,7 +135,7 @@ public class Soldier {
     public static void attack(RobotController rc) throws GameActionException {
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
             if(rc.canAttack(rc.getLocation())) {
-                rc.attack(rc.getLocation());
+                rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
         if(!rc.canSenseLocation(curObjective)) {
@@ -145,7 +145,7 @@ public class Soldier {
             }
         }
         if(rc.canAttack(curObjective)) {
-            rc.attack(curObjective);
+            rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
         }
 
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
