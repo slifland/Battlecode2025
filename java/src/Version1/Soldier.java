@@ -106,7 +106,7 @@ public class Soldier {
                 rc.attack(currentTile.getMapLocation(), useSecondaryColor);
         }
         else {
-            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 20)) {
+            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, rc.getType().actionRadiusSquared)) {
                 if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && patternTile.getPaint() != PaintType.ENEMY_SECONDARY && patternTile.getPaint() != PaintType.ENEMY_PRIMARY) {
                     boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
                     if (rc.canAttack(patternTile.getMapLocation()))

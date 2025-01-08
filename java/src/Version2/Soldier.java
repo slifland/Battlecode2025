@@ -31,8 +31,6 @@ public class Soldier {
     private static MapInfo[] nearbyTiles;
 
     public static void runSoldier(RobotController rc) throws GameActionException {
-        if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
-        else if(state != null) rc.setIndicatorString(state.toString());
         updateInfo(rc);
         updateState(rc);
         switch(state) {
@@ -56,6 +54,8 @@ public class Soldier {
         }
         updateInfo(rc);
         updateState(rc);
+        if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
+        else if(state != null) rc.setIndicatorString(state.toString());
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
@@ -69,7 +69,6 @@ public class Soldier {
             for(MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)){
                 if(loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()){
                     rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
-                    rc.setIndicatorString(state.toString() + " : " + loc.toString());
                 }
             }
         }
@@ -87,15 +86,16 @@ public class Soldier {
         if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
-        rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
     }
 
     //attempts to fill the ruin we can see
     public static void fillRuin(RobotController rc) throws GameActionException {
         MapLocation targetLoc = curObjective;
         Direction dir = BFS.moveTowards(rc, targetLoc);
-        if (dir != null && rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_PRIMARY && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_SECONDARY)
-            rc.move(dir);
+        if(rc.getLocation().distanceSquaredTo(curObjective) > 2) {
+            if (dir != null && rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_PRIMARY && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_SECONDARY)
+                rc.move(dir);
+        }
         dir = rc.getLocation().directionTo(curObjective);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
@@ -113,8 +113,8 @@ public class Soldier {
                 rc.attack(currentTile.getMapLocation(), useSecondaryColor);
         }
         else {
-            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, 20)) {
-                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && patternTile.getPaint() != PaintType.ENEMY_SECONDARY && patternTile.getPaint() != PaintType.ENEMY_PRIMARY) {
+            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, rc.getType().actionRadiusSquared)) {
+                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
                     boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
                     if (rc.canAttack(patternTile.getMapLocation()))
                         rc.attack(patternTile.getMapLocation(), useSecondaryColor);
@@ -132,6 +132,18 @@ public class Soldier {
             state = null;
             curObjective = null;
         }
+        //there is more to complete, but its out of our action radius - try to move closer to it
+        if(rc.isActionReady()) {
+            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, rc.getType().actionRadiusSquared)) {
+                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
+                    boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
+                    Direction d = BFS.moveTowards(rc, patternTile.getMapLocation());
+                    if(rc.canMove(d)) rc.move(d);
+                    if (rc.canAttack(patternTile.getMapLocation()))
+                        rc.attack(patternTile.getMapLocation(), useSecondaryColor);
+                }
+            }
+        }
     }
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
@@ -140,14 +152,14 @@ public class Soldier {
                 rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
-        if(!rc.canSenseLocation(curObjective)) {
+        if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
             Direction dir = BFS.moveTowards(rc, curObjective);
-            if(dir != null && rc.canMove(dir)) {
+            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
                 rc.move(dir);
             }
         }
         if(rc.canAttack(curObjective)) {
-            rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
+            rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
         }
 
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
@@ -184,7 +196,6 @@ public class Soldier {
             else rc.setIndicatorString("reverse");
         }
         else {
-            rc.setIndicatorLine(rc.getLocation(), curObjective, 100, 0, 100);
             Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
@@ -364,7 +375,6 @@ public class Soldier {
             }
         }
         if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {
-            rc.setIndicatorLine(rc.getLocation(), curObjective, 150, 150, 150);
             state = states.explore;
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
@@ -385,5 +395,10 @@ public class Soldier {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             return;
         }
+    }
+    //returns whether a location is controlled by the enemy
+    public static boolean isEnemyTile(MapInfo loc) {
+        PaintType temp = loc.getPaint();
+        return temp == PaintType.ENEMY_PRIMARY || temp == PaintType.ENEMY_SECONDARY;
     }
 }

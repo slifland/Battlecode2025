@@ -119,8 +119,9 @@ public class RobotPlayer {
         // Pick a direction to build in.
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
+        int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
         // Pick a random robot type to build.
-        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers != 4){
+        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio){
             rc.buildRobot(UnitType.SOLDIER, nextLoc);
             System.out.println("BUILT A SOLDIER");
             soldiers++;
@@ -133,7 +134,6 @@ public class RobotPlayer {
         else if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
             // rc.buildRobot(UnitType.SPLASHER, nextLoc);
             // System.out.println("BUILT A SPLASHER");
-            rc.setIndicatorString("SPLASHER NOT IMPLEMENTED YET");
         }
 
         // Read incoming messages
