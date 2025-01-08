@@ -159,4 +159,16 @@ public class Communication
         ruinsMemory.add(ruin);
     }
 
+    /*
+        Used for testing and debugging
+     */
+    public static void printRuinsMemory()
+    {
+        System.out.println("Num ruins in memory: " + ruinsMemory.size());
+        for(Ruin ruin : ruinsMemory)
+        {
+            System.out.println("\t" + ruin);
+        }
+    }
+
 }
