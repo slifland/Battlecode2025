@@ -3847,7 +3847,6 @@ public class BFS
         }
 
         return dirToMove(closestIndex);
-
 //        switch(closestIndex)
 //        {
 //            case 0:
