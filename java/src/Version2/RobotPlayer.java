@@ -71,7 +71,8 @@ public class RobotPlayer {
                 // this into a different control structure!
 
 
-                Communication.sendRuneLocationToTower(rc); //Scan for rune locations and send messages
+                Communication.sendRuinLocationToTower(rc); //Scan for rune locations and send messages
+                Communication.receiveRuinLocations(rc);
                 Utilities.attemptCompleteResourcePattern(rc);
 
 
