@@ -53,7 +53,7 @@ public class Soldier {
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        if (!currentTile.getPaint().isAlly() && rc.canAttack(rc.getLocation())){
+        if (!currentTile.getPaint().isAlly() && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
             rc.attack(rc.getLocation());
         }
         //otherwise, if we have a lot of paint, just paint something
@@ -135,7 +135,7 @@ public class Soldier {
         if(rc.canAttack(curObjective)) {
             rc.attack(curObjective);
         }
-        if(rc.senseRobotAtLocation(curObjective) == null) {
+        if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
             curObjective = null;
         }
     }
@@ -153,7 +153,6 @@ public class Soldier {
                 rc.move(dir);
             }
         }
-
     }
 
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
@@ -175,7 +174,7 @@ public class Soldier {
     //update our info, changing our state as necessary
     public static void updateState(RobotController rc) throws GameActionException {
         if(rc.getPaint() < 15 && nearestPaintTower != null) {
-            prevState = state;
+            if(prevState == null) prevState = state;
             state = states.refill;
             return;
         }
@@ -184,19 +183,21 @@ public class Soldier {
             prevState = null;
             return;
         }
+        else if(state == states.refill) return;
         if(curObjective == null) {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             state = states.explore;
         }
         // Search for a nearby ruin to complete.
         for (MapLocation tile : rc.senseNearbyRuins(-1)) {
-            if (rc.senseRobotAtLocation(tile) == null){
+            if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25){
                 curObjective = tile;
                 state = states.ruin;
                 return;
             }
         }
-        if(state == states.ruin && (!rc.canSenseLocation(curObjective) || rc.senseRobotAtLocation(curObjective) != null)) {
+        if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {
+            rc.setIndicatorLine(rc.getLocation(), curObjective, 150, 150, 150);
             state = states.explore;
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
