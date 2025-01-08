@@ -1,4 +1,4 @@
-package Version1;
+package Version2;
 
 import battlecode.common.*;
 import java.util.LinkedList;
@@ -7,9 +7,10 @@ import java.util.Queue;
 public class Communication
 {
     static Queue<Integer> ruinsQueue = new LinkedList<>();
+
     /*
-    Scan all rune locations and send them to a nearby tower, this method should be
-    called by robots and not towers
+        Scan all rune locations and send them to a nearby tower, this method should be
+        called by robots and not towers
     */
     public static void sendRuneLocationToTower(RobotController rc) throws GameActionException
     {
@@ -59,4 +60,7 @@ public class Communication
             //Ruin ruin = new Ruin(location, (message >> 14) & 3);
         }
     }
+
+
+
 }

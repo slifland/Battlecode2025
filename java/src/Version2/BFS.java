@@ -1,4 +1,4 @@
-package Version1;
+package Version2;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;

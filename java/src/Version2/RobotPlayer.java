@@ -1,4 +1,4 @@
-package Version1;
+package Version2;
 
 import battlecode.common.*;
 
@@ -55,6 +55,7 @@ public class RobotPlayer {
         // You can also use indicators to save debug notes in replays.
         rc.setIndicatorString("Hello world!");
 
+
         while (true) {
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
             // loop. If we ever leave this loop and return from run(), the robot dies! At the end of the
@@ -69,7 +70,10 @@ public class RobotPlayer {
                 // use different strategies on different robots. If you wish, you are free to rewrite
                 // this into a different control structure!
 
+
                 Communication.sendRuneLocationToTower(rc); //Scan for rune locations and send messages
+                Utilities.attemptCompleteResourcePattern(rc);
+
 
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
@@ -115,8 +119,9 @@ public class RobotPlayer {
         // Pick a direction to build in.
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
+        int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
         // Pick a random robot type to build.
-        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers != 6){
+        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio){
             rc.buildRobot(UnitType.SOLDIER, nextLoc);
             System.out.println("BUILT A SOLDIER");
             soldiers++;
@@ -129,7 +134,6 @@ public class RobotPlayer {
         else if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
             // rc.buildRobot(UnitType.SPLASHER, nextLoc);
             // System.out.println("BUILT A SPLASHER");
-            rc.setIndicatorString("SPLASHER NOT IMPLEMENTED YET");
         }
 
         // Read incoming messages
@@ -166,6 +170,7 @@ public class RobotPlayer {
                 for (RobotInfo ally : allyRobots){
                     if (rc.canSendMessage(ally.location, enemyRobots.length)){
                         rc.sendMessage(ally.location, enemyRobots.length);
+
                     }
                 }
             }

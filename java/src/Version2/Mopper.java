@@ -1,10 +1,10 @@
-package Version1;
+package Version2;
 
 import battlecode.common.*;
 
 import java.util.ArrayList;
 
-import static Version1.RobotPlayer.*;
+import static Version2.RobotPlayer.*;
 
 enum mopStates {
     mop, steal, explore
