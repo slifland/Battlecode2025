@@ -56,20 +56,6 @@ public class Splasher {
                 && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
             rc.attack(rc.getLocation(), currentTileIsSecondary);
         }
-        //otherwise, if we have a lot of paint, just paint something
-        else if (rc.getPaint() > 100) {
-            for(MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)){
-                if(loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()){
-                    rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
-                }
-            }
-        }
-        //lets try and transfer some paint, if we can
-        for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
-            if(ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
-                rc.transferPaint(ally.getLocation(), -50);
-            }
-        }
     }
 
     public static void fightContestedRuin(RobotController rc) throws GameActionException {
@@ -78,30 +64,33 @@ public class Splasher {
 
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
-        MapLocation toAttack = bestAttack(rc);
-        //first just try and attack the enemy tower
-        if(rc.canAttack(curObjective)) {
-            rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
-        }
-        if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
-            if(rc.canAttack(rc.getLocation())) {
-                rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+        if(rc.isActionReady()) {
+            MapLocation toAttack = bestAttack(rc);
+            if(rc.canAttack(toAttack)) {
+                rc.attack(toAttack);
+            }
+            else if(rc.canAttack(curObjective)) {
+                rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
+            }
+            else if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
+                if(rc.canAttack(rc.getLocation())) {
+                    rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+                }
             }
         }
-        if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
-            Direction dir = BFS.moveTowards(rc, curObjective);
-            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
-                rc.move(dir);
+        if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
+            if(curObjective != null) {
+                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
+                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
+                }
             }
         }
-        if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
-            curObjective = null;
-        }
+
     }
 
     private static MapLocation bestAttack(RobotController rc) throws GameActionException {
         int[] localSquares = new int[81];
-        int[] potentialAttackSquares = new int[25];
+        int[] potentialAttackSquares = new int[81];
         Arrays.fill(potentialAttackSquares, 0);
         int index = 0;
         for(MapInfo tile : rc.senseNearbyMapInfos(-1)) {
@@ -116,78 +105,92 @@ public class Splasher {
             else localSquares[index]+= 2;
             index++;
         }
-        int indexPotentialAttack = 0;
         for(int i = 20; i <= 24; i++) {
             for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i-j];
+                potentialAttackSquares[i] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i-j];
             }
             for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i+j];
             }
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-            indexPotentialAttack++;
+            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
+            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
+            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
+            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
+            i++;
         }
         for(int i = 29; i <= 33; i++) {
             for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i-j];
+                potentialAttackSquares[i] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i-j];
             }
             for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i+j];
             }
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-            indexPotentialAttack++;
+            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
+            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
+            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
+            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
+            i++;
         }
         for(int i = 38; i <= 42; i++) {
             for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i-j];
+                potentialAttackSquares[i] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i-j];
             }
             for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i+j];
             }
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-            indexPotentialAttack++;
+            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
+            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
+            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
+            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
+            i++;
         }
         for(int i = 47; i <= 51; i++) {
             for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i-j];
+                potentialAttackSquares[i] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i-j];
             }
             for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i+j];
             }
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-            indexPotentialAttack++;
+            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
+            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
+            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
+            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
+            i++;
         }
         for(int i = 56; i <= 60; i++) {
             for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i-j];
+                potentialAttackSquares[i] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i-j];
             }
             for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[indexPotentialAttack] += localSquares[i+j];
+                potentialAttackSquares[i] += localSquares[i+j];
             }
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[indexPotentialAttack] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-            indexPotentialAttack++;
+            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
+            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
+            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
+            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
+            i++;
         }
-        return null;
+        int highest = potentialAttackSquares[20];
+        int highestIndex = 20;
+        for(int i = 21; i <= 60; i++) {
+            if(potentialAttackSquares[i] > highest) {
+                highestIndex = i;
+                highest = potentialAttackSquares[i];
+            }
+        }
+        int offSetX, offSetY;
+        if(highestIndex <= 24) offSetX = -2;
+        else if(highestIndex <= 33) offSetX = -1;
+        else if(highestIndex <= 42) offSetX = 0;
+        else if(highestIndex <= 51) offSetX = 1;
+        else offSetX = 2;
+        offSetY = (highestIndex % 9) - 4;
+        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
     }
 
     //tries to return to nearest paint tower to refill
@@ -254,11 +257,23 @@ public class Splasher {
                 return;
             }
         }
-        state = splasherStates.placeholder;
+        state = splasherStates.attack;
     }
     //returns whether a location is controlled by the enemy
     public static boolean isEnemyTile(MapInfo loc) {
         PaintType temp = loc.getPaint();
         return temp == PaintType.ENEMY_PRIMARY || temp == PaintType.ENEMY_SECONDARY;
+    }
+
+    //checks whether a space is in firing range of any seen enemy towers
+    public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
+        for(RobotInfo enemy : enemyRobots) {
+            if(enemy.type.isTowerType()) {
+                if(loc.distanceSquaredTo(enemy.getLocation()) <= enemy.getType().actionRadiusSquared) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
