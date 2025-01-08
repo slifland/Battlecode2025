@@ -12,10 +12,32 @@ public class Communication
     static ArrayList<Ruin> ruinsMemory = new ArrayList<>();
 
     /*
+        used by towers to ensure all Ruin locations are sent, important in the situation where tower cannot
+        send every ruin location to every robot
+    */
+    private static int nextRuinToSend = 0;
+
+    /*
+        Called by RobotPlayer. Calls sendRuinLocationToTower or sendRuinLocationToTroops as
+        appropriate, dependent on the type of this unit.
+     */
+    public static void sendRuinLocations(RobotController rc) throws GameActionException
+    {
+        if(rc.getType().isRobotType())
+        {
+            sendRuinLocationsToTower(rc);
+        }
+        else
+        {
+            sendRuinLocationsToTroops(rc);
+        }
+    }
+
+    /*
         Scan all rune locations and send them to a nearby tower, this method should be
         called by robots and not towers
     */
-    public static void sendRuinLocationToTower(RobotController rc) throws GameActionException
+    private static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
     {
         //First determine all ruins nearby and add them to the queue
         MapLocation[] ruins = rc.senseNearbyRuins(-1);
@@ -66,6 +88,26 @@ public class Communication
         }
     }
 
+    private static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
+    {
+        if(ruinsMemory.size() == 0) return;
+
+        RobotInfo[] allies = rc.senseNearbyRobots();
+
+        int startIndex;
+
+        for(RobotInfo ri : allies)
+        {
+            startIndex = nextRuinToSend;
+            while(rc.canSendMessage(ri.location) && nextRuinToSend != startIndex)
+            {
+                rc.sendMessage(ri.location, ruinToMessage(ruinsMemory.get(nextRuinToSend)));
+                nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
+            }
+        }
+
+    }
+
     //looks through messages from the current round and the previous round, updating ruinsMemory
     public static void receiveRuinLocations(RobotController rc)
     {
@@ -75,10 +117,21 @@ public class Communication
         {
             for(Message m : mArr)
             {
-                updateRuinsMemory(messageToRuin(m.getBytes()));
+                updateRuinsMemory(messageToRuin(m));
             }
         }
     }
+
+    public static int ruinToMessage(Ruin ruin)
+    {
+        int message = 0;
+        message |= (ruin.location.x << 2);   //Add x location to message
+        message |= (ruin.location.y << 8);  //Add y location to message
+        message |= ruin.status << 14;       //Add ruin status to message
+
+        return message;
+    }
+
 
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
