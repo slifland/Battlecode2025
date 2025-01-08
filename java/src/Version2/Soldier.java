@@ -20,7 +20,7 @@ public class Soldier {
     private static states state;
     private static states prevState;
     //used for hugging the wall
-    private static boolean adjacentEdge = false;
+    private static int edge = 0; //0 = not on edge, 1 = top, 2 = right, 3 = bottom, 4 = left
     private static boolean clockwise;
     //used for refilling
     private static MapLocation nearestPaintTower = null;
@@ -99,7 +99,7 @@ public class Soldier {
         dir = rc.getLocation().directionTo(curObjective);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
-        if (rc.getRoundNum() < 350 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if (rc.getRoundNum() < 200 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
         else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
@@ -187,11 +187,8 @@ public class Soldier {
         if(curObjective == null) {
             curObjective = findClosestWall(rc);
         }
-        if(adjacentEdge || (rc.getLocation().distanceSquaredTo(curObjective) <= 2)) {
-            adjacentEdge = true;
-            if(clockwise) moveBestClockwiseDirection(rc);
-            else moveBestCounterClockwiseDirection(rc);
-            curObjective = rc.getLocation();
+        if(rc.getLocation().distanceSquaredTo(curObjective) <= 4) {
+            curObjective = rotateCorner(rc, clockwise);
             if(clockwise) rc.setIndicatorString("clockwise");
             else rc.setIndicatorString("reverse");
         }
@@ -203,6 +200,95 @@ public class Soldier {
         }
     }
 
+    //finds the closest corner in either the clockwise or counterclockwise direction, given the edge you are on
+    public static MapLocation rotateCorner(RobotController rc, boolean clockwise) throws GameActionException {
+        int curX = rc.getLocation().x;
+        int mapWidth = rc.getMapWidth() - 1;
+        int curY = rc.getLocation().y;
+        int mapHeight = rc.getMapHeight() - 1;
+        //we aren't even chasing a corner yet - need to return the closest one in the direction we are going
+        if(!(curObjective.x == 0 || curObjective.x == mapWidth && curObjective.y == 0 || curObjective.y == mapHeight)) {
+            int newX;
+            int newY;
+            //top edge
+            if(mapHeight - curY <= 4) {
+                if(clockwise) {
+                    newX = mapWidth;
+                }
+                else {
+                    newX = 0;
+                }
+                newY = mapHeight;
+            }
+            //right edge
+            else if(mapWidth - curX <= 4) {
+                if(clockwise) {
+                    newY = 0;
+                }
+                else {
+                    newY = mapHeight;
+                }
+                newX = mapWidth;
+            }
+            //bottom edge
+            else if (curY <= 4) {
+                if(clockwise) {
+                    newX = 0;
+                }
+                else {
+                   newX = mapWidth;
+                }
+                newY = 0;
+            }
+            // left edge
+            else {
+                if(clockwise) {
+                   newY = mapHeight;
+                }
+                else {
+                    newY = 0;
+                }
+                newX = 0;
+            }
+            return new MapLocation(newX, newY);
+        }
+        //bottom corner -> clockwise needs to go to top left, CCW needs to go to bottom right
+        if(curX < 5 && curY < 5) {
+            if(clockwise) {
+                return new MapLocation(0, mapHeight);
+            }
+            else {
+                return new MapLocation(mapWidth, 0);
+            }
+        }
+        //bottom right corner
+        else if(curX > 5 && curY < 5) {
+            if(clockwise) {
+                return new MapLocation(0, 0);
+            }
+            else {
+                return new MapLocation(mapWidth, mapHeight);
+            }
+        }
+        //top right
+        else if(curX > 5 && curY > 5) {
+            if(clockwise) {
+                return new MapLocation(mapWidth, 0);
+            }
+            else {
+                return new MapLocation(0, mapHeight);
+            }
+        }
+        //top left
+        else {
+            if(clockwise) {
+                return new MapLocation(mapWidth, mapHeight);
+            }
+            else {
+                return new MapLocation(0, 0);
+            }
+        }
+    }
     //moves the best counter clockwise direction for this robot
     private static void moveBestCounterClockwiseDirection(RobotController rc) throws GameActionException {
         Direction dir = null;
@@ -343,12 +429,12 @@ public class Soldier {
 
     //update our info, changing our state as necessary
     public static void updateState(RobotController rc) throws GameActionException {
-        if(rc.getPaint() < 15 && nearestPaintTower != null) {
+        if(rc.getPaint() < 20 && nearestPaintTower != null) {
             if(prevState == null) prevState = state;
             state = states.refill;
             return;
         }
-        if(state == states.refill && (rc.getPaint() > 50 || nearestPaintTower == null)) {
+        if(state == states.refill && (rc.getPaint() > 75 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
             return;
