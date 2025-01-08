@@ -11,18 +11,28 @@ enum mopStates {
 }
 
 public class Mopper {
+
     //keeps track of the state for the individual mopper
     private static mopStates state;
+
+    //info the mopper will need at various points throughout its turn
     private static RobotInfo[] enemyRobots;
     private static RobotInfo[] adjacentEnemyRobots;
     private static RobotInfo[] allyRobots;
     private static ArrayList<MapInfo> nearbyEnemyTiles;
     private static MapLocation curObjective = null;
+
     public static void runMopper(RobotController rc) throws GameActionException {
         if(RobotPlayer.turnCount == 1) nearbyEnemyTiles = new ArrayList<>();
         updateInfo(rc);
         updateState(rc);
-        //rc.setIndicatorString(state.toString());
+        if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
+            for(MapInfo loc : rc.senseNearbyMapInfos(2)) {
+                if(!isEnemyTile(loc) && rc.canMove(rc.getLocation().directionTo(loc.getMapLocation()))) {
+                    rc.move(rc.getLocation().directionTo(loc.getMapLocation()));
+                }
+            }
+        }
         switch(state) {
             case mop:
                 mop(rc);
@@ -35,6 +45,7 @@ public class Mopper {
                 break;
         }
         updateInfo(rc);
+        if(state != null) rc.setIndicatorString(state.toString());
     }
 
     //updates our knowledege of nearby things
@@ -147,18 +158,37 @@ public class Mopper {
 
     //goal is to clean up some enemy paint
     public static void mop(RobotController rc) throws GameActionException {
+        //if the mopper can see a ruin, we should probably stay near it and try to mop it up.. ends up more helpful for our team
+        for (MapLocation tile : rc.senseNearbyRuins(-1)) {
+            if (rc.canSenseLocation(tile) && rc.senseRobotAtLocation(tile) == null){
+                Direction dir = BFS.moveTowards(rc, tile);
+                if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, tile)) {
+                    rc.move(dir);
+                }
+            }
+        }
         //mop some shit up!
         if(rc.isActionReady()) {
             MapInfo loc = nearbyEnemyTiles.getFirst();
             for(MapInfo m : nearbyEnemyTiles) {
                 if(rc.canAttack(m.getMapLocation())) {
+                    loc = m;
                     rc.attack(m.getMapLocation());
                     break;
                 }
             }
             Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
-            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
+            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
                 rc.move(dir);
+            }
+            //still havent mopped anything, try again
+            if(rc.isActionReady()) {
+                for(MapInfo m : nearbyEnemyTiles) {
+                    if(rc.canAttack(m.getMapLocation())) {
+                        rc.attack(m.getMapLocation());
+                        break;
+                    }
+                }
             }
         }
     }
@@ -240,5 +270,17 @@ public class Mopper {
     public static boolean isEnemyTile(MapInfo loc) {
         PaintType temp = loc.getPaint();
         return temp == PaintType.ENEMY_PRIMARY || temp == PaintType.ENEMY_SECONDARY;
+    }
+
+    //checks whether a space is in firing range of any seen enemy towers
+    public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
+        for(RobotInfo enemy : enemyRobots) {
+            if(enemy.type.isTowerType()) {
+                if(loc.distanceSquaredTo(enemy.getLocation()) <= enemy.getType().actionRadiusSquared) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
