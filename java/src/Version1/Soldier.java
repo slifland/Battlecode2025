@@ -5,7 +5,7 @@ import battlecode.common.*;
 import static Version1.RobotPlayer.rng;
 
 enum states {
-    ruin, explore, attack
+    ruin, explore, attack, refill
 }
 
 public class Soldier {
@@ -18,9 +18,17 @@ public class Soldier {
 
     private static states state;
 
+    private static MapLocation nearestPaintTower = null;
+
+    //information updated each turn
+    private static RobotInfo[] enemyRobots;
+    private static RobotInfo[] allyRobots;
+    private static MapInfo[] nearbyTiles;
+
     public static void runSoldier(RobotController rc) throws GameActionException {
         if(state != null) rc.setIndicatorString(state.toString());
         updateInfo(rc);
+        updateState(rc);
         switch(state) {
             case explore:
                 explore(rc);
@@ -31,10 +39,14 @@ public class Soldier {
             case attack:
                 attack(rc);
                 break;
+            case refill:
+                refill(rc);
+                break;
             default:
                 break;
         }
         updateInfo(rc);
+        updateState(rc);
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
@@ -60,15 +72,9 @@ public class Soldier {
 
     //attempt to move to the random location we have been assigned, or choose a new random location
     public static void explore(RobotController rc) throws GameActionException {
-        Direction d = rc.getLocation().directionTo(curObjective);
-        if(rc.canMove(d)) {
-            rc.move(d);
-        }
-        else if(rc.canMove(d.rotateLeft())) {
-            rc.move(d.rotateLeft());
-        }
-        else if(rc.canMove(d.rotateRight())) {
-            rc.move(d.rotateRight());
+        Direction dir = BFS.moveTowards(rc, curObjective);
+        if(rc.canMove(dir)) {
+            rc.move(dir);
         }
         rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
     }
@@ -76,23 +82,20 @@ public class Soldier {
     //attempts to fill the ruin we can see
     public static void fillRuin(RobotController rc) throws GameActionException {
         MapLocation targetLoc = curObjective;
-        Direction dir = rc.getLocation().directionTo(targetLoc);
+        Direction dir = BFS.moveTowards(rc, targetLoc);
         if (rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_PRIMARY && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_SECONDARY)
             rc.move(dir);
-        int towerType = rng.nextInt(10);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
-        if ((towerType > 3 || RobotPlayer.turnCount < 400) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if (rc.getRoundNum() < 400 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
-            System.out.println("Trying to build a tower at " + targetLoc);
         }
         else if (rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
-            System.out.println("Trying to build a tower at " + targetLoc);
         }
         // Fill in any spots in the pattern with the appropriate paint, but first try to paint ur own tile so u can stay alive longer.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        if(currentTile.getPaint() == PaintType.EMPTY && currentTile.getMark() != currentTile.getPaint()){
+        if (currentTile.getPaint() == PaintType.EMPTY && currentTile.getMark() != currentTile.getPaint()){
             boolean useSecondaryColor = currentTile.getMark() == PaintType.ALLY_SECONDARY;
             if (rc.canAttack(currentTile.getMapLocation()))
                 rc.attack(currentTile.getMapLocation(), useSecondaryColor);
@@ -109,15 +112,11 @@ public class Soldier {
         // Complete the ruin if we can.
         if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
-            rc.setTimelineMarker("Tower built", 0, 255, 0);
-            System.out.println("Built a tower at " + targetLoc + "!");
             state = null;
             curObjective = null;
         }
         else if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
             rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
-            rc.setTimelineMarker("Tower built", 0, 255, 0);
-            System.out.println("Built a tower at " + targetLoc + "!");
             state = null;
             curObjective = null;
         }
@@ -137,19 +136,43 @@ public class Soldier {
         }
     }
 
-    //update our info, changing our state as necessary
+    //tries to return to nearest paint tower to refill
+    public static void refill(RobotController rc) throws GameActionException {
+        if(rc.getLocation().isAdjacentTo(curObjective)) {
+
+        }
+        BFS.moveTowards(rc, curObjective);
+
+    }
+
+    //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
+        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
+        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+        nearbyTiles = rc.senseNearbyMapInfos();
+
+        for(RobotInfo robot : allyRobots) {
+            if(robot.getType() == UnitType.LEVEL_ONE_PAINT_TOWER  ||robot.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || robot.getType() == UnitType.LEVEL_THREE_PAINT_TOWER&& robot.getTeam() == rc.getTeam()) {
+                nearestPaintTower = robot.getLocation();
+            }
+        }
+    }
+
+    //update our info, changing our state as necessary
+    public static void updateState(RobotController rc) throws GameActionException {
+        if(rc.getPaint() < 15) {
+            state = states.refill;
+            curObjective = nearestPaintTower;
+            return;
+        }
         if(curObjective == null) {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             state = states.explore;
         }
-        // Sense information about all visible nearby tiles.
-        MapInfo[] nearbyTiles = rc.senseNearbyMapInfos();
-        RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         // Search for a nearby ruin to complete.
-        for (MapInfo tile : nearbyTiles){
-            if (tile.hasRuin() && rc.senseRobotAtLocation(tile.getMapLocation()) == null){
-                curObjective = tile.getMapLocation();
+        for (MapLocation tile : rc.senseNearbyRuins(-1)) {
+            if (rc.senseRobotAtLocation(tile) == null){
+                curObjective = tile;
                 state = states.ruin;
                 return;
             }

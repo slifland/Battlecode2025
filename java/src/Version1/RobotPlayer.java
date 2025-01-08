@@ -113,7 +113,7 @@ public class RobotPlayer {
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
         // Pick a random robot type to build.
-        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers != 6){
+        if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers != 4){
             rc.buildRobot(UnitType.SOLDIER, nextLoc);
             System.out.println("BUILT A SOLDIER");
             soldiers++;
