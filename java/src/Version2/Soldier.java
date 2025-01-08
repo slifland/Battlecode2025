@@ -59,8 +59,10 @@ public class Soldier {
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        if (!currentTile.getPaint().isAlly() && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
-            rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+        boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
+        if ((!currentTile.getPaint().isAlly() || currentTileIsSecondary != currentTile.getPaint().isSecondary())
+                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
+            rc.attack(rc.getLocation(), currentTileIsSecondary);
         }
         //otherwise, if we have a lot of paint, just paint something
         else if (rc.getPaint() > 100) {
@@ -151,7 +153,6 @@ public class Soldier {
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
             curObjective = null;
         }
-
     }
 
     //tries to return to nearest paint tower to refill
