@@ -68,6 +68,9 @@ public class RobotPlayer {
                 // different types. Here, we separate the control depending on the UnitType, so we can
                 // use different strategies on different robots. If you wish, you are free to rewrite
                 // this into a different control structure!
+
+                Communication.sendRuneLocationToTower(rc); //Scan for rune locations and send messages
+
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;
@@ -130,10 +133,10 @@ public class RobotPlayer {
         }
 
         // Read incoming messages
-        Message[] messages = rc.readMessages(-1);
-        for (Message m : messages) {
-            System.out.println("Tower received message: '#" + m.getSenderID() + " " + m.getBytes());
-        }
+//        Message[] messages = rc.readMessages(-1);
+//        for (Message m : messages) {
+//            System.out.println("Tower received message: '#" + m.getSenderID() + " " + m.getBytes());
+//        }
 
         //try and attack if we can
         RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());

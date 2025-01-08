@@ -22,7 +22,7 @@ public class Mopper {
         if(RobotPlayer.turnCount == 1) nearbyEnemyTiles = new ArrayList<>();
         updateInfo(rc);
         updateState(rc);
-        rc.setIndicatorString(state.toString());
+        //rc.setIndicatorString(state.toString());
         switch(state) {
             case mop:
                 mop(rc);
