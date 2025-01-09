@@ -94,7 +94,8 @@ public class RobotPlayer {
         int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
         int mopperRatio = 2;
 
-        if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 2000) {
+        if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
+            if(rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
             if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                 rc.buildRobot(UnitType.SOLDIER, nextLoc);
                 soldiers++;

@@ -49,15 +49,13 @@ public class Soldier {
             default:
                 break;
         }
-        updateInfo(rc);
-        updateState(rc);
         if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
         else if(state != null) rc.setIndicatorString(state.toString());
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
         boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
-        if ((!currentTile.getPaint().isAlly() || currentTileIsSecondary != currentTile.getPaint().isSecondary())
+        if ((!currentTile.getPaint().isAlly() || (currentTileIsSecondary != currentTile.getPaint().isSecondary() && currentTile.getMark().isSecondary() == currentTileIsSecondary))
                 && rc.canAttack(rc.getLocation()) && rc.getPaint() > 10){
             rc.attack(rc.getLocation(), currentTileIsSecondary);
         }
@@ -97,6 +95,7 @@ public class Soldier {
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
         int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
+        if(rc.getRoundNum() <= 5) ranNum = 1;
         if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
                 prevState = states.ruin;
@@ -131,8 +130,8 @@ public class Soldier {
                 }
             }
         }
-        // Complete the ruin if we can.
-        if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        // Complete the ruin if we can - never complete a paint tower if we still only have two starting towers, unless we clearly arent doing anything else
+        if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1060) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
             state = null;
             curObjective = null;
@@ -163,13 +162,14 @@ public class Soldier {
                 rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
-
         //attempt to move towards the enemy if we are out of range, and the tile is not an enemy tile
         if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
             Direction dir = BFS.moveTowards(rc, curObjective);
-            MapLocation newLoc = rc.getLocation().add(dir);
-            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && (isSafeFromTower(rc, newLoc) || rc.getHealth() > 75)) {
-                rc.move(dir);
+            if(dir != null) {
+                MapLocation newLoc = rc.getLocation().add(dir);
+                if (rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && (isSafeFromTower(rc, newLoc) || rc.getHealth() > 75)) {
+                    rc.move(dir);
+                }
             }
         }
         //if we have good enough numbers, just move towards it anyway
@@ -190,6 +190,7 @@ public class Soldier {
         }
 
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {
+            state = null;
             curObjective = null;
         }
     }
@@ -479,16 +480,18 @@ public class Soldier {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             state = states.explore;
         }
-        // Search for a nearby ruin to complete.
-        for (MapLocation tile : rc.senseNearbyRuins(-1)) {
-            if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25){
-                if(rc.getMoney() < 1000 && rc.senseNearbyRobots(tile, 2, rc.getTeam()).length > 0) {
-                    if(state == states.ruin) state = states.explore;
-                    continue;
+        if(state != states.ruin) {
+            // Search for a nearby ruin to complete.
+            for (MapLocation tile : rc.senseNearbyRuins(-1)) {
+                if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25) {
+                    if (rc.getMoney() < 1000 && rc.senseNearbyRobots(tile, 2, rc.getTeam()).length > 0) {
+                        if (state == states.ruin) state = states.explore;
+                        continue;
+                    }
+                    curObjective = tile;
+                    state = states.ruin;
+                    return;
                 }
-                curObjective = tile;
-                state = states.ruin;
-                return;
             }
         }
         if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {

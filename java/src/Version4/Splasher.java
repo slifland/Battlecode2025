@@ -321,7 +321,6 @@ public class Splasher {
         if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
             nearestPaintTower = null;
         }
-
         for(Ruin r : Communication.ruinsMemory)
         {
             if(visitedAlliedTowers.contains(r.location) && r.status != 1) //if an allied tower has died, remove it from the list of visitedAlliedTowers
