@@ -138,7 +138,7 @@ public class Soldier {
                 if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
                     boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
                     Direction d = BFS.moveTowards(rc, patternTile.getMapLocation());
-                    if(rc.canMove(d)) rc.move(d);
+                    if(d != null && rc.canMove(d)) rc.move(d);
                     if (rc.canAttack(patternTile.getMapLocation()))
                         rc.attack(patternTile.getMapLocation(), useSecondaryColor);
                 }
