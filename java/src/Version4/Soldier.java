@@ -58,7 +58,7 @@ public class Soldier {
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
         boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
         if ((!currentTile.getPaint().isAlly() || currentTileIsSecondary != currentTile.getPaint().isSecondary())
-                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
+                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 10){
             rc.attack(rc.getLocation(), currentTileIsSecondary);
         }
         //otherwise, if we have a lot of paint, just paint something
@@ -98,9 +98,21 @@ public class Soldier {
         MapLocation shouldBeMarked = curObjective.subtract(dir);
         int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
         if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+            if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
+                prevState = states.ruin;
+                state = states.refill;
+                refill(rc);
+                return;
+            }
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
         else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
+            if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
+                state = states.refill;
+                prevState = states.ruin;
+                refill(rc);
+                return;
+            }
             rc.markTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
         }
         // Fill in any spots in the pattern with the appropriate paint, but first try to paint ur own tile so u can stay alive longer.
@@ -151,10 +163,12 @@ public class Soldier {
                 rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
+
         //attempt to move towards the enemy if we are out of range, and the tile is not an enemy tile
         if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
             Direction dir = BFS.moveTowards(rc, curObjective);
-            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
+            MapLocation newLoc = rc.getLocation().add(dir);
+            if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && (isSafeFromTower(rc, newLoc) || rc.getHealth() > 75)) {
                 rc.move(dir);
             }
         }
@@ -164,6 +178,12 @@ public class Soldier {
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
+        }
+        //if we are low on health and in tower range and dont have the numbers, back up
+        else if(rc.getHealth() <= 75 && rc.getLocation().distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared) {
+            if(rc.canAttack(curObjective)) rc.attack(curObjective);
+            Direction dir = rc.getLocation().directionTo(curObjective).opposite();
+            if(rc.canMove(dir)) rc.move(dir);
         }
         if(rc.canAttack(curObjective)) {
             rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
@@ -497,5 +517,17 @@ public class Soldier {
     public static boolean isEnemyTile(MapInfo loc) {
         PaintType temp = loc.getPaint();
         return temp == PaintType.ENEMY_PRIMARY || temp == PaintType.ENEMY_SECONDARY;
+    }
+
+    //checks whether a space is in firing range of any seen enemy towers
+    public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
+        for(RobotInfo enemy : enemyRobots) {
+            if(enemy.type.isTowerType()) {
+                if(loc.distanceSquaredTo(enemy.getLocation()) <= enemy.getType().actionRadiusSquared) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

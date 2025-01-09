@@ -54,8 +54,6 @@ public class Splasher {
             default:
                 break;
         }
-        updateInfo(rc);
-        updateState(rc);
         if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
         else if(state != null) rc.setIndicatorString(state.toString());
         // Try to paint beneath us as we walk to avoid paint penalties.
@@ -63,13 +61,48 @@ public class Splasher {
         MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
         boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
         if ((!currentTile.getPaint().isAlly() || currentTileIsSecondary != currentTile.getPaint().isSecondary())
-                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 5){
+                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 200){
             rc.attack(rc.getLocation(), currentTileIsSecondary);
         }
     }
 
+    //similar to attack but we dont need to check for being safe from towers, cause we know we are
     public static void fightContestedRuin(RobotController rc) throws GameActionException {
-
+        if(rc.isActionReady()) {
+            MapLocation toAttack = bestAttack(rc);
+            if(rc.canAttack(toAttack)) {
+                rc.attack(toAttack);
+            }
+            else if(rc.canAttack(curObjective)) {
+                rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
+            }
+//            else if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
+//                if(rc.canAttack(rc.getLocation())) {
+//                    rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+//                }
+//            }
+            //if we still havent moved, means we need to move closer to attack our target location
+            if(rc.isActionReady()) {
+                //Direction dir = BFS.moveTowards(rc, toAttack);
+                Direction dir = rc.getLocation().directionTo(toAttack);
+                if(dir == null) return;
+                MapLocation newLoc = rc.getLocation().add(dir);
+                MapInfo newLocInfo = rc.senseMapInfo(newLoc);
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && !isEnemyTile(newLocInfo)) {
+                    rc.move(dir);
+                    if(rc.canAttack(toAttack)) {
+                        rc.attack(toAttack);
+                    }
+                }
+            }
+        }
+        else if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
+            if(curObjective != null) {
+                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
+                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
+                }
+            }
+        }
     }
 
     //attempting to attack the tower we can see
@@ -82,26 +115,38 @@ public class Splasher {
             else if(rc.canAttack(curObjective)) {
                 rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
             }
-            else if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
-                if(rc.canAttack(rc.getLocation())) {
-                    rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+//            else if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
+//                if(rc.canAttack(rc.getLocation())) {
+//                    rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+//                }
+//            }
+            //if we still havent moved, means we need to move closer to attack our target location
+            if(rc.isActionReady()) {
+                //Direction dir = BFS.moveTowards(rc, toAttack);
+                Direction dir = rc.getLocation().directionTo(toAttack);
+                if(dir == null) return;
+                MapLocation newLoc = rc.getLocation().add(dir);
+                MapInfo newLocInfo = rc.senseMapInfo(newLoc);
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && isSafeFromTower(rc, newLoc) && !isEnemyTile(newLocInfo)) {
+                    rc.move(dir);
+                    if(rc.canAttack(toAttack)) {
+                        rc.attack(toAttack);
+                    }
                 }
             }
         }
-        if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
+        else if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
             if(curObjective != null) {
                 if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
                     rc.move(rc.getLocation().directionTo(curObjective).opposite());
                 }
             }
         }
-
     }
 
     private static MapLocation bestAttack(RobotController rc) throws GameActionException {
         int[] localSquares = new int[81];
         int[] potentialAttackSquares = new int[81];
-        Arrays.fill(potentialAttackSquares, 0);
         int index = 0;
         for(MapInfo tile : rc.senseNearbyMapInfos(-1)) {
             while(index == 0 || index == 1 || index == 7 || index == 8 || index == 17 || index == 9 || index == 63 || index == 71 || index == 72 || index == 73 || index ==79 || index == 80) {
@@ -206,8 +251,8 @@ public class Splasher {
     //tries to return to nearest paint tower to refill
     public static void refill(RobotController rc) throws GameActionException {
         if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
-            if(rc.canTransferPaint(nearestPaintTower, rc.getPaint() - rc.getType().paintCapacity)){
-                rc.transferPaint(nearestPaintTower, rc.getPaint() - rc.getType().paintCapacity);
+            if(rc.canTransferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1))){
+                rc.transferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1));
             }
         }
         else {
@@ -316,7 +361,7 @@ public class Splasher {
             state = splasherStates.refill;
             return;
         }
-        if(state == splasherStates.refill && (rc.getPaint() > 150 || nearestPaintTower == null)) {
+        if(state == splasherStates.refill && (rc.getPaint() > 200 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
             return;

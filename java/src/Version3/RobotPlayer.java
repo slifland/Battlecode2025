@@ -52,10 +52,8 @@ public class RobotPlayer {
     public static void run(RobotController rc) throws GameActionException {
         // Hello world! Standard output is very useful for debugging.
         // Everything you say here will be directly viewable in your terminal when you run a match!
-        System.out.println("I'm alive");
 
         // You can also use indicators to save debug notes in replays.
-        rc.setIndicatorString("Hello world!");
 
 
         while (true) {
@@ -126,19 +124,16 @@ public class RobotPlayer {
         if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 2000) {
             if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                 rc.buildRobot(UnitType.SOLDIER, nextLoc);
-                System.out.println("BUILT A SOLDIER");
                 soldiers++;
                 totalBuilt++;
             }
             if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                 rc.buildRobot(UnitType.MOPPER, nextLoc);
-                System.out.println("BUILT A MOPPER");
                 soldiers = 0;
                 moppers++;
                 totalBuilt++;
             }if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                 rc.buildRobot(UnitType.SPLASHER, nextLoc);
-                System.out.println("BUILT A SPLASHER");
                 moppers = 0;
                 totalBuilt++;
             }

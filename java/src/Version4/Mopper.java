@@ -52,7 +52,6 @@ public class Mopper {
             for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
                 if((ally.getType() == UnitType.SOLDIER || ally.getType() == UnitType.SPLASHER) && ally.getPaintAmount() < 100 && rc.canTransferPaint(ally.getLocation(), rc.getPaint() - 50)) {
                     rc.transferPaint(ally.getLocation(), rc.getPaint() - 50);
-                    rc.setTimelineMarker("helped out!", 100, 100, 255);
                 }
             }
         }
@@ -273,7 +272,7 @@ public class Mopper {
         RobotInfo target = null;
         for(RobotInfo robot : adjacentEnemyRobots) {
             MapInfo loc = rc.senseMapInfo(robot.getLocation());
-            int score = (robot.getPaintAmount() == 0) ? -50 : robot.getType().paintCapacity - robot.getPaintAmount();
+            int score = (robot.getPaintAmount() == 0) ? 1 : robot.getType().paintCapacity - robot.getPaintAmount();
             //add a big bonus if we are also removing paint from the tile
             if(isEnemyTile(loc)) score += 50;
             if(score > highestScore) {
