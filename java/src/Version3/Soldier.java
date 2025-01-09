@@ -97,7 +97,7 @@ public class Soldier {
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
         int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
-        if (ranNum == 0 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
         else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){

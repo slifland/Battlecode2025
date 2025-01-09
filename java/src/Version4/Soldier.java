@@ -97,7 +97,7 @@ public class Soldier {
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
         int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
-        if (ranNum == 0 && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
         else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
@@ -145,14 +145,23 @@ public class Soldier {
     }
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
+        //attempt to paint under us to save paint in the long run
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
             if(rc.canAttack(rc.getLocation())) {
                 rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
+        //attempt to move towards the enemy if we are out of range, and the tile is not an enemy tile
         if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
             Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir)))) {
+                rc.move(dir);
+            }
+        }
+        //if we have good enough numbers, just move towards it anyway
+        if(allyRobots.length - enemyRobots.length > 3) {
+            Direction dir = BFS.moveTowards(rc, curObjective);
+            if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
         }
@@ -453,6 +462,10 @@ public class Soldier {
         // Search for a nearby ruin to complete.
         for (MapLocation tile : rc.senseNearbyRuins(-1)) {
             if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25){
+                if(rc.getMoney() < 1000 && rc.senseNearbyRobots(tile, 2, rc.getTeam()).length > 0) {
+                    if(state == states.ruin) state = states.explore;
+                    continue;
+                }
                 curObjective = tile;
                 state = states.ruin;
                 return;

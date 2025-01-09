@@ -206,8 +206,8 @@ public class Splasher {
     //tries to return to nearest paint tower to refill
     public static void refill(RobotController rc) throws GameActionException {
         if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
-            if(rc.canTransferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount))){
-                rc.transferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount));
+            if(rc.canTransferPaint(nearestPaintTower, rc.getPaint() - rc.getType().paintCapacity)){
+                rc.transferPaint(nearestPaintTower, rc.getPaint() - rc.getType().paintCapacity);
             }
         }
         else {

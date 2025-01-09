@@ -1,6 +1,7 @@
 package Version4;
 
 import battlecode.common.*;
+import battlecode.schema.RobotType;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,11 @@ public class Mopper {
     private static RobotInfo[] enemyRobots;
     private static RobotInfo[] adjacentEnemyRobots;
     private static RobotInfo[] allyRobots;
-    private static ArrayList<MapInfo> nearbyEnemyTiles;
+    private static MapInfo[] nearbyTiles;
+    private int[] paintMap; //going in order that tiles are detected, 1 indicates enemy, 0 empty, -1 ally
     private static MapLocation curObjective = null;
 
     public static void runMopper(RobotController rc) throws GameActionException {
-        if(RobotPlayer.turnCount == 1) nearbyEnemyTiles = new ArrayList<>();
         updateInfo(rc);
         updateState(rc);
         if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
@@ -44,8 +45,17 @@ public class Mopper {
                 explore(rc);
                 break;
         }
-        updateInfo(rc);
+        //updateInfo(rc);
         if(state != null) rc.setIndicatorString(state.toString());
+        //if we are stll action ready, and have paint, lets transfer it to low paint soldiers nearby
+        if(rc.isActionReady() && rc.getPaint() > 50 && rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
+            for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
+                if((ally.getType() == UnitType.SOLDIER || ally.getType() == UnitType.SPLASHER) && ally.getPaintAmount() < 100 && rc.canTransferPaint(ally.getLocation(), rc.getPaint() - 50)) {
+                    rc.transferPaint(ally.getLocation(), rc.getPaint() - 50);
+                    rc.setTimelineMarker("helped out!", 100, 100, 255);
+                }
+            }
+        }
     }
 
     //updates our knowledege of nearby things
@@ -53,12 +63,7 @@ public class Mopper {
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         adjacentEnemyRobots = rc.senseNearbyRobots(2, rc.getTeam().opponent());
-        nearbyEnemyTiles.clear();
-        for(MapInfo loc : rc.senseNearbyMapInfos(-1)) {
-            if(!loc.getPaint().isAlly() && !(loc.getPaint() == PaintType.EMPTY)) {
-                nearbyEnemyTiles.add(loc);
-            }
-        }
+        nearbyTiles = rc.senseNearbyMapInfos(13);
     }
 
     //determins what state the mopper should be in
@@ -68,9 +73,13 @@ public class Mopper {
             //should probably be stealing
             state = mopStates.steal;
         }
-        else if(!nearbyEnemyTiles.isEmpty()) {
-            //should probably be mopping
-            state = mopStates.mop;
+        else {
+            for(MapInfo loc : nearbyTiles) {
+                if(loc.getPaint().isEnemy()){
+                    state = mopStates.mop;
+                    return;
+                }
+            }
         }
     }
 
@@ -145,6 +154,13 @@ public class Mopper {
             //so we didnt swing our mop
             if(rc.isActionReady()) {
                 RobotInfo target = findBestTarget(rc);
+                if(target.getLocation().distanceSquaredTo(rc.getLocation()) > rc.getType().actionRadiusSquared) {
+                    Direction dir = BFS.moveTowards(rc, target.getLocation());
+                    MapLocation newLoc = rc.getLocation().add(dir);
+                    if(newLoc.distanceSquaredTo(target.getLocation()) <= rc.getType().actionRadiusSquared && dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && isSafeFromTower(rc, newLoc)) {
+                        rc.move(dir);
+                    }
+                }
                 if(rc.canAttack(target.getLocation())) {
                     rc.attack(target.getLocation());
                 }
@@ -169,22 +185,24 @@ public class Mopper {
         }
         //mop some shit up!
         if(rc.isActionReady()) {
-            MapInfo loc = nearbyEnemyTiles.getFirst();
-            for(MapInfo m : nearbyEnemyTiles) {
-                if(rc.canAttack(m.getMapLocation())) {
+            MapInfo loc = null;
+            for(MapInfo m : nearbyTiles) {
+                if(m.getPaint().isEnemy()) {
                     loc = m;
-                    rc.attack(m.getMapLocation());
-                    break;
+                     if(rc.canAttack(m.getMapLocation())) {
+                         rc.attack(m.getMapLocation());
+                         break;
+                     }
                 }
             }
-            Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
+            assert loc != null; Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
             if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
                 rc.move(dir);
             }
             //still havent mopped anything, try again
             if(rc.isActionReady()) {
-                for(MapInfo m : nearbyEnemyTiles) {
-                    if(rc.canAttack(m.getMapLocation())) {
+                for(MapInfo m : nearbyTiles) {
+                    if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
                         rc.attack(m.getMapLocation());
                         break;
                     }
@@ -255,7 +273,7 @@ public class Mopper {
         RobotInfo target = null;
         for(RobotInfo robot : adjacentEnemyRobots) {
             MapInfo loc = rc.senseMapInfo(robot.getLocation());
-            int score = robot.getType().paintCapacity - robot.getPaintAmount();
+            int score = (robot.getPaintAmount() == 0) ? -50 : robot.getType().paintCapacity - robot.getPaintAmount();
             //add a big bonus if we are also removing paint from the tile
             if(isEnemyTile(loc)) score += 50;
             if(score > highestScore) {
