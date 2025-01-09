@@ -73,6 +73,15 @@ public class Soldier {
                 rc.transferPaint(ally.getLocation(), -50);
             }
         }
+        if(Clock.getBytecodesLeft() > 6000) {
+            nearbyTiles = rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared);
+            for(MapInfo tile : nearbyTiles) {
+                if(rc.canCompleteResourcePattern(tile.getMapLocation())) {
+                    rc.completeResourcePattern(tile.getMapLocation());
+                    break;
+                }
+            }
+        }
     }
 
     //attempt to move to the random location we have been assigned, or choose a new random location

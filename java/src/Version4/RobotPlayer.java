@@ -83,6 +83,13 @@ public class RobotPlayer {
         }
     }
     public static void runTower(RobotController rc) throws GameActionException{
+        if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || rc.getType() == UnitType.LEVEL_THREE_PAINT_TOWER) {
+            if(rc.getMoney() > 4000 && rc.canUpgradeTower(rc.getLocation()))
+                rc.upgradeTower(rc.getLocation());
+        }
+        else if(rc.getMoney() > 5000 && rc.canUpgradeTower(rc.getLocation())) {
+            rc.upgradeTower(rc.getLocation());
+        }
         /* USE LATER...
         if (isDefenseTower()) runDefenseTower();
         if (isMoneyTower()) runMoneyTower();
@@ -103,11 +110,11 @@ public class RobotPlayer {
             }
             if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                 rc.buildRobot(UnitType.MOPPER, nextLoc);
-                soldiers = 0;
                 moppers++;
                 totalBuilt++;
             }if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                 rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                soldiers = 0;
                 moppers = 0;
                 totalBuilt++;
             }
