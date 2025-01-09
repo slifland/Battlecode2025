@@ -10,7 +10,7 @@ import static Version5.RobotPlayer.directions;
 import static Version5.RobotPlayer.rng;
 
 enum splasherStates {
-    contestedRuin, attack, refill, navigate, conquer
+    attack, refill, navigate, conquer, explore
 }
 
 public class Splasher {
@@ -39,17 +39,17 @@ public class Splasher {
         updateInfo(rc);
         updateState(rc);
         switch(state) {
-            case contestedRuin:
-                fightContestedRuin(rc);
-                break;
             case attack:
                 attack(rc);
                 break;
             case refill:
                 refill(rc);
                 break;
-            case navigate:
-                navigate(rc);
+//            case navigate:
+//                navigate(rc);
+//                break;
+            case explore:
+                explore(rc);
                 break;
             case conquer:
                 conquer(rc);
@@ -82,7 +82,7 @@ public class Splasher {
                     }
                 }
                 //otherwise, move closer, then attack
-                Direction dir = rc.getLocation().directionTo(curObjective);
+                Direction dir = rc.getLocation().directionTo(toAttack);
                 if (rc.canMove(dir)) {
                     rc.move(dir);
                 } else if (rc.canMove(dir.rotateLeft())) {
@@ -111,58 +111,17 @@ public class Splasher {
             }
         }
         else {
-            Direction dir = rc.getLocation().directionTo(curObjective);
-            MapLocation newLoc = rc.getLocation().add(dir);
-            MapInfo newLocInfo = rc.senseMapInfo(newLoc);
-            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() ||!isSafeFromTower(rc, rc.getLocation())) {
-                if(rc.canMove(dir.opposite())) {
-                    rc.move(dir.opposite());
-                }
-            }
-            else {
-                if(isSafeFromTower(rc, newLoc) && rc.canMove(dir) && !isEnemyTile(newLocInfo)) {
-                    rc.move(dir);
-                }
+            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() || !isSafeFromTower(rc, rc.getLocation())) {
+                findSafety(rc);
             }
         }
     }
 
-    //similar to attack but we dont need to check for being safe from towers, cause we know we are
-    public static void fightContestedRuin(RobotController rc) throws GameActionException {
-        if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, false, 0);
-            if(toAttack != null && rc.canAttack(toAttack)) {
-                rc.attack(toAttack);
-            }
-            //if we still havent moved, means we need to move closer to attack our target location
-            if(rc.isActionReady() && toAttack != null) {
-                //Direction dir = BFS.moveTowards(rc, toAttack);
-                Direction dir = rc.getLocation().directionTo(toAttack);
-                if(dir == null) return;
-                MapLocation newLoc = rc.getLocation().add(dir);
-                MapInfo newLocInfo = rc.senseMapInfo(newLoc);
-                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared) {
-                    rc.move(dir);
-                    if(rc.canAttack(toAttack)) {
-                        rc.attack(toAttack);
-                    }
-                }
-            }
-            if(toAttack == null) {
-                for(MapInfo tile : nearbyTiles) {
-                    if(tile.getPaint().isEnemy()) {
-                        if(rc.canMove(rc.getLocation().directionTo(tile.getMapLocation()))) {
-                            rc.move(rc.getLocation().directionTo(tile.getMapLocation()));
-                        }
-                    }
-                }
-            }
-        }
-        else if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
-            if(curObjective != null) {
-                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
-                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
-                }
+    //looks to retreat to safety by finding a square that isnt the enemies
+    public static void findSafety(RobotController rc) throws GameActionException {
+        for(MapInfo tile : nearbyTiles) {
+            if(rc.canMove(rc.getLocation().directionTo(tile.getMapLocation())) && !isEnemyTile(tile) && isSafeFromTower(rc, tile.getMapLocation())) {
+                rc.move(rc.getLocation().directionTo(tile.getMapLocation()));
             }
         }
     }
@@ -170,7 +129,7 @@ public class Splasher {
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
         if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, true, 0);
+            MapLocation toAttack = bestAttack(rc, true, 2);
             if(toAttack != null && rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
@@ -189,19 +148,59 @@ public class Splasher {
                 if(dir == null) return;
                 MapLocation newLoc = rc.getLocation().add(dir);
                 MapInfo newLocInfo = rc.senseMapInfo(newLoc);
-                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && isSafeFromTower(rc, newLoc)) {
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc)) {
                     rc.move(dir);
                     if(rc.canAttack(toAttack)) {
                         rc.attack(toAttack);
                     }
                 }
             }
-        }
-        else if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
-            if(curObjective != null) {
-                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
-                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
+            //to attack is null, lets see if we should maybe move closer to the tower and attack it
+            if(rc.isActionReady()) {
+                Direction dir = rc.getLocation().directionTo(curObjective);
+                MapLocation newLoc = rc.getLocation().add(dir);
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc)) {
+                    rc.move(dir);
+                    if(rc.canAttack(curObjective)) {
+                        rc.attack(curObjective);
+                    }
                 }
+            }
+        }
+        //if we cant attack, stay safe until we can
+        else if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
+//            if(curObjective != null) {
+//                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
+//                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
+//                }
+//            }
+            findSafety(rc);
+        }
+    }
+
+    //tries to go to the current objective
+    public static void explore(RobotController rc) throws GameActionException {
+        MapLocation toAttack = bestAttack(rc, false, 5);
+        if(toAttack != null && rc.canAttack(toAttack)) {
+            rc.attack(toAttack);
+        }
+        if(toAttack != null && rc.isActionReady()) {
+            //Direction dir = BFS.moveTowards(rc, toAttack);
+            Direction dir = rc.getLocation().directionTo(toAttack);
+            if(dir != null && rc.canMove(dir)) {
+                rc.move(dir);
+                if(toAttack != null && rc.canAttack(toAttack)) {
+                    rc.attack(toAttack);
+                }
+            }
+        }
+        if(rc.isMovementReady()) {
+            //Direction dir = BFS.moveTowards(rc, curObjective);
+            Direction dir = BFS.moveTowards(rc, curObjective);
+            if(rc.getPaint() < 50 && !rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly())
+                return;
+            if(dir != null && rc.canMove(dir)) {
+                rc.move(dir);
             }
         }
     }
@@ -209,10 +208,12 @@ public class Splasher {
     //returns the best location to attack based on how much impact the attack will have
     //returns null if the best attack has less than or equal impact to the minScore
     private static MapLocation bestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
+        //keeps track of total potential points, so we can short circuit and save bytecode if possible
+        int totalPoints = 0;
         int[] localSquares = new int[81];
         int[] potentialAttackSquares = new int[81];
         int index = 0;
-        for(MapInfo tile : rc.senseNearbyMapInfos(-1)) {
+        for(MapInfo tile : nearbyTiles) {
             while(index == 0 || index == 1 || index == 7 || index == 8 || index == 17 || index == 9 || index == 63 || index == 71 || index == 72 || index == 73 || index ==79 || index == 80) {
                 localSquares[index] = 0;
                 index++;
@@ -230,11 +231,21 @@ public class Splasher {
                 paint = PaintType.ALLY_PRIMARY;
             }
             //favor the enemy most, but also like empty squares
-            if(paint == PaintType.EMPTY) localSquares[index]++;
-            else if(paint.isAlly()) localSquares[index] = 0;
-            else localSquares[index]+= 2;
+            if(paint == PaintType.EMPTY) {
+                localSquares[index]++;
+                totalPoints++;
+            }
+            else if(paint.isAlly()){
+                localSquares[index] = 0;
+            }
+            else {
+                localSquares[index]+= 2;
+                totalPoints+= 2;
+            }
+
             index++;
         }
+        if(totalPoints <= minScore) {return null;}
         for(int i = 20; i <= 24; i++) {
             for(int j = 10; j >= 8; j--) {
                 potentialAttackSquares[i] += localSquares[i+j];
@@ -383,7 +394,6 @@ public class Splasher {
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos();
-
         for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType())
@@ -398,6 +408,7 @@ public class Splasher {
         if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
             nearestPaintTower = null;
         }
+        /*
         if(nearestRuin != null && rc.canSenseLocation(nearestRuin) && (rc.senseRobotAtLocation(nearestRuin) != null || rc.getNumberTowers() >= 25)) {
             if(nearestRuin.equals(curObjective)) curObjective = null;
             nearestRuin = null;
@@ -432,6 +443,8 @@ public class Splasher {
                 }
             }
         }
+
+         */
     }
 
     //update our current state
@@ -439,6 +452,11 @@ public class Splasher {
         if(rc.getPaint() < 60 && nearestPaintTower != null) {
             if(prevState == null) prevState = state;
             state = splasherStates.refill;
+            return;
+        }
+        else if(rc.getPaint() < 60 && nearestPaintTower == null) {
+            state = splasherStates.explore;
+            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             return;
         }
         if(state == splasherStates.refill && (rc.getPaint() > 200 || nearestPaintTower == null)) {
@@ -450,17 +468,17 @@ public class Splasher {
         //check all nearby ruins
         for(MapLocation loc : rc.senseNearbyRuins(-1)) {
             //see if contested, aka if there is any enemy tiles we need to change
-            if(rc.senseRobotAtLocation(loc) == null) {
-                for(MapInfo tile : rc.senseNearbyMapInfos(loc, 13)) {
-                    if(isEnemyTile(tile)) {
-                        state = splasherStates.contestedRuin;
-                        curObjective = loc;
-                        return;
-                    }
-                }
-            }
+//            if(rc.senseRobotAtLocation(loc) == null) {
+//                for(MapInfo tile : rc.senseNearbyMapInfos(loc, 13)) {
+//                    if(isEnemyTile(tile)) {
+//                        state = splasherStates.contestedRuin;
+//                        curObjective = loc;
+//                        return;
+//                    }
+//                }
+//            }
             //otherwise, make sure it is an enemy tower
-            else if(rc.senseRobotAtLocation(loc).team != rc.getTeam()) {
+            if(rc.senseRobotAtLocation(loc) != null && rc.senseRobotAtLocation(loc).team != rc.getTeam()) {
                 curObjective = loc;
                 state = splasherStates.attack;
                 return;
@@ -473,10 +491,14 @@ public class Splasher {
                 return;
             }
         }
-        if(state != splasherStates.navigate || (curObjective == null || (!rc.canSenseLocation(curObjective) && state == splasherStates.navigate)))
-        {
-            state = splasherStates.navigate;
+        state = splasherStates.explore;
+        if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) {
+            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
+//        if(state != splasherStates.navigate || (curObjective == null || (!rc.canSenseLocation(curObjective) && state == splasherStates.navigate)))
+//        {
+//            state = splasherStates.navigate;
+//        }
     }
     //returns whether a location is controlled by the enemy
     public static boolean isEnemyTile(MapInfo loc) {

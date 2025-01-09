@@ -181,65 +181,96 @@ public class Mopper {
     //goal is to clean up some enemy paint
     public static void mop(RobotController rc) throws GameActionException {
         //if the mopper can see a ruin, we should probably stay near it and try to mop it up.. ends up more helpful for our team
-        for (MapLocation tile : rc.senseNearbyRuins(-1)) {
-            if (rc.canSenseLocation(tile) && rc.senseRobotAtLocation(tile) == null){
-                if(rc.getLocation().distanceSquaredTo(tile) > 9) {
-                    Direction dir = BFS.moveTowards(rc, tile);
-                    if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, tile)) {
-                        rc.move(dir);
-                        break;
-                    }
-                }
-                //try and do our normal turn, but dont leave a certain radius of the ruins
-                if(rc.isActionReady()) {
-                    MapInfo loc = null;
-                    for(MapInfo m : nearbyTiles) {
-                        if(m.getPaint().isEnemy()) {
-                            loc = m;
-                            if(rc.canAttack(m.getMapLocation())) {
-                                rc.attack(m.getMapLocation());
-                                break;
-                            }
-                        }
-                    }
-                    if(rc.isMovementReady()) {
-                        assert loc != null;
-                        Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
-                        if(dir != null) {
-                            MapLocation newLoc = rc.getLocation().add(dir);
-                            if (newLoc.isWithinDistanceSquared(tile, 9) && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && isSafeFromTower(rc, newLoc)) {
-                                rc.move(dir);
-                            }
-                        }
-                    }
-                    //still havent mopped anything, try again
-                    if(rc.isActionReady()) {
-                        for(MapInfo m : nearbyTiles) {
-                            if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
-                                rc.attack(m.getMapLocation());
-                                break;
-                            }
-                        }
-                    }
-                }
-                return;
-            }
-        }
+        //for (MapLocation tile : rc.senseNearbyRuins(-1)) {
+//            if (rc.canSenseLocation(tile) && rc.senseRobotAtLocation(tile) == null){
+//                if(rc.getLocation().distanceSquaredTo(tile) > 9) {
+//                    Direction dir = BFS.moveTowards(rc, tile);
+//                    if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, tile)) {
+//                        rc.move(dir);
+//                        break;
+//                    }
+//                }
+//                int minDistance = Integer.MAX_VALUE;
+//                //try and do our normal turn, but dont leave a certain radius of the ruins
+//                if(rc.isActionReady()) {
+//                    MapInfo loc = null;
+//                    for(MapInfo m : nearbyTiles) {
+//                        if(m.getPaint().isEnemy()) {
+//                            int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
+//                            if(dist < minDistance) {
+//                                minDistance = dist;
+//                                loc = m;
+//                            }
+//                            if(rc.canAttack(m.getMapLocation())) {
+//                                rc.attack(m.getMapLocation());
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    if(rc.isMovementReady()) {
+//                        assert loc != null;
+//                        Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
+//                        if(dir != null) {
+//                            MapLocation newLoc = rc.getLocation().add(dir);
+//                            if (newLoc.isWithinDistanceSquared(tile, 9) && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && isSafeFromTower(rc, newLoc)) {
+//                                rc.move(dir);
+//                            }
+//                        }
+//                    }
+//                    //still havent mopped anything, try again
+//                    if(rc.isActionReady()) {
+//                        for(MapInfo m : nearbyTiles) {
+//                            if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
+//                                rc.attack(m.getMapLocation());
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                return;
+//            }
+//        }
         //this is the turn if we dont see any unoccupied ruins
         //mop some shit up!
         if(rc.isActionReady()) {
             MapInfo loc = null;
+            boolean hasMark = false;
+            int minDist = Integer.MAX_VALUE;
             for(MapInfo m : nearbyTiles) {
                 if(m.getPaint().isEnemy()) {
-                    loc = m;
-                     if(rc.canAttack(m.getMapLocation())) {
-                         rc.attack(m.getMapLocation());
-                         break;
-                     }
+                    int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
+                    if(!hasMark && !m.getMark().isAlly()) {
+                        if(dist < minDist) {
+                            minDist = dist;
+                            loc = m;
+                        }
+                    }
+                    else if(!hasMark && m.getMark().isAlly()) {
+                        hasMark = true;
+                        minDist = dist;
+                        loc = m;
+                    }
+                    else {
+                        if(m.getMark().isAlly()) {
+                            if(dist < minDist){
+                                minDist = dist;
+                                loc = m;
+                            }
+                        }
+                    }
+
+                    if(!hasMark && m.getMark().isAlly()) {
+                        hasMark = true;
+                        minDist = dist;
+                        loc = m;
+                    }
                 }
             }
+            assert loc != null;
+            if(rc.canAttack(loc.getMapLocation())) {
+                rc.attack(loc.getMapLocation());
+            }
             if(rc.isMovementReady()) {
-                assert loc != null;
                 Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
                 if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
                     rc.move(dir);
@@ -282,24 +313,24 @@ public class Mopper {
                     nearestEnemyTower = r.location;
                 }
             }
-            else if(r.status == 0)
-            {
-                if(nearestRuin == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestRuin))
-                {
-                    nearestRuin = r.location;
-                }
-            }
+//            else if(r.status == 0)
+//            {
+//                if(nearestRuin == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestRuin))
+//                {
+//                    nearestRuin = r.location;
+//                }
+//            }
         }
         if(nearestEnemyTower != null)
         {
             curObjective = nearestEnemyTower;
             //System.out.println("Splasher moving towards: nearestEnemyTower " + curObjective);
         }
-        else if(nearestRuin != null && !rc.canSenseLocation(nearestRuin))
-        {
-            curObjective = nearestRuin;
-            //System.out.println("Splasher moving towards: nearestRuin" + curObjective);
-        }
+//        else if(nearestRuin != null && !rc.canSenseLocation(nearestRuin))
+//        {
+//            curObjective = nearestRuin;
+//            //System.out.println("Splasher moving towards: nearestRuin" + curObjective);
+//        }
         else
         {
             explore(rc);

@@ -171,31 +171,30 @@ public class Soldier {
                 rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             }
         }
+        if(rc.canAttack(curObjective)) rc.attack(curObjective);
         //attempt to move towards the enemy if we are out of range, and the tile is not an enemy tile
         if(rc.getLocation().distanceSquaredTo(curObjective) > rc.getType().actionRadiusSquared) {
             Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null) {
                 MapLocation newLoc = rc.getLocation().add(dir);
-                if (rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && (isSafeFromTower(rc, newLoc) || rc.getHealth() > 75)) {
+                if (rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && (isSafeFromTower(rc, newLoc) || rc.getHealth() > 200)) {
                     rc.move(dir);
                 }
             }
         }
         //if we have good enough numbers, just move towards it anyway
-        if(allyRobots.length - enemyRobots.length > 3) {
+        if(rc.isMovementReady() && allyRobots.length - enemyRobots.length > 3 && !rc.getLocation().isAdjacentTo(curObjective)) {
             Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
         }
+
         //if we are low on health and in tower range and dont have the numbers, back up
-        else if(rc.getHealth() <= 75 && rc.getLocation().distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared) {
-            if(rc.canAttack(curObjective)) rc.attack(curObjective);
+        else if(rc.isMovementReady() && rc.getHealth() <= 100 && rc.getLocation().distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared) {
             Direction dir = rc.getLocation().directionTo(curObjective).opposite();
+            if(rc.canAttack(curObjective)) rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
             if(rc.canMove(dir)) rc.move(dir);
-        }
-        if(rc.canAttack(curObjective)) {
-            rc.attack(curObjective, Utilities.getColorFromOriginPattern(curObjective, rc.getResourcePattern()));
         }
 
         if(rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) == null) {

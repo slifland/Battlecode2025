@@ -87,7 +87,7 @@ public class RobotPlayer {
             if(rc.getMoney() > 4000 && rc.canUpgradeTower(rc.getLocation()))
                 rc.upgradeTower(rc.getLocation());
         }
-        else if(rc.getMoney() > 5000 && rc.canUpgradeTower(rc.getLocation())) {
+        else if(rc.getMoney() > 4500 && rc.canUpgradeTower(rc.getLocation())) {
             rc.upgradeTower(rc.getLocation());
         }
         /* USE LATER...
@@ -98,25 +98,35 @@ public class RobotPlayer {
         // Pick a direction to build in.
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
-        int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
-        int mopperRatio = 2;
-
-        if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
-            if(rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
-            if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
-                rc.buildRobot(UnitType.SOLDIER, nextLoc);
-                soldiers++;
+        int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 3 : 2;
+        int mopperRatio = 1;
+        //if you arent our first tower, always build a splasher first
+        if(totalBuilt == 0 && rc.getNumberTowers() > 2 && rc.getMapHeight() < 35 && rc.getMapWidth() < 35) {
+            if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
+                rc.buildRobot(UnitType.SPLASHER, nextLoc);
                 totalBuilt++;
             }
-            if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
-                rc.buildRobot(UnitType.MOPPER, nextLoc);
-                moppers++;
-                totalBuilt++;
-            }if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
-                rc.buildRobot(UnitType.SPLASHER, nextLoc);
-                soldiers = 0;
-                moppers = 0;
-                totalBuilt++;
+        }
+        else {
+            if (totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
+                if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
+
+                if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
+                    rc.buildRobot(UnitType.SOLDIER, nextLoc);
+                    soldiers++;
+                    totalBuilt++;
+                }
+                if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
+                    rc.buildRobot(UnitType.MOPPER, nextLoc);
+                    moppers++;
+                    totalBuilt++;
+                }
+                if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
+                    rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                    soldiers = 0;
+                    moppers = 0;
+                    totalBuilt++;
+                }
             }
         }
        // }
