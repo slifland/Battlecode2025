@@ -2,13 +2,15 @@ package Version3;
 
 import battlecode.common.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static Version3.RobotPlayer.directions;
 import static Version3.RobotPlayer.rng;
 
 enum splasherStates {
-    contestedRuin, attack, refill, placeholder
+    contestedRuin, attack, refill, navigate
 }
 
 public class Splasher {
@@ -22,6 +24,11 @@ public class Splasher {
     private static boolean clockwise;
     //used for refilling
     private static MapLocation nearestPaintTower = null;
+    //used for navigating
+    private static MapLocation nearestEnemyTower = null;
+    private static MapLocation closestUnvisitedAlliedTower = null;
+    private static final HashSet<MapLocation> visitedAlliedTowers = new HashSet<MapLocation>();
+    private static MapLocation nearestRuin = null;
 
     //information updated each turn
     private static RobotInfo[] enemyRobots;
@@ -40,6 +47,9 @@ public class Splasher {
                 break;
             case refill:
                 refill(rc);
+                break;
+            case navigate:
+                navigate(rc);
                 break;
             default:
                 break;
@@ -208,6 +218,43 @@ public class Splasher {
         }
     }
 
+    /*
+        moves towards the closest enemy tower if known
+        If there is no known enemy towers, moves towards the closest known, unvisited, allied tower.
+        If there is no known unvisited allied tower, moves towards the nearest known ruin
+        Else
+            move towards a random location
+            (If it gets here multiple rounds in a row, it will move towards the same location each round)
+     */
+    public static void navigate(RobotController rc) throws GameActionException
+    {
+        if(nearestEnemyTower != null)
+        {
+            curObjective = nearestEnemyTower;
+            //System.out.println("Splasher moving towards: nearestEnemyTower " + curObjective);
+        }
+        else if(closestUnvisitedAlliedTower != null)
+        {
+            curObjective = closestUnvisitedAlliedTower;
+            //System.out.println("Splasher moving towards: closestUnvisitedAlliedTower" + curObjective);
+        }
+        else if(nearestRuin != null)
+        {
+            curObjective = nearestRuin;
+            //System.out.println("Splasher moving towards: nearestRuin" + curObjective);
+        }
+        else
+        {
+            //System.out.println("Splasher moving towards: random" + curObjective);
+        }
+
+        Direction dir = BFS.moveTowards(rc, curObjective);
+        if(dir != null && rc.canMove(dir))
+        {
+            rc.move(dir);
+        }
+    }
+
 
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
@@ -215,13 +262,50 @@ public class Splasher {
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos();
 
-        for(RobotInfo robot : allyRobots) {
-            if(robot.getType() == UnitType.LEVEL_ONE_PAINT_TOWER  || robot.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || robot.getType() == UnitType.LEVEL_THREE_PAINT_TOWER && robot.getTeam() == rc.getTeam()) {
-                nearestPaintTower = robot.getLocation();
+        for(RobotInfo robot : allyRobots)
+        {
+            if(robot.getType().isTowerType())
+            {
+                visitedAlliedTowers.add(robot.getLocation());
+                if(robot.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || robot.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || robot.getType() == UnitType.LEVEL_THREE_PAINT_TOWER && robot.getTeam() == rc.getTeam())
+                {
+                    nearestPaintTower = robot.getLocation();
+                }
             }
         }
         if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
             nearestPaintTower = null;
+        }
+
+        for(Ruin r : Communication.ruinsMemory)
+        {
+            if(visitedAlliedTowers.contains(r.location) && r.status != 1) //if an allied tower has died, remove it from the list of visitedAlliedTowers
+            {
+                visitedAlliedTowers.remove(r.location);
+            }
+
+            if(r.status == 2)
+            {
+                if(nearestEnemyTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestEnemyTower))
+                {
+                    nearestEnemyTower = r.location;
+                }
+            }
+            else if(r.status == 1)
+            {
+                if(     !visitedAlliedTowers.contains(r.location)
+                     && (closestUnvisitedAlliedTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(closestUnvisitedAlliedTower)))
+                {
+                    closestUnvisitedAlliedTower = r.location;
+                }
+            }
+            else if(r.status == 0)
+            {
+                if(nearestRuin == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestRuin))
+                {
+                    nearestRuin = r.location;
+                }
+            }
         }
     }
 
@@ -257,7 +341,12 @@ public class Splasher {
                 return;
             }
         }
-        state = splasherStates.attack;
+
+        if(state != splasherStates.navigate || rc.canSenseLocation(curObjective))
+        {
+            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+            state = splasherStates.navigate;
+        }
     }
     //returns whether a location is controlled by the enemy
     public static boolean isEnemyTile(MapInfo loc) {

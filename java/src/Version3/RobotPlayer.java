@@ -18,7 +18,7 @@ public class RobotPlayer {
      */
     static int turnCount = 0;
     static int soldiers = 0;
-    static int splashers = 0;
+    static int moppers = 0;
     static int totalBuilt = 0;
 
     /**
@@ -121,14 +121,8 @@ public class RobotPlayer {
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
         int soldierRatio = (rc.getNumberTowers() < 25) ? 4 : 2;
-        // Pick a random robot type to build.
-//        if(rc.getRoundNum() > 150 && splashers == 0) {
-//            if(rc.canBuildRobot(UnitType.SPLASHER, nextLoc)){
-//                rc.buildRobot(UnitType.SPLASHER, nextLoc);
-//                splashers++;
-//            }
-//        }
-       // else {
+        int mopperRatio = 2;
+
         if(totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 2000) {
             if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                 rc.buildRobot(UnitType.SOLDIER, nextLoc);
@@ -136,10 +130,16 @@ public class RobotPlayer {
                 soldiers++;
                 totalBuilt++;
             }
-            if (rc.canBuildRobot(UnitType.MOPPER, nextLoc)) {
+            if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                 rc.buildRobot(UnitType.MOPPER, nextLoc);
                 System.out.println("BUILT A MOPPER");
                 soldiers = 0;
+                moppers++;
+                totalBuilt++;
+            }if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
+                rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                System.out.println("BUILT A SPLASHER");
+                moppers = 0;
                 totalBuilt++;
             }
         }
