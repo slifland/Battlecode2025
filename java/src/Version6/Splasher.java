@@ -180,7 +180,7 @@ public class Splasher {
 
     //tries to go to the current objective
     public static void explore(RobotController rc) throws GameActionException {
-        MapLocation toAttack = bestAttack(rc, false, 5);
+        MapLocation toAttack = bestAttack(rc, false, 6);
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }

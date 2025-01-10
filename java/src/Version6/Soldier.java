@@ -2,10 +2,12 @@ package Version6;
 
 import battlecode.common.*;
 
+import java.util.Map;
+
 import static Version6.RobotPlayer.rng;
 
 enum states {
-    ruin, explore, attack, refill, wallHug
+    ruin, explore, attack, refill, wallHug, fill
 }
 
 public class Soldier {
@@ -16,6 +18,8 @@ public class Soldier {
     //state tracker - prevState used for when refilling
     private static states state;
     private static states prevState;
+    private static MapLocation averageEmpty;
+    private static int countEmpty;
     //used for hugging the wall
     private static int edge = 0; //0 = not on edge, 1 = top, 2 = right, 3 = bottom, 4 = left
     private static boolean clockwise;
@@ -46,6 +50,9 @@ public class Soldier {
             case wallHug:
                 wallHug(rc);
                 break;
+            case fill:
+                fill(rc);
+                break;
             default:
                 break;
         }
@@ -53,27 +60,29 @@ public class Soldier {
         else if(state != null) rc.setIndicatorString(state.toString());
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
-        MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
-        if ((!currentTile.getPaint().isAlly() || (currentTileIsSecondary != currentTile.getPaint().isSecondary() && currentTile.getMark().isSecondary() == currentTileIsSecondary))
-                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 10){
-            rc.attack(rc.getLocation(), currentTileIsSecondary);
-        }
-        //otherwise, if we have a lot of paint, just paint something
-        else if (rc.getPaint() > 100) {
-            for(MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)){
-                if(loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()){
-                    rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
+        if(rc.isActionReady()) {
+            MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
+            boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
+            if ((!currentTile.getPaint().isAlly() || (currentTileIsSecondary != currentTile.getPaint().isSecondary() && currentTile.getMark() == PaintType.EMPTY))
+                    && rc.canAttack(rc.getLocation()) && rc.getPaint() > 10) {
+                rc.attack(rc.getLocation(), currentTileIsSecondary);
+            }
+            //otherwise, if we have a lot of paint, just paint something
+            else if (rc.getPaint() > 100) {
+                for (MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
+                    if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()) {
+                        rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
+                    }
+                }
+            }
+            //lets try and transfer some paint, if we can
+            for (RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
+                if (ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
+                    rc.transferPaint(ally.getLocation(), -50);
                 }
             }
         }
-        //lets try and transfer some paint, if we can
-        for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
-            if(ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
-                rc.transferPaint(ally.getLocation(), -50);
-            }
-        }
-        if(Clock.getBytecodesLeft() > 6000) {
+        if(Clock.getBytecodesLeft() > 4000) {
             nearbyTiles = rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared);
             for(MapInfo tile : nearbyTiles) {
                 if(rc.canCompleteResourcePattern(tile.getMapLocation())) {
@@ -86,7 +95,8 @@ public class Soldier {
 
     //attempt to move to the random location we have been assigned, or choose a new random location
     public static void explore(RobotController rc) throws GameActionException {
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        //Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = BFS_FullVision.pathfind(rc, curObjective);
         if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
@@ -95,12 +105,13 @@ public class Soldier {
     //attempts to fill the ruin we can see
     public static void fillRuin(RobotController rc) throws GameActionException {
         MapLocation targetLoc = curObjective;
-        Direction dir = BFS.moveTowards(rc, targetLoc);
         if(rc.getLocation().distanceSquaredTo(curObjective) > 2) {
+            Direction dir = (rc.getLocation().distanceSquaredTo(curObjective) > GameConstants.VISION_RADIUS_SQUARED) ? BFS_FullVision.pathfind(rc, targetLoc) : BFS_7x7.pathfind(rc, targetLoc);
             if (dir != null && rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_PRIMARY && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_SECONDARY)
                 rc.move(dir);
         }
-        dir = rc.getLocation().directionTo(curObjective);
+        //if(rc.getLocation().distanceSquaredTo(curObjective) > GameConstants.VISION_RADIUS_SQUARED) return;
+        Direction dir = rc.getLocation().directionTo(curObjective);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
         int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
@@ -163,6 +174,45 @@ public class Soldier {
             }
         }
     }
+    //attempt to fill the empty space around us, prioritizing spaces that might complete resource patterns
+    public static void fill(RobotController rc) throws GameActionException {
+        Direction dir = BFS_7x7.pathfind(rc, averageEmpty);
+        if(dir != null && rc.canMove(dir)) {
+            rc.move(dir);
+        }
+        if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.canAttack(rc.getLocation())) {
+            rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+            if(rc.canCompleteResourcePattern(rc.getLocation())) {
+                rc.completeResourcePattern(rc.getLocation());
+            }
+        }
+        else {
+            //if we have a lot of bytecode left, then try and find a space adjacent to us - otherwise, just fill in any space we can
+            if(Clock.getBytecodesLeft() > 5000) {
+                for(MapInfo tile : rc.senseNearbyMapInfos(2)) {
+                    if (tile.getPaint() == PaintType.EMPTY && rc.canAttack(tile.getMapLocation())) {
+                        rc.attack(tile.getMapLocation(), Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern()));
+                        if(rc.canCompleteResourcePattern(rc.getLocation())) {
+                            rc.completeResourcePattern(rc.getLocation());
+                        }
+                        break;
+                    }
+                }
+            }
+            if(rc.isActionReady()) {
+                for(MapInfo tile : nearbyTiles) {
+                    if(tile.getPaint() == PaintType.EMPTY && rc.canAttack(tile.getMapLocation())) {
+                        rc.attack(tile.getMapLocation(), Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern()));
+                        if(rc.canCompleteResourcePattern(rc.getLocation())) {
+                            rc.completeResourcePattern(rc.getLocation());
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
         //attempt to paint under us to save paint in the long run
@@ -211,7 +261,8 @@ public class Soldier {
             }
         }
         else {
-            Direction dir = BFS.moveTowards(rc, nearestPaintTower);
+            //Direction dir = BFS.moveTowards(rc, nearestPaintTower);
+            Direction dir = BFS_FullVision.pathfind(rc, nearestPaintTower);
             if (dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
@@ -465,7 +516,13 @@ public class Soldier {
 
     //update our info, changing our state as necessary
     public static void updateState(RobotController rc) throws GameActionException {
+        if(state != states.refill && state != states.fill && prevState != null) prevState = null;
         if(rc.getPaint() < 20 && nearestPaintTower != null) {
+            if(state == states.fill) {
+                prevState = null;
+                state = states.explore;
+                curObjective = averageEmpty;
+            }
             if(prevState == null) prevState = state;
             state = states.refill;
             return;
@@ -516,6 +573,28 @@ public class Soldier {
                 curObjective = enemy.getLocation();
                 state = states.attack;
                 return;
+            }
+        }
+        countEmpty = 0;
+        int x = 0;
+        int y = 0;
+        if(state == states.explore || state == states.wallHug || state == states.fill) {
+            for(MapInfo tile : nearbyTiles) {
+                if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {
+                    countEmpty++;
+                    x += tile.getMapLocation().x;
+                    y += tile.getMapLocation().y;
+                }
+            }
+            averageEmpty = (countEmpty != 0) ? new MapLocation(x/countEmpty, y/countEmpty) : null;
+            if(countEmpty > 6 || state == states.fill && countEmpty >= 1){
+                if(prevState == null) prevState = state;
+                state = states.fill;
+                return;
+            }
+            else if(state == states.fill) {
+                state = prevState;
+                prevState = null;
             }
         }
         if(state == states.explore && rc.getLocation().distanceSquaredTo(curObjective) < 16) {
