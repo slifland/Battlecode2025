@@ -17,6 +17,8 @@ public class Splasher {
     //keeps track of the soldiers current objective - starts as going to a random place on map, can change
     private static MapLocation curObjective = null;
 
+    //private static boolean emptyTiles = false;
+    private static int maxScore = 0; //used to cheaply calculate whether its worth it to run best Attack
     //state tracker - prevState used for when refilling
     private static splasherStates state;
     private static splasherStates prevState;
@@ -72,7 +74,7 @@ public class Splasher {
     //attempts to take over the enemy territory we can see, using its awesome splashing power
     private static void conquer(RobotController rc) throws GameActionException {
         if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, false, 1);
+            MapLocation toAttack = bestAttack(rc, false, 2);
             //lets try and attack that position
             if (toAttack != null) {
                 //if we are close enough, just attack
@@ -180,7 +182,8 @@ public class Splasher {
 
     //tries to go to the current objective
     public static void explore(RobotController rc) throws GameActionException {
-        MapLocation toAttack = bestAttack(rc, false, 6);
+        //if there cant even conceivably be a place with that many empty tiles, then dont bother running that expensive method
+        MapLocation toAttack = (maxScore > 6) ? bestAttack(rc, false, 7) : null;
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }
@@ -195,17 +198,24 @@ public class Splasher {
             }
         }
         if(rc.isMovementReady()) {
-            //Direction dir = BFS.moveTowards(rc, curObjective);
-            //Direction dir = BFS.moveTowards(rc, curObjective);
-            Direction dir = rc.getLocation().directionTo(curObjective);
-            if(rc.getPaint() < 50 && !rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly())
-                return;
-            if(rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
-                rc.move(dir);
-            } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft()))) {
-                rc.move(dir.rotateLeft());
-            } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight()))) {
-                rc.move(dir.rotateRight());
+            //if we didnt run best attack, we have plenty of bytecodes to use pathfinding
+            if(maxScore <= 6) {
+                Direction dir = BFS_7x7.pathfind(rc, curObjective);
+                if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+                    rc.move(dir);
+                }
+            }
+            else {
+                Direction dir = rc.getLocation().directionTo(curObjective);
+                if(rc.getPaint() < 50 && !rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly())
+                    return;
+                if(rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+                    rc.move(dir);
+                } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft()))) {
+                    rc.move(dir.rotateLeft());
+                } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight()))) {
+                    rc.move(dir.rotateRight());
+                }
             }
         }
     }
@@ -330,7 +340,7 @@ public class Splasher {
                 highest = potentialAttackSquares[i];
             }
         }
-        if(highest <= minScore) return null;
+        if(highest < minScore) return null;
         int offSetX, offSetY;
         if(highestIndex <= 24) offSetX = -2;
         else if(highestIndex <= 33) offSetX = -1;
@@ -397,9 +407,24 @@ public class Splasher {
 
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
+        maxScore = 0;
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos();
+        //calculate the max score for a splasher attack to save bytecodes later
+        for(MapInfo tile : nearbyTiles) {
+            if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {
+                maxScore += 1;
+            }
+            else if(tile.getPaint().isEnemy() || (tile.hasRuin())) {
+                if(tile.hasRuin() && rc.senseRobotAtLocation(tile.getMapLocation()) != null && rc.senseRobotAtLocation(tile.getMapLocation()).team != rc.getTeam()) {
+                    maxScore += 2;
+                } else if (!tile.hasRuin()) {
+                    maxScore += 2;
+                }
+            }
+            if(maxScore > 6) break;
+        }
         for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType())
@@ -472,41 +497,36 @@ public class Splasher {
         }
         else if(state == splasherStates.refill) return;
         //check all nearby ruins
-        for(MapLocation loc : rc.senseNearbyRuins(-1)) {
-            //see if contested, aka if there is any enemy tiles we need to change
-//            if(rc.senseRobotAtLocation(loc) == null) {
-//                for(MapInfo tile : rc.senseNearbyMapInfos(loc, 13)) {
-//                    if(isEnemyTile(tile)) {
-//                        state = splasherStates.contestedRuin;
-//                        curObjective = loc;
-//                        return;
-//                    }
-//                }
-//            }
-            //otherwise, make sure it is an enemy tower
-            if(rc.senseRobotAtLocation(loc) != null && rc.senseRobotAtLocation(loc).team != rc.getTeam()) {
-                curObjective = loc;
-                state = splasherStates.attack;
-                return;
-            }
-        }
-        MapInfo bestTile = null;
-        for(MapInfo info : nearbyTiles) {
-            if(info.getPaint().isEnemy()) {
-                if(bestTile == null) bestTile = info;
-                else {
-                    if(farFromEdgeNonMovement(rc, info.getMapLocation()) && !farFromEdgeNonMovement(rc, bestTile.getMapLocation())) {
-                        bestTile = info;
-                    }
+        if(maxScore > 0) {
+            for (MapLocation loc : rc.senseNearbyRuins(-1)) {
+                //make sure it is an enemy tower
+                if (rc.senseRobotAtLocation(loc) != null && rc.senseRobotAtLocation(loc).team != rc.getTeam()) {
+                    curObjective = loc;
+                    state = splasherStates.attack;
+                    return;
                 }
             }
         }
-        if(bestTile != null) {
-            state = splasherStates.conquer;
-            curObjective = bestTile.getMapLocation();
-            return;
+        if(maxScore > 1) {
+            MapInfo bestTile = null;
+            for (MapInfo info : nearbyTiles) {
+                if (info.getPaint().isEnemy()) {
+                    if (bestTile == null) bestTile = info;
+                    else {
+                        if (farFromEdgeNonMovement(rc, info.getMapLocation()) && !farFromEdgeNonMovement(rc, bestTile.getMapLocation())) {
+                            bestTile = info;
+                        }
+                    }
+                }
+            }
+            if (bestTile != null) {
+                state = splasherStates.conquer;
+                curObjective = bestTile.getMapLocation();
+                return;
+            }
         }
         state = splasherStates.explore;
+
         if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }

@@ -96,7 +96,7 @@ public class Soldier {
     //attempt to move to the random location we have been assigned, or choose a new random location
     public static void explore(RobotController rc) throws GameActionException {
         //Direction dir = BFS.moveTowards(rc, curObjective);
-        Direction dir = BFS_FullVision.pathfind(rc, curObjective);
+        Direction dir = BFS_7x7.pathfind(rc, curObjective);
         if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
@@ -263,6 +263,7 @@ public class Soldier {
         else {
             //Direction dir = BFS.moveTowards(rc, nearestPaintTower);
             Direction dir = BFS_FullVision.pathfind(rc, nearestPaintTower);
+            System.out.println(Clock.getBytecodesLeft());
             if (dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
@@ -530,7 +531,6 @@ public class Soldier {
         if(state == states.refill && (rc.getPaint() > 75 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
-            return;
         }
         else if(state == states.refill) return;
         if(curObjective == null) {
