@@ -101,7 +101,7 @@ public class RobotPlayer {
         int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 3 : 2;
         int mopperRatio = 1;
         //if you arent our first tower, always build a splasher first
-        if(totalBuilt == 0 && rc.getNumberTowers() > 2 && rc.getMapHeight() < 35 && rc.getMapWidth() < 35) {
+        if(totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() < 50 || rc.getMapWidth() < 50)) {
             if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                 rc.buildRobot(UnitType.SPLASHER, nextLoc);
                 totalBuilt++;

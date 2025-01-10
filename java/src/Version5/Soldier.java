@@ -502,6 +502,10 @@ public class Soldier {
                 }
             }
         }
+        if(state == states.ruin && rc.getLocation().isAdjacentTo(curObjective)) {
+            if (rc.getMoney() < 1000 && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
+                state = states.explore;
+        }
         if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {
             state = states.explore;
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
