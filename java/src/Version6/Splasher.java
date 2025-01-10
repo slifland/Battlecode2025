@@ -72,7 +72,7 @@ public class Splasher {
     //attempts to take over the enemy territory we can see, using its awesome splashing power
     private static void conquer(RobotController rc) throws GameActionException {
         if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, false, 3);
+            MapLocation toAttack = bestAttack(rc, false, 1);
             //lets try and attack that position
             if (toAttack != null) {
                 //if we are close enough, just attack
