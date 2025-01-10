@@ -1,6 +1,9 @@
-package Version4;
+package Version6;
 
-import battlecode.common.*;
+import battlecode.common.Direction;
+import battlecode.common.GameActionException;
+import battlecode.common.MapLocation;
+import battlecode.common.RobotController;
 
 public class BFS
 {
@@ -347,7 +350,6 @@ public class BFS
         dist3 = 1000000;
         h3 = l3.distanceSquaredTo(destination);
         exists3 = rc.onTheMap(l3) && rc.sensePassability(l3) && !rc.canSenseRobotAtLocation(l3);
-
 
         l4 = getLocationFromIndex(4, start);
         dist4 = 1000000;
@@ -1603,7 +1605,6 @@ public class BFS
                     closestDistance = h9;
                     closestIndex = 9;
                 }
-
             }
             if(exists14 && dist15 + 1 < dist14)
             {
