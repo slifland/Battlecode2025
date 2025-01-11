@@ -42,6 +42,13 @@ public class Utilities
     public static void updatePaintAverages(RobotController rc)
     {
         if(rc.getType().isTowerType()) return; // We don't want towers contributing for simplicity
+        if(rc.getRoundNum() % 50 == 0)        // Clear frontlines every so often
+        {
+            paintCount1 = 0;
+            paintCount2 = 0;
+            paintAverage1 = new MapLocation(0,0);
+            paintAverage2 = new MapLocation(0,0);
+        }
 
         int xTotal1 = 0;
         int yTotal1 = 0;
@@ -72,12 +79,14 @@ public class Utilities
             xTotal1 = (xTotal1 + paintAverage1.x * paintCount1) / (count1 + paintCount1);
             yTotal1 = (yTotal1 + paintAverage1.y * paintCount1) / (count1 + paintCount1);
             paintAverage1 = new MapLocation(xTotal1, yTotal1);
+            paintCount1 += count1;
         }
         if(count2 != 0)
         {
             xTotal2 = (xTotal2 + paintAverage2.x * paintCount2) / (count2 + paintCount2);
             yTotal2 = (yTotal2 + paintAverage2.y * paintCount2) / (count2 + paintCount2);
             paintAverage2 = new MapLocation(xTotal2, yTotal2);
+            paintCount2 += count2;
         }
     }
 

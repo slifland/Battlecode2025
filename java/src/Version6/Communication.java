@@ -19,6 +19,54 @@ public class Communication
     /*
         Scan for nearby ruin locations and update ruinsMemory as necessary
      */
+        /*
+        Process all incoming messages for towers
+    */
+    public static void processMessagesTower(RobotController rc)
+    {
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+
+        for(Message[] mArr : messages)
+        {
+            for(Message m : mArr)
+            {
+                switch (m.getBytes() >> 2 & 0b11)
+                {
+                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                    case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                }
+            }
+        }
+    }
+
+    public static void sendMessagesTower(RobotController rc) throws GameActionException
+    {
+        Communication.sendRuinLocationsToTroops(rc);
+    }
+
+    public static void sendMessagesRobot(RobotController rc) throws GameActionException
+    {
+        //Check if there is an available tower to broadcast to
+        MapLocation tower = null;
+        for(RobotInfo robot : allyRobots)
+        {
+            if(robot.getType().isTowerType())
+            {
+                tower = robot.getLocation();
+                break;
+            }
+        }
+        if(tower == null || !rc.canSendMessage(tower)) return;
+
+        //We have different kinds of messages to send so let's alternate every round
+        switch (rc.getRoundNum() % 2)
+        {
+            case 0 -> sendRuinLocationsToTower(rc, tower);
+            case 1 -> sendAveragesToTower(rc, tower);
+        }
+
+    }
+
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
         for(MapLocation ruinLoc : nearbyRuins)
@@ -50,26 +98,21 @@ public class Communication
         }
     }
 
+    public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
+    {
+        rc.sendMessage(tower, createAverageMessage());
+    }
+
     /*
         Send known ruin locations to a nearby tower
         This method should be called by robots and not towers
 
         Currently, only broadcasts info about paint towers, not ruins or other tower types
     */
-    public static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
+    public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
-        //Check if there is an available tower to broadcast to
-        MapLocation tower = null;
-        for(RobotInfo robot : allyRobots)
-        {
-            if(robot.getType().isTowerType())
-            {
-                tower = robot.getLocation();
-                break;
-            }
-        }
 
-        if(tower == null || ruinsMemory.isEmpty()) return;
+        if(ruinsMemory.isEmpty()) return;
 
         //filter communications to include paint towers only; might be edited/removed later on
         while(!ruinsMemory.get(nextRuinToSend).isPaintTower)
@@ -99,26 +142,6 @@ public class Communication
             }
         }
 
-    }
-
-    /*
-        Process all incoming messages for towers
-     */
-    public static void processMessagesTower(RobotController rc)
-    {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
-
-        for(Message[] mArr : messages)
-        {
-            for(Message m : mArr)
-            {
-                switch (m.getBytes() >> 2 & 0b11)
-                {
-                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    case 0b10 -> updatePaintAveragesTower(readAverageMessage(m));
-                }
-            }
-        }
     }
 
     public static int ruinToMessage(Ruin ruin)
@@ -163,7 +186,7 @@ public class Communication
     public static int createAverageMessage()
     {
         int message = 0b01;
-        message |= (paintCount1 == 0 ? 0 : 1) << 1; //Indicate average1's emptiness
+        message |= (paintCount1 == 0 ? 0 : 1) << 2; //Indicate average1's emptiness
         message |= paintAverage1.x << 3;
         message |= paintAverage1.y << 9;
         message |= (paintCount2 == 0 ? 0 : 1) << 15; //Indicate average2's emptiness
@@ -174,7 +197,11 @@ public class Communication
 
     public static MapLocation[] readAverageMessage(Message m)
     {
-        int message = m.getBytes();
+        return readAverageMessage(m.getBytes());
+    }
+
+    public static MapLocation[] readAverageMessage(int message)
+    {
         if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 0)      //Both locations are empty
         {
             return new MapLocation[0];
@@ -190,36 +217,46 @@ public class Communication
         else                                                         //Location 1 is used, Location2 is empty
         {
             return new MapLocation[]{new MapLocation(message >> 3 & 63, message >> 9 & 63),
-              new MapLocation(message >> 16 & 63, message >> 22 & 63)};
+                    new MapLocation(message >> 16 & 63, message >> 22 & 63)};
         }
     }
 
-    public static void updatePaintAveragesTower(MapLocation[] locations)
+    public static void updatePaintAveragesTower(RobotController rc, MapLocation[] locations)
     {
-        for(MapLocation location : locations)
+        if(locations.length == 2)
         {
-            if(paintCount1 == 0)
-            {
-                paintAverage1 = location;
-                paintCount1++;
-                continue;
-            }
-
-            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
-            {
-                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
-                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
-                paintAverage1 = new MapLocation(x, y);
-                paintCount1++;
-            }
-            else
-            {
-                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
-                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
-                paintAverage2 = new MapLocation(x, y);
-                paintCount2++;
-            }
+            paintAverage1 = locations[0];
+            paintAverage2 = locations[1];
         }
+        if(locations.length == 1)
+        {
+            paintAverage2 = locations[0];
+        }
+//        for(MapLocation location : locations)
+//        {
+//            System.out.println(location);
+//            if(paintCount1 == 0)
+//            {
+//                paintAverage1 = location;
+//                paintCount1++;
+//                continue;
+//            }
+//
+//            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
+//            {
+//                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
+//                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
+//                paintAverage1 = new MapLocation(x, y);
+//                paintCount1++;
+//            }
+//            else
+//            {
+//                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
+//                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
+//                paintAverage2 = new MapLocation(x, y);
+//                paintCount2++;
+//            }
+//        }
     }
 
     /*

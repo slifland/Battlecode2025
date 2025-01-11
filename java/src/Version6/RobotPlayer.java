@@ -70,6 +70,7 @@ public class RobotPlayer {
      **/
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
+
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
@@ -173,8 +174,6 @@ public class RobotPlayer {
         {
             Utilities.updatePaintAverages(rc);
         }
-        rc.setIndicatorDot(paintAverage1, 0,255,0);
-        rc.setIndicatorDot(paintAverage2, 255,0,0);
     }
 
     static void completeBeginningTasks(RobotController rc) throws GameActionException
@@ -189,12 +188,16 @@ public class RobotPlayer {
         if(rc.getType().isTowerType())
         {
             Communication.processMessagesTower(rc);
-            Communication.sendRuinLocationsToTroops(rc);
+            Communication.sendMessagesTower(rc);
+            rc.setIndicatorDot(paintAverage1, 0,0,255);
+            rc.setIndicatorDot(paintAverage2, 0,255,0);
+
+
         }
         else
         {
             Communication.scanForRuins(rc);
-            Communication.sendRuinLocationsToTower(rc);
+            Communication.sendMessagesRobot(rc);
         }
     }
 
