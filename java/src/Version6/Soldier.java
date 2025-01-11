@@ -64,17 +64,17 @@ public class Soldier {
                 rc.attack(rc.getLocation(), currentTileIsSecondary);
             }
             //otherwise, if we have a lot of paint, just paint something
-            else if (rc.getPaint() > 100 || (rc.getPaint() > 50 && nearestPaintTower != null)) {
-                if(Clock.getBytecodesLeft() > 3000) {
+            else if (rc.getPaint() > 75 || (rc.getPaint() > 35 && nearestPaintTower != null)) {
+                if(Clock.getBytecodesLeft() > 4000) {
                     calculateAverageFilled(rc);
                     MapLocation toFill = bestFill(rc);
                     if(toFill != null && rc.canAttack(toFill)) {
                         rc.attack(toFill, Utilities.getColorFromOriginPattern(toFill, rc.getResourcePattern()));
                     }
                 }
-                if(rc.isActionReady()) {
+                if(rc.isActionReady() && Clock.getBytecodesLeft() > 2000) {
                     for (MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
-                        if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()) {
+                        if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.hasRuin()) {
                             rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
                             break;
                         }
@@ -97,6 +97,7 @@ public class Soldier {
                 }
             }
         }
+        System.out.println(Clock.getBytecodesLeft());
     }
 
     //attempt to move to the random location we have been assigned, or choose a new random location
@@ -182,6 +183,13 @@ public class Soldier {
     }
     //attempt to fill the empty space around us, prioritizing spaces that might complete resource patterns
     public static void fill(RobotController rc) throws GameActionException {
+        int ranNum = rng.nextInt(2);
+        if(ranNum == 0 || rc.getRoundNum() < 150) {
+            Direction dir = BFS_7x7.pathfind(rc, averageEmpty);
+            if(dir != null && rc.canMove(dir)) {
+                rc.move(dir);
+            }
+        }
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.canAttack(rc.getLocation())) {
             rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             if(rc.canCompleteResourcePattern(rc.getLocation())) {
@@ -211,25 +219,30 @@ public class Soldier {
             }
         }
         }
-        //Direction dir = (Clock.getBytecodesLeft() > 6000) ? BFS_7x7.pathfind(rc, averageEmpty) : rc.getLocation().directionTo(averageEmpty);
-        Direction dir = BFS_7x7.pathfind(rc, averageEmpty);
-        if(dir != null && rc.canMove(dir)) {
-            rc.move(dir);
-        }
+
     }
 
     //returns the square the robot can fill that has the most adjacent filled in squares
     //approximation - based on averageFill, the average location of filled ally squares the robot can see
     private static MapLocation bestFill(RobotController rc) throws GameActionException {
-        MapInfo[] closeToAvgFill = rc.senseNearbyMapInfos(averageFilled, 4);
+       // MapInfo[] closeToAvgFill = rc.senseNearbyMapInfos(averageFilled, 4);
         MapLocation closest = null;
         int closestDistance = Integer.MAX_VALUE;
         MapLocation curLoc = rc.getLocation();
         int actionRadiusSquared = UnitType.SOLDIER.actionRadiusSquared;
-        for(MapInfo patternTile : closeToAvgFill) {
-            if(patternTile.getMapLocation().distanceSquaredTo(curLoc) < closestDistance && patternTile.getPaint() == PaintType.EMPTY && patternTile.getMapLocation().isWithinDistanceSquared(curLoc, actionRadiusSquared)) {
-                closest = patternTile.getMapLocation();
-                closestDistance = patternTile.getMapLocation().distanceSquaredTo(curLoc);
+//        for(MapInfo patternTile : closeToAvgFill) {
+//            if(patternTile.getMapLocation().distanceSquaredTo(curLoc) < closestDistance && patternTile.getPaint() == PaintType.EMPTY && patternTile.getMapLocation().isWithinDistanceSquared(curLoc, actionRadiusSquared)) {
+//                closest = patternTile.getMapLocation();
+//                closestDistance = patternTile.getMapLocation().distanceSquaredTo(curLoc);
+//            }
+//        }
+        for(MapInfo tile : nearbyTiles) {
+            MapLocation tempLoc = tile.getMapLocation();
+            int dist = curLoc.distanceSquaredTo(tempLoc);
+            int distFromAvg = curLoc.distanceSquaredTo(averageFilled);
+            if(dist <= actionRadiusSquared && distFromAvg < closestDistance && tile.getPaint() == PaintType.EMPTY) {
+                closest = tempLoc;
+                closestDistance = distFromAvg;
             }
         }
         return closest;
@@ -250,7 +263,6 @@ public class Soldier {
             }
         }
         averageFilled = countFilled != 0 ? new MapLocation(x/countFilled, y/countFilled) : null;
-        System.out.println("Price: " + (price - Clock.getBytecodesLeft()));
     }
 
 
@@ -326,7 +338,7 @@ public class Soldier {
             else rc.setIndicatorString("reverse");
         }
         else {
-            Direction dir = BFS.moveTowards(rc, curObjective);
+            Direction dir = BFS_7x7.pathfind(rc, curObjective);
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
@@ -611,7 +623,7 @@ public class Soldier {
             }
         }
         if(state == states.ruin && rc.getLocation().isAdjacentTo(curObjective)) {
-            if (rc.getMoney() < 1000 && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
+            if ((rc.getMoney() < 1000 || enemyRobots.length == 0) && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
                 state = states.explore;
         }
         if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {
@@ -632,7 +644,7 @@ public class Soldier {
         int fY = 0;
         int x = 0;
         int y = 0;
-        if(state == states.explore || state == states.wallHug || state == states.fill) {
+        if((state == states.explore) || state == states.wallHug || state == states.fill) {
             for(MapInfo tile : nearbyTiles) {
                 if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {
                     countEmpty++;
@@ -663,6 +675,7 @@ public class Soldier {
         }
         if(state == null) {
             state = states.explore;
+            //if(rc.getRoundNum() < 10) curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             return;
         }
