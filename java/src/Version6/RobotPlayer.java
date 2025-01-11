@@ -191,11 +191,10 @@ public class RobotPlayer {
             Communication.sendMessagesTower(rc);
             rc.setIndicatorDot(paintAverage1, 0,0,255);
             rc.setIndicatorDot(paintAverage2, 0,255,0);
-
-
         }
         else
         {
+            Communication.processMessagesRobot(rc);
             Communication.scanForRuins(rc);
             Communication.sendMessagesRobot(rc);
         }

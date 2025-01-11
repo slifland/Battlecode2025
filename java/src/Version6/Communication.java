@@ -16,10 +16,27 @@ public class Communication
         Ensures that, over time, all Ruin locations are sent
     */
     private static int nextRuinToSend = 0;
+
     /*
-        Scan for nearby ruin locations and update ruinsMemory as necessary
-     */
-        /*
+        Process all incoming messages for robots
+    */
+    public static void processMessagesRobot(RobotController rc)
+    {
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+
+        for(Message[] mArr : messages)
+        {
+            for(Message m : mArr)
+            {
+                if((m.getBytes() >> 2 & 0b11) == 0b00)
+                {
+                    updateRuinsMemory(messageToRuin(m));
+                }
+            }
+        }
+    }
+
+    /*
         Process all incoming messages for towers
     */
     public static void processMessagesTower(RobotController rc)
@@ -67,6 +84,9 @@ public class Communication
 
     }
 
+    /*
+        Scan for nearby ruin locations and update ruinsMemory as necessary
+     */
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
         for(MapLocation ruinLoc : nearbyRuins)
