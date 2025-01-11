@@ -6,11 +6,13 @@ public class Ruin
 {
     public MapLocation location;
     public int status;              //0 - empty, 1 - ally, 2 - enemy
+    public boolean isPaintTower;
 
-    public Ruin(MapLocation location, int status)
+    public Ruin(MapLocation location, int status, boolean isPaintTower)
     {
         this.location = location;
         this.status = status;
+        this.isPaintTower = isPaintTower;
     }
 
     public String toString()
@@ -24,6 +26,7 @@ public class Ruin
         {
             ownership = "Enemy";
         }
-        return "Location: " + location + ", Owned by: " + ownership;
+
+        return "Location: " + location + ", Owned by: " + ownership + (isPaintTower ? ", Paint Tower" : ", Non-Paint Tower");
     }
 }
