@@ -184,9 +184,18 @@ public class RobotPlayer {
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyRuins = rc.senseNearbyRuins(-1);
 
-        Communication.sendRuinLocations(rc);            //Scan for rune locations and send messages
-        Communication.processMessagesTower(rc);
         Utilities.attemptCompleteResourcePattern(rc);
+
+        if(rc.getType().isTowerType())
+        {
+            Communication.processMessagesTower(rc);
+            Communication.sendRuinLocationsToTroops(rc);
+        }
+        else
+        {
+            Communication.scanForRuins(rc);
+            Communication.sendRuinLocationsToTower(rc);
+        }
     }
 
 

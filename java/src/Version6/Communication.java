@@ -16,28 +16,10 @@ public class Communication
         Ensures that, over time, all Ruin locations are sent
     */
     private static int nextRuinToSend = 0;
-
-    /*
-        Called by RobotPlayer. Calls sendRuinLocationToTower or sendRuinLocationToTroops as
-        appropriate, dependent on the type of this unit.
-     */
-    public static void sendRuinLocations(RobotController rc) throws GameActionException
-    {
-        if(rc.getType().isRobotType())
-        {
-            scanForRuins(rc);
-            sendRuinLocationsToTower(rc);
-        }
-        else
-        {
-            sendRuinLocationsToTroops(rc);
-        }
-    }
-
     /*
         Scan for nearby ruin locations and update ruinsMemory as necessary
      */
-    private static void scanForRuins(RobotController rc) throws GameActionException
+    public static void scanForRuins(RobotController rc) throws GameActionException
     {
         for(MapLocation ruinLoc : nearbyRuins)
         {
@@ -74,7 +56,7 @@ public class Communication
 
         Currently, only broadcasts info about paint towers, not ruins or other tower types
     */
-    private static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
+    public static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
     {
         //Check if there is an available tower to broadcast to
         MapLocation tower = null;
@@ -101,9 +83,9 @@ public class Communication
         }
     }
 
-    private static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
+    public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
     {
-        if(ruinsMemory.size() == 0) return;
+        if(ruinsMemory.isEmpty()) return;
 
         int startIndex;
 
@@ -132,12 +114,8 @@ public class Communication
             {
                 switch (m.getBytes() >> 2 & 0b11)
                 {
-                    case 0b00:
-                        updateRuinsMemory(messageToRuin(m));
-                        break;
-                    case 0b10:
-                        updatePaintAveragesTower(readAverageMessage(m));
-                        break;
+                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                    case 0b10 -> updatePaintAveragesTower(readAverageMessage(m));
                 }
             }
         }
