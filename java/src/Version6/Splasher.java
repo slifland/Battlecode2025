@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import static Version6.RobotPlayer.*;
+import static Version6.splasherStates.*;
 
 enum splasherStates {
     attack, refill, navigate, conquer, explore
@@ -68,8 +69,9 @@ public class Splasher {
 
     //attempts to take over the enemy territory we can see, using its awesome splashing power
     private static void conquer(RobotController rc) throws GameActionException {
+        //System.out.println("Starting to conquer:" + Clock.getBytecodesLeft());
         if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, false, 2);
+            MapLocation toAttack = splasherUtil.bestAttack(rc, false, 2);
             //lets try and attack that position
             if (toAttack != null) {
                 //if we are close enough, just attack
@@ -126,7 +128,7 @@ public class Splasher {
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
         if(rc.isActionReady()) {
-            MapLocation toAttack = bestAttack(rc, true, 2);
+            MapLocation toAttack = splasherUtil.bestAttack(rc, true, 2);
             if(toAttack != null && rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
@@ -181,7 +183,7 @@ public class Splasher {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 7) + 4, rng.nextInt(rc.getMapHeight() - 7) + 4);
         }
         //if there cant even conceivably be a place with that many empty tiles, then dont bother running that expensive method
-        MapLocation toAttack = (maxScore > 6) ? bestAttack(rc, false, 7) : null;
+        MapLocation toAttack = (maxScore > 6) ? splasherUtil.bestAttack(rc, false, 7) : null;
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }
@@ -216,226 +218,6 @@ public class Splasher {
                 }
             }
         }
-    }
-
-    //returns the best location to attack based on how much impact the attack will have
-    //returns null if the best attack has less than or equal impact to the minScore
-    private static MapLocation bestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdgeNonMovement(rc, rc.getLocation())) return cheapBestAttack(rc, fightingTower, minScore);
-        //keeps track of total potential points, so we can short circuit and save bytecode if possible
-        int totalPoints = 0;
-        int[] localSquares = new int[81];
-        int[] potentialAttackSquares = new int[81];
-        int index = 0;
-        for(MapInfo tile : nearbyTiles) {
-            while(index == 0 || index == 1 || index == 7 || index == 8 || index == 17 || index == 9 || index == 63 || index == 71 || index == 72 || index == 73 || index ==79 || index == 80) {
-                index++;
-            }
-            PaintType paint = tile.getPaint();
-            if(tile.hasRuin()) {
-                if(fightingTower) {
-                    paint = PaintType.ENEMY_PRIMARY;
-                }
-                else {
-                    paint = PaintType.ALLY_PRIMARY;
-                }
-            }
-            else if(tile.isWall()) {
-                paint = PaintType.ALLY_PRIMARY;
-            }
-            //favor the enemy most, but also like empty squares
-            if(paint == PaintType.EMPTY) {
-                localSquares[index]++;
-                totalPoints++;
-            }
-            else if(paint.isAlly()){
-                localSquares[index] = 0;
-            }
-            else {
-                localSquares[index]+= 2;
-                totalPoints+= 2;
-            }
-            index++;
-        }
-        if(totalPoints < minScore) {return null;}
-        for(int i = 20; i <= 24; i++) {
-            for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[i] += localSquares[i+j];
-                potentialAttackSquares[i] += localSquares[i-j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 29; i <= 33; i++) {
-            for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[i] += localSquares[i+j];
-                potentialAttackSquares[i] += localSquares[i-j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 38; i <= 42; i++) {
-            for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[i] += localSquares[i+j];
-                potentialAttackSquares[i] += localSquares[i-j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 47; i <= 51; i++) {
-            for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[i] += localSquares[i+j];
-                potentialAttackSquares[i] += localSquares[i-j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 56; i <= 60; i++) {
-            for(int j = 10; j >= 8; j--) {
-                potentialAttackSquares[i] += localSquares[i+j];
-                potentialAttackSquares[i] += localSquares[i-j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-18] != 2) ? localSquares[i-18] : 0;
-            potentialAttackSquares[i] += (localSquares[i+18] != 2) ? localSquares[i+18] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        int highest = potentialAttackSquares[20];
-        int highestIndex = 20;
-        for(int i = 21; i <= 60; i++) {
-            if(potentialAttackSquares[i] > highest) {
-                highestIndex = i;
-                highest = potentialAttackSquares[i];
-            }
-        }
-        if(highest < minScore) return null;
-        int offSetX, offSetY;
-        if(highestIndex <= 24) offSetX = -2;
-        else if(highestIndex <= 33) offSetX = -1;
-        else if(highestIndex <= 42) offSetX = 0;
-        else if(highestIndex <= 51) offSetX = 1;
-        else offSetX = 2;
-        offSetY = (highestIndex % 9) - 4;
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
-    }
-
-    //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
-    public static MapLocation cheapBestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdge(rc, rc.getLocation())) return null;
-        //keeps track of total potential points, so we can short circuit and save bytecode if possible
-        int totalPoints = 0;
-        int[] localSquares = new int[45];
-        int[] potentialAttackSquares = new int[45];
-        int index = 0;
-        for(MapInfo tile : rc.senseNearbyMapInfos(13)) {
-            if(index == 0 || index == 4 || index == 5 || index == 11 || index == 33 || index == 39 || index == 40 || index == 44) {
-                index++;
-                continue;
-            }
-            PaintType paint = tile.getPaint();
-            if(tile.hasRuin()) {
-                if(fightingTower) {
-                    paint = PaintType.ENEMY_PRIMARY;
-                }
-                else {
-                    paint = PaintType.ALLY_PRIMARY;
-                }
-            }
-            else if(tile.isWall()) {
-                paint = PaintType.ALLY_PRIMARY;
-            }
-            //favor the enemy most, but also like empty squares
-            if(paint == PaintType.EMPTY) {
-                localSquares[index]++;
-                totalPoints++;
-            }
-            else if(paint.isAlly()){
-                localSquares[index] = 0;
-            }
-            else {
-                localSquares[index]+= 2;
-                totalPoints+= 2;
-            }
-            index++;
-        }
-        if(totalPoints < minScore) {return null;}
-        for(int i = 14; i <= 16; i++) {
-            for(int j = 8; j >= 6; j--) {
-                potentialAttackSquares[i] += localSquares[i-j];
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-13] != 2) ? localSquares[i-13] : 0;
-            potentialAttackSquares[i] += (localSquares[i+14] != 2) ? localSquares[i+14] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 21; i <= 23; i++) {
-            for(int j = 8; j >= 6; j--) {
-                potentialAttackSquares[i] += localSquares[i-j];
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-14] != 2) ? localSquares[i-14] : 0;
-            potentialAttackSquares[i] += (localSquares[i+14] != 2) ? localSquares[i+14] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        for(int i = 28; i <= 30; i++) {
-            for(int j = 8; j >= 6; j--) {
-                potentialAttackSquares[i] += localSquares[i-j];
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            for(int j = -1; j <= 1; j++) {
-                potentialAttackSquares[i] += localSquares[i+j];
-            }
-            potentialAttackSquares[i] += (localSquares[i-14] != 2) ? localSquares[i-14] : 0;
-            potentialAttackSquares[i] += (localSquares[i+13] != 2) ? localSquares[i+13] : 0;
-            potentialAttackSquares[i] += (localSquares[i-2] != 2) ? localSquares[i-2] : 0;
-            potentialAttackSquares[i] += (localSquares[i+2] != 2) ? localSquares[i+2] : 0;
-        }
-        int highest = potentialAttackSquares[14];
-        int highestIndex = 14;
-        for(int i = 15; i <= 30; i++) {
-            if(potentialAttackSquares[i] > highest) {
-                highestIndex = i;
-                highest = potentialAttackSquares[i];
-            }
-        }
-        if(highest < minScore) return null;
-        int offSetX, offSetY;
-        if(highestIndex <= 18) offSetX = -1;
-        else if(highestIndex <= 25) offSetX = 0;
-        else offSetX = 1;
-        offSetY = (highestIndex % 7) - 1;
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
     }
 
     //tries to return to nearest paint tower to refill
