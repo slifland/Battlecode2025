@@ -1,6 +1,7 @@
 package Version6;
 
 import battlecode.common.*;
+import static Version6.RobotPlayer.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,8 +41,7 @@ public class Communication
     private static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
     {
         //First determine all ruins nearby and add them to the queue
-        MapLocation[] ruins = rc.senseNearbyRuins(-1);
-        for(MapLocation ruin : ruins)
+        for(MapLocation ruin : nearbyRuins)
         {
             int message = 0;
             message |= (ruin.x << 2);   //Add x location to message
@@ -63,9 +63,8 @@ public class Communication
         }
 
         //Check if there is an available tower to broadcast to
-        RobotInfo[] allies = rc.senseNearbyRobots(-1, rc.getTeam());
         MapLocation tower = null;
-        for(RobotInfo robot : allies)
+        for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType())
             {
@@ -92,11 +91,9 @@ public class Communication
     {
         if(ruinsMemory.size() == 0) return;
 
-        RobotInfo[] allies = rc.senseNearbyRobots();
-
         int startIndex;
 
-        for(RobotInfo ri : allies)
+        for(RobotInfo ri : allyRobots)
         {
             startIndex = nextRuinToSend;
             while(rc.canSendMessage(ri.location) && nextRuinToSend != startIndex)

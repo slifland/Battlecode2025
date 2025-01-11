@@ -21,6 +21,14 @@ public class RobotPlayer {
     static int moppers = 0;
     static int totalBuilt = 0;
 
+    /*
+    Store all methods initially to avoid redundant calls
+     */
+    public static MapInfo[] nearbyTiles;
+    public static RobotInfo[] allyRobots;
+    public static RobotInfo[] enemyRobots;
+    public static MapLocation[] nearbyRuins;
+
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random
@@ -50,18 +58,21 @@ public class RobotPlayer {
      **/
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
-
-
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
 
             try {
-
-
-                Communication.sendRuinLocations(rc); //Scan for rune locations and send messages
+                initializeAllVariables(rc);                     //This needs to be first!
+                Communication.sendRuinLocations(rc);            //Scan for rune locations and send messages
                 Communication.receiveRuinLocations(rc);
                 Utilities.attemptCompleteResourcePattern(rc);
+
+                if(rc.getID() == 10449)
+                {
+                    rc.setIndicatorDot(rc.getLocation(), 0, 255, 0);
+                }
+
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;
@@ -83,6 +94,9 @@ public class RobotPlayer {
         }
     }
     public static void runTower(RobotController rc) throws GameActionException{
+        //We're a tower so might as well try and complete patterns with our extra bytecode
+        Utilities.attemptCompletePatterns(rc);
+
         if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || rc.getType() == UnitType.LEVEL_THREE_PAINT_TOWER) {
             if(rc.getMoney() > 4000 && rc.canUpgradeTower(rc.getLocation()))
                 rc.upgradeTower(rc.getLocation());
@@ -132,12 +146,6 @@ public class RobotPlayer {
        // }
 
 
-        // Read incoming messages
-//        Message[] messages = rc.readMessages(-1);
-//        for (Message m : messages) {
-//            System.out.println("Tower received message: '#" + m.getSenderID() + " " + m.getBytes());
-//        }
-
         //try and attack if we can
         RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         for(RobotInfo robot : enemyRobots) {
@@ -148,28 +156,12 @@ public class RobotPlayer {
         if(enemyRobots.length != 0) rc.attack(null);
     }
 
-
-    public static void updateEnemyRobots(RobotController rc) throws GameActionException{
-        // Sensing methods can be passed in a radius of -1 to automatically 
-        // use the largest possible value.
-        RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        if (enemyRobots.length != 0){
-            rc.setIndicatorString("There are nearby enemy robots! Scary!");
-            // Save an array of locations with enemy robots in them for possible future use.
-            MapLocation[] enemyLocations = new MapLocation[enemyRobots.length];
-            for (int i = 0; i < enemyRobots.length; i++){
-                enemyLocations[i] = enemyRobots[i].getLocation();
-            }
-            RobotInfo[] allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
-            // Occasionally try to tell nearby allies how many enemy robots we see.
-            if (rc.getRoundNum() % 20 == 0){
-                for (RobotInfo ally : allyRobots){
-                    if (rc.canSendMessage(ally.location, enemyRobots.length)){
-                        rc.sendMessage(ally.location, enemyRobots.length);
-
-                    }
-                }
-            }
-        }
+    static void initializeAllVariables(RobotController rc) throws GameActionException
+    {
+        nearbyTiles = rc.senseNearbyMapInfos();
+        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
+        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+        nearbyRuins = rc.senseNearbyRuins(-1);
     }
+
 }

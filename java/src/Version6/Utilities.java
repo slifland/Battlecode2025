@@ -3,6 +3,7 @@ package Version6;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
+import static Version6.RobotPlayer.*;
 
 public class Utilities
 {
@@ -22,6 +23,21 @@ public class Utilities
         if(rc.canCompleteResourcePattern(rc.getLocation()))
         {
             rc.completeResourcePattern(rc.getLocation());
+        }
+    }
+
+    /*
+        Attempt to complete resource pattern at all visible locations
+     */
+
+    public static void attemptCompletePatterns(RobotController rc) throws GameActionException
+    {
+        for(int i = 0; i < nearbyTiles.length; i++)
+        {
+            if(rc.canCompleteResourcePattern(nearbyTiles[i].getMapLocation()))
+            {
+                rc.completeResourcePattern(nearbyTiles[i].getMapLocation());
+            }
         }
     }
 

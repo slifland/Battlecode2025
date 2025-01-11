@@ -3928,6 +3928,6 @@ public class BFS_7x7
          }
       }
 
-      return dirToMove(closestIndex);
+      return closestIndex != -1 ? dirToMove(closestIndex) : Direction.CENTER;
    }
 }

@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static Version6.RobotPlayer.directions;
-import static Version6.RobotPlayer.rng;
+import static Version6.RobotPlayer.*;
 
 enum splasherStates {
     attack, refill, navigate, conquer, explore
@@ -33,12 +32,7 @@ public class Splasher {
     private static MapLocation nearestRuin = null;
 
     //information updated each turn
-    private static RobotInfo[] enemyRobots;
-    private static RobotInfo[] allyRobots;
-    private static MapInfo[] nearbyTiles;
-
     public static void runSplasher(RobotController rc) throws GameActionException {
-        updateInfo(rc);
         updateState(rc);
         switch(state) {
             case attack:
@@ -408,9 +402,6 @@ public class Splasher {
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
         maxScore = 0;
-        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
-        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        nearbyTiles = rc.senseNearbyMapInfos();
         //calculate the max score for a splasher attack to save bytecodes later
         for(MapInfo tile : nearbyTiles) {
             if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {

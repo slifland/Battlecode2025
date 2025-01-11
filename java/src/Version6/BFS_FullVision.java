@@ -5753,6 +5753,6 @@ public class BFS_FullVision
             }
         }
 
-        return dirToMove(closestIndex);
+        return closestIndex != -1 ? dirToMove(closestIndex) : Direction.CENTER;
     }
 }

@@ -17,9 +17,7 @@ public class Mopper {
     private static mopStates state;
 
     //info the mopper will need at various points throughout its turn
-    private static RobotInfo[] enemyRobots;
     private static RobotInfo[] adjacentEnemyRobots;
-    private static RobotInfo[] allyRobots;
     private static MapInfo[] nearbyTiles;
     //location data
     private static MapLocation nearestEnemyTower;
@@ -66,8 +64,6 @@ public class Mopper {
 
     //updates our knowledege of nearby things
     public static void updateInfo(RobotController rc) throws GameActionException {
-        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         adjacentEnemyRobots = rc.senseNearbyRobots(2, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos(13);
     }

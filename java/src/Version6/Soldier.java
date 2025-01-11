@@ -2,9 +2,7 @@ package Version6;
 
 import battlecode.common.*;
 
-import java.util.Map;
-
-import static Version6.RobotPlayer.rng;
+import static Version6.RobotPlayer.*;
 
 enum states {
     ruin, explore, attack, refill, wallHug, fill
@@ -27,9 +25,6 @@ public class Soldier {
     private static MapLocation nearestPaintTower = null;
 
     //information updated each turn
-    private static RobotInfo[] enemyRobots;
-    private static RobotInfo[] allyRobots;
-    private static MapInfo[] nearbyTiles;
 
     public static void runSoldier(RobotController rc) throws GameActionException {
         updateInfo(rc);
@@ -501,10 +496,6 @@ public class Soldier {
 
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
-        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
-        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        nearbyTiles = rc.senseNearbyMapInfos();
-
         for(RobotInfo robot : allyRobots) {
             if(robot.getType() == UnitType.LEVEL_ONE_PAINT_TOWER  || robot.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || robot.getType() == UnitType.LEVEL_THREE_PAINT_TOWER && robot.getTeam() == rc.getTeam()) {
                 nearestPaintTower = robot.getLocation();
