@@ -147,7 +147,7 @@ public class Soldier {
             }
         }
         // Complete the ruin if we can - never complete a paint tower if we still only have two starting towers, unless we clearly arent doing anything else
-        if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1060) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
+        if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1500) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
             state = null;
             curObjective = null;
@@ -229,7 +229,7 @@ public class Soldier {
             }
         }
         //if we have good enough numbers, just move towards it anyway
-        if(rc.isMovementReady() && allyRobots.length - enemyRobots.length > 3 && !rc.getLocation().isAdjacentTo(curObjective)) {
+        if(rc.isMovementReady() && allyRobots.length - enemyRobots.length > 4 && !rc.getLocation().isAdjacentTo(curObjective)) {
             Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
