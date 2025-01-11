@@ -17,6 +17,7 @@ public class Soldier {
     private static states state;
     private static states prevState;
     private static MapLocation averageEmpty;
+    private static MapLocation averageFilled;
     private static int countEmpty;
     //used for hugging the wall
     private static int edge = 0; //0 = not on edge, 1 = top, 2 = right, 3 = bottom, 4 = left
@@ -63,11 +64,20 @@ public class Soldier {
                 rc.attack(rc.getLocation(), currentTileIsSecondary);
             }
             //otherwise, if we have a lot of paint, just paint something
-            else if (rc.getPaint() > 100) {
-                for (MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
-                    if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()) {
-                        rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
-                        break;
+            else if (rc.getPaint() > 100 || (rc.getPaint() > 50 && nearestPaintTower != null)) {
+                if(Clock.getBytecodesLeft() > 3000) {
+                    calculateAverageFilled(rc);
+                    MapLocation toFill = bestFill(rc);
+                    if(toFill != null && rc.canAttack(toFill)) {
+                        rc.attack(toFill, Utilities.getColorFromOriginPattern(toFill, rc.getResourcePattern()));
+                    }
+                }
+                if(rc.isActionReady()) {
+                    for (MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
+                        if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()) {
+                            rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
+                            break;
+                        }
                     }
                 }
             }
@@ -172,10 +182,6 @@ public class Soldier {
     }
     //attempt to fill the empty space around us, prioritizing spaces that might complete resource patterns
     public static void fill(RobotController rc) throws GameActionException {
-        Direction dir = BFS_7x7.pathfind(rc, averageEmpty);
-        if(dir != null && rc.canMove(dir)) {
-            rc.move(dir);
-        }
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.canAttack(rc.getLocation())) {
             rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
             if(rc.canCompleteResourcePattern(rc.getLocation())) {
@@ -183,31 +189,70 @@ public class Soldier {
             }
         }
         else {
-            //if we have a lot of bytecode left, then try and find a space adjacent to us - otherwise, just fill in any space we can
-            if(Clock.getBytecodesLeft() > 5000) {
-                for(MapInfo tile : rc.senseNearbyMapInfos(2)) {
-                    if (tile.getPaint() == PaintType.EMPTY && rc.canAttack(tile.getMapLocation())) {
+        if(rc.isActionReady()) {
+            //try and find a spot near other filled spots
+            MapLocation bestFill = bestFill(rc);
+            if(rc.canAttack(bestFill)){
+                rc.attack(bestFill, Utilities.getColorFromOriginPattern(bestFill, rc.getResourcePattern()));
+                if(rc.canCompleteResourcePattern(bestFill)) {
+                    rc.completeResourcePattern(bestFill);
+                }
+            }
+            else {
+                for(MapInfo tile : nearbyTiles) {
+                    if(tile.getPaint() == PaintType.EMPTY && rc.canAttack(tile.getMapLocation())) {
                         rc.attack(tile.getMapLocation(), Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern()));
-                        if(rc.canCompleteResourcePattern(rc.getLocation())) {
-                            rc.completeResourcePattern(rc.getLocation());
+                        if(rc.canCompleteResourcePattern(tile.getMapLocation())) {
+                            rc.completeResourcePattern(tile.getMapLocation());
                         }
                         break;
                     }
                 }
             }
-            if(rc.isActionReady()) {
-                for(MapInfo tile : nearbyTiles) {
-                    if(tile.getPaint() == PaintType.EMPTY && rc.canAttack(tile.getMapLocation())) {
-                        rc.attack(tile.getMapLocation(), Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern()));
-                        if(rc.canCompleteResourcePattern(rc.getLocation())) {
-                            rc.completeResourcePattern(rc.getLocation());
-                        }
-                        return;
-                    }
-                }
-            }
+        }
+        }
+        //Direction dir = (Clock.getBytecodesLeft() > 6000) ? BFS_7x7.pathfind(rc, averageEmpty) : rc.getLocation().directionTo(averageEmpty);
+        Direction dir = BFS_7x7.pathfind(rc, averageEmpty);
+        if(dir != null && rc.canMove(dir)) {
+            rc.move(dir);
         }
     }
+
+    //returns the square the robot can fill that has the most adjacent filled in squares
+    //approximation - based on averageFill, the average location of filled ally squares the robot can see
+    private static MapLocation bestFill(RobotController rc) throws GameActionException {
+        MapInfo[] closeToAvgFill = rc.senseNearbyMapInfos(averageFilled, 4);
+        MapLocation closest = null;
+        int closestDistance = Integer.MAX_VALUE;
+        MapLocation curLoc = rc.getLocation();
+        int actionRadiusSquared = UnitType.SOLDIER.actionRadiusSquared;
+        for(MapInfo patternTile : closeToAvgFill) {
+            if(patternTile.getMapLocation().distanceSquaredTo(curLoc) < closestDistance && patternTile.getPaint() == PaintType.EMPTY && patternTile.getMapLocation().isWithinDistanceSquared(curLoc, actionRadiusSquared)) {
+                closest = patternTile.getMapLocation();
+                closestDistance = patternTile.getMapLocation().distanceSquaredTo(curLoc);
+            }
+        }
+        return closest;
+    }
+
+    //calculates average filled in case you wanna use bestFill and you areont on fill mode
+    //costs roughly 1800 bytecode
+    private static void calculateAverageFilled(RobotController rc) throws GameActionException {
+        int price = Clock.getBytecodesLeft();
+        int x = 0;
+        int y = 0;
+        int countFilled = 0;
+        for(MapInfo tile : nearbyTiles) {
+            if(tile.getPaint().isAlly()) {
+                countFilled++;
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+            }
+        }
+        averageFilled = countFilled != 0 ? new MapLocation(x/countFilled, y/countFilled) : null;
+        System.out.println("Price: " + (price - Clock.getBytecodesLeft()));
+    }
+
 
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
@@ -534,7 +579,7 @@ public class Soldier {
             state = states.refill;
             return;
         }
-        if(state == states.refill && (rc.getPaint() > 75 || nearestPaintTower == null)) {
+        if(state == states.refill && (rc.getPaint() > 100 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
         }
@@ -582,6 +627,9 @@ public class Soldier {
             }
         }
         countEmpty = 0;
+        int countFilled = 0;
+        int fX = 0;
+        int fY = 0;
         int x = 0;
         int y = 0;
         if(state == states.explore || state == states.wallHug || state == states.fill) {
@@ -591,8 +639,14 @@ public class Soldier {
                     x += tile.getMapLocation().x;
                     y += tile.getMapLocation().y;
                 }
+                else if(tile.getPaint().isAlly()) {
+                    countFilled++;
+                    fX += tile.getMapLocation().x;
+                    fY += tile.getMapLocation().y;
+                }
             }
             averageEmpty = (countEmpty != 0) ? new MapLocation(x/countEmpty, y/countEmpty) : null;
+            averageFilled = countFilled != 0 ? new MapLocation(fX/countFilled, fY/countFilled) : null;
             if(countEmpty > 6 || state == states.fill && countEmpty >= 1){
                 if(prevState == null) prevState = state;
                 state = states.fill;
