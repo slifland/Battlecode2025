@@ -29,4 +29,9 @@ public class Ruin
 
         return "Location: " + location + ", Owned by: " + ownership + (isPaintTower ? ", Paint Tower" : ", Non-Paint Tower");
     }
+
+    public boolean isAllied()
+    {
+        return status == 1;
+    }
 }
