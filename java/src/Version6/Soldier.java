@@ -496,14 +496,24 @@ public class Soldier {
 
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
+        /*
         for(RobotInfo robot : allyRobots) {
             if(robot.getType() == UnitType.LEVEL_ONE_PAINT_TOWER  || robot.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || robot.getType() == UnitType.LEVEL_THREE_PAINT_TOWER && robot.getTeam() == rc.getTeam()) {
                 nearestPaintTower = robot.getLocation();
             }
         }
+        */
+        nearestPaintTower = null;
+        for(Ruin r : Communication.ruinsMemory)
+        {
+            if(r.isPaintTower && (nearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestPaintTower)))
+                nearestPaintTower = r.location;
+        }
+        /*
         if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
             nearestPaintTower = null;
         }
+        */
     }
 
     //update our info, changing our state as necessary

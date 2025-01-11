@@ -33,6 +33,7 @@ public class Splasher {
 
     //information updated each turn
     public static void runSplasher(RobotController rc) throws GameActionException {
+        updateInfo(rc);
         updateState(rc);
         switch(state) {
             case attack:
@@ -416,6 +417,7 @@ public class Splasher {
             }
             if(maxScore > 6) break;
         }
+        /*
         for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType())
@@ -427,8 +429,12 @@ public class Splasher {
                 }
             }
         }
-        if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
-            nearestPaintTower = null;
+        */
+        nearestPaintTower = null;
+        for(Ruin r : Communication.ruinsMemory)
+        {
+            if(r.isPaintTower && (nearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestPaintTower)))
+                nearestPaintTower = r.location;
         }
         /*
         if(nearestRuin != null && rc.canSenseLocation(nearestRuin) && (rc.senseRobotAtLocation(nearestRuin) != null || rc.getNumberTowers() >= 25)) {
