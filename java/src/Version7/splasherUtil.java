@@ -1,9 +1,9 @@
-package Version6;
+package Version7;
 
 import battlecode.common.*;
 
-import static Version6.RobotPlayer.nearbyTiles;
-import static Version6.Splasher.*;
+import static Version7.RobotPlayer.nearbyTiles;
+import static Version7.Splasher.*;
 
 public class splasherUtil {
     //returns the best location to attack based on how much impact the attack will have
