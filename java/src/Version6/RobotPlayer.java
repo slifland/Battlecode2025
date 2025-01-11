@@ -79,12 +79,10 @@ public class RobotPlayer {
             turnCount += 1;  // We have now been alive for one more turn!
 
             try {
-
                 /*
                     Complete all tasks which need to be completed in the beginning of the round
                 */
                 completeBeginningTasks(rc);
-
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;
@@ -189,8 +187,8 @@ public class RobotPlayer {
         {
             Communication.processMessagesTower(rc);
             Communication.sendMessagesTower(rc);
-            rc.setIndicatorDot(paintAverage1, 0,0,255);
-            rc.setIndicatorDot(paintAverage2, 0,255,0);
+            //if(paintAverage1 != null) rc.setIndicatorDot(paintAverage1, 0,0,255);
+            //if(paintAverage2 != null) rc.setIndicatorDot(paintAverage2, 0,255,0);
         }
         else
         {

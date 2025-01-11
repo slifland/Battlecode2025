@@ -346,6 +346,11 @@ public class Splasher {
         return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
     }
 
+    //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
+    public static MapLocation cheapBestAttack() {
+        return null;
+    }
+
     //tries to return to nearest paint tower to refill
     public static void refill(RobotController rc) throws GameActionException {
         if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
@@ -388,7 +393,7 @@ public class Splasher {
         }
         else
         {
-            if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+            if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 8) + 4, rng.nextInt(rc.getMapHeight() - 8) + 4);
             //System.out.println("Splasher moving towards: random" + curObjective);
         }
 
@@ -484,7 +489,7 @@ public class Splasher {
         }
         else if(rc.getPaint() < 60 && nearestPaintTower == null) {
             state = splasherStates.explore;
-            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 8) + 4, rng.nextInt(rc.getMapHeight() - 8) + 4);
             return;
         }
         if(state == splasherStates.refill && (rc.getPaint() > 200 || nearestPaintTower == null)) {
@@ -525,7 +530,7 @@ public class Splasher {
         state = splasherStates.explore;
 
         if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) {
-            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 8) + 4, rng.nextInt(rc.getMapHeight() - 8) + 4);
         }
 //        if(state != splasherStates.navigate || (curObjective == null || (!rc.canSenseLocation(curObjective) && state == splasherStates.navigate)))
 //        {

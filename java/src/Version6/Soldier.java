@@ -67,15 +67,16 @@ public class Soldier {
                 for (MapInfo loc : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
                     if (loc.getPaint() == PaintType.EMPTY && rc.canAttack(loc.getMapLocation()) && !loc.isWall() && !loc.hasRuin()) {
                         rc.attack(loc.getMapLocation(), Utilities.getColorFromOriginPattern(loc.getMapLocation(), rc.getResourcePattern()));
+                        break;
                     }
                 }
             }
             //lets try and transfer some paint, if we can
-            for (RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
-                if (ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
-                    rc.transferPaint(ally.getLocation(), -50);
-                }
-            }
+//            for (RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
+//                if (ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
+//                    rc.transferPaint(ally.getLocation(), -50);
+//                }
+//            }
         }
         if(Clock.getBytecodesLeft() > 4000) {
             nearbyTiles = rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared);
@@ -109,8 +110,8 @@ public class Soldier {
         Direction dir = rc.getLocation().directionTo(curObjective);
         // Mark the pattern we need to draw to build a tower here if we haven't already.
         MapLocation shouldBeMarked = curObjective.subtract(dir);
-        int ranNum = (rc.getRoundNum() > 200) ? rng.nextInt(2) : rng.nextInt(3);
-        if(rc.getRoundNum() <= 5) ranNum = 1;
+        int ranNum = rng.nextInt(2);
+        if(rc.getRoundNum() <= 4) ranNum = 1;
         if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
                 prevState = states.ruin;
@@ -250,15 +251,19 @@ public class Soldier {
 
     //tries to return to nearest paint tower to refill
     public static void refill(RobotController rc) throws GameActionException {
+//        if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
+//            if(rc.canTransferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount))){
+//                rc.transferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount));
+//            }
+//        }
         if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
-            if(rc.canTransferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount))){
-                rc.transferPaint(nearestPaintTower, Math.max(200-rc.getPaint(), rc.senseRobotAtLocation(nearestPaintTower).paintAmount));
+            if(rc.canTransferPaint(nearestPaintTower, Math.max(rc.getPaint() - UnitType.SOLDIER.paintCapacity, -1 * rc.senseRobotAtLocation(nearestPaintTower).paintAmount))){
+                rc.transferPaint(nearestPaintTower, Math.max(rc.getPaint() - UnitType.SOLDIER.paintCapacity, -1 * rc.senseRobotAtLocation(nearestPaintTower).paintAmount));
             }
         }
         else {
             //Direction dir = BFS.moveTowards(rc, nearestPaintTower);
             Direction dir = BFS_FullVision.pathfind(rc, nearestPaintTower);
-            System.out.println(Clock.getBytecodesLeft());
             if (dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }

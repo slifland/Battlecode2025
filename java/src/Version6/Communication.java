@@ -133,10 +133,13 @@ public class Communication
     {
 
         if(ruinsMemory.isEmpty()) return;
-
+        int escape = 0;
         ////////////////////////filter communications to include allied paint towers only; might be edited/removed later on///////////////////////////////
-        while(!(ruinsMemory.get(nextRuinToSend).isAllied() && ruinsMemory.get(nextRuinToSend).isPaintTower))
+        while(!(ruinsMemory.get(nextRuinToSend).isAllied() && ruinsMemory.get(nextRuinToSend).isPaintTower)) {
             nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
+            escape++;
+            if(escape >= ruinsMemory.size()) break;
+        }
 
         //if there are ruins to be sent and we can message the tower, send a location
         if(rc.canSendMessage(tower, ruinToMessage(ruinsMemory.get(nextRuinToSend))))
