@@ -119,6 +119,28 @@ public class Communication
         }
     }
 
+    /*
+        Process all incoming messages for towers
+     */
+    public static void processMessagesTower(RobotController rc)
+    {
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+
+        for(Message[] mArr : messages)
+        {
+            for(Message m : mArr)
+            {
+                switch (m.getBytes() >> 2 & 0b11)
+                {
+                    case 0b00:
+                        updateRuinsMemory(messageToRuin(m));
+                    case 0b10:
+                        updatePaintAveragesTower(readAverageMessage(m));
+                }
+            }
+        }
+    }
+
     public static int ruinToMessage(Ruin ruin)
     {
         int message = 0;
@@ -154,6 +176,68 @@ public class Communication
         }
 
         ruinsMemory.add(ruin);
+    }
+
+    public static int createAverageMessage()
+    {
+        int message = 0b01;
+        message |= (paintCount1 == 0 ? 0 : 1) << 1; //Indicate average1's emptiness
+        message |= paintAverage1.x << 3;
+        message |= paintAverage1.y << 9;
+        message |= (paintCount2 == 0 ? 0 : 1) << 15; //Indicate average2's emptiness
+        message |= paintAverage2.x << 16;
+        message |= paintAverage2.y << 22;
+        return message;
+    }
+
+    public static MapLocation[] readAverageMessage(Message m)
+    {
+        int message = m.getBytes();
+        if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 0)      //Both locations are empty
+        {
+            return new MapLocation[0];
+        }
+        else if((message >> 2 & 1) == 1 && (message >> 15 & 1) == 0) //Location1 is used, Location2 is empty
+        {
+            return new MapLocation[]{new MapLocation(message >> 3 & 63, message >> 9 & 63)};
+        }
+        else if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 1) //Location2 is used, Location1 is empty
+        {
+            return new MapLocation[]{new MapLocation(message >> 16 & 63, message >> 22 & 63)};
+        }
+        else                                                         //Location 1 is used, Location2 is empty
+        {
+            return new MapLocation[]{new MapLocation(message >> 3 & 63, message >> 9 & 63),
+              new MapLocation(message >> 16 & 63, message >> 22 & 63)};
+        }
+    }
+
+    public static void updatePaintAveragesTower(MapLocation[] locations)
+    {
+        for(MapLocation location : locations)
+        {
+            if(paintCount1 == 0)
+            {
+                paintAverage1 = location;
+                paintCount1++;
+                continue;
+            }
+
+            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
+            {
+                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
+                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
+                paintAverage1 = new MapLocation(x, y);
+                paintCount1++;
+            }
+            else
+            {
+                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
+                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
+                paintAverage2 = new MapLocation(x, y);
+                paintCount2++;
+            }
+        }
     }
 
     /*

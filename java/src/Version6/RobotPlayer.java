@@ -21,6 +21,18 @@ public class RobotPlayer {
     static int moppers = 0;
     static int totalBuilt = 0;
 
+
+    /*
+        Variables responsible for tracking average location of enemy paint
+     */
+    static int distanceThreshold;   //For finding a good distance to start a new average
+    static MapLocation paintAverage1 = new MapLocation(0,0);
+    static MapLocation paintAverage2 = new MapLocation(0,0);
+    static int paintCount1;
+    static int paintCount2;
+    static int greatestDelta;
+    static boolean returnFirst = true;
+
     /*
     Store all methods initially to avoid redundant calls
      */
@@ -58,20 +70,19 @@ public class RobotPlayer {
      **/
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
+        int mapSize = rc.getMapHeight() * rc.getMapWidth();
+        distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
+
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
 
             try {
-                initializeAllVariables(rc);                     //This needs to be first!
-                Communication.sendRuinLocations(rc);            //Scan for rune locations and send messages
-                Communication.receiveRuinLocations(rc);
-                Utilities.attemptCompleteResourcePattern(rc);
 
-                if(rc.getID() == 10449)
-                {
-                    rc.setIndicatorDot(rc.getLocation(), 0, 255, 0);
-                }
+                /*
+                    Complete all tasks which need to be completed in the beginning of the round
+                */
+                completeBeginningTasks(rc);
 
                 switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
@@ -79,7 +90,8 @@ public class RobotPlayer {
                     case SPLASHER: Splasher.runSplasher(rc); break;
                     default: runTower(rc); break;
                     }
-                }
+                bytecodeSensitiveOperations(rc);
+            }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
                 e.printStackTrace();
@@ -96,7 +108,6 @@ public class RobotPlayer {
     public static void runTower(RobotController rc) throws GameActionException{
         //We're a tower so might as well try and complete patterns with our extra bytecode
         Utilities.attemptCompletePatterns(rc);
-
         if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || rc.getType() == UnitType.LEVEL_THREE_PAINT_TOWER) {
             if(rc.getMoney() > 4000 && rc.canUpgradeTower(rc.getLocation()))
                 rc.upgradeTower(rc.getLocation());
@@ -156,12 +167,28 @@ public class RobotPlayer {
         if(enemyRobots.length != 0) rc.attack(null);
     }
 
-    static void initializeAllVariables(RobotController rc) throws GameActionException
+    static void bytecodeSensitiveOperations(RobotController rc) throws GameActionException
+    {
+        if(Clock.getBytecodesLeft() > 3000)
+        {
+            Utilities.updatePaintAverages(rc);
+        }
+        rc.setIndicatorDot(paintAverage1, 0,255,0);
+        rc.setIndicatorDot(paintAverage2, 255,0,0);
+    }
+
+    static void completeBeginningTasks(RobotController rc) throws GameActionException
     {
         nearbyTiles = rc.senseNearbyMapInfos();
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyRuins = rc.senseNearbyRuins(-1);
+
+        Communication.sendRuinLocations(rc);            //Scan for rune locations and send messages
+        Communication.processMessagesTower(rc);
+        Utilities.attemptCompleteResourcePattern(rc);
     }
+
+
 
 }
