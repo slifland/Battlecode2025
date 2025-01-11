@@ -1,6 +1,9 @@
 package Version6;
 
 import battlecode.common.*;
+
+import java.awt.*;
+
 import static Version6.RobotPlayer.*;
 
 public class Utilities
@@ -14,6 +17,36 @@ public class Utilities
         MapLocation corner = new MapLocation((location.x / pattern[0].length) * pattern[0].length,
                 (location.y / pattern.length) * pattern.length);
         return pattern[location.y - corner.y][location.x - corner.x];
+    }
+    //returns the color a square should be in a pattern starting from a custom origin
+    public static boolean getColorFromCustomPattern(MapLocation location, boolean[][] pattern, MapLocation center)
+    {
+        //MapLocation origin = new MapLocation(center.x - 2, center.y - 2);
+        return pattern[location.x - (center.x - 2)][location.y - (center.y - 2)];
+    }
+
+    //looks at the area around a map location, and infers which tower pattern is matched
+    //for now only considers the two patterns we build, money and paint
+    public static boolean[][] inferPatternFromExistingSpots(RobotController rc, MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
+        int moneyScore = 0;
+        int paintScore = 0;
+        int totalAlly = 0;
+        MapLocation fakeOrigin = new MapLocation(center.x - 2, center.y - 2);
+        boolean[][] moneyPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        boolean[][] paintPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+        for(MapInfo tile : ruinTiles) {
+            PaintType paint = tile.getPaint();
+            if(paint.isAlly()) {
+                int offsetX = tile.getMapLocation().x - fakeOrigin.x;
+                int offsetY = tile.getMapLocation().y - fakeOrigin.y;
+                if(paint.isSecondary() == moneyPattern[offsetX][offsetY]) moneyScore++;
+                if(paint.isSecondary() == paintPattern[offsetX][offsetY]) paintScore++;
+                totalAlly++;
+            }
+        }
+        if(totalAlly == 0) return null;
+        if(moneyScore >= paintScore) return moneyPattern;
+        else return paintPattern;
     }
 
     public static void attemptCompleteResourcePattern(RobotController rc) throws GameActionException

@@ -66,6 +66,12 @@ public class Mopper {
     public static void updateInfo(RobotController rc) throws GameActionException {
         adjacentEnemyRobots = rc.senseNearbyRobots(2, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos(13);
+        for(MapInfo loc : nearbyTiles) {
+            if(loc.hasRuin()){
+                nearestRuin = loc.getMapLocation();
+                break;
+            }
+        }
     }
 
     //determins what state the mopper should be in
@@ -176,57 +182,6 @@ public class Mopper {
 
     //goal is to clean up some enemy paint
     public static void mop(RobotController rc) throws GameActionException {
-        //if the mopper can see a ruin, we should probably stay near it and try to mop it up.. ends up more helpful for our team
-        //for (MapLocation tile : rc.senseNearbyRuins(-1)) {
-//            if (rc.canSenseLocation(tile) && rc.senseRobotAtLocation(tile) == null){
-//                if(rc.getLocation().distanceSquaredTo(tile) > 9) {
-//                    Direction dir = BFS.moveTowards(rc, tile);
-//                    if(dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, tile)) {
-//                        rc.move(dir);
-//                        break;
-//                    }
-//                }
-//                int minDistance = Integer.MAX_VALUE;
-//                //try and do our normal turn, but dont leave a certain radius of the ruins
-//                if(rc.isActionReady()) {
-//                    MapInfo loc = null;
-//                    for(MapInfo m : nearbyTiles) {
-//                        if(m.getPaint().isEnemy()) {
-//                            int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
-//                            if(dist < minDistance) {
-//                                minDistance = dist;
-//                                loc = m;
-//                            }
-//                            if(rc.canAttack(m.getMapLocation())) {
-//                                rc.attack(m.getMapLocation());
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    if(rc.isMovementReady()) {
-//                        assert loc != null;
-//                        Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
-//                        if(dir != null) {
-//                            MapLocation newLoc = rc.getLocation().add(dir);
-//                            if (newLoc.isWithinDistanceSquared(tile, 9) && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && isSafeFromTower(rc, newLoc)) {
-//                                rc.move(dir);
-//                            }
-//                        }
-//                    }
-//                    //still havent mopped anything, try again
-//                    if(rc.isActionReady()) {
-//                        for(MapInfo m : nearbyTiles) {
-//                            if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
-//                                rc.attack(m.getMapLocation());
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//                return;
-//            }
-//        }
-        //this is the turn if we dont see any unoccupied ruins
         //mop some shit up!
         if(rc.isActionReady()) {
             MapInfo loc = null;
@@ -235,19 +190,19 @@ public class Mopper {
             for(MapInfo m : nearbyTiles) {
                 if(m.getPaint().isEnemy()) {
                     int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
-                    if(!hasMark && !m.getMark().isAlly()) {
+                    if(!hasMark && !m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
                         if(dist < minDist) {
                             minDist = dist;
                             loc = m;
                         }
                     }
-                    else if(!hasMark && m.getMark().isAlly()) {
+                    else if(!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
                         hasMark = true;
                         minDist = dist;
                         loc = m;
                     }
                     else {
-                        if(m.getMark().isAlly()) {
+                        if(m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
                             if(dist < minDist){
                                 minDist = dist;
                                 loc = m;
@@ -255,7 +210,7 @@ public class Mopper {
                         }
                     }
 
-                    if(!hasMark && m.getMark().isAlly()) {
+                    if(!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
                         hasMark = true;
                         minDist = dist;
                         loc = m;

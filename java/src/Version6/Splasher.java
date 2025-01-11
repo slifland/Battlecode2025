@@ -31,6 +31,7 @@ public class Splasher {
     private static MapLocation closestUnvisitedAlliedTower = null;
     private static final HashSet<MapLocation> visitedAlliedTowers = new HashSet<MapLocation>();
     private static MapLocation nearestRuin = null;
+    private static MapLocation nearestUnoccupiedRuin = null;
 
     //information updated each turn
     public static void runSplasher(RobotController rc) throws GameActionException {
@@ -59,11 +60,50 @@ public class Splasher {
         else if(state != null) rc.setIndicatorString(state.toString());
         // Try to paint beneath us as we walk to avoid paint penalties.
         // Avoiding wasting paint by re-painting our own tiles.
-        MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
-        if ((!currentTile.getPaint().isAlly())
-                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 200){
-            rc.attack(rc.getLocation(), currentTileIsSecondary);
+//        MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
+//        boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
+//        if ((!currentTile.getPaint().isAlly())
+//                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 200){
+//            rc.attack(rc.getLocation(), currentTileIsSecondary);
+//        }
+        if(!farFromEdge(rc, rc.getLocation()) && rc.isMovementReady()) {
+            moveFromEdge(rc);
+        }
+    }
+
+    //attempts to move away from the closest edge
+    private static void moveFromEdge(RobotController rc) throws GameActionException {
+        int edgeX = 0;
+        int edgeY = 0;
+        MapLocation curLoc = rc.getLocation();
+        if(curLoc.x <= 3) {
+            edgeX = 0;
+        }
+        else if(curLoc.x >= rc.getMapWidth()-4) {
+            edgeX = rc.getMapWidth()-1;
+        }
+        else {
+            edgeX = curLoc.x;
+        }
+        if(curLoc.y <= 3) {
+            edgeY = 0;
+        }
+        else if(curLoc.y >= rc.getMapHeight()-4) {
+            edgeY = rc.getMapHeight()-1;
+        }
+        else {
+            edgeY = curLoc.y;
+        }
+        MapLocation edge = new MapLocation(edgeX, edgeY);
+        Direction dir = rc.getLocation().directionTo(edge);
+        if(rc.canMove(dir)) {
+            rc.move(dir);
+        }
+        else if(rc.canMove(dir.rotateRight())) {
+            rc.move(dir.rotateRight());
+        }
+        else if(rc.canMove(dir.rotateLeft())) {
+            rc.move(dir.rotateLeft());
         }
     }
 
@@ -180,10 +220,11 @@ public class Splasher {
     //tries to go to the current objective
     public static void explore(RobotController rc) throws GameActionException {
         if(!farFromEdge(rc, curObjective)){
-            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 7) + 4, rng.nextInt(rc.getMapHeight() - 7) + 4);
+            curObjective = new MapLocation(rc.getMapWidth() /2, rc.getMapHeight()/2);
         }
         //if there cant even conceivably be a place with that many empty tiles, then dont bother running that expensive method
         MapLocation toAttack = (maxScore > 6) ? splasherUtil.bestAttack(rc, false, 7) : null;
+        if(toAttack != null && toAttack.distanceSquaredTo(nearestUnoccupiedRuin) <= 8) toAttack = null;
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }
@@ -262,7 +303,7 @@ public class Splasher {
         }
         else
         {
-            if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 7) + 4, rng.nextInt(rc.getMapHeight() - 7) + 4);
+            if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = new MapLocation(rc.getMapWidth()/2, rc.getMapHeight()/2);
             //System.out.println("Splasher moving towards: random" + curObjective);
         }
 
@@ -289,7 +330,10 @@ public class Splasher {
                     maxScore += 2;
                 }
             }
-            if(maxScore > 6) break;
+            if(tile.hasRuin() && rc.senseRobotAtLocation(tile.getMapLocation()) == null) {
+                nearestUnoccupiedRuin = tile.getMapLocation();
+            }
+            //if(maxScore > 6) break;
         }
         /*
         for(RobotInfo robot : allyRobots)
@@ -358,7 +402,7 @@ public class Splasher {
         }
         else if(rc.getPaint() < 60 && nearestPaintTower == null) {
             state = splasherStates.explore;
-            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 8) + 4, rng.nextInt(rc.getMapHeight() - 8) + 4);
+            curObjective = new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight() / 2);
             return;
         }
         if(state == splasherStates.refill && (rc.getPaint() > 200 || nearestPaintTower == null)) {
@@ -399,7 +443,7 @@ public class Splasher {
         state = splasherStates.explore;
 
         if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) < 8) {
-            curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 8) + 4, rng.nextInt(rc.getMapHeight() - 8) + 4);
+            curObjective = new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight() / 2);
         }
 //        if(state != splasherStates.navigate || (curObjective == null || (!rc.canSenseLocation(curObjective) && state == splasherStates.navigate)))
 //        {

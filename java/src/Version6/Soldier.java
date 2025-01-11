@@ -2,6 +2,8 @@ package Version6;
 
 import battlecode.common.*;
 
+import java.awt.*;
+
 import static Version6.RobotPlayer.*;
 
 enum states {
@@ -24,6 +26,8 @@ public class Soldier {
     private static boolean clockwise;
     //used for refilling
     private static MapLocation nearestPaintTower = null;
+    //used to track if we should be painting under ourselves for the resource pattern
+    private static boolean nearRuin = false;
 
     //information updated each turn
 
@@ -59,7 +63,7 @@ public class Soldier {
         if(rc.isActionReady()) {
             MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
             boolean currentTileIsSecondary = Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
-            if ((!currentTile.getPaint().isAlly() || (currentTileIsSecondary != currentTile.getPaint().isSecondary() && currentTile.getMark() == PaintType.EMPTY))
+            if (!nearRuin && (!currentTile.getPaint().isAlly() || (currentTileIsSecondary != currentTile.getPaint().isSecondary() && currentTile.getMark() == PaintType.EMPTY))
                     && rc.canAttack(rc.getLocation()) && rc.getPaint() > 10) {
                 rc.attack(rc.getLocation(), currentTileIsSecondary);
             }
@@ -67,8 +71,9 @@ public class Soldier {
             else if (rc.getPaint() > 75 || (rc.getPaint() > 35 && nearestPaintTower != null)) {
                 if(Clock.getBytecodesLeft() > 4000) {
                     calculateAverageFilled(rc);
-                    MapLocation toFill = bestFill(rc);
+                    MapLocation toFill = bestFill(rc, state != states.ruin);
                     if(toFill != null && rc.canAttack(toFill)) {
+                        //rc.setIndicatorLine(rc.getLocation(), toFill, 255, 255, 255);
                         rc.attack(toFill, Utilities.getColorFromOriginPattern(toFill, rc.getResourcePattern()));
                     }
                 }
@@ -81,6 +86,7 @@ public class Soldier {
                     }
                 }
             }
+            if(rc.canCompleteResourcePattern(rc.getLocation())) rc.completeResourcePattern(rc.getLocation());
             //lets try and transfer some paint, if we can
 //            for (RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
 //                if (ally.getType().isTowerType() && rc.canTransferPaint(ally.getLocation(), -50)) {
@@ -108,56 +114,69 @@ public class Soldier {
             rc.move(dir);
         }
     }
-
     //attempts to fill the ruin we can see
     public static void fillRuin(RobotController rc) throws GameActionException {
         MapLocation targetLoc = curObjective;
         if(rc.getLocation().distanceSquaredTo(curObjective) > 2) {
-            Direction dir = (rc.getLocation().distanceSquaredTo(curObjective) > GameConstants.VISION_RADIUS_SQUARED) ? BFS_FullVision.pathfind(rc, targetLoc) : BFS_7x7.pathfind(rc, targetLoc);
-            if (dir != null && rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_PRIMARY && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint() != PaintType.ENEMY_SECONDARY)
+            Direction dir = BFS_7x7.pathfind(rc, targetLoc);
+            if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
-        }
-        //if(rc.getLocation().distanceSquaredTo(curObjective) > GameConstants.VISION_RADIUS_SQUARED) return;
-        Direction dir = rc.getLocation().directionTo(curObjective);
-        // Mark the pattern we need to draw to build a tower here if we haven't already.
-        MapLocation shouldBeMarked = curObjective.subtract(dir);
-        int ranNum = rng.nextInt(2);
-        if(rc.getRoundNum() <= 4) ranNum = 1;
-        if (ranNum == 0 && rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
-            if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
-                prevState = states.ruin;
-                state = states.refill;
-                refill(rc);
-                return;
             }
-            rc.markTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
         }
-        else if (rc.canSenseLocation(shouldBeMarked) && rc.senseMapInfo(shouldBeMarked).getMark() == PaintType.EMPTY && rc.canMarkTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc)){
-            if(rc.getPaint() <= GameConstants.MARK_PATTERN_PAINT_COST + 5) {
-                state = states.refill;
-                prevState = states.ruin;
-                refill(rc);
-                return;
+        if(rc.getLocation().distanceSquaredTo(curObjective) > GameConstants.VISION_RADIUS_SQUARED) return;
+        MapInfo[] ruinTiles = rc.senseNearbyMapInfos(curObjective, 8);
+        boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, curObjective, ruinTiles);
+        //time to choose the pattern for ourselves!
+        if(desiredPattern == null) {
+            if(rc.getRoundNum() <= 3) {
+                desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
             }
-            rc.markTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
-        }
-        // Fill in any spots in the pattern with the appropriate paint, but first try to paint ur own tile so u can stay alive longer.
-        MapInfo currentTile = rc.senseMapInfo(rc.getLocation());
-        if (currentTile.getPaint() == PaintType.EMPTY && currentTile.getMark() != currentTile.getPaint()){
-            boolean useSecondaryColor = currentTile.getMark() == PaintType.ALLY_SECONDARY;
-            if (rc.canAttack(currentTile.getMapLocation()))
-                rc.attack(currentTile.getMapLocation(), useSecondaryColor);
-        }
-        else {
-            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, rc.getType().actionRadiusSquared)) {
-                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
-                    boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
-                    if (rc.canAttack(patternTile.getMapLocation()))
-                        rc.attack(patternTile.getMapLocation(), useSecondaryColor);
+            else {
+                int ranNum = rng.nextInt(2);
+                if(ranNum == 0) {
+                    desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+                }
+                else {
+                    desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
                 }
             }
         }
-        // Complete the ruin if we can - never complete a paint tower if we still only have two starting towers, unless we clearly arent doing anything else
+        if(rc.getLocation().distanceSquaredTo(curObjective) <= 8) {
+            MapInfo curTile = rc.senseMapInfo(rc.getLocation());
+            PaintType paint = curTile.getPaint();
+            if(paint.equals(PaintType.EMPTY) && rc.canAttack(rc.getLocation())) {
+                rc.attack(rc.getLocation(), Utilities.getColorFromCustomPattern(rc.getLocation(), desiredPattern, curObjective));
+            }
+        }
+        //otherwise, lets try and fill it in
+        MapInfo desiredTile = null;
+        if(rc.isActionReady()) {
+        for(MapInfo tile : ruinTiles) {
+            if (!tile.getPaint().isEnemy() && !tile.hasRuin()) {
+                boolean isSecondary = Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, curObjective);
+                if (tile.getPaint().isSecondary() != isSecondary || tile.getPaint() == PaintType.EMPTY) {
+                    desiredTile = tile;
+                    if (rc.canAttack(tile.getMapLocation())) {
+                        //rc.setIndicatorLine(rc.getLocation(), tile.getMapLocation(), 255, 255, 255);
+                        rc.attack(tile.getMapLocation(), isSecondary);
+                    }
+                    break;
+
+                }
+            }
+        }
+        }
+        //potentially just need to move closer to some of the tiles
+        if(rc.isActionReady() && desiredTile != null) {
+            Direction dir = BFS_7x7.pathfind(rc, desiredTile.getMapLocation());
+            if(rc.canMove(dir)) {
+                rc.move(dir);
+            }
+            if(rc.canAttack(desiredTile.getMapLocation())) {
+                rc.attack(desiredTile.getMapLocation(), Utilities.getColorFromCustomPattern(desiredTile.getMapLocation(), desiredPattern, curObjective));
+            }
+        }
+        //try and complete the ruin pattern
         if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1500) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc)){
             rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, targetLoc);
             state = null;
@@ -167,18 +186,6 @@ public class Soldier {
             rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, targetLoc);
             state = null;
             curObjective = null;
-        }
-        //there is more to complete, but its out of our action radius - try to move closer to it
-        if(rc.isActionReady()) {
-            for (MapInfo patternTile : rc.senseNearbyMapInfos(targetLoc, rc.getType().actionRadiusSquared)) {
-                if (patternTile.getMark() != patternTile.getPaint() && patternTile.getMark() != PaintType.EMPTY && !isEnemyTile(patternTile)) {
-                    boolean useSecondaryColor = patternTile.getMark() == PaintType.ALLY_SECONDARY;
-                    Direction d = BFS.moveTowards(rc, patternTile.getMapLocation());
-                    if(d != null && rc.canMove(d)) rc.move(d);
-                    if (rc.canAttack(patternTile.getMapLocation()))
-                        rc.attack(patternTile.getMapLocation(), useSecondaryColor);
-                }
-            }
         }
     }
     //attempt to fill the empty space around us, prioritizing spaces that might complete resource patterns
@@ -199,7 +206,7 @@ public class Soldier {
         else {
         if(rc.isActionReady()) {
             //try and find a spot near other filled spots
-            MapLocation bestFill = bestFill(rc);
+            MapLocation bestFill = bestFill(rc, false);
             if(rc.canAttack(bestFill)){
                 rc.attack(bestFill, Utilities.getColorFromOriginPattern(bestFill, rc.getResourcePattern()));
                 if(rc.canCompleteResourcePattern(bestFill)) {
@@ -224,7 +231,7 @@ public class Soldier {
 
     //returns the square the robot can fill that has the most adjacent filled in squares
     //approximation - based on averageFill, the average location of filled ally squares the robot can see
-    private static MapLocation bestFill(RobotController rc) throws GameActionException {
+    private static MapLocation bestFill(RobotController rc, boolean acceptingCorrections) throws GameActionException {
        // MapInfo[] closeToAvgFill = rc.senseNearbyMapInfos(averageFilled, 4);
         MapLocation closest = null;
         int closestDistance = Integer.MAX_VALUE;
@@ -236,16 +243,22 @@ public class Soldier {
 //                closestDistance = patternTile.getMapLocation().distanceSquaredTo(curLoc);
 //            }
 //        }
+        MapLocation wrongTypePaint = null;
         for(MapInfo tile : nearbyTiles) {
             MapLocation tempLoc = tile.getMapLocation();
             int dist = curLoc.distanceSquaredTo(tempLoc);
             int distFromAvg = curLoc.distanceSquaredTo(averageFilled);
-            if(dist <= actionRadiusSquared && distFromAvg < closestDistance && tile.getPaint() == PaintType.EMPTY) {
+            if(dist <= actionRadiusSquared && distFromAvg < closestDistance && tile.getPaint() == PaintType.EMPTY && !tile.hasRuin()) {
                 closest = tempLoc;
                 closestDistance = distFromAvg;
             }
+            if(wrongTypePaint == null && dist <= actionRadiusSquared && tile.getPaint().isAlly() && tile.getPaint().isSecondary() != Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern()) && !tile.hasRuin()) {
+                wrongTypePaint = tile.getMapLocation();
+            }
         }
-        return closest;
+        if(closest != null) return closest;
+        else if (acceptingCorrections && wrongTypePaint != null) return wrongTypePaint;
+        else return null;
     }
 
     //calculates average filled in case you wanna use bestFill and you areont on fill mode
@@ -580,6 +593,7 @@ public class Soldier {
 
     //update our info, changing our state as necessary
     public static void updateState(RobotController rc) throws GameActionException {
+        nearRuin = false;
         if(state != states.refill && state != states.fill && prevState != null) prevState = null;
         if(rc.getPaint() < 20 && nearestPaintTower != null) {
             if(state == states.fill) {
@@ -611,6 +625,7 @@ public class Soldier {
         if(state != states.ruin) {
             // Search for a nearby ruin to complete.
             for (MapLocation tile : rc.senseNearbyRuins(-1)) {
+                nearRuin = true;
                 if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25) {
                     if (rc.getMoney() < 1000 && rc.senseNearbyRobots(tile, 2, rc.getTeam()).length > 0) {
                         if (state == states.ruin) state = states.explore;
@@ -621,6 +636,9 @@ public class Soldier {
                     return;
                 }
             }
+        }
+        else {
+            nearRuin = true;
         }
         if(state == states.ruin && rc.getLocation().isAdjacentTo(curObjective)) {
             if ((rc.getMoney() < 1000 || enemyRobots.length == 0) && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
