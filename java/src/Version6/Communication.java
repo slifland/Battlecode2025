@@ -119,22 +119,6 @@ public class Communication
 
     }
 
-    //looks through messages from the current round and the previous round, updating ruinsMemory
-    public static void receiveRuinLocations(RobotController rc)
-    {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
-
-        for(Message[] mArr : messages)
-        {
-            for(Message m : mArr)
-            {
-                if((m.getBytes() & 3) != 0) continue;
-
-                updateRuinsMemory(messageToRuin(m));
-            }
-        }
-    }
-
     /*
         Process all incoming messages for towers
      */
@@ -150,8 +134,10 @@ public class Communication
                 {
                     case 0b00:
                         updateRuinsMemory(messageToRuin(m));
+                        break;
                     case 0b10:
                         updatePaintAveragesTower(readAverageMessage(m));
+                        break;
                 }
             }
         }
