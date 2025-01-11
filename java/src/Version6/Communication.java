@@ -9,12 +9,11 @@ import java.util.Queue;
 
 public class Communication
 {
-    static Queue<Integer> ruinsQueue = new LinkedList<>();
     static ArrayList<Ruin> ruinsMemory = new ArrayList<>();
 
     /*
-        used by towers to ensure all Ruin locations are sent, important in the situation where tower cannot
-        send every ruin location to every robot
+        Cycles through ruinsMemory, determines which ruin is next to be broadcast
+        Ensures that, over time, all Ruin locations are sent
     */
     private static int nextRuinToSend = 0;
 
@@ -26,6 +25,7 @@ public class Communication
     {
         if(rc.getType().isRobotType())
         {
+            scanForRuins(rc);
             sendRuinLocationsToTower(rc);
         }
         else
@@ -35,33 +35,47 @@ public class Communication
     }
 
     /*
-        Scan all rune locations and send them to a nearby tower, this method should be
-        called by robots and not towers
+        Scan for nearby ruin locations and update ruinsMemory as necessary
+     */
+    private static void scanForRuins(RobotController rc) throws GameActionException
+    {
+        for(MapLocation ruinLoc : nearbyRuins)
+        {
+            int status = 0;
+            boolean isPaintTower = false;
+
+            RobotInfo ruinInfo = rc.senseRobotAtLocation(ruinLoc);
+
+            /*
+                If the ruin is unclaimed, ruinInfo will be null
+                    status will be left as 0
+                    isPaintTower will be left as false
+             */
+            if(ruinInfo != null)
+            {
+                //get the team information
+                if(ruinInfo.team == rc.getTeam())
+                    status = 1;
+                else
+                    status = 2;
+
+                //get whether it is a paint tower
+                if(isPaintTower(ruinInfo))
+                    isPaintTower = true;
+            }
+
+            updateRuinsMemory(new Ruin(ruinLoc, status, isPaintTower));
+        }
+    }
+
+    /*
+        Send known ruin locations to a nearby tower
+        This method should be called by robots and not towers
+
+        Currently, only broadcasts info about paint towers, not ruins or other tower types
     */
     private static void sendRuinLocationsToTower(RobotController rc) throws GameActionException
     {
-        //First determine all ruins nearby and add them to the queue
-        for(MapLocation ruin : nearbyRuins)
-        {
-            int message = 0;
-            message |= (ruin.x << 2);   //Add x location to message
-            message |= (ruin.y << 8);  //Add y location to message
-
-            //Add the team information to the message
-            RobotInfo ruinTeam = rc.senseRobotAtLocation(ruin);
-            if(ruinTeam != null)
-            {
-                message = ruinTeam.team == rc.getTeam() ?
-                        message | 1 << 14 : message | 2 << 14;
-            }
-            if(!ruinsQueue.contains(message))
-            {
-                ruinsQueue.add(message);
-            }
-
-            updateRuinsMemory(messageToRuin(message));
-        }
-
         //Check if there is an available tower to broadcast to
         MapLocation tower = null;
         for(RobotInfo robot : allyRobots)
@@ -72,18 +86,18 @@ public class Communication
                 break;
             }
         }
-        if(tower == null)
-        {
-            return;
-        }
+
+        if(tower == null || ruinsMemory.isEmpty()) return;
+
+        //filter communications to include paint towers only; might be edited/removed later on
+        while(!ruinsMemory.get(nextRuinToSend).isPaintTower)
+            nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
 
         //if there are ruins to be sent and we can message the tower, send a location
-        if(!ruinsQueue.isEmpty() && rc.canSendMessage(tower, ruinsQueue.peek()))
+        if(rc.canSendMessage(tower, ruinToMessage(ruinsMemory.get(nextRuinToSend))))
         {
-            int message = ruinsQueue.remove();
-            rc.sendMessage(tower, message);
-            //MapLocation location = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
-            //Ruin ruin = new Ruin(location, (message >> 14) & 3);
+            rc.sendMessage(tower, ruinToMessage(ruinsMemory.get(nextRuinToSend)));
+            nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
         }
     }
 
@@ -114,6 +128,8 @@ public class Communication
         {
             for(Message m : mArr)
             {
+                if((m.getBytes() & 3) != 0) continue;
+
                 updateRuinsMemory(messageToRuin(m));
             }
         }
@@ -143,10 +159,12 @@ public class Communication
 
     public static int ruinToMessage(Ruin ruin)
     {
-        int message = 0;
-        message |= (ruin.location.x << 2);   //Add x location to message
-        message |= (ruin.location.y << 8);  //Add y location to message
-        message |= ruin.status << 14;       //Add ruin status to message
+        int message = 0; //comm code for Ruin Info
+
+        message |= (ruin.location.x << 2);          //Add x location to message
+        message |= (ruin.location.y << 8);          //Add y location to message
+        message |= ruin.status << 14;               //Add ruin status to message
+        message |= ruin.isPaintTower ? 1 << 16 : 0; //Add isPaintTower to message
 
         return message;
     }
@@ -156,7 +174,7 @@ public class Communication
     public static Ruin messageToRuin(int message)
     {
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
-        return new Ruin(loc, (message >> 14) & 3);
+        return new Ruin(loc, (message >> 14) & 3, ((message >> 16) & 1) == 1);
     }
     public static Ruin messageToRuin(Message m)
     {
@@ -250,6 +268,18 @@ public class Communication
         {
             System.out.println("\t" + ruin);
         }
+    }
+
+    /*
+        Returns whether a robot is a paint tower
+     */
+    public static boolean isPaintTower(RobotInfo info)
+    {
+        UnitType type = info.getType();
+
+        return     type == UnitType.LEVEL_ONE_PAINT_TOWER
+                || type == UnitType.LEVEL_TWO_PAINT_TOWER
+                || type == UnitType.LEVEL_THREE_PAINT_TOWER;
     }
 
 }
