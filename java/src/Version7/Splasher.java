@@ -32,6 +32,8 @@ public class Splasher {
     private static final HashSet<MapLocation> visitedAlliedTowers = new HashSet<MapLocation>();
     private static MapLocation nearestRuin = null;
     private static MapLocation nearestUnoccupiedRuin = null;
+    //used to direct splashers to other nearby paint towers if the current one is occupied
+    private static MapLocation fillingStation = null;
 
     //information updated each turn
     public static void runSplasher(RobotController rc) throws GameActionException {
@@ -66,8 +68,13 @@ public class Splasher {
 //                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 200){
 //            rc.attack(rc.getLocation(), currentTileIsSecondary);
 //        }
-        if(!farFromEdge(rc, rc.getLocation()) && rc.isMovementReady()) {
-            moveFromEdge(rc);
+        if(rc.isMovementReady()) {
+            if (!farFromEdge(rc, rc.getLocation()) && (state != splasherStates.refill)) {
+                moveFromEdge(rc);
+            }
+            if (!rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
+                findSafety(rc);
+            }
         }
     }
 
@@ -150,25 +157,46 @@ public class Splasher {
             }
         }
         else {
-            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() || !isSafeFromTower(rc, rc.getLocation())) {
+            if(!rc.senseMapInfo(rc.getLocation()).getPaint().isAlly() || !isSafeFromTower(rc, rc.getLocation())) {
                 findSafety(rc);
+            }
+            else {
+                Direction dir = (Clock.getBytecodesLeft() > 6000) ? BFS_7x7.pathfind(rc, curObjective) : rc.getLocation().directionTo(curObjective);
+                if(dir != null && rc.canMove(dir) && rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly() && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+                    rc.move(dir);
+                }
             }
         }
     }
 
     //looks to retreat to safety by finding a square that isnt the enemies
     public static void findSafety(RobotController rc) throws GameActionException {
-        for(MapInfo tile : nearbyTiles) {
-            if(rc.canMove(rc.getLocation().directionTo(tile.getMapLocation())) && !isEnemyTile(tile) && isSafeFromTower(rc, tile.getMapLocation())) {
-                rc.move(rc.getLocation().directionTo(tile.getMapLocation()));
+//        for(MapInfo tile : nearbyTiles) {
+//            if(rc.canMove(rc.getLocation().directionTo(tile.getMapLocation())) && !isEnemyTile(tile) && isSafeFromTower(rc, tile.getMapLocation())) {
+//                rc.move(rc.getLocation().directionTo(tile.getMapLocation()));
+//            }
+//        }
+        MapInfo bestTile = null;
+        for(MapInfo tile : rc.senseNearbyMapInfos(2)) {
+            if(tile.getPaint().isAlly() && isSafeFromTower(rc, tile.getMapLocation())) {
+                bestTile = tile;
             }
+            else if(isSafeFromTower(rc, tile.getMapLocation()) && !tile.getPaint().isEnemy() && (bestTile == null || !bestTile.getPaint().isAlly())) {
+                bestTile = tile;
+            }
+        }
+        if(bestTile == null) return;
+        Direction dir = rc.getLocation().directionTo(bestTile.getMapLocation());
+        if(rc.canMove(dir)) {
+            rc.move(dir);
         }
     }
 
     //attempting to attack the tower we can see
     public static void attack(RobotController rc) throws GameActionException {
-        if(rc.isActionReady()) {
-            MapLocation toAttack = splasherUtil.bestAttack(rc, true, 2);
+        if(rc.isActionReady() && rc.getPaint() > 50) {
+            //MapLocation toAttack = splasherUtil.bestAttack(rc, true, 2);
+            MapLocation toAttack = splasherUtil.cheapBestAttack(rc,true, 2);
             if(toAttack != null && rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
             }
@@ -207,24 +235,19 @@ public class Splasher {
             }
         }
         //if we cant attack, stay safe until we can
-        else if(!(isSafeFromTower(rc, rc.getLocation()) || !isEnemyTile(rc.senseMapInfo(rc.getLocation())))) {
-//            if(curObjective != null) {
-//                if(rc.canMove(rc.getLocation().directionTo(curObjective).opposite())) {
-//                    rc.move(rc.getLocation().directionTo(curObjective).opposite());
-//                }
-//            }
+        if(!isSafeFromTower(rc,rc.getLocation()) || isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
             findSafety(rc);
         }
     }
 
     //tries to go to the current objective
     public static void explore(RobotController rc) throws GameActionException {
-        if(!farFromEdge(rc, curObjective)){
+        if(curObjective == null || !farFromEdge(rc, curObjective)){
             curObjective = new MapLocation(rc.getMapWidth() /2, rc.getMapHeight()/2);
         }
         //if there cant even conceivably be a place with that many empty tiles, then dont bother running that expensive method
         MapLocation toAttack = (maxScore > 6) ? splasherUtil.bestAttack(rc, false, 7) : null;
-        if(toAttack != null && toAttack.distanceSquaredTo(nearestUnoccupiedRuin) <= 8) toAttack = null;
+        if(toAttack != null && nearestUnoccupiedRuin != null && toAttack.distanceSquaredTo(nearestUnoccupiedRuin) <= 8) toAttack = null;
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }
@@ -242,7 +265,7 @@ public class Splasher {
             //if we didnt run best attack, we have plenty of bytecodes to use pathfinding
             if(maxScore <= 6) {
                 Direction dir = BFS_7x7.pathfind(rc, curObjective);
-                if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+                if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir)) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir);
                 }
             }
@@ -250,11 +273,11 @@ public class Splasher {
                 Direction dir = rc.getLocation().directionTo(curObjective);
                 if(rc.getPaint() < 50 && !rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly())
                     return;
-                if(rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+                if(rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir)) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir);
-                } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft()))) {
+                } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft())) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir.rotateLeft());
-                } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight()))) {
+                } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight())) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir.rotateRight());
                 }
             }
@@ -263,14 +286,38 @@ public class Splasher {
 
     //tries to return to nearest paint tower to refill
     public static void refill(RobotController rc) throws GameActionException {
-        if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
-            if(rc.canTransferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1))){
-                rc.transferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1));
+//        if(rc.getLocation().isAdjacentTo(nearestPaintTower)) {
+//            if(rc.canTransferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1))){
+//                rc.transferPaint(nearestPaintTower, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(nearestPaintTower).paintAmount * -1));
+//            }
+//        }
+//        else {
+//            Direction dir = BFS_7x7.pathfind(rc, nearestPaintTower);
+//            if (dir != null && rc.canMove(dir) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+//                rc.move(dir);
+//            }
+//        }
+            //station is crowded, lets find another
+            if(rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 2 || (rc.canSenseLocation(fillingStation) && rc.senseRobotAtLocation(fillingStation) == null)) {
+                MapLocation nextNearestPaintTower = null;
+                for(Ruin r : Communication.ruinsMemory)
+                {
+                    if(r.isPaintTower && !r.location.equals(fillingStation) && ((nextNearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nextNearestPaintTower)) && r.status == 1)){
+                        nextNearestPaintTower = r.location;
+                    }
+                }
+                if(nextNearestPaintTower != null) {
+                    fillingStation = nextNearestPaintTower;
+                }
+            }
+            if(rc.getLocation().isAdjacentTo(fillingStation)) {
+            if(rc.canTransferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1))){
+                rc.transferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1));
             }
         }
         else {
-            Direction dir = BFS.moveTowards(rc, nearestPaintTower);
-            if (dir != null && rc.canMove(dir)) {
+            Direction dir = BFS_7x7.pathfind(rc, fillingStation);
+            if (dir != null && rc.canMove(dir) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                 rc.move(dir);
             }
         }
@@ -351,8 +398,9 @@ public class Splasher {
         nearestPaintTower = null;
         for(Ruin r : Communication.ruinsMemory)
         {
-            if(r.isPaintTower && (nearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestPaintTower)))
+            if(r.isPaintTower && (nearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestPaintTower)) && r.status == 1){
                 nearestPaintTower = r.location;
+            }
         }
         /*
         if(nearestRuin != null && rc.canSenseLocation(nearestRuin) && (rc.senseRobotAtLocation(nearestRuin) != null || rc.getNumberTowers() >= 25)) {
@@ -398,14 +446,17 @@ public class Splasher {
         if(rc.getPaint() < 60 && nearestPaintTower != null) {
             if(prevState == null) prevState = state;
             state = splasherStates.refill;
+            if(fillingStation == null) fillingStation = nearestPaintTower;
             return;
         }
         else if(rc.getPaint() < 60 && nearestPaintTower == null) {
             state = splasherStates.explore;
             curObjective = new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight() / 2);
+            fillingStation = null;
             return;
         }
         if(state == splasherStates.refill && (rc.getPaint() > 200 || nearestPaintTower == null)) {
+            fillingStation = null;
             state = prevState;
             prevState = null;
             return;

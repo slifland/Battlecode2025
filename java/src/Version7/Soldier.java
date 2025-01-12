@@ -103,7 +103,6 @@ public class Soldier {
                 }
             }
         }
-        System.out.println(Clock.getBytecodesLeft());
     }
 
     //attempt to move to the random location we have been assigned, or choose a new random location
@@ -232,6 +231,7 @@ public class Soldier {
     //returns the square the robot can fill that has the most adjacent filled in squares
     //approximation - based on averageFill, the average location of filled ally squares the robot can see
     private static MapLocation bestFill(RobotController rc, boolean acceptingCorrections) throws GameActionException {
+        if(averageFilled == null) return null;
        // MapInfo[] closeToAvgFill = rc.senseNearbyMapInfos(averageFilled, 4);
         MapLocation closest = null;
         int closestDistance = Integer.MAX_VALUE;

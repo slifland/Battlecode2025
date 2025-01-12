@@ -103,7 +103,6 @@ public class Soldier {
                 }
             }
         }
-        System.out.println(Clock.getBytecodesLeft());
     }
 
     //attempt to move to the random location we have been assigned, or choose a new random location

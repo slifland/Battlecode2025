@@ -142,7 +142,8 @@ public class RobotPlayer {
                 }
                 if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
-                    moppers++;
+                    //moppers++;
+                    soldiers = 0;
                     totalBuilt++;
                 }
                 if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {

@@ -222,7 +222,7 @@ public class Mopper {
                 rc.attack(loc.getMapLocation());
             }
             if(rc.isMovementReady()) {
-                Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
+                Direction dir = BFS_7x7.pathfind(rc, loc.getMapLocation());
                 if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
                     rc.move(dir);
                 }
@@ -247,7 +247,8 @@ public class Mopper {
         if (rc.getLocation().distanceSquaredTo(curObjective) < 16) {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        //Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = BFS_7x7.pathfind(rc, curObjective);
         if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
@@ -289,7 +290,8 @@ public class Mopper {
 
         }
 
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        //Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = BFS_7x7.pathfind(rc, curObjective);
         if(dir != null && rc.canMove(dir))
         {
             rc.move(dir);

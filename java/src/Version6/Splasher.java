@@ -66,7 +66,7 @@ public class Splasher {
 //                && rc.canAttack(rc.getLocation()) && rc.getPaint() > 200){
 //            rc.attack(rc.getLocation(), currentTileIsSecondary);
 //        }
-        if(!farFromEdge(rc, rc.getLocation()) && rc.isMovementReady()) {
+        if(!farFromEdge(rc, rc.getLocation()) && rc.isMovementReady() && state != refill) {
             moveFromEdge(rc);
         }
     }
@@ -224,7 +224,7 @@ public class Splasher {
         }
         //if there cant even conceivably be a place with that many empty tiles, then dont bother running that expensive method
         MapLocation toAttack = (maxScore > 6) ? splasherUtil.bestAttack(rc, false, 7) : null;
-        if(toAttack != null && toAttack.distanceSquaredTo(nearestUnoccupiedRuin) <= 8) toAttack = null;
+        if(toAttack != null && nearestUnoccupiedRuin != null && toAttack.distanceSquaredTo(nearestUnoccupiedRuin) <= 8) toAttack = null;
         if(toAttack != null && rc.canAttack(toAttack)) {
             rc.attack(toAttack);
         }
