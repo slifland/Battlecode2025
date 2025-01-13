@@ -4,18 +4,22 @@ import battlecode.common.*;
 import static Version8.RobotPlayer.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Communication
 {
-    static ArrayList<Ruin> ruinsMemory = new ArrayList<>();
+    static ArrayList<Ruin> ruins = new ArrayList<>();
+    static ArrayList<Ruin> enemyTowers = new ArrayList<>();
+    static ArrayList<Ruin> alliedPaintTowers = new ArrayList<>();
+    static ArrayList<Ruin> alliedNonpaintTowers = new ArrayList<>();
+
+    static ArrayList<Ruin>[] allRuinsMemory = (ArrayList<Ruin>[]) new ArrayList[] {ruins, enemyTowers, alliedPaintTowers, alliedNonpaintTowers};
 
     /*
         Cycles through ruinsMemory, determines which ruin is next to be broadcast
         Ensures that, over time, all Ruin locations are sent
     */
-    private static int nextRuinToSend = 0;
+    private static int nextRuinToSendOuter = 0;
+    private static int nextRuinToSendInner = 0;
 
     /*
         Process all incoming messages for robots
@@ -131,37 +135,57 @@ public class Communication
     */
     public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
+        emptyCheck: {
+            for(ArrayList<Ruin> list : allRuinsMemory)
+            {
+                if(!list.isEmpty()) break emptyCheck;
+            }
 
-        if(ruinsMemory.isEmpty()) return;
-        int escape = 0;
-        ////////////////////////filter communications to include allied paint towers only; might be edited/removed later on///////////////////////////////
-        while(!(ruinsMemory.get(nextRuinToSend).isAllied() && ruinsMemory.get(nextRuinToSend).isPaintTower)) {
-            nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
-            escape++;
-            if(escape >= ruinsMemory.size()) break;
+            return; //we have no Ruins to send
         }
 
-        //if there are ruins to be sent and we can message the tower, send a location
-        if(rc.canSendMessage(tower, ruinToMessage(ruinsMemory.get(nextRuinToSend))))
+        while(allRuinsMemory[nextRuinToSendOuter].isEmpty())
         {
-            rc.sendMessage(tower, ruinToMessage(ruinsMemory.get(nextRuinToSend)));
-            nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
+            nextRuinToSendOuter = (nextRuinToSendOuter + 1) % allRuinsMemory.length;
+            nextRuinToSendInner = 0;
+        }
+
+        if(rc.canSendMessage(tower, ruinToMessage(allRuinsMemory[nextRuinToSendOuter].get(nextRuinToSendInner))))
+        {
+            rc.sendMessage(tower, ruinToMessage(allRuinsMemory[nextRuinToSendOuter].get(nextRuinToSendInner)));
+            nextRuinToSendInner++;
+
+            if(nextRuinToSendInner >= allRuinsMemory[nextRuinToSendOuter].size())
+                nextRuinToSendOuter++;
         }
     }
 
     public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
     {
-        if(ruinsMemory.isEmpty()) return;
+        emptyCheck: {
+            for(ArrayList<Ruin> list : allRuinsMemory)
+            {
+                if(!list.isEmpty()) break emptyCheck;
+            }
 
-        int startIndex;
+            return; //we have no Ruins to send
+        }
 
         for(RobotInfo ri : allyRobots)
         {
-            startIndex = nextRuinToSend;
-            while(rc.canSendMessage(ri.location) && nextRuinToSend != startIndex)
+            while(allRuinsMemory[nextRuinToSendOuter].isEmpty())
             {
-                rc.sendMessage(ri.location, ruinToMessage(ruinsMemory.get(nextRuinToSend)));
-                nextRuinToSend = (nextRuinToSend + 1) % ruinsMemory.size();
+                nextRuinToSendOuter = (nextRuinToSendOuter + 1) % allRuinsMemory.length;
+                nextRuinToSendInner = 0;
+            }
+
+            if(rc.canSendMessage(ri.location, ruinToMessage(allRuinsMemory[nextRuinToSendOuter].get(nextRuinToSendInner))))
+            {
+                rc.sendMessage(ri.location, ruinToMessage(allRuinsMemory[nextRuinToSendOuter].get(nextRuinToSendInner)));
+                nextRuinToSendInner++;
+
+                if(nextRuinToSendInner >= allRuinsMemory[nextRuinToSendOuter].size())
+                    nextRuinToSendOuter++;
             }
         }
 
@@ -194,16 +218,34 @@ public class Communication
     //Takes in a Ruin; If we already have knowledge of this Ruin, update the status, otherwise add it to memory
     public static void updateRuinsMemory(Ruin ruin)
     {
-        for(int i = 0; i < ruinsMemory.size(); i++)
+        for(ArrayList<Ruin> list : allRuinsMemory)
         {
-            if(ruinsMemory.get(i).location.equals(ruin.location))
+            for(int i = 0; i < list.size(); i++)
             {
-                ruinsMemory.set(i, ruin);
-                return;
+                if(list.get(i).location.equals(ruin.location))
+                {
+                    list.remove(i);
+                }
             }
         }
 
-        ruinsMemory.add(ruin);
+        switch(ruin.status)
+        {
+            case 0: //unclaimed
+                ruins.add(ruin);
+                break;
+
+            case 1: //ally
+                if(ruin.isPaintTower)
+                    alliedPaintTowers.add(ruin);
+                else
+                    alliedNonpaintTowers.add(ruin);
+                break;
+
+            case 2: //enemy
+                enemyTowers.add(ruin);
+                break;
+        }
     }
 
     public static int createAverageMessage()
@@ -287,11 +329,13 @@ public class Communication
      */
     public static void printRuinsMemory()
     {
+        /*
         System.out.println("Num ruins in memory: " + ruinsMemory.size());
         for(Ruin ruin : ruinsMemory)
         {
             System.out.println("\t" + ruin);
         }
+        */
     }
 
     /*

@@ -5,7 +5,7 @@ import battlecode.common.*;
 public class Ruin
 {
     public MapLocation location;
-    public int status;              //0 - empty, 1 - ally, 2 - enemy
+    public int status;              //0 - unclaimed, 1 - ally, 2 - enemy
     public boolean isPaintTower;
 
     public Ruin(MapLocation location, int status, boolean isPaintTower)
