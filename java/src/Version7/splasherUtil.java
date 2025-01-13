@@ -6,6 +6,32 @@ import static Version7.RobotPlayer.nearbyTiles;
 import static Version7.Splasher.*;
 
 public class splasherUtil {
+
+    //returns a basic location to attack - used when very close to edge
+    public static MapLocation basicBestAttack(RobotController rc) {
+        MapInfo bestTile = null;
+        int bestDist = Integer.MAX_VALUE;
+        boolean isEnemyTile = false;
+        MapLocation curLoc = rc.getLocation();
+        for(MapInfo tile : nearbyTiles) {
+            PaintType paint = tile.getPaint();
+            if(paint.isEnemy() && !isEnemyTile) {
+                isEnemyTile = true;
+                bestTile = tile;
+                bestDist = curLoc.distanceSquaredTo(tile.getMapLocation());
+            }
+            else if(paint.isEnemy() && curLoc.distanceSquaredTo(tile.getMapLocation()) < bestDist) {
+                bestTile = tile;
+                bestDist = curLoc.distanceSquaredTo(tile.getMapLocation());
+            }
+            else if(paint == PaintType.EMPTY && curLoc.distanceSquaredTo(tile.getMapLocation()) < bestDist) {
+                bestTile = tile;
+                bestDist = curLoc.distanceSquaredTo(tile.getMapLocation());
+            }
+        }
+        return (bestTile == null) ? null : bestTile.getMapLocation();
+    }
+
     //returns the best location to attack based on how much impact the attack will have
     //returns null if the best attack has less than or equal impact to the minScore
     public static MapLocation bestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
@@ -1803,7 +1829,7 @@ public class splasherUtil {
 
     //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
     public static MapLocation cheapBestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdge(rc, rc.getLocation())) return null;
+        if(!farFromEdge(rc, rc.getLocation())) return basicBestAttack(rc);
         int price = Clock.getBytecodesLeft();
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;

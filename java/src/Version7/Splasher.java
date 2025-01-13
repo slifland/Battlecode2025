@@ -2,12 +2,9 @@ package Version7;
 
 import battlecode.common.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 
 import static Version7.RobotPlayer.*;
-import static Version7.splasherStates.*;
 
 enum splasherStates {
     attack, refill, navigate, conquer, explore
@@ -69,9 +66,9 @@ public class Splasher {
 //            rc.attack(rc.getLocation(), currentTileIsSecondary);
 //        }
         if(rc.isMovementReady()) {
-            if (!farFromEdge(rc, rc.getLocation()) && (state != splasherStates.refill)) {
-                moveFromEdge(rc);
-            }
+//            if (!farFromEdge(rc, rc.getLocation()) && (state != splasherStates.refill)) {
+//                moveFromEdge(rc);
+//            }
             if (!rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
                 findSafety(rc);
             }
@@ -129,11 +126,11 @@ public class Splasher {
                 }
                 //otherwise, move closer, then attack
                 Direction dir = rc.getLocation().directionTo(toAttack);
-                if (rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+                if (rc.canMove(dir)) {
                     rc.move(dir);
-                } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft()))) {
+                } else if (rc.canMove(dir.rotateLeft())) {
                     rc.move(dir.rotateLeft());
-                } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight()))) {
+                } else if (rc.canMove(dir.rotateRight())) {
                     rc.move(dir.rotateRight());
                 }
                 if (rc.canAttack(toAttack)) {
@@ -150,7 +147,7 @@ public class Splasher {
                     }
                 }
                 else {
-                    if(isSafeFromTower(rc, newLoc) && rc.canMove(dir) && !isEnemyTile(newLocInfo) && farFromEdge(rc, newLoc)) {
+                    if(isSafeFromTower(rc, newLoc) && rc.canMove(dir) && !isEnemyTile(newLocInfo)) {
                         rc.move(dir);
                     }
                 }
@@ -215,7 +212,7 @@ public class Splasher {
                 if(dir == null) return;
                 MapLocation newLoc = rc.getLocation().add(dir);
                 MapInfo newLocInfo = rc.senseMapInfo(newLoc);
-                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc) && farFromEdge(rc, newLoc)) {
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(toAttack) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc)) {
                     rc.move(dir);
                     if(rc.canAttack(toAttack)) {
                         rc.attack(toAttack);
@@ -226,7 +223,7 @@ public class Splasher {
             if(rc.isActionReady()) {
                 Direction dir = rc.getLocation().directionTo(curObjective);
                 MapLocation newLoc = rc.getLocation().add(dir);
-                if(rc.canMove(dir) && newLoc.distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc) && farFromEdge(rc, newLoc)) {
+                if(rc.canMove(dir) && newLoc.distanceSquaredTo(curObjective) <= rc.getType().actionRadiusSquared && isSafeFromTowerModified(rc, newLoc)) {
                     rc.move(dir);
                     if(rc.canAttack(curObjective)) {
                         rc.attack(curObjective);
@@ -254,7 +251,7 @@ public class Splasher {
         if(toAttack != null && rc.isActionReady()) {
             //Direction dir = BFS.moveTowards(rc, toAttack);
             Direction dir = rc.getLocation().directionTo(toAttack);
-            if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
+            if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
                 if(rc.canAttack(toAttack)) {
                     rc.attack(toAttack);
@@ -265,7 +262,7 @@ public class Splasher {
             //if we didnt run best attack, we have plenty of bytecodes to use pathfinding
             if(maxScore <= 6) {
                 Direction dir = BFS_7x7.pathfind(rc, curObjective);
-                if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir)) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+                if(dir != null && rc.canMove(dir) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir);
                 }
             }
@@ -273,11 +270,11 @@ public class Splasher {
                 Direction dir = rc.getLocation().directionTo(curObjective);
                 if(rc.getPaint() < 50 && !rc.senseMapInfo(rc.getLocation().add(dir)).getPaint().isAlly())
                     return;
-                if(rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir)) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+                if(rc.canMove(dir) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir);
-                } else if (rc.canMove(dir.rotateLeft()) && farFromEdge(rc, rc.getLocation().add(dir.rotateLeft())) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+                } else if (rc.canMove(dir.rotateLeft()) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir.rotateLeft());
-                } else if (rc.canMove(dir.rotateRight()) && farFromEdge(rc, rc.getLocation().add(dir.rotateRight())) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
+                } else if (rc.canMove(dir.rotateRight()) && isSafeFromTower(rc, rc.getLocation().add(dir))) {
                     rc.move(dir.rotateRight());
                 }
             }
@@ -533,7 +530,7 @@ public class Splasher {
     //returns if the location is at least four blocks away from the edge in x and y direction - if we somehow are close to edge, never run bestAttack
     //differs from other because this will return true if you are close to edge so you dont get trapped
     public static boolean farFromEdge(RobotController rc, MapLocation loc) {
-        if(!loc.equals(rc.getLocation()) && !farFromEdge(rc, rc.getLocation())) return true;
+        //if(!loc.equals(rc.getLocation()) && !farFromEdge(rc, rc.getLocation())) return true;
         int mapHeight = rc.getMapHeight() - 1;
         int mapWidth = rc.getMapWidth()- 1;
         return loc.x >= 3 && loc.y >= 3 && loc.x <= mapWidth - 3 && loc.y <= mapHeight - 3;
@@ -546,6 +543,4 @@ public class Splasher {
         int mapWidth = rc.getMapWidth()- 1;
         return loc.x >= 4 && loc.y >= 4 && loc.x <= mapWidth - 4 && loc.y <= mapHeight - 4;
     }
-
-
 }
