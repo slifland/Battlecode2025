@@ -28,13 +28,13 @@ public class Mopper {
     public static void runMopper(RobotController rc) throws GameActionException {
         updateInfo(rc);
         updateState(rc);
-        if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
-            for(MapInfo loc : rc.senseNearbyMapInfos(2)) {
-                if(!isEnemyTile(loc) && rc.canMove(rc.getLocation().directionTo(loc.getMapLocation()))) {
-                    rc.move(rc.getLocation().directionTo(loc.getMapLocation()));
-                }
-            }
-        }
+//        if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {
+//            for(MapInfo loc : rc.senseNearbyMapInfos(2)) {
+//                if(!isEnemyTile(loc) && rc.canMove(rc.getLocation().directionTo(loc.getMapLocation()))) {
+//                    rc.move(rc.getLocation().directionTo(loc.getMapLocation()));
+//                }
+//            }
+//        }
         switch(state) {
             case mop:
                 mop(rc);
@@ -52,14 +52,15 @@ public class Mopper {
         //updateInfo(rc);
         if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
         else if(state != null) rc.setIndicatorString(state.toString());
+        //System.out.println(Clock.getBytecodesLeft());
         //if we are stll action ready, and have paint, lets transfer it to low paint soldiers nearby
-        if(rc.isActionReady() && rc.getPaint() > 50 && rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
-            for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
-                if((ally.getType() == UnitType.SOLDIER || ally.getType() == UnitType.SPLASHER) && ally.getPaintAmount() < 100 && rc.canTransferPaint(ally.getLocation(), rc.getPaint() - 50)) {
-                    rc.transferPaint(ally.getLocation(), rc.getPaint() - 50);
-                }
-            }
-        }
+//        if(rc.isActionReady() && rc.getPaint() > 50 && rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
+//            for(RobotInfo ally : rc.senseNearbyRobots(2, rc.getTeam())) {
+//                if((ally.getType() == UnitType.SOLDIER || ally.getType() == UnitType.SPLASHER) && ally.getPaintAmount() < 100 && rc.canTransferPaint(ally.getLocation(), rc.getPaint() - 50)) {
+//                    rc.transferPaint(ally.getLocation(), rc.getPaint() - 50);
+//                }
+//            }
+//        }
     }
 
     //updates our knowledege of nearby things
@@ -174,9 +175,9 @@ public class Mopper {
                 }
             }
         }
-        //stay near enemies but off enemy tiles
-        else {
-            return;
+        if(rc.isMovementReady()) {
+            Direction dir = Micro.runMicro(rc);
+            if(rc.canMove(dir)) rc.move(dir);
         }
     }
 
@@ -187,43 +188,55 @@ public class Mopper {
             MapInfo loc = null;
             boolean hasMark = false;
             int minDist = Integer.MAX_VALUE;
-            for(MapInfo m : nearbyTiles) {
-                if(m.getPaint().isEnemy()) {
-                    int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
-                    if(!hasMark && !m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                        if(dist < minDist) {
+            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() && rc.canAttack(rc.getLocation())) {
+                rc.attack(rc.getLocation());
+            }
+            else {
+                for (MapInfo m : nearbyTiles) {
+                    if (m.getPaint().isEnemy()) {
+                        int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
+                        if (!hasMark && !m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+                            if (dist < minDist) {
+                                minDist = dist;
+                                loc = m;
+                            }
+                        } else if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+                            hasMark = true;
+                            minDist = dist;
+                            loc = m;
+                        } else {
+                            if (m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+                                if (dist < minDist) {
+                                    minDist = dist;
+                                    loc = m;
+                                }
+                            }
+                        }
+
+                        if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+                            hasMark = true;
                             minDist = dist;
                             loc = m;
                         }
                     }
-                    else if(!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                        hasMark = true;
-                        minDist = dist;
-                        loc = m;
-                    }
-                    else {
-                        if(m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                            if(dist < minDist){
-                                minDist = dist;
-                                loc = m;
-                            }
-                        }
-                    }
-
-                    if(!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                        hasMark = true;
-                        minDist = dist;
-                        loc = m;
-                    }
+                }
+                assert loc != null;
+                if(rc.canAttack(loc.getMapLocation())) {
+                    rc.attack(loc.getMapLocation());
                 }
             }
-            assert loc != null;
-            if(rc.canAttack(loc.getMapLocation())) {
-                rc.attack(loc.getMapLocation());
-            }
+
+//            if(rc.isMovementReady()) {
+//                Direction dir = BFS_7x7.pathfind(rc, loc.getMapLocation());
+//                if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
+//                    rc.move(dir);
+//                }
+//            }
             if(rc.isMovementReady()) {
-                Direction dir = BFS_7x7.pathfind(rc, loc.getMapLocation());
-                if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
+                //int price = Clock.getBytecodesLeft();
+                Direction dir = Micro.runMicro(rc);
+                //System.out.println(price - Clock.getBytecodesLeft());
+                if(rc.canMove(dir)) {
                     rc.move(dir);
                 }
             }
