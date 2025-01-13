@@ -12,7 +12,7 @@ public class Communication
     static ArrayList<Ruin> alliedPaintTowers = new ArrayList<>();
     static ArrayList<Ruin> alliedNonpaintTowers = new ArrayList<>();
 
-    static ArrayList<Ruin>[] allRuinsMemory = (ArrayList<Ruin>[]) new ArrayList[] {ruins, enemyTowers, alliedPaintTowers, alliedNonpaintTowers};
+    private static ArrayList<Ruin>[] allRuinsMemory = (ArrayList<Ruin>[]) new ArrayList[] {ruins, enemyTowers, alliedPaintTowers, alliedNonpaintTowers};
 
     /*
         Cycles through ruinsMemory, determines which ruin is next to be broadcast
