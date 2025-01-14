@@ -109,7 +109,7 @@ public class RobotPlayer {
                 System.out.println(price - Clock.getBytecodesLeft());
                 if(knownSymmetry != symmetry.unknown) {
                     System.out.println(knownSymmetry);
-                    rc.resign();
+                    //rc.resign();
                 }
                     switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
