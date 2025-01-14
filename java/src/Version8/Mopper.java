@@ -173,7 +173,7 @@ public class Mopper {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
         for(MapInfo tile : nearbyTiles) {
-            if(tile.hasRuin() && rc.senseRobotAtLocation(tile.getMapLocation()) == null){
+            if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
                 break;
             }
