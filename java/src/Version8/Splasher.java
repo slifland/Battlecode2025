@@ -81,7 +81,7 @@ public class Splasher {
     //attempts to steal enemy territory and potentially attack towers
     public static void contest(RobotController rc) throws GameActionException {
         MapLocation toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
-        //no attack that good
+        //no attacks that good
         if(toAttack == null) {
             if(rc.canAttack(seenEnemyTower.getLocation())) {
                 rc.attack(seenEnemyTower.getLocation());
