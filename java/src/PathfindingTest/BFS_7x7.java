@@ -657,9 +657,10 @@ public class BFS_7x7
       int closestIndex = -1;
       if(exists24)
       {
-         if(exists16 && dist24 + cost16 < dist16)
+         rc.setIndicatorDot(l24, 0, 255,0);
+         if(exists16 && dist24 + 1 < dist16)
          {
-            dist16 = dist24 + cost16;
+            dist16 = dist24 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.SOUTHEAST;
             if(h16 < closestDistance)
             {
@@ -667,9 +668,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists17 && dist24 + cost17 < dist17)
+         if(exists17 && dist24 + 1 < dist17)
          {
-            dist17 = dist24 + cost17;
+            dist17 = dist24 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.SOUTH;
             if(h17 < closestDistance)
             {
@@ -677,9 +678,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists18 && dist24 + cost18 < dist18)
+         if(exists18 && dist24 + 1 < dist18)
          {
-            dist18 = dist24 + cost18;
+            dist18 = dist24 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.SOUTHWEST;
             if(h18 < closestDistance)
             {
@@ -687,9 +688,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists23 && dist24 + cost23 < dist23)
+         if(exists23 && dist24 + 1 < dist23)
          {
-            dist23 = dist24 + cost23;
+            dist23 = dist24 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.EAST;
             if(h23 < closestDistance)
             {
@@ -697,9 +698,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists25 && dist24 + cost25 < dist25)
+         if(exists25 && dist24 + 1 < dist25)
          {
-            dist25 = dist24 + cost25;
+            dist25 = dist24 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.WEST;
             if(h25 < closestDistance)
             {
@@ -707,9 +708,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists30 && dist24 + cost30 < dist30)
+         if(exists30 && dist24 + 1 < dist30)
          {
-            dist30 = dist24 + cost30;
+            dist30 = dist24 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.NORTHEAST;
             if(h30 < closestDistance)
             {
@@ -717,9 +718,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists31 && dist24 + cost31 < dist31)
+         if(exists31 && dist24 + 1 < dist31)
          {
-            dist31 = dist24 + cost31;
+            dist31 = dist24 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.NORTH;
             if(h31 < closestDistance)
             {
@@ -727,9 +728,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists32 && dist24 + cost32 < dist32)
+         if(exists32 && dist24 + 1 < dist32)
          {
-            dist32 = dist24 + cost32;
+            dist32 = dist24 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.NORTHWEST;
             if(h32 < closestDistance)
             {
@@ -740,9 +741,10 @@ public class BFS_7x7
       }
       if(exists16)
       {
-         if(exists8 && dist16 + cost8 < dist8)
+         rc.setIndicatorDot(l16, 0, 255,0);
+         if(exists8 && dist16 + 1 < dist8)
          {
-            dist8 = dist16 + cost8;
+            dist8 = dist16 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.SOUTHEAST;
             if(h8 < closestDistance)
             {
@@ -750,9 +752,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists9 && dist16 + cost9 < dist9)
+         if(exists9 && dist16 + 1 < dist9)
          {
-            dist9 = dist16 + cost9;
+            dist9 = dist16 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.SOUTH;
             if(h9 < closestDistance)
             {
@@ -760,9 +762,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists10 && dist16 + cost10 < dist10)
+         if(exists10 && dist16 + 1 < dist10)
          {
-            dist10 = dist16 + cost10;
+            dist10 = dist16 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.SOUTHWEST;
             if(h10 < closestDistance)
             {
@@ -770,9 +772,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists15 && dist16 + cost15 < dist15)
+         if(exists15 && dist16 + 1 < dist15)
          {
-            dist15 = dist16 + cost15;
+            dist15 = dist16 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.EAST;
             if(h15 < closestDistance)
             {
@@ -780,9 +782,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists17 && dist16 + cost17 < dist17)
+         if(exists17 && dist16 + 1 < dist17)
          {
-            dist17 = dist16 + cost17;
+            dist17 = dist16 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.WEST;
             if(h17 < closestDistance)
             {
@@ -790,9 +792,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists22 && dist16 + cost22 < dist22)
+         if(exists22 && dist16 + 1 < dist22)
          {
-            dist22 = dist16 + cost22;
+            dist22 = dist16 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.NORTHEAST;
             if(h22 < closestDistance)
             {
@@ -800,9 +802,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists23 && dist16 + cost23 < dist23)
+         if(exists23 && dist16 + 1 < dist23)
          {
-            dist23 = dist16 + cost23;
+            dist23 = dist16 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.NORTH;
             if(h23 < closestDistance)
             {
@@ -810,9 +812,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists24 && dist16 + cost24 < dist24)
+         if(exists24 && dist16 + 1 < dist24)
          {
-            dist24 = dist16 + cost24;
+            dist24 = dist16 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.NORTHWEST;
             if(h24 < closestDistance)
             {
@@ -823,9 +825,10 @@ public class BFS_7x7
       }
       if(exists17)
       {
-         if(exists9 && dist17 + cost9 < dist9)
+         rc.setIndicatorDot(l17, 0, 255,0);
+         if(exists9 && dist17 + 1 < dist9)
          {
-            dist9 = dist17 + cost9;
+            dist9 = dist17 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.SOUTHEAST;
             if(h9 < closestDistance)
             {
@@ -833,9 +836,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists10 && dist17 + cost10 < dist10)
+         if(exists10 && dist17 + 1 < dist10)
          {
-            dist10 = dist17 + cost10;
+            dist10 = dist17 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.SOUTH;
             if(h10 < closestDistance)
             {
@@ -843,9 +846,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists11 && dist17 + cost11 < dist11)
+         if(exists11 && dist17 + 1 < dist11)
          {
-            dist11 = dist17 + cost11;
+            dist11 = dist17 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.SOUTHWEST;
             if(h11 < closestDistance)
             {
@@ -853,9 +856,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists16 && dist17 + cost16 < dist16)
+         if(exists16 && dist17 + 1 < dist16)
          {
-            dist16 = dist17 + cost16;
+            dist16 = dist17 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.EAST;
             if(h16 < closestDistance)
             {
@@ -863,9 +866,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists18 && dist17 + cost18 < dist18)
+         if(exists18 && dist17 + 1 < dist18)
          {
-            dist18 = dist17 + cost18;
+            dist18 = dist17 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.WEST;
             if(h18 < closestDistance)
             {
@@ -873,9 +876,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists23 && dist17 + cost23 < dist23)
+         if(exists23 && dist17 + 1 < dist23)
          {
-            dist23 = dist17 + cost23;
+            dist23 = dist17 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.NORTHEAST;
             if(h23 < closestDistance)
             {
@@ -883,9 +886,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists24 && dist17 + cost24 < dist24)
+         if(exists24 && dist17 + 1 < dist24)
          {
-            dist24 = dist17 + cost24;
+            dist24 = dist17 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.NORTH;
             if(h24 < closestDistance)
             {
@@ -893,9 +896,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists25 && dist17 + cost25 < dist25)
+         if(exists25 && dist17 + 1 < dist25)
          {
-            dist25 = dist17 + cost25;
+            dist25 = dist17 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.NORTHWEST;
             if(h25 < closestDistance)
             {
@@ -906,9 +909,10 @@ public class BFS_7x7
       }
       if(exists18)
       {
-         if(exists10 && dist18 + cost10 < dist10)
+         rc.setIndicatorDot(l18, 0, 255,0);
+         if(exists10 && dist18 + 1 < dist10)
          {
-            dist10 = dist18 + cost10;
+            dist10 = dist18 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.SOUTHEAST;
             if(h10 < closestDistance)
             {
@@ -916,9 +920,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists11 && dist18 + cost11 < dist11)
+         if(exists11 && dist18 + 1 < dist11)
          {
-            dist11 = dist18 + cost11;
+            dist11 = dist18 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.SOUTH;
             if(h11 < closestDistance)
             {
@@ -926,9 +930,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists12 && dist18 + cost12 < dist12)
+         if(exists12 && dist18 + 1 < dist12)
          {
-            dist12 = dist18 + cost12;
+            dist12 = dist18 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.SOUTHWEST;
             if(h12 < closestDistance)
             {
@@ -936,9 +940,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists17 && dist18 + cost17 < dist17)
+         if(exists17 && dist18 + 1 < dist17)
          {
-            dist17 = dist18 + cost17;
+            dist17 = dist18 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.EAST;
             if(h17 < closestDistance)
             {
@@ -946,9 +950,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists19 && dist18 + cost19 < dist19)
+         if(exists19 && dist18 + 1 < dist19)
          {
-            dist19 = dist18 + cost19;
+            dist19 = dist18 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.WEST;
             if(h19 < closestDistance)
             {
@@ -956,9 +960,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists24 && dist18 + cost24 < dist24)
+         if(exists24 && dist18 + 1 < dist24)
          {
-            dist24 = dist18 + cost24;
+            dist24 = dist18 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.NORTHEAST;
             if(h24 < closestDistance)
             {
@@ -966,9 +970,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists25 && dist18 + cost25 < dist25)
+         if(exists25 && dist18 + 1 < dist25)
          {
-            dist25 = dist18 + cost25;
+            dist25 = dist18 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.NORTH;
             if(h25 < closestDistance)
             {
@@ -976,9 +980,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists26 && dist18 + cost26 < dist26)
+         if(exists26 && dist18 + 1 < dist26)
          {
-            dist26 = dist18 + cost26;
+            dist26 = dist18 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.NORTHWEST;
             if(h26 < closestDistance)
             {
@@ -989,9 +993,10 @@ public class BFS_7x7
       }
       if(exists23)
       {
-         if(exists15 && dist23 + cost15 < dist15)
+         rc.setIndicatorDot(l23, 0, 255,0);
+         if(exists15 && dist23 + 1 < dist15)
          {
-            dist15 = dist23 + cost15;
+            dist15 = dist23 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.SOUTHEAST;
             if(h15 < closestDistance)
             {
@@ -999,9 +1004,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists16 && dist23 + cost16 < dist16)
+         if(exists16 && dist23 + 1 < dist16)
          {
-            dist16 = dist23 + cost16;
+            dist16 = dist23 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.SOUTH;
             if(h16 < closestDistance)
             {
@@ -1009,9 +1014,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists17 && dist23 + cost17 < dist17)
+         if(exists17 && dist23 + 1 < dist17)
          {
-            dist17 = dist23 + cost17;
+            dist17 = dist23 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.SOUTHWEST;
             if(h17 < closestDistance)
             {
@@ -1019,9 +1024,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists22 && dist23 + cost22 < dist22)
+         if(exists22 && dist23 + 1 < dist22)
          {
-            dist22 = dist23 + cost22;
+            dist22 = dist23 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.EAST;
             if(h22 < closestDistance)
             {
@@ -1029,9 +1034,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists24 && dist23 + cost24 < dist24)
+         if(exists24 && dist23 + 1 < dist24)
          {
-            dist24 = dist23 + cost24;
+            dist24 = dist23 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.WEST;
             if(h24 < closestDistance)
             {
@@ -1039,9 +1044,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists29 && dist23 + cost29 < dist29)
+         if(exists29 && dist23 + 1 < dist29)
          {
-            dist29 = dist23 + cost29;
+            dist29 = dist23 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.NORTHEAST;
             if(h29 < closestDistance)
             {
@@ -1049,9 +1054,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists30 && dist23 + cost30 < dist30)
+         if(exists30 && dist23 + 1 < dist30)
          {
-            dist30 = dist23 + cost30;
+            dist30 = dist23 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.NORTH;
             if(h30 < closestDistance)
             {
@@ -1059,9 +1064,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists31 && dist23 + cost31 < dist31)
+         if(exists31 && dist23 + 1 < dist31)
          {
-            dist31 = dist23 + cost31;
+            dist31 = dist23 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.NORTHWEST;
             if(h31 < closestDistance)
             {
@@ -1072,9 +1077,10 @@ public class BFS_7x7
       }
       if(exists25)
       {
-         if(exists17 && dist25 + cost17 < dist17)
+         rc.setIndicatorDot(l25, 0, 255,0);
+         if(exists17 && dist25 + 1 < dist17)
          {
-            dist17 = dist25 + cost17;
+            dist17 = dist25 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.SOUTHEAST;
             if(h17 < closestDistance)
             {
@@ -1082,9 +1088,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists18 && dist25 + cost18 < dist18)
+         if(exists18 && dist25 + 1 < dist18)
          {
-            dist18 = dist25 + cost18;
+            dist18 = dist25 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.SOUTH;
             if(h18 < closestDistance)
             {
@@ -1092,9 +1098,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists19 && dist25 + cost19 < dist19)
+         if(exists19 && dist25 + 1 < dist19)
          {
-            dist19 = dist25 + cost19;
+            dist19 = dist25 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.SOUTHWEST;
             if(h19 < closestDistance)
             {
@@ -1102,9 +1108,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists24 && dist25 + cost24 < dist24)
+         if(exists24 && dist25 + 1 < dist24)
          {
-            dist24 = dist25 + cost24;
+            dist24 = dist25 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.EAST;
             if(h24 < closestDistance)
             {
@@ -1112,9 +1118,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists26 && dist25 + cost26 < dist26)
+         if(exists26 && dist25 + 1 < dist26)
          {
-            dist26 = dist25 + cost26;
+            dist26 = dist25 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.WEST;
             if(h26 < closestDistance)
             {
@@ -1122,9 +1128,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists31 && dist25 + cost31 < dist31)
+         if(exists31 && dist25 + 1 < dist31)
          {
-            dist31 = dist25 + cost31;
+            dist31 = dist25 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.NORTHEAST;
             if(h31 < closestDistance)
             {
@@ -1132,9 +1138,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists32 && dist25 + cost32 < dist32)
+         if(exists32 && dist25 + 1 < dist32)
          {
-            dist32 = dist25 + cost32;
+            dist32 = dist25 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.NORTH;
             if(h32 < closestDistance)
             {
@@ -1142,9 +1148,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists33 && dist25 + cost33 < dist33)
+         if(exists33 && dist25 + 1 < dist33)
          {
-            dist33 = dist25 + cost33;
+            dist33 = dist25 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.NORTHWEST;
             if(h33 < closestDistance)
             {
@@ -1155,9 +1161,10 @@ public class BFS_7x7
       }
       if(exists30)
       {
-         if(exists22 && dist30 + cost22 < dist22)
+         rc.setIndicatorDot(l30, 0, 255,0);
+         if(exists22 && dist30 + 1 < dist22)
          {
-            dist22 = dist30 + cost22;
+            dist22 = dist30 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.SOUTHEAST;
             if(h22 < closestDistance)
             {
@@ -1165,9 +1172,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists23 && dist30 + cost23 < dist23)
+         if(exists23 && dist30 + 1 < dist23)
          {
-            dist23 = dist30 + cost23;
+            dist23 = dist30 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.SOUTH;
             if(h23 < closestDistance)
             {
@@ -1175,9 +1182,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists24 && dist30 + cost24 < dist24)
+         if(exists24 && dist30 + 1 < dist24)
          {
-            dist24 = dist30 + cost24;
+            dist24 = dist30 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.SOUTHWEST;
             if(h24 < closestDistance)
             {
@@ -1185,9 +1192,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists29 && dist30 + cost29 < dist29)
+         if(exists29 && dist30 + 1 < dist29)
          {
-            dist29 = dist30 + cost29;
+            dist29 = dist30 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.EAST;
             if(h29 < closestDistance)
             {
@@ -1195,9 +1202,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists31 && dist30 + cost31 < dist31)
+         if(exists31 && dist30 + 1 < dist31)
          {
-            dist31 = dist30 + cost31;
+            dist31 = dist30 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.WEST;
             if(h31 < closestDistance)
             {
@@ -1205,9 +1212,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists36 && dist30 + cost36 < dist36)
+         if(exists36 && dist30 + 1 < dist36)
          {
-            dist36 = dist30 + cost36;
+            dist36 = dist30 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.NORTHEAST;
             if(h36 < closestDistance)
             {
@@ -1215,9 +1222,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists37 && dist30 + cost37 < dist37)
+         if(exists37 && dist30 + 1 < dist37)
          {
-            dist37 = dist30 + cost37;
+            dist37 = dist30 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.NORTH;
             if(h37 < closestDistance)
             {
@@ -1225,9 +1232,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists38 && dist30 + cost38 < dist38)
+         if(exists38 && dist30 + 1 < dist38)
          {
-            dist38 = dist30 + cost38;
+            dist38 = dist30 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.NORTHWEST;
             if(h38 < closestDistance)
             {
@@ -1238,9 +1245,10 @@ public class BFS_7x7
       }
       if(exists31)
       {
-         if(exists23 && dist31 + cost23 < dist23)
+         rc.setIndicatorDot(l31, 0, 255,0);
+         if(exists23 && dist31 + 1 < dist23)
          {
-            dist23 = dist31 + cost23;
+            dist23 = dist31 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.SOUTHEAST;
             if(h23 < closestDistance)
             {
@@ -1248,9 +1256,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists24 && dist31 + cost24 < dist24)
+         if(exists24 && dist31 + 1 < dist24)
          {
-            dist24 = dist31 + cost24;
+            dist24 = dist31 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.SOUTH;
             if(h24 < closestDistance)
             {
@@ -1258,9 +1266,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists25 && dist31 + cost25 < dist25)
+         if(exists25 && dist31 + 1 < dist25)
          {
-            dist25 = dist31 + cost25;
+            dist25 = dist31 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.SOUTHWEST;
             if(h25 < closestDistance)
             {
@@ -1268,9 +1276,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists30 && dist31 + cost30 < dist30)
+         if(exists30 && dist31 + 1 < dist30)
          {
-            dist30 = dist31 + cost30;
+            dist30 = dist31 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.EAST;
             if(h30 < closestDistance)
             {
@@ -1278,9 +1286,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists32 && dist31 + cost32 < dist32)
+         if(exists32 && dist31 + 1 < dist32)
          {
-            dist32 = dist31 + cost32;
+            dist32 = dist31 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.WEST;
             if(h32 < closestDistance)
             {
@@ -1288,9 +1296,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists37 && dist31 + cost37 < dist37)
+         if(exists37 && dist31 + 1 < dist37)
          {
-            dist37 = dist31 + cost37;
+            dist37 = dist31 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.NORTHEAST;
             if(h37 < closestDistance)
             {
@@ -1298,9 +1306,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists38 && dist31 + cost38 < dist38)
+         if(exists38 && dist31 + 1 < dist38)
          {
-            dist38 = dist31 + cost38;
+            dist38 = dist31 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.NORTH;
             if(h38 < closestDistance)
             {
@@ -1308,9 +1316,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists39 && dist31 + cost39 < dist39)
+         if(exists39 && dist31 + 1 < dist39)
          {
-            dist39 = dist31 + cost39;
+            dist39 = dist31 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.NORTHWEST;
             if(h39 < closestDistance)
             {
@@ -1321,9 +1329,10 @@ public class BFS_7x7
       }
       if(exists32)
       {
-         if(exists24 && dist32 + cost24 < dist24)
+         rc.setIndicatorDot(l32, 0, 255,0);
+         if(exists24 && dist32 + 1 < dist24)
          {
-            dist24 = dist32 + cost24;
+            dist24 = dist32 + 1;
             lookup[indexToLocalY(24)][indexToLocalX(24)] = Direction.SOUTHEAST;
             if(h24 < closestDistance)
             {
@@ -1331,9 +1340,9 @@ public class BFS_7x7
                closestIndex = 24;
             }
          }
-         if(exists25 && dist32 + cost25 < dist25)
+         if(exists25 && dist32 + 1 < dist25)
          {
-            dist25 = dist32 + cost25;
+            dist25 = dist32 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.SOUTH;
             if(h25 < closestDistance)
             {
@@ -1341,9 +1350,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists26 && dist32 + cost26 < dist26)
+         if(exists26 && dist32 + 1 < dist26)
          {
-            dist26 = dist32 + cost26;
+            dist26 = dist32 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.SOUTHWEST;
             if(h26 < closestDistance)
             {
@@ -1351,9 +1360,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists31 && dist32 + cost31 < dist31)
+         if(exists31 && dist32 + 1 < dist31)
          {
-            dist31 = dist32 + cost31;
+            dist31 = dist32 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.EAST;
             if(h31 < closestDistance)
             {
@@ -1361,9 +1370,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists33 && dist32 + cost33 < dist33)
+         if(exists33 && dist32 + 1 < dist33)
          {
-            dist33 = dist32 + cost33;
+            dist33 = dist32 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.WEST;
             if(h33 < closestDistance)
             {
@@ -1371,9 +1380,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists38 && dist32 + cost38 < dist38)
+         if(exists38 && dist32 + 1 < dist38)
          {
-            dist38 = dist32 + cost38;
+            dist38 = dist32 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.NORTHEAST;
             if(h38 < closestDistance)
             {
@@ -1381,9 +1390,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists39 && dist32 + cost39 < dist39)
+         if(exists39 && dist32 + 1 < dist39)
          {
-            dist39 = dist32 + cost39;
+            dist39 = dist32 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.NORTH;
             if(h39 < closestDistance)
             {
@@ -1391,9 +1400,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists40 && dist32 + cost40 < dist40)
+         if(exists40 && dist32 + 1 < dist40)
          {
-            dist40 = dist32 + cost40;
+            dist40 = dist32 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.NORTHWEST;
             if(h40 < closestDistance)
             {
@@ -1404,9 +1413,10 @@ public class BFS_7x7
       }
       if(exists8)
       {
-         if(exists0 && dist8 + cost0 < dist0)
+         rc.setIndicatorDot(l8, 0, 255,0);
+         if(exists0 && dist8 + 1 < dist0)
          {
-            dist0 = dist8 + cost0;
+            dist0 = dist8 + 1;
             lookup[indexToLocalY(0)][indexToLocalX(0)] = Direction.SOUTHEAST;
             if(h0 < closestDistance)
             {
@@ -1414,9 +1424,9 @@ public class BFS_7x7
                closestIndex = 0;
             }
          }
-         if(exists1 && dist8 + cost1 < dist1)
+         if(exists1 && dist8 + 1 < dist1)
          {
-            dist1 = dist8 + cost1;
+            dist1 = dist8 + 1;
             lookup[indexToLocalY(1)][indexToLocalX(1)] = Direction.SOUTH;
             if(h1 < closestDistance)
             {
@@ -1424,9 +1434,9 @@ public class BFS_7x7
                closestIndex = 1;
             }
          }
-         if(exists2 && dist8 + cost2 < dist2)
+         if(exists2 && dist8 + 1 < dist2)
          {
-            dist2 = dist8 + cost2;
+            dist2 = dist8 + 1;
             lookup[indexToLocalY(2)][indexToLocalX(2)] = Direction.SOUTHWEST;
             if(h2 < closestDistance)
             {
@@ -1434,9 +1444,9 @@ public class BFS_7x7
                closestIndex = 2;
             }
          }
-         if(exists7 && dist8 + cost7 < dist7)
+         if(exists7 && dist8 + 1 < dist7)
          {
-            dist7 = dist8 + cost7;
+            dist7 = dist8 + 1;
             lookup[indexToLocalY(7)][indexToLocalX(7)] = Direction.EAST;
             if(h7 < closestDistance)
             {
@@ -1444,9 +1454,9 @@ public class BFS_7x7
                closestIndex = 7;
             }
          }
-         if(exists9 && dist8 + cost9 < dist9)
+         if(exists9 && dist8 + 1 < dist9)
          {
-            dist9 = dist8 + cost9;
+            dist9 = dist8 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.WEST;
             if(h9 < closestDistance)
             {
@@ -1454,9 +1464,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists14 && dist8 + cost14 < dist14)
+         if(exists14 && dist8 + 1 < dist14)
          {
-            dist14 = dist8 + cost14;
+            dist14 = dist8 + 1;
             lookup[indexToLocalY(14)][indexToLocalX(14)] = Direction.NORTHEAST;
             if(h14 < closestDistance)
             {
@@ -1464,9 +1474,9 @@ public class BFS_7x7
                closestIndex = 14;
             }
          }
-         if(exists15 && dist8 + cost15 < dist15)
+         if(exists15 && dist8 + 1 < dist15)
          {
-            dist15 = dist8 + cost15;
+            dist15 = dist8 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.NORTH;
             if(h15 < closestDistance)
             {
@@ -1474,9 +1484,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists16 && dist8 + cost16 < dist16)
+         if(exists16 && dist8 + 1 < dist16)
          {
-            dist16 = dist8 + cost16;
+            dist16 = dist8 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.NORTHWEST;
             if(h16 < closestDistance)
             {
@@ -1487,9 +1497,10 @@ public class BFS_7x7
       }
       if(exists9)
       {
-         if(exists1 && dist9 + cost1 < dist1)
+         rc.setIndicatorDot(l9, 0, 255,0);
+         if(exists1 && dist9 + 1 < dist1)
          {
-            dist1 = dist9 + cost1;
+            dist1 = dist9 + 1;
             lookup[indexToLocalY(1)][indexToLocalX(1)] = Direction.SOUTHEAST;
             if(h1 < closestDistance)
             {
@@ -1497,9 +1508,9 @@ public class BFS_7x7
                closestIndex = 1;
             }
          }
-         if(exists2 && dist9 + cost2 < dist2)
+         if(exists2 && dist9 + 1 < dist2)
          {
-            dist2 = dist9 + cost2;
+            dist2 = dist9 + 1;
             lookup[indexToLocalY(2)][indexToLocalX(2)] = Direction.SOUTH;
             if(h2 < closestDistance)
             {
@@ -1507,9 +1518,9 @@ public class BFS_7x7
                closestIndex = 2;
             }
          }
-         if(exists3 && dist9 + cost3 < dist3)
+         if(exists3 && dist9 + 1 < dist3)
          {
-            dist3 = dist9 + cost3;
+            dist3 = dist9 + 1;
             lookup[indexToLocalY(3)][indexToLocalX(3)] = Direction.SOUTHWEST;
             if(h3 < closestDistance)
             {
@@ -1517,9 +1528,9 @@ public class BFS_7x7
                closestIndex = 3;
             }
          }
-         if(exists8 && dist9 + cost8 < dist8)
+         if(exists8 && dist9 + 1 < dist8)
          {
-            dist8 = dist9 + cost8;
+            dist8 = dist9 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.EAST;
             if(h8 < closestDistance)
             {
@@ -1527,9 +1538,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists10 && dist9 + cost10 < dist10)
+         if(exists10 && dist9 + 1 < dist10)
          {
-            dist10 = dist9 + cost10;
+            dist10 = dist9 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.WEST;
             if(h10 < closestDistance)
             {
@@ -1537,9 +1548,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists15 && dist9 + cost15 < dist15)
+         if(exists15 && dist9 + 1 < dist15)
          {
-            dist15 = dist9 + cost15;
+            dist15 = dist9 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.NORTHEAST;
             if(h15 < closestDistance)
             {
@@ -1547,9 +1558,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists16 && dist9 + cost16 < dist16)
+         if(exists16 && dist9 + 1 < dist16)
          {
-            dist16 = dist9 + cost16;
+            dist16 = dist9 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.NORTH;
             if(h16 < closestDistance)
             {
@@ -1557,9 +1568,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists17 && dist9 + cost17 < dist17)
+         if(exists17 && dist9 + 1 < dist17)
          {
-            dist17 = dist9 + cost17;
+            dist17 = dist9 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.NORTHWEST;
             if(h17 < closestDistance)
             {
@@ -1570,9 +1581,10 @@ public class BFS_7x7
       }
       if(exists10)
       {
-         if(exists2 && dist10 + cost2 < dist2)
+         rc.setIndicatorDot(l10, 0, 255,0);
+         if(exists2 && dist10 + 1 < dist2)
          {
-            dist2 = dist10 + cost2;
+            dist2 = dist10 + 1;
             lookup[indexToLocalY(2)][indexToLocalX(2)] = Direction.SOUTHEAST;
             if(h2 < closestDistance)
             {
@@ -1580,9 +1592,9 @@ public class BFS_7x7
                closestIndex = 2;
             }
          }
-         if(exists3 && dist10 + cost3 < dist3)
+         if(exists3 && dist10 + 1 < dist3)
          {
-            dist3 = dist10 + cost3;
+            dist3 = dist10 + 1;
             lookup[indexToLocalY(3)][indexToLocalX(3)] = Direction.SOUTH;
             if(h3 < closestDistance)
             {
@@ -1590,9 +1602,9 @@ public class BFS_7x7
                closestIndex = 3;
             }
          }
-         if(exists4 && dist10 + cost4 < dist4)
+         if(exists4 && dist10 + 1 < dist4)
          {
-            dist4 = dist10 + cost4;
+            dist4 = dist10 + 1;
             lookup[indexToLocalY(4)][indexToLocalX(4)] = Direction.SOUTHWEST;
             if(h4 < closestDistance)
             {
@@ -1600,9 +1612,9 @@ public class BFS_7x7
                closestIndex = 4;
             }
          }
-         if(exists9 && dist10 + cost9 < dist9)
+         if(exists9 && dist10 + 1 < dist9)
          {
-            dist9 = dist10 + cost9;
+            dist9 = dist10 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.EAST;
             if(h9 < closestDistance)
             {
@@ -1610,9 +1622,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists11 && dist10 + cost11 < dist11)
+         if(exists11 && dist10 + 1 < dist11)
          {
-            dist11 = dist10 + cost11;
+            dist11 = dist10 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.WEST;
             if(h11 < closestDistance)
             {
@@ -1620,9 +1632,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists16 && dist10 + cost16 < dist16)
+         if(exists16 && dist10 + 1 < dist16)
          {
-            dist16 = dist10 + cost16;
+            dist16 = dist10 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.NORTHEAST;
             if(h16 < closestDistance)
             {
@@ -1630,9 +1642,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists17 && dist10 + cost17 < dist17)
+         if(exists17 && dist10 + 1 < dist17)
          {
-            dist17 = dist10 + cost17;
+            dist17 = dist10 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.NORTH;
             if(h17 < closestDistance)
             {
@@ -1640,9 +1652,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists18 && dist10 + cost18 < dist18)
+         if(exists18 && dist10 + 1 < dist18)
          {
-            dist18 = dist10 + cost18;
+            dist18 = dist10 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.NORTHWEST;
             if(h18 < closestDistance)
             {
@@ -1653,9 +1665,10 @@ public class BFS_7x7
       }
       if(exists15)
       {
-         if(exists7 && dist15 + cost7 < dist7)
+         rc.setIndicatorDot(l15, 0, 255,0);
+         if(exists7 && dist15 + 1 < dist7)
          {
-            dist7 = dist15 + cost7;
+            dist7 = dist15 + 1;
             lookup[indexToLocalY(7)][indexToLocalX(7)] = Direction.SOUTHEAST;
             if(h7 < closestDistance)
             {
@@ -1663,9 +1676,9 @@ public class BFS_7x7
                closestIndex = 7;
             }
          }
-         if(exists8 && dist15 + cost8 < dist8)
+         if(exists8 && dist15 + 1 < dist8)
          {
-            dist8 = dist15 + cost8;
+            dist8 = dist15 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.SOUTH;
             if(h8 < closestDistance)
             {
@@ -1673,9 +1686,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists9 && dist15 + cost9 < dist9)
+         if(exists9 && dist15 + 1 < dist9)
          {
-            dist9 = dist15 + cost9;
+            dist9 = dist15 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.SOUTHWEST;
             if(h9 < closestDistance)
             {
@@ -1683,9 +1696,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists14 && dist15 + cost14 < dist14)
+         if(exists14 && dist15 + 1 < dist14)
          {
-            dist14 = dist15 + cost14;
+            dist14 = dist15 + 1;
             lookup[indexToLocalY(14)][indexToLocalX(14)] = Direction.EAST;
             if(h14 < closestDistance)
             {
@@ -1693,9 +1706,9 @@ public class BFS_7x7
                closestIndex = 14;
             }
          }
-         if(exists16 && dist15 + cost16 < dist16)
+         if(exists16 && dist15 + 1 < dist16)
          {
-            dist16 = dist15 + cost16;
+            dist16 = dist15 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.WEST;
             if(h16 < closestDistance)
             {
@@ -1703,9 +1716,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists21 && dist15 + cost21 < dist21)
+         if(exists21 && dist15 + 1 < dist21)
          {
-            dist21 = dist15 + cost21;
+            dist21 = dist15 + 1;
             lookup[indexToLocalY(21)][indexToLocalX(21)] = Direction.NORTHEAST;
             if(h21 < closestDistance)
             {
@@ -1713,9 +1726,9 @@ public class BFS_7x7
                closestIndex = 21;
             }
          }
-         if(exists22 && dist15 + cost22 < dist22)
+         if(exists22 && dist15 + 1 < dist22)
          {
-            dist22 = dist15 + cost22;
+            dist22 = dist15 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.NORTH;
             if(h22 < closestDistance)
             {
@@ -1723,9 +1736,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists23 && dist15 + cost23 < dist23)
+         if(exists23 && dist15 + 1 < dist23)
          {
-            dist23 = dist15 + cost23;
+            dist23 = dist15 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.NORTHWEST;
             if(h23 < closestDistance)
             {
@@ -1736,9 +1749,10 @@ public class BFS_7x7
       }
       if(exists22)
       {
-         if(exists14 && dist22 + cost14 < dist14)
+         rc.setIndicatorDot(l22, 0, 255,0);
+         if(exists14 && dist22 + 1 < dist14)
          {
-            dist14 = dist22 + cost14;
+            dist14 = dist22 + 1;
             lookup[indexToLocalY(14)][indexToLocalX(14)] = Direction.SOUTHEAST;
             if(h14 < closestDistance)
             {
@@ -1746,9 +1760,9 @@ public class BFS_7x7
                closestIndex = 14;
             }
          }
-         if(exists15 && dist22 + cost15 < dist15)
+         if(exists15 && dist22 + 1 < dist15)
          {
-            dist15 = dist22 + cost15;
+            dist15 = dist22 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.SOUTH;
             if(h15 < closestDistance)
             {
@@ -1756,9 +1770,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists16 && dist22 + cost16 < dist16)
+         if(exists16 && dist22 + 1 < dist16)
          {
-            dist16 = dist22 + cost16;
+            dist16 = dist22 + 1;
             lookup[indexToLocalY(16)][indexToLocalX(16)] = Direction.SOUTHWEST;
             if(h16 < closestDistance)
             {
@@ -1766,9 +1780,9 @@ public class BFS_7x7
                closestIndex = 16;
             }
          }
-         if(exists21 && dist22 + cost21 < dist21)
+         if(exists21 && dist22 + 1 < dist21)
          {
-            dist21 = dist22 + cost21;
+            dist21 = dist22 + 1;
             lookup[indexToLocalY(21)][indexToLocalX(21)] = Direction.EAST;
             if(h21 < closestDistance)
             {
@@ -1776,9 +1790,9 @@ public class BFS_7x7
                closestIndex = 21;
             }
          }
-         if(exists23 && dist22 + cost23 < dist23)
+         if(exists23 && dist22 + 1 < dist23)
          {
-            dist23 = dist22 + cost23;
+            dist23 = dist22 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.WEST;
             if(h23 < closestDistance)
             {
@@ -1786,9 +1800,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists28 && dist22 + cost28 < dist28)
+         if(exists28 && dist22 + 1 < dist28)
          {
-            dist28 = dist22 + cost28;
+            dist28 = dist22 + 1;
             lookup[indexToLocalY(28)][indexToLocalX(28)] = Direction.NORTHEAST;
             if(h28 < closestDistance)
             {
@@ -1796,9 +1810,9 @@ public class BFS_7x7
                closestIndex = 28;
             }
          }
-         if(exists29 && dist22 + cost29 < dist29)
+         if(exists29 && dist22 + 1 < dist29)
          {
-            dist29 = dist22 + cost29;
+            dist29 = dist22 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.NORTH;
             if(h29 < closestDistance)
             {
@@ -1806,9 +1820,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists30 && dist22 + cost30 < dist30)
+         if(exists30 && dist22 + 1 < dist30)
          {
-            dist30 = dist22 + cost30;
+            dist30 = dist22 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.NORTHWEST;
             if(h30 < closestDistance)
             {
@@ -1819,9 +1833,10 @@ public class BFS_7x7
       }
       if(exists11)
       {
-         if(exists3 && dist11 + cost3 < dist3)
+         rc.setIndicatorDot(l11, 0, 255,0);
+         if(exists3 && dist11 + 1 < dist3)
          {
-            dist3 = dist11 + cost3;
+            dist3 = dist11 + 1;
             lookup[indexToLocalY(3)][indexToLocalX(3)] = Direction.SOUTHEAST;
             if(h3 < closestDistance)
             {
@@ -1829,9 +1844,9 @@ public class BFS_7x7
                closestIndex = 3;
             }
          }
-         if(exists4 && dist11 + cost4 < dist4)
+         if(exists4 && dist11 + 1 < dist4)
          {
-            dist4 = dist11 + cost4;
+            dist4 = dist11 + 1;
             lookup[indexToLocalY(4)][indexToLocalX(4)] = Direction.SOUTH;
             if(h4 < closestDistance)
             {
@@ -1839,9 +1854,9 @@ public class BFS_7x7
                closestIndex = 4;
             }
          }
-         if(exists5 && dist11 + cost5 < dist5)
+         if(exists5 && dist11 + 1 < dist5)
          {
-            dist5 = dist11 + cost5;
+            dist5 = dist11 + 1;
             lookup[indexToLocalY(5)][indexToLocalX(5)] = Direction.SOUTHWEST;
             if(h5 < closestDistance)
             {
@@ -1849,9 +1864,9 @@ public class BFS_7x7
                closestIndex = 5;
             }
          }
-         if(exists10 && dist11 + cost10 < dist10)
+         if(exists10 && dist11 + 1 < dist10)
          {
-            dist10 = dist11 + cost10;
+            dist10 = dist11 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.EAST;
             if(h10 < closestDistance)
             {
@@ -1859,9 +1874,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists12 && dist11 + cost12 < dist12)
+         if(exists12 && dist11 + 1 < dist12)
          {
-            dist12 = dist11 + cost12;
+            dist12 = dist11 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.WEST;
             if(h12 < closestDistance)
             {
@@ -1869,9 +1884,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists17 && dist11 + cost17 < dist17)
+         if(exists17 && dist11 + 1 < dist17)
          {
-            dist17 = dist11 + cost17;
+            dist17 = dist11 + 1;
             lookup[indexToLocalY(17)][indexToLocalX(17)] = Direction.NORTHEAST;
             if(h17 < closestDistance)
             {
@@ -1879,9 +1894,9 @@ public class BFS_7x7
                closestIndex = 17;
             }
          }
-         if(exists18 && dist11 + cost18 < dist18)
+         if(exists18 && dist11 + 1 < dist18)
          {
-            dist18 = dist11 + cost18;
+            dist18 = dist11 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.NORTH;
             if(h18 < closestDistance)
             {
@@ -1889,9 +1904,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists19 && dist11 + cost19 < dist19)
+         if(exists19 && dist11 + 1 < dist19)
          {
-            dist19 = dist11 + cost19;
+            dist19 = dist11 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.NORTHWEST;
             if(h19 < closestDistance)
             {
@@ -1902,9 +1917,10 @@ public class BFS_7x7
       }
       if(exists12)
       {
-         if(exists4 && dist12 + cost4 < dist4)
+         rc.setIndicatorDot(l12, 0, 255,0);
+         if(exists4 && dist12 + 1 < dist4)
          {
-            dist4 = dist12 + cost4;
+            dist4 = dist12 + 1;
             lookup[indexToLocalY(4)][indexToLocalX(4)] = Direction.SOUTHEAST;
             if(h4 < closestDistance)
             {
@@ -1912,9 +1928,9 @@ public class BFS_7x7
                closestIndex = 4;
             }
          }
-         if(exists5 && dist12 + cost5 < dist5)
+         if(exists5 && dist12 + 1 < dist5)
          {
-            dist5 = dist12 + cost5;
+            dist5 = dist12 + 1;
             lookup[indexToLocalY(5)][indexToLocalX(5)] = Direction.SOUTH;
             if(h5 < closestDistance)
             {
@@ -1922,9 +1938,9 @@ public class BFS_7x7
                closestIndex = 5;
             }
          }
-         if(exists6 && dist12 + cost6 < dist6)
+         if(exists6 && dist12 + 1 < dist6)
          {
-            dist6 = dist12 + cost6;
+            dist6 = dist12 + 1;
             lookup[indexToLocalY(6)][indexToLocalX(6)] = Direction.SOUTHWEST;
             if(h6 < closestDistance)
             {
@@ -1932,9 +1948,9 @@ public class BFS_7x7
                closestIndex = 6;
             }
          }
-         if(exists11 && dist12 + cost11 < dist11)
+         if(exists11 && dist12 + 1 < dist11)
          {
-            dist11 = dist12 + cost11;
+            dist11 = dist12 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.EAST;
             if(h11 < closestDistance)
             {
@@ -1942,9 +1958,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists13 && dist12 + cost13 < dist13)
+         if(exists13 && dist12 + 1 < dist13)
          {
-            dist13 = dist12 + cost13;
+            dist13 = dist12 + 1;
             lookup[indexToLocalY(13)][indexToLocalX(13)] = Direction.WEST;
             if(h13 < closestDistance)
             {
@@ -1952,9 +1968,9 @@ public class BFS_7x7
                closestIndex = 13;
             }
          }
-         if(exists18 && dist12 + cost18 < dist18)
+         if(exists18 && dist12 + 1 < dist18)
          {
-            dist18 = dist12 + cost18;
+            dist18 = dist12 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.NORTHEAST;
             if(h18 < closestDistance)
             {
@@ -1962,9 +1978,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists19 && dist12 + cost19 < dist19)
+         if(exists19 && dist12 + 1 < dist19)
          {
-            dist19 = dist12 + cost19;
+            dist19 = dist12 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.NORTH;
             if(h19 < closestDistance)
             {
@@ -1972,9 +1988,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists20 && dist12 + cost20 < dist20)
+         if(exists20 && dist12 + 1 < dist20)
          {
-            dist20 = dist12 + cost20;
+            dist20 = dist12 + 1;
             lookup[indexToLocalY(20)][indexToLocalX(20)] = Direction.NORTHWEST;
             if(h20 < closestDistance)
             {
@@ -1985,9 +2001,10 @@ public class BFS_7x7
       }
       if(exists19)
       {
-         if(exists11 && dist19 + cost11 < dist11)
+         rc.setIndicatorDot(l19, 0, 255,0);
+         if(exists11 && dist19 + 1 < dist11)
          {
-            dist11 = dist19 + cost11;
+            dist11 = dist19 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.SOUTHEAST;
             if(h11 < closestDistance)
             {
@@ -1995,9 +2012,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists12 && dist19 + cost12 < dist12)
+         if(exists12 && dist19 + 1 < dist12)
          {
-            dist12 = dist19 + cost12;
+            dist12 = dist19 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.SOUTH;
             if(h12 < closestDistance)
             {
@@ -2005,9 +2022,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists13 && dist19 + cost13 < dist13)
+         if(exists13 && dist19 + 1 < dist13)
          {
-            dist13 = dist19 + cost13;
+            dist13 = dist19 + 1;
             lookup[indexToLocalY(13)][indexToLocalX(13)] = Direction.SOUTHWEST;
             if(h13 < closestDistance)
             {
@@ -2015,9 +2032,9 @@ public class BFS_7x7
                closestIndex = 13;
             }
          }
-         if(exists18 && dist19 + cost18 < dist18)
+         if(exists18 && dist19 + 1 < dist18)
          {
-            dist18 = dist19 + cost18;
+            dist18 = dist19 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.EAST;
             if(h18 < closestDistance)
             {
@@ -2025,9 +2042,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists20 && dist19 + cost20 < dist20)
+         if(exists20 && dist19 + 1 < dist20)
          {
-            dist20 = dist19 + cost20;
+            dist20 = dist19 + 1;
             lookup[indexToLocalY(20)][indexToLocalX(20)] = Direction.WEST;
             if(h20 < closestDistance)
             {
@@ -2035,9 +2052,9 @@ public class BFS_7x7
                closestIndex = 20;
             }
          }
-         if(exists25 && dist19 + cost25 < dist25)
+         if(exists25 && dist19 + 1 < dist25)
          {
-            dist25 = dist19 + cost25;
+            dist25 = dist19 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.NORTHEAST;
             if(h25 < closestDistance)
             {
@@ -2045,9 +2062,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists26 && dist19 + cost26 < dist26)
+         if(exists26 && dist19 + 1 < dist26)
          {
-            dist26 = dist19 + cost26;
+            dist26 = dist19 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.NORTH;
             if(h26 < closestDistance)
             {
@@ -2055,9 +2072,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists27 && dist19 + cost27 < dist27)
+         if(exists27 && dist19 + 1 < dist27)
          {
-            dist27 = dist19 + cost27;
+            dist27 = dist19 + 1;
             lookup[indexToLocalY(27)][indexToLocalX(27)] = Direction.NORTHWEST;
             if(h27 < closestDistance)
             {
@@ -2068,9 +2085,10 @@ public class BFS_7x7
       }
       if(exists26)
       {
-         if(exists18 && dist26 + cost18 < dist18)
+         rc.setIndicatorDot(l26, 0, 255,0);
+         if(exists18 && dist26 + 1 < dist18)
          {
-            dist18 = dist26 + cost18;
+            dist18 = dist26 + 1;
             lookup[indexToLocalY(18)][indexToLocalX(18)] = Direction.SOUTHEAST;
             if(h18 < closestDistance)
             {
@@ -2078,9 +2096,9 @@ public class BFS_7x7
                closestIndex = 18;
             }
          }
-         if(exists19 && dist26 + cost19 < dist19)
+         if(exists19 && dist26 + 1 < dist19)
          {
-            dist19 = dist26 + cost19;
+            dist19 = dist26 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.SOUTH;
             if(h19 < closestDistance)
             {
@@ -2088,9 +2106,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists20 && dist26 + cost20 < dist20)
+         if(exists20 && dist26 + 1 < dist20)
          {
-            dist20 = dist26 + cost20;
+            dist20 = dist26 + 1;
             lookup[indexToLocalY(20)][indexToLocalX(20)] = Direction.SOUTHWEST;
             if(h20 < closestDistance)
             {
@@ -2098,9 +2116,9 @@ public class BFS_7x7
                closestIndex = 20;
             }
          }
-         if(exists25 && dist26 + cost25 < dist25)
+         if(exists25 && dist26 + 1 < dist25)
          {
-            dist25 = dist26 + cost25;
+            dist25 = dist26 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.EAST;
             if(h25 < closestDistance)
             {
@@ -2108,9 +2126,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists27 && dist26 + cost27 < dist27)
+         if(exists27 && dist26 + 1 < dist27)
          {
-            dist27 = dist26 + cost27;
+            dist27 = dist26 + 1;
             lookup[indexToLocalY(27)][indexToLocalX(27)] = Direction.WEST;
             if(h27 < closestDistance)
             {
@@ -2118,9 +2136,9 @@ public class BFS_7x7
                closestIndex = 27;
             }
          }
-         if(exists32 && dist26 + cost32 < dist32)
+         if(exists32 && dist26 + 1 < dist32)
          {
-            dist32 = dist26 + cost32;
+            dist32 = dist26 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.NORTHEAST;
             if(h32 < closestDistance)
             {
@@ -2128,9 +2146,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists33 && dist26 + cost33 < dist33)
+         if(exists33 && dist26 + 1 < dist33)
          {
-            dist33 = dist26 + cost33;
+            dist33 = dist26 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.NORTH;
             if(h33 < closestDistance)
             {
@@ -2138,9 +2156,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists34 && dist26 + cost34 < dist34)
+         if(exists34 && dist26 + 1 < dist34)
          {
-            dist34 = dist26 + cost34;
+            dist34 = dist26 + 1;
             lookup[indexToLocalY(34)][indexToLocalX(34)] = Direction.NORTHWEST;
             if(h34 < closestDistance)
             {
@@ -2151,9 +2169,10 @@ public class BFS_7x7
       }
       if(exists29)
       {
-         if(exists21 && dist29 + cost21 < dist21)
+         rc.setIndicatorDot(l29, 0, 255,0);
+         if(exists21 && dist29 + 1 < dist21)
          {
-            dist21 = dist29 + cost21;
+            dist21 = dist29 + 1;
             lookup[indexToLocalY(21)][indexToLocalX(21)] = Direction.SOUTHEAST;
             if(h21 < closestDistance)
             {
@@ -2161,9 +2180,9 @@ public class BFS_7x7
                closestIndex = 21;
             }
          }
-         if(exists22 && dist29 + cost22 < dist22)
+         if(exists22 && dist29 + 1 < dist22)
          {
-            dist22 = dist29 + cost22;
+            dist22 = dist29 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.SOUTH;
             if(h22 < closestDistance)
             {
@@ -2171,9 +2190,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists23 && dist29 + cost23 < dist23)
+         if(exists23 && dist29 + 1 < dist23)
          {
-            dist23 = dist29 + cost23;
+            dist23 = dist29 + 1;
             lookup[indexToLocalY(23)][indexToLocalX(23)] = Direction.SOUTHWEST;
             if(h23 < closestDistance)
             {
@@ -2181,9 +2200,9 @@ public class BFS_7x7
                closestIndex = 23;
             }
          }
-         if(exists28 && dist29 + cost28 < dist28)
+         if(exists28 && dist29 + 1 < dist28)
          {
-            dist28 = dist29 + cost28;
+            dist28 = dist29 + 1;
             lookup[indexToLocalY(28)][indexToLocalX(28)] = Direction.EAST;
             if(h28 < closestDistance)
             {
@@ -2191,9 +2210,9 @@ public class BFS_7x7
                closestIndex = 28;
             }
          }
-         if(exists30 && dist29 + cost30 < dist30)
+         if(exists30 && dist29 + 1 < dist30)
          {
-            dist30 = dist29 + cost30;
+            dist30 = dist29 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.WEST;
             if(h30 < closestDistance)
             {
@@ -2201,9 +2220,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists35 && dist29 + cost35 < dist35)
+         if(exists35 && dist29 + 1 < dist35)
          {
-            dist35 = dist29 + cost35;
+            dist35 = dist29 + 1;
             lookup[indexToLocalY(35)][indexToLocalX(35)] = Direction.NORTHEAST;
             if(h35 < closestDistance)
             {
@@ -2211,9 +2230,9 @@ public class BFS_7x7
                closestIndex = 35;
             }
          }
-         if(exists36 && dist29 + cost36 < dist36)
+         if(exists36 && dist29 + 1 < dist36)
          {
-            dist36 = dist29 + cost36;
+            dist36 = dist29 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.NORTH;
             if(h36 < closestDistance)
             {
@@ -2221,9 +2240,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists37 && dist29 + cost37 < dist37)
+         if(exists37 && dist29 + 1 < dist37)
          {
-            dist37 = dist29 + cost37;
+            dist37 = dist29 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.NORTHWEST;
             if(h37 < closestDistance)
             {
@@ -2234,9 +2253,10 @@ public class BFS_7x7
       }
       if(exists33)
       {
-         if(exists25 && dist33 + cost25 < dist25)
+         rc.setIndicatorDot(l33, 0, 255,0);
+         if(exists25 && dist33 + 1 < dist25)
          {
-            dist25 = dist33 + cost25;
+            dist25 = dist33 + 1;
             lookup[indexToLocalY(25)][indexToLocalX(25)] = Direction.SOUTHEAST;
             if(h25 < closestDistance)
             {
@@ -2244,9 +2264,9 @@ public class BFS_7x7
                closestIndex = 25;
             }
          }
-         if(exists26 && dist33 + cost26 < dist26)
+         if(exists26 && dist33 + 1 < dist26)
          {
-            dist26 = dist33 + cost26;
+            dist26 = dist33 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.SOUTH;
             if(h26 < closestDistance)
             {
@@ -2254,9 +2274,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists27 && dist33 + cost27 < dist27)
+         if(exists27 && dist33 + 1 < dist27)
          {
-            dist27 = dist33 + cost27;
+            dist27 = dist33 + 1;
             lookup[indexToLocalY(27)][indexToLocalX(27)] = Direction.SOUTHWEST;
             if(h27 < closestDistance)
             {
@@ -2264,9 +2284,9 @@ public class BFS_7x7
                closestIndex = 27;
             }
          }
-         if(exists32 && dist33 + cost32 < dist32)
+         if(exists32 && dist33 + 1 < dist32)
          {
-            dist32 = dist33 + cost32;
+            dist32 = dist33 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.EAST;
             if(h32 < closestDistance)
             {
@@ -2274,9 +2294,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists34 && dist33 + cost34 < dist34)
+         if(exists34 && dist33 + 1 < dist34)
          {
-            dist34 = dist33 + cost34;
+            dist34 = dist33 + 1;
             lookup[indexToLocalY(34)][indexToLocalX(34)] = Direction.WEST;
             if(h34 < closestDistance)
             {
@@ -2284,9 +2304,9 @@ public class BFS_7x7
                closestIndex = 34;
             }
          }
-         if(exists39 && dist33 + cost39 < dist39)
+         if(exists39 && dist33 + 1 < dist39)
          {
-            dist39 = dist33 + cost39;
+            dist39 = dist33 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.NORTHEAST;
             if(h39 < closestDistance)
             {
@@ -2294,9 +2314,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists40 && dist33 + cost40 < dist40)
+         if(exists40 && dist33 + 1 < dist40)
          {
-            dist40 = dist33 + cost40;
+            dist40 = dist33 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.NORTH;
             if(h40 < closestDistance)
             {
@@ -2304,9 +2324,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists41 && dist33 + cost41 < dist41)
+         if(exists41 && dist33 + 1 < dist41)
          {
-            dist41 = dist33 + cost41;
+            dist41 = dist33 + 1;
             lookup[indexToLocalY(41)][indexToLocalX(41)] = Direction.NORTHWEST;
             if(h41 < closestDistance)
             {
@@ -2317,9 +2337,10 @@ public class BFS_7x7
       }
       if(exists36)
       {
-         if(exists28 && dist36 + cost28 < dist28)
+         rc.setIndicatorDot(l36, 0, 255,0);
+         if(exists28 && dist36 + 1 < dist28)
          {
-            dist28 = dist36 + cost28;
+            dist28 = dist36 + 1;
             lookup[indexToLocalY(28)][indexToLocalX(28)] = Direction.SOUTHEAST;
             if(h28 < closestDistance)
             {
@@ -2327,9 +2348,9 @@ public class BFS_7x7
                closestIndex = 28;
             }
          }
-         if(exists29 && dist36 + cost29 < dist29)
+         if(exists29 && dist36 + 1 < dist29)
          {
-            dist29 = dist36 + cost29;
+            dist29 = dist36 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.SOUTH;
             if(h29 < closestDistance)
             {
@@ -2337,9 +2358,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists30 && dist36 + cost30 < dist30)
+         if(exists30 && dist36 + 1 < dist30)
          {
-            dist30 = dist36 + cost30;
+            dist30 = dist36 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.SOUTHWEST;
             if(h30 < closestDistance)
             {
@@ -2347,9 +2368,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists35 && dist36 + cost35 < dist35)
+         if(exists35 && dist36 + 1 < dist35)
          {
-            dist35 = dist36 + cost35;
+            dist35 = dist36 + 1;
             lookup[indexToLocalY(35)][indexToLocalX(35)] = Direction.EAST;
             if(h35 < closestDistance)
             {
@@ -2357,9 +2378,9 @@ public class BFS_7x7
                closestIndex = 35;
             }
          }
-         if(exists37 && dist36 + cost37 < dist37)
+         if(exists37 && dist36 + 1 < dist37)
          {
-            dist37 = dist36 + cost37;
+            dist37 = dist36 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.WEST;
             if(h37 < closestDistance)
             {
@@ -2367,9 +2388,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists42 && dist36 + cost42 < dist42)
+         if(exists42 && dist36 + 1 < dist42)
          {
-            dist42 = dist36 + cost42;
+            dist42 = dist36 + 1;
             lookup[indexToLocalY(42)][indexToLocalX(42)] = Direction.NORTHEAST;
             if(h42 < closestDistance)
             {
@@ -2377,9 +2398,9 @@ public class BFS_7x7
                closestIndex = 42;
             }
          }
-         if(exists43 && dist36 + cost43 < dist43)
+         if(exists43 && dist36 + 1 < dist43)
          {
-            dist43 = dist36 + cost43;
+            dist43 = dist36 + 1;
             lookup[indexToLocalY(43)][indexToLocalX(43)] = Direction.NORTH;
             if(h43 < closestDistance)
             {
@@ -2387,9 +2408,9 @@ public class BFS_7x7
                closestIndex = 43;
             }
          }
-         if(exists44 && dist36 + cost44 < dist44)
+         if(exists44 && dist36 + 1 < dist44)
          {
-            dist44 = dist36 + cost44;
+            dist44 = dist36 + 1;
             lookup[indexToLocalY(44)][indexToLocalX(44)] = Direction.NORTHWEST;
             if(h44 < closestDistance)
             {
@@ -2400,9 +2421,10 @@ public class BFS_7x7
       }
       if(exists37)
       {
-         if(exists29 && dist37 + cost29 < dist29)
+         rc.setIndicatorDot(l37, 0, 255,0);
+         if(exists29 && dist37 + 1 < dist29)
          {
-            dist29 = dist37 + cost29;
+            dist29 = dist37 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.SOUTHEAST;
             if(h29 < closestDistance)
             {
@@ -2410,9 +2432,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists30 && dist37 + cost30 < dist30)
+         if(exists30 && dist37 + 1 < dist30)
          {
-            dist30 = dist37 + cost30;
+            dist30 = dist37 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.SOUTH;
             if(h30 < closestDistance)
             {
@@ -2420,9 +2442,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists31 && dist37 + cost31 < dist31)
+         if(exists31 && dist37 + 1 < dist31)
          {
-            dist31 = dist37 + cost31;
+            dist31 = dist37 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.SOUTHWEST;
             if(h31 < closestDistance)
             {
@@ -2430,9 +2452,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists36 && dist37 + cost36 < dist36)
+         if(exists36 && dist37 + 1 < dist36)
          {
-            dist36 = dist37 + cost36;
+            dist36 = dist37 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.EAST;
             if(h36 < closestDistance)
             {
@@ -2440,9 +2462,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists38 && dist37 + cost38 < dist38)
+         if(exists38 && dist37 + 1 < dist38)
          {
-            dist38 = dist37 + cost38;
+            dist38 = dist37 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.WEST;
             if(h38 < closestDistance)
             {
@@ -2450,9 +2472,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists43 && dist37 + cost43 < dist43)
+         if(exists43 && dist37 + 1 < dist43)
          {
-            dist43 = dist37 + cost43;
+            dist43 = dist37 + 1;
             lookup[indexToLocalY(43)][indexToLocalX(43)] = Direction.NORTHEAST;
             if(h43 < closestDistance)
             {
@@ -2460,9 +2482,9 @@ public class BFS_7x7
                closestIndex = 43;
             }
          }
-         if(exists44 && dist37 + cost44 < dist44)
+         if(exists44 && dist37 + 1 < dist44)
          {
-            dist44 = dist37 + cost44;
+            dist44 = dist37 + 1;
             lookup[indexToLocalY(44)][indexToLocalX(44)] = Direction.NORTH;
             if(h44 < closestDistance)
             {
@@ -2470,9 +2492,9 @@ public class BFS_7x7
                closestIndex = 44;
             }
          }
-         if(exists45 && dist37 + cost45 < dist45)
+         if(exists45 && dist37 + 1 < dist45)
          {
-            dist45 = dist37 + cost45;
+            dist45 = dist37 + 1;
             lookup[indexToLocalY(45)][indexToLocalX(45)] = Direction.NORTHWEST;
             if(h45 < closestDistance)
             {
@@ -2483,9 +2505,10 @@ public class BFS_7x7
       }
       if(exists38)
       {
-         if(exists30 && dist38 + cost30 < dist30)
+         rc.setIndicatorDot(l38, 0, 255,0);
+         if(exists30 && dist38 + 1 < dist30)
          {
-            dist30 = dist38 + cost30;
+            dist30 = dist38 + 1;
             lookup[indexToLocalY(30)][indexToLocalX(30)] = Direction.SOUTHEAST;
             if(h30 < closestDistance)
             {
@@ -2493,9 +2516,9 @@ public class BFS_7x7
                closestIndex = 30;
             }
          }
-         if(exists31 && dist38 + cost31 < dist31)
+         if(exists31 && dist38 + 1 < dist31)
          {
-            dist31 = dist38 + cost31;
+            dist31 = dist38 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.SOUTH;
             if(h31 < closestDistance)
             {
@@ -2503,9 +2526,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists32 && dist38 + cost32 < dist32)
+         if(exists32 && dist38 + 1 < dist32)
          {
-            dist32 = dist38 + cost32;
+            dist32 = dist38 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.SOUTHWEST;
             if(h32 < closestDistance)
             {
@@ -2513,9 +2536,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists37 && dist38 + cost37 < dist37)
+         if(exists37 && dist38 + 1 < dist37)
          {
-            dist37 = dist38 + cost37;
+            dist37 = dist38 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.EAST;
             if(h37 < closestDistance)
             {
@@ -2523,9 +2546,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists39 && dist38 + cost39 < dist39)
+         if(exists39 && dist38 + 1 < dist39)
          {
-            dist39 = dist38 + cost39;
+            dist39 = dist38 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.WEST;
             if(h39 < closestDistance)
             {
@@ -2533,9 +2556,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists44 && dist38 + cost44 < dist44)
+         if(exists44 && dist38 + 1 < dist44)
          {
-            dist44 = dist38 + cost44;
+            dist44 = dist38 + 1;
             lookup[indexToLocalY(44)][indexToLocalX(44)] = Direction.NORTHEAST;
             if(h44 < closestDistance)
             {
@@ -2543,9 +2566,9 @@ public class BFS_7x7
                closestIndex = 44;
             }
          }
-         if(exists45 && dist38 + cost45 < dist45)
+         if(exists45 && dist38 + 1 < dist45)
          {
-            dist45 = dist38 + cost45;
+            dist45 = dist38 + 1;
             lookup[indexToLocalY(45)][indexToLocalX(45)] = Direction.NORTH;
             if(h45 < closestDistance)
             {
@@ -2553,9 +2576,9 @@ public class BFS_7x7
                closestIndex = 45;
             }
          }
-         if(exists46 && dist38 + cost46 < dist46)
+         if(exists46 && dist38 + 1 < dist46)
          {
-            dist46 = dist38 + cost46;
+            dist46 = dist38 + 1;
             lookup[indexToLocalY(46)][indexToLocalX(46)] = Direction.NORTHWEST;
             if(h46 < closestDistance)
             {
@@ -2566,9 +2589,10 @@ public class BFS_7x7
       }
       if(exists39)
       {
-         if(exists31 && dist39 + cost31 < dist31)
+         rc.setIndicatorDot(l39, 0, 255,0);
+         if(exists31 && dist39 + 1 < dist31)
          {
-            dist31 = dist39 + cost31;
+            dist31 = dist39 + 1;
             lookup[indexToLocalY(31)][indexToLocalX(31)] = Direction.SOUTHEAST;
             if(h31 < closestDistance)
             {
@@ -2576,9 +2600,9 @@ public class BFS_7x7
                closestIndex = 31;
             }
          }
-         if(exists32 && dist39 + cost32 < dist32)
+         if(exists32 && dist39 + 1 < dist32)
          {
-            dist32 = dist39 + cost32;
+            dist32 = dist39 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.SOUTH;
             if(h32 < closestDistance)
             {
@@ -2586,9 +2610,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists33 && dist39 + cost33 < dist33)
+         if(exists33 && dist39 + 1 < dist33)
          {
-            dist33 = dist39 + cost33;
+            dist33 = dist39 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.SOUTHWEST;
             if(h33 < closestDistance)
             {
@@ -2596,9 +2620,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists38 && dist39 + cost38 < dist38)
+         if(exists38 && dist39 + 1 < dist38)
          {
-            dist38 = dist39 + cost38;
+            dist38 = dist39 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.EAST;
             if(h38 < closestDistance)
             {
@@ -2606,9 +2630,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists40 && dist39 + cost40 < dist40)
+         if(exists40 && dist39 + 1 < dist40)
          {
-            dist40 = dist39 + cost40;
+            dist40 = dist39 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.WEST;
             if(h40 < closestDistance)
             {
@@ -2616,9 +2640,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists45 && dist39 + cost45 < dist45)
+         if(exists45 && dist39 + 1 < dist45)
          {
-            dist45 = dist39 + cost45;
+            dist45 = dist39 + 1;
             lookup[indexToLocalY(45)][indexToLocalX(45)] = Direction.NORTHEAST;
             if(h45 < closestDistance)
             {
@@ -2626,9 +2650,9 @@ public class BFS_7x7
                closestIndex = 45;
             }
          }
-         if(exists46 && dist39 + cost46 < dist46)
+         if(exists46 && dist39 + 1 < dist46)
          {
-            dist46 = dist39 + cost46;
+            dist46 = dist39 + 1;
             lookup[indexToLocalY(46)][indexToLocalX(46)] = Direction.NORTH;
             if(h46 < closestDistance)
             {
@@ -2636,9 +2660,9 @@ public class BFS_7x7
                closestIndex = 46;
             }
          }
-         if(exists47 && dist39 + cost47 < dist47)
+         if(exists47 && dist39 + 1 < dist47)
          {
-            dist47 = dist39 + cost47;
+            dist47 = dist39 + 1;
             lookup[indexToLocalY(47)][indexToLocalX(47)] = Direction.NORTHWEST;
             if(h47 < closestDistance)
             {
@@ -2649,9 +2673,10 @@ public class BFS_7x7
       }
       if(exists40)
       {
-         if(exists32 && dist40 + cost32 < dist32)
+         rc.setIndicatorDot(l40, 0, 255,0);
+         if(exists32 && dist40 + 1 < dist32)
          {
-            dist32 = dist40 + cost32;
+            dist32 = dist40 + 1;
             lookup[indexToLocalY(32)][indexToLocalX(32)] = Direction.SOUTHEAST;
             if(h32 < closestDistance)
             {
@@ -2659,9 +2684,9 @@ public class BFS_7x7
                closestIndex = 32;
             }
          }
-         if(exists33 && dist40 + cost33 < dist33)
+         if(exists33 && dist40 + 1 < dist33)
          {
-            dist33 = dist40 + cost33;
+            dist33 = dist40 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.SOUTH;
             if(h33 < closestDistance)
             {
@@ -2669,9 +2694,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists34 && dist40 + cost34 < dist34)
+         if(exists34 && dist40 + 1 < dist34)
          {
-            dist34 = dist40 + cost34;
+            dist34 = dist40 + 1;
             lookup[indexToLocalY(34)][indexToLocalX(34)] = Direction.SOUTHWEST;
             if(h34 < closestDistance)
             {
@@ -2679,9 +2704,9 @@ public class BFS_7x7
                closestIndex = 34;
             }
          }
-         if(exists39 && dist40 + cost39 < dist39)
+         if(exists39 && dist40 + 1 < dist39)
          {
-            dist39 = dist40 + cost39;
+            dist39 = dist40 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.EAST;
             if(h39 < closestDistance)
             {
@@ -2689,9 +2714,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists41 && dist40 + cost41 < dist41)
+         if(exists41 && dist40 + 1 < dist41)
          {
-            dist41 = dist40 + cost41;
+            dist41 = dist40 + 1;
             lookup[indexToLocalY(41)][indexToLocalX(41)] = Direction.WEST;
             if(h41 < closestDistance)
             {
@@ -2699,9 +2724,9 @@ public class BFS_7x7
                closestIndex = 41;
             }
          }
-         if(exists46 && dist40 + cost46 < dist46)
+         if(exists46 && dist40 + 1 < dist46)
          {
-            dist46 = dist40 + cost46;
+            dist46 = dist40 + 1;
             lookup[indexToLocalY(46)][indexToLocalX(46)] = Direction.NORTHEAST;
             if(h46 < closestDistance)
             {
@@ -2709,9 +2734,9 @@ public class BFS_7x7
                closestIndex = 46;
             }
          }
-         if(exists47 && dist40 + cost47 < dist47)
+         if(exists47 && dist40 + 1 < dist47)
          {
-            dist47 = dist40 + cost47;
+            dist47 = dist40 + 1;
             lookup[indexToLocalY(47)][indexToLocalX(47)] = Direction.NORTH;
             if(h47 < closestDistance)
             {
@@ -2719,9 +2744,9 @@ public class BFS_7x7
                closestIndex = 47;
             }
          }
-         if(exists48 && dist40 + cost48 < dist48)
+         if(exists48 && dist40 + 1 < dist48)
          {
-            dist48 = dist40 + cost48;
+            dist48 = dist40 + 1;
             lookup[indexToLocalY(48)][indexToLocalX(48)] = Direction.NORTHWEST;
             if(h48 < closestDistance)
             {
@@ -2732,9 +2757,10 @@ public class BFS_7x7
       }
       if(exists0)
       {
-         if(exists1 && dist0 + cost1 < dist1)
+         rc.setIndicatorDot(l0, 0, 255,0);
+         if(exists1 && dist0 + 1 < dist1)
          {
-            dist1 = dist0 + cost1;
+            dist1 = dist0 + 1;
             lookup[indexToLocalY(1)][indexToLocalX(1)] = Direction.WEST;
             if(h1 < closestDistance)
             {
@@ -2742,9 +2768,9 @@ public class BFS_7x7
                closestIndex = 1;
             }
          }
-         if(exists7 && dist0 + cost7 < dist7)
+         if(exists7 && dist0 + 1 < dist7)
          {
-            dist7 = dist0 + cost7;
+            dist7 = dist0 + 1;
             lookup[indexToLocalY(7)][indexToLocalX(7)] = Direction.NORTH;
             if(h7 < closestDistance)
             {
@@ -2752,9 +2778,9 @@ public class BFS_7x7
                closestIndex = 7;
             }
          }
-         if(exists8 && dist0 + cost8 < dist8)
+         if(exists8 && dist0 + 1 < dist8)
          {
-            dist8 = dist0 + cost8;
+            dist8 = dist0 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.NORTHWEST;
             if(h8 < closestDistance)
             {
@@ -2765,9 +2791,10 @@ public class BFS_7x7
       }
       if(exists1)
       {
-         if(exists0 && dist1 + cost0 < dist0)
+         rc.setIndicatorDot(l1, 0, 255,0);
+         if(exists0 && dist1 + 1 < dist0)
          {
-            dist0 = dist1 + cost0;
+            dist0 = dist1 + 1;
             lookup[indexToLocalY(0)][indexToLocalX(0)] = Direction.EAST;
             if(h0 < closestDistance)
             {
@@ -2775,9 +2802,9 @@ public class BFS_7x7
                closestIndex = 0;
             }
          }
-         if(exists2 && dist1 + cost2 < dist2)
+         if(exists2 && dist1 + 1 < dist2)
          {
-            dist2 = dist1 + cost2;
+            dist2 = dist1 + 1;
             lookup[indexToLocalY(2)][indexToLocalX(2)] = Direction.WEST;
             if(h2 < closestDistance)
             {
@@ -2785,9 +2812,9 @@ public class BFS_7x7
                closestIndex = 2;
             }
          }
-         if(exists7 && dist1 + cost7 < dist7)
+         if(exists7 && dist1 + 1 < dist7)
          {
-            dist7 = dist1 + cost7;
+            dist7 = dist1 + 1;
             lookup[indexToLocalY(7)][indexToLocalX(7)] = Direction.NORTHEAST;
             if(h7 < closestDistance)
             {
@@ -2795,9 +2822,9 @@ public class BFS_7x7
                closestIndex = 7;
             }
          }
-         if(exists8 && dist1 + cost8 < dist8)
+         if(exists8 && dist1 + 1 < dist8)
          {
-            dist8 = dist1 + cost8;
+            dist8 = dist1 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.NORTH;
             if(h8 < closestDistance)
             {
@@ -2805,9 +2832,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists9 && dist1 + cost9 < dist9)
+         if(exists9 && dist1 + 1 < dist9)
          {
-            dist9 = dist1 + cost9;
+            dist9 = dist1 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.NORTHWEST;
             if(h9 < closestDistance)
             {
@@ -2818,9 +2845,10 @@ public class BFS_7x7
       }
       if(exists2)
       {
-         if(exists1 && dist2 + cost1 < dist1)
+         rc.setIndicatorDot(l2, 0, 255,0);
+         if(exists1 && dist2 + 1 < dist1)
          {
-            dist1 = dist2 + cost1;
+            dist1 = dist2 + 1;
             lookup[indexToLocalY(1)][indexToLocalX(1)] = Direction.EAST;
             if(h1 < closestDistance)
             {
@@ -2828,9 +2856,9 @@ public class BFS_7x7
                closestIndex = 1;
             }
          }
-         if(exists3 && dist2 + cost3 < dist3)
+         if(exists3 && dist2 + 1 < dist3)
          {
-            dist3 = dist2 + cost3;
+            dist3 = dist2 + 1;
             lookup[indexToLocalY(3)][indexToLocalX(3)] = Direction.WEST;
             if(h3 < closestDistance)
             {
@@ -2838,9 +2866,9 @@ public class BFS_7x7
                closestIndex = 3;
             }
          }
-         if(exists8 && dist2 + cost8 < dist8)
+         if(exists8 && dist2 + 1 < dist8)
          {
-            dist8 = dist2 + cost8;
+            dist8 = dist2 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.NORTHEAST;
             if(h8 < closestDistance)
             {
@@ -2848,9 +2876,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists9 && dist2 + cost9 < dist9)
+         if(exists9 && dist2 + 1 < dist9)
          {
-            dist9 = dist2 + cost9;
+            dist9 = dist2 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.NORTH;
             if(h9 < closestDistance)
             {
@@ -2858,9 +2886,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists10 && dist2 + cost10 < dist10)
+         if(exists10 && dist2 + 1 < dist10)
          {
-            dist10 = dist2 + cost10;
+            dist10 = dist2 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.NORTHWEST;
             if(h10 < closestDistance)
             {
@@ -2871,9 +2899,10 @@ public class BFS_7x7
       }
       if(exists7)
       {
-         if(exists0 && dist7 + cost0 < dist0)
+         rc.setIndicatorDot(l7, 0, 255,0);
+         if(exists0 && dist7 + 1 < dist0)
          {
-            dist0 = dist7 + cost0;
+            dist0 = dist7 + 1;
             lookup[indexToLocalY(0)][indexToLocalX(0)] = Direction.SOUTH;
             if(h0 < closestDistance)
             {
@@ -2881,9 +2910,9 @@ public class BFS_7x7
                closestIndex = 0;
             }
          }
-         if(exists1 && dist7 + cost1 < dist1)
+         if(exists1 && dist7 + 1 < dist1)
          {
-            dist1 = dist7 + cost1;
+            dist1 = dist7 + 1;
             lookup[indexToLocalY(1)][indexToLocalX(1)] = Direction.SOUTHWEST;
             if(h1 < closestDistance)
             {
@@ -2891,9 +2920,9 @@ public class BFS_7x7
                closestIndex = 1;
             }
          }
-         if(exists8 && dist7 + cost8 < dist8)
+         if(exists8 && dist7 + 1 < dist8)
          {
-            dist8 = dist7 + cost8;
+            dist8 = dist7 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.WEST;
             if(h8 < closestDistance)
             {
@@ -2901,9 +2930,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists14 && dist7 + cost14 < dist14)
+         if(exists14 && dist7 + 1 < dist14)
          {
-            dist14 = dist7 + cost14;
+            dist14 = dist7 + 1;
             lookup[indexToLocalY(14)][indexToLocalX(14)] = Direction.NORTH;
             if(h14 < closestDistance)
             {
@@ -2911,9 +2940,9 @@ public class BFS_7x7
                closestIndex = 14;
             }
          }
-         if(exists15 && dist7 + cost15 < dist15)
+         if(exists15 && dist7 + 1 < dist15)
          {
-            dist15 = dist7 + cost15;
+            dist15 = dist7 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.NORTHWEST;
             if(h15 < closestDistance)
             {
@@ -2924,9 +2953,10 @@ public class BFS_7x7
       }
       if(exists14)
       {
-         if(exists7 && dist14 + cost7 < dist7)
+         rc.setIndicatorDot(l14, 0, 255,0);
+         if(exists7 && dist14 + 1 < dist7)
          {
-            dist7 = dist14 + cost7;
+            dist7 = dist14 + 1;
             lookup[indexToLocalY(7)][indexToLocalX(7)] = Direction.SOUTH;
             if(h7 < closestDistance)
             {
@@ -2934,9 +2964,9 @@ public class BFS_7x7
                closestIndex = 7;
             }
          }
-         if(exists8 && dist14 + cost8 < dist8)
+         if(exists8 && dist14 + 1 < dist8)
          {
-            dist8 = dist14 + cost8;
+            dist8 = dist14 + 1;
             lookup[indexToLocalY(8)][indexToLocalX(8)] = Direction.SOUTHWEST;
             if(h8 < closestDistance)
             {
@@ -2944,9 +2974,9 @@ public class BFS_7x7
                closestIndex = 8;
             }
          }
-         if(exists15 && dist14 + cost15 < dist15)
+         if(exists15 && dist14 + 1 < dist15)
          {
-            dist15 = dist14 + cost15;
+            dist15 = dist14 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.WEST;
             if(h15 < closestDistance)
             {
@@ -2954,9 +2984,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists21 && dist14 + cost21 < dist21)
+         if(exists21 && dist14 + 1 < dist21)
          {
-            dist21 = dist14 + cost21;
+            dist21 = dist14 + 1;
             lookup[indexToLocalY(21)][indexToLocalX(21)] = Direction.NORTH;
             if(h21 < closestDistance)
             {
@@ -2964,9 +2994,9 @@ public class BFS_7x7
                closestIndex = 21;
             }
          }
-         if(exists22 && dist14 + cost22 < dist22)
+         if(exists22 && dist14 + 1 < dist22)
          {
-            dist22 = dist14 + cost22;
+            dist22 = dist14 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.NORTHWEST;
             if(h22 < closestDistance)
             {
@@ -2977,9 +3007,10 @@ public class BFS_7x7
       }
       if(exists3)
       {
-         if(exists2 && dist3 + cost2 < dist2)
+         rc.setIndicatorDot(l3, 0, 255,0);
+         if(exists2 && dist3 + 1 < dist2)
          {
-            dist2 = dist3 + cost2;
+            dist2 = dist3 + 1;
             lookup[indexToLocalY(2)][indexToLocalX(2)] = Direction.EAST;
             if(h2 < closestDistance)
             {
@@ -2987,9 +3018,9 @@ public class BFS_7x7
                closestIndex = 2;
             }
          }
-         if(exists4 && dist3 + cost4 < dist4)
+         if(exists4 && dist3 + 1 < dist4)
          {
-            dist4 = dist3 + cost4;
+            dist4 = dist3 + 1;
             lookup[indexToLocalY(4)][indexToLocalX(4)] = Direction.WEST;
             if(h4 < closestDistance)
             {
@@ -2997,9 +3028,9 @@ public class BFS_7x7
                closestIndex = 4;
             }
          }
-         if(exists9 && dist3 + cost9 < dist9)
+         if(exists9 && dist3 + 1 < dist9)
          {
-            dist9 = dist3 + cost9;
+            dist9 = dist3 + 1;
             lookup[indexToLocalY(9)][indexToLocalX(9)] = Direction.NORTHEAST;
             if(h9 < closestDistance)
             {
@@ -3007,9 +3038,9 @@ public class BFS_7x7
                closestIndex = 9;
             }
          }
-         if(exists10 && dist3 + cost10 < dist10)
+         if(exists10 && dist3 + 1 < dist10)
          {
-            dist10 = dist3 + cost10;
+            dist10 = dist3 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.NORTH;
             if(h10 < closestDistance)
             {
@@ -3017,9 +3048,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists11 && dist3 + cost11 < dist11)
+         if(exists11 && dist3 + 1 < dist11)
          {
-            dist11 = dist3 + cost11;
+            dist11 = dist3 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.NORTHWEST;
             if(h11 < closestDistance)
             {
@@ -3030,9 +3061,10 @@ public class BFS_7x7
       }
       if(exists4)
       {
-         if(exists3 && dist4 + cost3 < dist3)
+         rc.setIndicatorDot(l4, 0, 255,0);
+         if(exists3 && dist4 + 1 < dist3)
          {
-            dist3 = dist4 + cost3;
+            dist3 = dist4 + 1;
             lookup[indexToLocalY(3)][indexToLocalX(3)] = Direction.EAST;
             if(h3 < closestDistance)
             {
@@ -3040,9 +3072,9 @@ public class BFS_7x7
                closestIndex = 3;
             }
          }
-         if(exists5 && dist4 + cost5 < dist5)
+         if(exists5 && dist4 + 1 < dist5)
          {
-            dist5 = dist4 + cost5;
+            dist5 = dist4 + 1;
             lookup[indexToLocalY(5)][indexToLocalX(5)] = Direction.WEST;
             if(h5 < closestDistance)
             {
@@ -3050,9 +3082,9 @@ public class BFS_7x7
                closestIndex = 5;
             }
          }
-         if(exists10 && dist4 + cost10 < dist10)
+         if(exists10 && dist4 + 1 < dist10)
          {
-            dist10 = dist4 + cost10;
+            dist10 = dist4 + 1;
             lookup[indexToLocalY(10)][indexToLocalX(10)] = Direction.NORTHEAST;
             if(h10 < closestDistance)
             {
@@ -3060,9 +3092,9 @@ public class BFS_7x7
                closestIndex = 10;
             }
          }
-         if(exists11 && dist4 + cost11 < dist11)
+         if(exists11 && dist4 + 1 < dist11)
          {
-            dist11 = dist4 + cost11;
+            dist11 = dist4 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.NORTH;
             if(h11 < closestDistance)
             {
@@ -3070,9 +3102,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists12 && dist4 + cost12 < dist12)
+         if(exists12 && dist4 + 1 < dist12)
          {
-            dist12 = dist4 + cost12;
+            dist12 = dist4 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.NORTHWEST;
             if(h12 < closestDistance)
             {
@@ -3083,9 +3115,10 @@ public class BFS_7x7
       }
       if(exists21)
       {
-         if(exists14 && dist21 + cost14 < dist14)
+         rc.setIndicatorDot(l21, 0, 255,0);
+         if(exists14 && dist21 + 1 < dist14)
          {
-            dist14 = dist21 + cost14;
+            dist14 = dist21 + 1;
             lookup[indexToLocalY(14)][indexToLocalX(14)] = Direction.SOUTH;
             if(h14 < closestDistance)
             {
@@ -3093,9 +3126,9 @@ public class BFS_7x7
                closestIndex = 14;
             }
          }
-         if(exists15 && dist21 + cost15 < dist15)
+         if(exists15 && dist21 + 1 < dist15)
          {
-            dist15 = dist21 + cost15;
+            dist15 = dist21 + 1;
             lookup[indexToLocalY(15)][indexToLocalX(15)] = Direction.SOUTHWEST;
             if(h15 < closestDistance)
             {
@@ -3103,9 +3136,9 @@ public class BFS_7x7
                closestIndex = 15;
             }
          }
-         if(exists22 && dist21 + cost22 < dist22)
+         if(exists22 && dist21 + 1 < dist22)
          {
-            dist22 = dist21 + cost22;
+            dist22 = dist21 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.WEST;
             if(h22 < closestDistance)
             {
@@ -3113,9 +3146,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists28 && dist21 + cost28 < dist28)
+         if(exists28 && dist21 + 1 < dist28)
          {
-            dist28 = dist21 + cost28;
+            dist28 = dist21 + 1;
             lookup[indexToLocalY(28)][indexToLocalX(28)] = Direction.NORTH;
             if(h28 < closestDistance)
             {
@@ -3123,9 +3156,9 @@ public class BFS_7x7
                closestIndex = 28;
             }
          }
-         if(exists29 && dist21 + cost29 < dist29)
+         if(exists29 && dist21 + 1 < dist29)
          {
-            dist29 = dist21 + cost29;
+            dist29 = dist21 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.NORTHWEST;
             if(h29 < closestDistance)
             {
@@ -3136,9 +3169,10 @@ public class BFS_7x7
       }
       if(exists28)
       {
-         if(exists21 && dist28 + cost21 < dist21)
+         rc.setIndicatorDot(l28, 0, 255,0);
+         if(exists21 && dist28 + 1 < dist21)
          {
-            dist21 = dist28 + cost21;
+            dist21 = dist28 + 1;
             lookup[indexToLocalY(21)][indexToLocalX(21)] = Direction.SOUTH;
             if(h21 < closestDistance)
             {
@@ -3146,9 +3180,9 @@ public class BFS_7x7
                closestIndex = 21;
             }
          }
-         if(exists22 && dist28 + cost22 < dist22)
+         if(exists22 && dist28 + 1 < dist22)
          {
-            dist22 = dist28 + cost22;
+            dist22 = dist28 + 1;
             lookup[indexToLocalY(22)][indexToLocalX(22)] = Direction.SOUTHWEST;
             if(h22 < closestDistance)
             {
@@ -3156,9 +3190,9 @@ public class BFS_7x7
                closestIndex = 22;
             }
          }
-         if(exists29 && dist28 + cost29 < dist29)
+         if(exists29 && dist28 + 1 < dist29)
          {
-            dist29 = dist28 + cost29;
+            dist29 = dist28 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.WEST;
             if(h29 < closestDistance)
             {
@@ -3166,9 +3200,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists35 && dist28 + cost35 < dist35)
+         if(exists35 && dist28 + 1 < dist35)
          {
-            dist35 = dist28 + cost35;
+            dist35 = dist28 + 1;
             lookup[indexToLocalY(35)][indexToLocalX(35)] = Direction.NORTH;
             if(h35 < closestDistance)
             {
@@ -3176,9 +3210,9 @@ public class BFS_7x7
                closestIndex = 35;
             }
          }
-         if(exists36 && dist28 + cost36 < dist36)
+         if(exists36 && dist28 + 1 < dist36)
          {
-            dist36 = dist28 + cost36;
+            dist36 = dist28 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.NORTHWEST;
             if(h36 < closestDistance)
             {
@@ -3189,9 +3223,10 @@ public class BFS_7x7
       }
       if(exists5)
       {
-         if(exists4 && dist5 + cost4 < dist4)
+         rc.setIndicatorDot(l5, 0, 255,0);
+         if(exists4 && dist5 + 1 < dist4)
          {
-            dist4 = dist5 + cost4;
+            dist4 = dist5 + 1;
             lookup[indexToLocalY(4)][indexToLocalX(4)] = Direction.EAST;
             if(h4 < closestDistance)
             {
@@ -3199,9 +3234,9 @@ public class BFS_7x7
                closestIndex = 4;
             }
          }
-         if(exists6 && dist5 + cost6 < dist6)
+         if(exists6 && dist5 + 1 < dist6)
          {
-            dist6 = dist5 + cost6;
+            dist6 = dist5 + 1;
             lookup[indexToLocalY(6)][indexToLocalX(6)] = Direction.WEST;
             if(h6 < closestDistance)
             {
@@ -3209,9 +3244,9 @@ public class BFS_7x7
                closestIndex = 6;
             }
          }
-         if(exists11 && dist5 + cost11 < dist11)
+         if(exists11 && dist5 + 1 < dist11)
          {
-            dist11 = dist5 + cost11;
+            dist11 = dist5 + 1;
             lookup[indexToLocalY(11)][indexToLocalX(11)] = Direction.NORTHEAST;
             if(h11 < closestDistance)
             {
@@ -3219,9 +3254,9 @@ public class BFS_7x7
                closestIndex = 11;
             }
          }
-         if(exists12 && dist5 + cost12 < dist12)
+         if(exists12 && dist5 + 1 < dist12)
          {
-            dist12 = dist5 + cost12;
+            dist12 = dist5 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.NORTH;
             if(h12 < closestDistance)
             {
@@ -3229,9 +3264,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists13 && dist5 + cost13 < dist13)
+         if(exists13 && dist5 + 1 < dist13)
          {
-            dist13 = dist5 + cost13;
+            dist13 = dist5 + 1;
             lookup[indexToLocalY(13)][indexToLocalX(13)] = Direction.NORTHWEST;
             if(h13 < closestDistance)
             {
@@ -3242,9 +3277,10 @@ public class BFS_7x7
       }
       if(exists6)
       {
-         if(exists5 && dist6 + cost5 < dist5)
+         rc.setIndicatorDot(l6, 0, 255,0);
+         if(exists5 && dist6 + 1 < dist5)
          {
-            dist5 = dist6 + cost5;
+            dist5 = dist6 + 1;
             lookup[indexToLocalY(5)][indexToLocalX(5)] = Direction.EAST;
             if(h5 < closestDistance)
             {
@@ -3252,9 +3288,9 @@ public class BFS_7x7
                closestIndex = 5;
             }
          }
-         if(exists12 && dist6 + cost12 < dist12)
+         if(exists12 && dist6 + 1 < dist12)
          {
-            dist12 = dist6 + cost12;
+            dist12 = dist6 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.NORTHEAST;
             if(h12 < closestDistance)
             {
@@ -3262,9 +3298,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists13 && dist6 + cost13 < dist13)
+         if(exists13 && dist6 + 1 < dist13)
          {
-            dist13 = dist6 + cost13;
+            dist13 = dist6 + 1;
             lookup[indexToLocalY(13)][indexToLocalX(13)] = Direction.NORTH;
             if(h13 < closestDistance)
             {
@@ -3275,9 +3311,10 @@ public class BFS_7x7
       }
       if(exists13)
       {
-         if(exists5 && dist13 + cost5 < dist5)
+         rc.setIndicatorDot(l13, 0, 255,0);
+         if(exists5 && dist13 + 1 < dist5)
          {
-            dist5 = dist13 + cost5;
+            dist5 = dist13 + 1;
             lookup[indexToLocalY(5)][indexToLocalX(5)] = Direction.SOUTHEAST;
             if(h5 < closestDistance)
             {
@@ -3285,9 +3322,9 @@ public class BFS_7x7
                closestIndex = 5;
             }
          }
-         if(exists6 && dist13 + cost6 < dist6)
+         if(exists6 && dist13 + 1 < dist6)
          {
-            dist6 = dist13 + cost6;
+            dist6 = dist13 + 1;
             lookup[indexToLocalY(6)][indexToLocalX(6)] = Direction.SOUTH;
             if(h6 < closestDistance)
             {
@@ -3295,9 +3332,9 @@ public class BFS_7x7
                closestIndex = 6;
             }
          }
-         if(exists12 && dist13 + cost12 < dist12)
+         if(exists12 && dist13 + 1 < dist12)
          {
-            dist12 = dist13 + cost12;
+            dist12 = dist13 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.EAST;
             if(h12 < closestDistance)
             {
@@ -3305,9 +3342,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists19 && dist13 + cost19 < dist19)
+         if(exists19 && dist13 + 1 < dist19)
          {
-            dist19 = dist13 + cost19;
+            dist19 = dist13 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.NORTHEAST;
             if(h19 < closestDistance)
             {
@@ -3315,9 +3352,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists20 && dist13 + cost20 < dist20)
+         if(exists20 && dist13 + 1 < dist20)
          {
-            dist20 = dist13 + cost20;
+            dist20 = dist13 + 1;
             lookup[indexToLocalY(20)][indexToLocalX(20)] = Direction.NORTH;
             if(h20 < closestDistance)
             {
@@ -3328,9 +3365,10 @@ public class BFS_7x7
       }
       if(exists20)
       {
-         if(exists12 && dist20 + cost12 < dist12)
+         rc.setIndicatorDot(l20, 0, 255,0);
+         if(exists12 && dist20 + 1 < dist12)
          {
-            dist12 = dist20 + cost12;
+            dist12 = dist20 + 1;
             lookup[indexToLocalY(12)][indexToLocalX(12)] = Direction.SOUTHEAST;
             if(h12 < closestDistance)
             {
@@ -3338,9 +3376,9 @@ public class BFS_7x7
                closestIndex = 12;
             }
          }
-         if(exists13 && dist20 + cost13 < dist13)
+         if(exists13 && dist20 + 1 < dist13)
          {
-            dist13 = dist20 + cost13;
+            dist13 = dist20 + 1;
             lookup[indexToLocalY(13)][indexToLocalX(13)] = Direction.SOUTH;
             if(h13 < closestDistance)
             {
@@ -3348,9 +3386,9 @@ public class BFS_7x7
                closestIndex = 13;
             }
          }
-         if(exists19 && dist20 + cost19 < dist19)
+         if(exists19 && dist20 + 1 < dist19)
          {
-            dist19 = dist20 + cost19;
+            dist19 = dist20 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.EAST;
             if(h19 < closestDistance)
             {
@@ -3358,9 +3396,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists26 && dist20 + cost26 < dist26)
+         if(exists26 && dist20 + 1 < dist26)
          {
-            dist26 = dist20 + cost26;
+            dist26 = dist20 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.NORTHEAST;
             if(h26 < closestDistance)
             {
@@ -3368,9 +3406,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists27 && dist20 + cost27 < dist27)
+         if(exists27 && dist20 + 1 < dist27)
          {
-            dist27 = dist20 + cost27;
+            dist27 = dist20 + 1;
             lookup[indexToLocalY(27)][indexToLocalX(27)] = Direction.NORTH;
             if(h27 < closestDistance)
             {
@@ -3381,9 +3419,10 @@ public class BFS_7x7
       }
       if(exists27)
       {
-         if(exists19 && dist27 + cost19 < dist19)
+         rc.setIndicatorDot(l27, 0, 255,0);
+         if(exists19 && dist27 + 1 < dist19)
          {
-            dist19 = dist27 + cost19;
+            dist19 = dist27 + 1;
             lookup[indexToLocalY(19)][indexToLocalX(19)] = Direction.SOUTHEAST;
             if(h19 < closestDistance)
             {
@@ -3391,9 +3430,9 @@ public class BFS_7x7
                closestIndex = 19;
             }
          }
-         if(exists20 && dist27 + cost20 < dist20)
+         if(exists20 && dist27 + 1 < dist20)
          {
-            dist20 = dist27 + cost20;
+            dist20 = dist27 + 1;
             lookup[indexToLocalY(20)][indexToLocalX(20)] = Direction.SOUTH;
             if(h20 < closestDistance)
             {
@@ -3401,9 +3440,9 @@ public class BFS_7x7
                closestIndex = 20;
             }
          }
-         if(exists26 && dist27 + cost26 < dist26)
+         if(exists26 && dist27 + 1 < dist26)
          {
-            dist26 = dist27 + cost26;
+            dist26 = dist27 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.EAST;
             if(h26 < closestDistance)
             {
@@ -3411,9 +3450,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists33 && dist27 + cost33 < dist33)
+         if(exists33 && dist27 + 1 < dist33)
          {
-            dist33 = dist27 + cost33;
+            dist33 = dist27 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.NORTHEAST;
             if(h33 < closestDistance)
             {
@@ -3421,9 +3460,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists34 && dist27 + cost34 < dist34)
+         if(exists34 && dist27 + 1 < dist34)
          {
-            dist34 = dist27 + cost34;
+            dist34 = dist27 + 1;
             lookup[indexToLocalY(34)][indexToLocalX(34)] = Direction.NORTH;
             if(h34 < closestDistance)
             {
@@ -3434,9 +3473,10 @@ public class BFS_7x7
       }
       if(exists34)
       {
-         if(exists26 && dist34 + cost26 < dist26)
+         rc.setIndicatorDot(l34, 0, 255,0);
+         if(exists26 && dist34 + 1 < dist26)
          {
-            dist26 = dist34 + cost26;
+            dist26 = dist34 + 1;
             lookup[indexToLocalY(26)][indexToLocalX(26)] = Direction.SOUTHEAST;
             if(h26 < closestDistance)
             {
@@ -3444,9 +3484,9 @@ public class BFS_7x7
                closestIndex = 26;
             }
          }
-         if(exists27 && dist34 + cost27 < dist27)
+         if(exists27 && dist34 + 1 < dist27)
          {
-            dist27 = dist34 + cost27;
+            dist27 = dist34 + 1;
             lookup[indexToLocalY(27)][indexToLocalX(27)] = Direction.SOUTH;
             if(h27 < closestDistance)
             {
@@ -3454,9 +3494,9 @@ public class BFS_7x7
                closestIndex = 27;
             }
          }
-         if(exists33 && dist34 + cost33 < dist33)
+         if(exists33 && dist34 + 1 < dist33)
          {
-            dist33 = dist34 + cost33;
+            dist33 = dist34 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.EAST;
             if(h33 < closestDistance)
             {
@@ -3464,9 +3504,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists40 && dist34 + cost40 < dist40)
+         if(exists40 && dist34 + 1 < dist40)
          {
-            dist40 = dist34 + cost40;
+            dist40 = dist34 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.NORTHEAST;
             if(h40 < closestDistance)
             {
@@ -3474,9 +3514,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists41 && dist34 + cost41 < dist41)
+         if(exists41 && dist34 + 1 < dist41)
          {
-            dist41 = dist34 + cost41;
+            dist41 = dist34 + 1;
             lookup[indexToLocalY(41)][indexToLocalX(41)] = Direction.NORTH;
             if(h41 < closestDistance)
             {
@@ -3487,9 +3527,10 @@ public class BFS_7x7
       }
       if(exists35)
       {
-         if(exists28 && dist35 + cost28 < dist28)
+         rc.setIndicatorDot(l35, 0, 255,0);
+         if(exists28 && dist35 + 1 < dist28)
          {
-            dist28 = dist35 + cost28;
+            dist28 = dist35 + 1;
             lookup[indexToLocalY(28)][indexToLocalX(28)] = Direction.SOUTH;
             if(h28 < closestDistance)
             {
@@ -3497,9 +3538,9 @@ public class BFS_7x7
                closestIndex = 28;
             }
          }
-         if(exists29 && dist35 + cost29 < dist29)
+         if(exists29 && dist35 + 1 < dist29)
          {
-            dist29 = dist35 + cost29;
+            dist29 = dist35 + 1;
             lookup[indexToLocalY(29)][indexToLocalX(29)] = Direction.SOUTHWEST;
             if(h29 < closestDistance)
             {
@@ -3507,9 +3548,9 @@ public class BFS_7x7
                closestIndex = 29;
             }
          }
-         if(exists36 && dist35 + cost36 < dist36)
+         if(exists36 && dist35 + 1 < dist36)
          {
-            dist36 = dist35 + cost36;
+            dist36 = dist35 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.WEST;
             if(h36 < closestDistance)
             {
@@ -3517,9 +3558,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists42 && dist35 + cost42 < dist42)
+         if(exists42 && dist35 + 1 < dist42)
          {
-            dist42 = dist35 + cost42;
+            dist42 = dist35 + 1;
             lookup[indexToLocalY(42)][indexToLocalX(42)] = Direction.NORTH;
             if(h42 < closestDistance)
             {
@@ -3527,9 +3568,9 @@ public class BFS_7x7
                closestIndex = 42;
             }
          }
-         if(exists43 && dist35 + cost43 < dist43)
+         if(exists43 && dist35 + 1 < dist43)
          {
-            dist43 = dist35 + cost43;
+            dist43 = dist35 + 1;
             lookup[indexToLocalY(43)][indexToLocalX(43)] = Direction.NORTHWEST;
             if(h43 < closestDistance)
             {
@@ -3540,9 +3581,10 @@ public class BFS_7x7
       }
       if(exists41)
       {
-         if(exists33 && dist41 + cost33 < dist33)
+         rc.setIndicatorDot(l41, 0, 255,0);
+         if(exists33 && dist41 + 1 < dist33)
          {
-            dist33 = dist41 + cost33;
+            dist33 = dist41 + 1;
             lookup[indexToLocalY(33)][indexToLocalX(33)] = Direction.SOUTHEAST;
             if(h33 < closestDistance)
             {
@@ -3550,9 +3592,9 @@ public class BFS_7x7
                closestIndex = 33;
             }
          }
-         if(exists34 && dist41 + cost34 < dist34)
+         if(exists34 && dist41 + 1 < dist34)
          {
-            dist34 = dist41 + cost34;
+            dist34 = dist41 + 1;
             lookup[indexToLocalY(34)][indexToLocalX(34)] = Direction.SOUTH;
             if(h34 < closestDistance)
             {
@@ -3560,9 +3602,9 @@ public class BFS_7x7
                closestIndex = 34;
             }
          }
-         if(exists40 && dist41 + cost40 < dist40)
+         if(exists40 && dist41 + 1 < dist40)
          {
-            dist40 = dist41 + cost40;
+            dist40 = dist41 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.EAST;
             if(h40 < closestDistance)
             {
@@ -3570,9 +3612,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists47 && dist41 + cost47 < dist47)
+         if(exists47 && dist41 + 1 < dist47)
          {
-            dist47 = dist41 + cost47;
+            dist47 = dist41 + 1;
             lookup[indexToLocalY(47)][indexToLocalX(47)] = Direction.NORTHEAST;
             if(h47 < closestDistance)
             {
@@ -3580,9 +3622,9 @@ public class BFS_7x7
                closestIndex = 47;
             }
          }
-         if(exists48 && dist41 + cost48 < dist48)
+         if(exists48 && dist41 + 1 < dist48)
          {
-            dist48 = dist41 + cost48;
+            dist48 = dist41 + 1;
             lookup[indexToLocalY(48)][indexToLocalX(48)] = Direction.NORTH;
             if(h48 < closestDistance)
             {
@@ -3593,9 +3635,10 @@ public class BFS_7x7
       }
       if(exists42)
       {
-         if(exists35 && dist42 + cost35 < dist35)
+         rc.setIndicatorDot(l42, 0, 255,0);
+         if(exists35 && dist42 + 1 < dist35)
          {
-            dist35 = dist42 + cost35;
+            dist35 = dist42 + 1;
             lookup[indexToLocalY(35)][indexToLocalX(35)] = Direction.SOUTH;
             if(h35 < closestDistance)
             {
@@ -3603,9 +3646,9 @@ public class BFS_7x7
                closestIndex = 35;
             }
          }
-         if(exists36 && dist42 + cost36 < dist36)
+         if(exists36 && dist42 + 1 < dist36)
          {
-            dist36 = dist42 + cost36;
+            dist36 = dist42 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.SOUTHWEST;
             if(h36 < closestDistance)
             {
@@ -3613,9 +3656,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists43 && dist42 + cost43 < dist43)
+         if(exists43 && dist42 + 1 < dist43)
          {
-            dist43 = dist42 + cost43;
+            dist43 = dist42 + 1;
             lookup[indexToLocalY(43)][indexToLocalX(43)] = Direction.WEST;
             if(h43 < closestDistance)
             {
@@ -3626,9 +3669,10 @@ public class BFS_7x7
       }
       if(exists43)
       {
-         if(exists35 && dist43 + cost35 < dist35)
+         rc.setIndicatorDot(l43, 0, 255,0);
+         if(exists35 && dist43 + 1 < dist35)
          {
-            dist35 = dist43 + cost35;
+            dist35 = dist43 + 1;
             lookup[indexToLocalY(35)][indexToLocalX(35)] = Direction.SOUTHEAST;
             if(h35 < closestDistance)
             {
@@ -3636,9 +3680,9 @@ public class BFS_7x7
                closestIndex = 35;
             }
          }
-         if(exists36 && dist43 + cost36 < dist36)
+         if(exists36 && dist43 + 1 < dist36)
          {
-            dist36 = dist43 + cost36;
+            dist36 = dist43 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.SOUTH;
             if(h36 < closestDistance)
             {
@@ -3646,9 +3690,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists37 && dist43 + cost37 < dist37)
+         if(exists37 && dist43 + 1 < dist37)
          {
-            dist37 = dist43 + cost37;
+            dist37 = dist43 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.SOUTHWEST;
             if(h37 < closestDistance)
             {
@@ -3656,9 +3700,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists42 && dist43 + cost42 < dist42)
+         if(exists42 && dist43 + 1 < dist42)
          {
-            dist42 = dist43 + cost42;
+            dist42 = dist43 + 1;
             lookup[indexToLocalY(42)][indexToLocalX(42)] = Direction.EAST;
             if(h42 < closestDistance)
             {
@@ -3666,9 +3710,9 @@ public class BFS_7x7
                closestIndex = 42;
             }
          }
-         if(exists44 && dist43 + cost44 < dist44)
+         if(exists44 && dist43 + 1 < dist44)
          {
-            dist44 = dist43 + cost44;
+            dist44 = dist43 + 1;
             lookup[indexToLocalY(44)][indexToLocalX(44)] = Direction.WEST;
             if(h44 < closestDistance)
             {
@@ -3679,9 +3723,10 @@ public class BFS_7x7
       }
       if(exists44)
       {
-         if(exists36 && dist44 + cost36 < dist36)
+         rc.setIndicatorDot(l44, 0, 255,0);
+         if(exists36 && dist44 + 1 < dist36)
          {
-            dist36 = dist44 + cost36;
+            dist36 = dist44 + 1;
             lookup[indexToLocalY(36)][indexToLocalX(36)] = Direction.SOUTHEAST;
             if(h36 < closestDistance)
             {
@@ -3689,9 +3734,9 @@ public class BFS_7x7
                closestIndex = 36;
             }
          }
-         if(exists37 && dist44 + cost37 < dist37)
+         if(exists37 && dist44 + 1 < dist37)
          {
-            dist37 = dist44 + cost37;
+            dist37 = dist44 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.SOUTH;
             if(h37 < closestDistance)
             {
@@ -3699,9 +3744,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists38 && dist44 + cost38 < dist38)
+         if(exists38 && dist44 + 1 < dist38)
          {
-            dist38 = dist44 + cost38;
+            dist38 = dist44 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.SOUTHWEST;
             if(h38 < closestDistance)
             {
@@ -3709,9 +3754,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists43 && dist44 + cost43 < dist43)
+         if(exists43 && dist44 + 1 < dist43)
          {
-            dist43 = dist44 + cost43;
+            dist43 = dist44 + 1;
             lookup[indexToLocalY(43)][indexToLocalX(43)] = Direction.EAST;
             if(h43 < closestDistance)
             {
@@ -3719,9 +3764,9 @@ public class BFS_7x7
                closestIndex = 43;
             }
          }
-         if(exists45 && dist44 + cost45 < dist45)
+         if(exists45 && dist44 + 1 < dist45)
          {
-            dist45 = dist44 + cost45;
+            dist45 = dist44 + 1;
             lookup[indexToLocalY(45)][indexToLocalX(45)] = Direction.WEST;
             if(h45 < closestDistance)
             {
@@ -3732,9 +3777,10 @@ public class BFS_7x7
       }
       if(exists45)
       {
-         if(exists37 && dist45 + cost37 < dist37)
+         rc.setIndicatorDot(l45, 0, 255,0);
+         if(exists37 && dist45 + 1 < dist37)
          {
-            dist37 = dist45 + cost37;
+            dist37 = dist45 + 1;
             lookup[indexToLocalY(37)][indexToLocalX(37)] = Direction.SOUTHEAST;
             if(h37 < closestDistance)
             {
@@ -3742,9 +3788,9 @@ public class BFS_7x7
                closestIndex = 37;
             }
          }
-         if(exists38 && dist45 + cost38 < dist38)
+         if(exists38 && dist45 + 1 < dist38)
          {
-            dist38 = dist45 + cost38;
+            dist38 = dist45 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.SOUTH;
             if(h38 < closestDistance)
             {
@@ -3752,9 +3798,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists39 && dist45 + cost39 < dist39)
+         if(exists39 && dist45 + 1 < dist39)
          {
-            dist39 = dist45 + cost39;
+            dist39 = dist45 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.SOUTHWEST;
             if(h39 < closestDistance)
             {
@@ -3762,9 +3808,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists44 && dist45 + cost44 < dist44)
+         if(exists44 && dist45 + 1 < dist44)
          {
-            dist44 = dist45 + cost44;
+            dist44 = dist45 + 1;
             lookup[indexToLocalY(44)][indexToLocalX(44)] = Direction.EAST;
             if(h44 < closestDistance)
             {
@@ -3772,9 +3818,9 @@ public class BFS_7x7
                closestIndex = 44;
             }
          }
-         if(exists46 && dist45 + cost46 < dist46)
+         if(exists46 && dist45 + 1 < dist46)
          {
-            dist46 = dist45 + cost46;
+            dist46 = dist45 + 1;
             lookup[indexToLocalY(46)][indexToLocalX(46)] = Direction.WEST;
             if(h46 < closestDistance)
             {
@@ -3785,9 +3831,10 @@ public class BFS_7x7
       }
       if(exists46)
       {
-         if(exists38 && dist46 + cost38 < dist38)
+         rc.setIndicatorDot(l46, 0, 255,0);
+         if(exists38 && dist46 + 1 < dist38)
          {
-            dist38 = dist46 + cost38;
+            dist38 = dist46 + 1;
             lookup[indexToLocalY(38)][indexToLocalX(38)] = Direction.SOUTHEAST;
             if(h38 < closestDistance)
             {
@@ -3795,9 +3842,9 @@ public class BFS_7x7
                closestIndex = 38;
             }
          }
-         if(exists39 && dist46 + cost39 < dist39)
+         if(exists39 && dist46 + 1 < dist39)
          {
-            dist39 = dist46 + cost39;
+            dist39 = dist46 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.SOUTH;
             if(h39 < closestDistance)
             {
@@ -3805,9 +3852,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists40 && dist46 + cost40 < dist40)
+         if(exists40 && dist46 + 1 < dist40)
          {
-            dist40 = dist46 + cost40;
+            dist40 = dist46 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.SOUTHWEST;
             if(h40 < closestDistance)
             {
@@ -3815,9 +3862,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists45 && dist46 + cost45 < dist45)
+         if(exists45 && dist46 + 1 < dist45)
          {
-            dist45 = dist46 + cost45;
+            dist45 = dist46 + 1;
             lookup[indexToLocalY(45)][indexToLocalX(45)] = Direction.EAST;
             if(h45 < closestDistance)
             {
@@ -3825,9 +3872,9 @@ public class BFS_7x7
                closestIndex = 45;
             }
          }
-         if(exists47 && dist46 + cost47 < dist47)
+         if(exists47 && dist46 + 1 < dist47)
          {
-            dist47 = dist46 + cost47;
+            dist47 = dist46 + 1;
             lookup[indexToLocalY(47)][indexToLocalX(47)] = Direction.WEST;
             if(h47 < closestDistance)
             {
@@ -3838,9 +3885,10 @@ public class BFS_7x7
       }
       if(exists47)
       {
-         if(exists39 && dist47 + cost39 < dist39)
+         rc.setIndicatorDot(l47, 0, 255,0);
+         if(exists39 && dist47 + 1 < dist39)
          {
-            dist39 = dist47 + cost39;
+            dist39 = dist47 + 1;
             lookup[indexToLocalY(39)][indexToLocalX(39)] = Direction.SOUTHEAST;
             if(h39 < closestDistance)
             {
@@ -3848,9 +3896,9 @@ public class BFS_7x7
                closestIndex = 39;
             }
          }
-         if(exists40 && dist47 + cost40 < dist40)
+         if(exists40 && dist47 + 1 < dist40)
          {
-            dist40 = dist47 + cost40;
+            dist40 = dist47 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.SOUTH;
             if(h40 < closestDistance)
             {
@@ -3858,9 +3906,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists41 && dist47 + cost41 < dist41)
+         if(exists41 && dist47 + 1 < dist41)
          {
-            dist41 = dist47 + cost41;
+            dist41 = dist47 + 1;
             lookup[indexToLocalY(41)][indexToLocalX(41)] = Direction.SOUTHWEST;
             if(h41 < closestDistance)
             {
@@ -3868,9 +3916,9 @@ public class BFS_7x7
                closestIndex = 41;
             }
          }
-         if(exists46 && dist47 + cost46 < dist46)
+         if(exists46 && dist47 + 1 < dist46)
          {
-            dist46 = dist47 + cost46;
+            dist46 = dist47 + 1;
             lookup[indexToLocalY(46)][indexToLocalX(46)] = Direction.EAST;
             if(h46 < closestDistance)
             {
@@ -3878,9 +3926,9 @@ public class BFS_7x7
                closestIndex = 46;
             }
          }
-         if(exists48 && dist47 + cost48 < dist48)
+         if(exists48 && dist47 + 1 < dist48)
          {
-            dist48 = dist47 + cost48;
+            dist48 = dist47 + 1;
             lookup[indexToLocalY(48)][indexToLocalX(48)] = Direction.WEST;
             if(h48 < closestDistance)
             {
@@ -3891,9 +3939,10 @@ public class BFS_7x7
       }
       if(exists48)
       {
-         if(exists40 && dist48 + cost40 < dist40)
+         rc.setIndicatorDot(l48, 0, 255,0);
+         if(exists40 && dist48 + 1 < dist40)
          {
-            dist40 = dist48 + cost40;
+            dist40 = dist48 + 1;
             lookup[indexToLocalY(40)][indexToLocalX(40)] = Direction.SOUTHEAST;
             if(h40 < closestDistance)
             {
@@ -3901,9 +3950,9 @@ public class BFS_7x7
                closestIndex = 40;
             }
          }
-         if(exists41 && dist48 + cost41 < dist41)
+         if(exists41 && dist48 + 1 < dist41)
          {
-            dist41 = dist48 + cost41;
+            dist41 = dist48 + 1;
             lookup[indexToLocalY(41)][indexToLocalX(41)] = Direction.SOUTH;
             if(h41 < closestDistance)
             {
@@ -3911,9 +3960,9 @@ public class BFS_7x7
                closestIndex = 41;
             }
          }
-         if(exists47 && dist48 + cost47 < dist47)
+         if(exists47 && dist48 + 1 < dist47)
          {
-            dist47 = dist48 + cost47;
+            dist47 = dist48 + 1;
             lookup[indexToLocalY(47)][indexToLocalX(47)] = Direction.EAST;
             if(h47 < closestDistance)
             {
@@ -3923,6 +3972,7 @@ public class BFS_7x7
          }
       }
 
+      System.out.println(lookup[indexToLocalY(27)][indexToLocalX(27)]);
       return dirToMove(closestIndex);
    }
 }

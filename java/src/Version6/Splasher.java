@@ -241,7 +241,7 @@ public class Splasher {
         if(rc.isMovementReady()) {
             //if we didnt run best attack, we have plenty of bytecodes to use pathfinding
             if(maxScore <= 6) {
-                Direction dir = BFS_7x7.pathfind(rc, curObjective);
+                Direction dir = Pathfinding.bugBFS(rc, curObjective);
                 if(dir != null && rc.canMove(dir) && farFromEdge(rc, rc.getLocation().add(dir))) {
                     rc.move(dir);
                 }
@@ -269,7 +269,7 @@ public class Splasher {
             }
         }
         else {
-            Direction dir = BFS.moveTowards(rc, nearestPaintTower);
+            Direction dir = Pathfinding.bugBFS(rc, nearestPaintTower);
             if (dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
@@ -307,7 +307,7 @@ public class Splasher {
             //System.out.println("Splasher moving towards: random" + curObjective);
         }
 
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = Pathfinding.bugBFS(rc, curObjective);
         if(dir != null && rc.canMove(dir))
         {
             rc.move(dir);
