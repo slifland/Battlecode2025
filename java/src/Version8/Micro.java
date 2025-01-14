@@ -331,6 +331,7 @@ public class Micro {
 
         }
         return (bestMicro.passable) ? rc.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
+
     }
 
     //UTILITY METHODS
@@ -352,7 +353,7 @@ public class Micro {
 //                for (int dy = -1; dy <= 1; dy++) {
 //                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
 //                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
-//                        if(rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+//                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
 //                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
 //                        totalFilled++;
 //                    }
@@ -362,19 +363,19 @@ public class Micro {
         if (curX + -1 >= 0 && curX + -1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
@@ -382,19 +383,19 @@ public class Micro {
         if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
@@ -402,19 +403,19 @@ public class Micro {
         if (curX + 1 >= 0 && curX + 1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
-                if (rc.senseRobotAtLocation(newLoc) != null) microArray[totalFilled] = new microInfo();
+                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
