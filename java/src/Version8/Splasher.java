@@ -47,6 +47,10 @@ public class Splasher {
     public static void navigate(RobotController rc) throws GameActionException {
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
+        MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
+        if(enemyAverages.length != 0) {
+            curObjective = enemyAverages[0];
+        }
         //next, if we have enemy towers, go there
         //last resort - just go to the center
         if(curObjective == null) {
@@ -83,7 +87,7 @@ public class Splasher {
                 rc.attack(seenEnemyTower.getLocation());
             }
             else {
-                Direction dir = Micro.runMicro(rc);
+                Direction dir = Micro.runMicro(rc, allyRobots.length - enemyRobots.length > 5);
                 if (rc.canMove(dir)) rc.move(dir);
                 toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
                 if (toAttack != null && rc.canAttack(toAttack)) {
@@ -110,7 +114,7 @@ public class Splasher {
         seenEnemyTower = null;
         numEnemyTiles = 0;
 
-        if(rc.getPaint() <= refillThreshold) {
+        if(rc.getPaint() <= refillThreshold || (state == splasherStates.refill && rc.getPaint() <= endRefillThreshold)) {
             state = splasherStates.refill;
             fillingStation = nearestPaintTower;
             //go back to nearest tower
