@@ -30,8 +30,15 @@ public class Ruin
         return "Location: " + location + ", Owned by: " + ownership + (isPaintTower ? ", Paint Tower" : ", Non-Paint Tower");
     }
 
-    public boolean isAllied()
+    @Override
+    public boolean equals(Object o)
     {
-        return status == 1;
+        if(o == this) return true;
+        if(o == null) return false;
+        if(!(o instanceof Ruin)) return false;
+
+        Ruin r = (Ruin)o;
+
+        return location.equals(r.location) && status == r.status && isPaintTower == r.isPaintTower;
     }
 }
