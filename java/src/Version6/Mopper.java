@@ -163,7 +163,7 @@ public class Mopper {
             if(rc.isActionReady()) {
                 RobotInfo target = findBestTarget(rc);
                 if(target.getLocation().distanceSquaredTo(rc.getLocation()) > rc.getType().actionRadiusSquared) {
-                    Direction dir = BFS.moveTowards(rc, target.getLocation());
+                    Direction dir = Pathfinding.bugBFS(rc, target.getLocation());
                     MapLocation newLoc = rc.getLocation().add(dir);
                     if(newLoc.distanceSquaredTo(target.getLocation()) <= rc.getType().actionRadiusSquared && dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(newLoc)) && isSafeFromTower(rc, newLoc)) {
                         rc.move(dir);
@@ -222,7 +222,7 @@ public class Mopper {
                 rc.attack(loc.getMapLocation());
             }
             if(rc.isMovementReady()) {
-                Direction dir = BFS.moveTowards(rc, loc.getMapLocation());
+                Direction dir = Pathfinding.bugBFS(rc, loc.getMapLocation());
                 if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
                     rc.move(dir);
                 }
@@ -247,7 +247,7 @@ public class Mopper {
         if (rc.getLocation().distanceSquaredTo(curObjective) < 16) {
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = Pathfinding.bugBFS(rc, curObjective);
         if(dir != null && rc.canMove(dir)) {
             rc.move(dir);
         }
@@ -289,7 +289,7 @@ public class Mopper {
 
         }
 
-        Direction dir = BFS.moveTowards(rc, curObjective);
+        Direction dir = Pathfinding.bugBFS(rc, curObjective);
         if(dir != null && rc.canMove(dir))
         {
             rc.move(dir);

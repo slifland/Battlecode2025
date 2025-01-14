@@ -81,10 +81,13 @@ public class RobotPlayer {
                 else
                 {
 //                  Pathfinding.bugNav(rc, new MapLocation(0,0));
-                    Direction dir = BFS_7x7.pathfind(rc, new MapLocation(0,0));
-                    if(rc.canMove(dir))
+                    if(rc.getType().isRobotType())
                     {
-                        rc.move(dir);
+                        Direction dir = BFS_7x7.pathfind(rc, new MapLocation(11,13));
+                        if(rc.canMove(dir))
+                        {
+                            rc.move(dir);
+                        }
                     }
                 }
             }

@@ -123,6 +123,27 @@ public class Utilities
         }
     }
 
+    public static MapLocation[] getEnemyPaintAverages()
+    {
+        MapLocation empty = new MapLocation(0,0);
+        if(!paintAverage1.equals(empty) && !paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage1, paintAverage2};
+        }
+        else if(!paintAverage1.equals(empty) && paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage1};
+        }
+        else if(paintAverage1.equals(empty) && !paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage2};
+        }
+        else
+        {
+            return new MapLocation[0];
+        }
+    }
+
     public static void setDotsAtGridStart(RobotController rc) throws GameActionException
     {
         for(int i = 0; i < rc.getMapHeight(); i += 5)

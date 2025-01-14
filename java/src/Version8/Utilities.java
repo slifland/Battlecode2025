@@ -3,7 +3,6 @@ package Version8;
 import battlecode.common.*;
 
 import java.awt.*;
-
 import static Version8.RobotPlayer.*;
 
 public class Utilities
@@ -120,6 +119,27 @@ public class Utilities
             yTotal2 = (yTotal2 + paintAverage2.y * paintCount2) / (count2 + paintCount2);
             paintAverage2 = new MapLocation(xTotal2, yTotal2);
             paintCount2 += count2;
+        }
+    }
+
+    public static MapLocation[] getEnemyPaintAverages()
+    {
+        MapLocation empty = new MapLocation(0,0);
+        if(!paintAverage1.equals(empty) && !paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage1, paintAverage2};
+        }
+        else if(!paintAverage1.equals(empty) && paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage1};
+        }
+        else if(paintAverage1.equals(empty) && !paintAverage2.equals(empty))
+        {
+            return new MapLocation[]{paintAverage2};
+        }
+        else
+        {
+            return new MapLocation[0];
         }
     }
 

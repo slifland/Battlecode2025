@@ -1,8 +1,7 @@
-package PathfindingTest;
+package Version6;
 
 import battlecode.common.*;
 
-import static PathfindingTest.RobotPlayer.*;
 import java.util.Stack;
 
 public class Pathfinding
@@ -86,13 +85,13 @@ public class Pathfinding
     public static Direction bugBFS(RobotController rc, MapLocation destination) throws GameActionException
     {
         Direction bfsDirection = BFS_7x7.pathfind(rc, destination);
-        System.out.println(bfsDirection);
         if(bfsDirection != null)
         {
             directionStack.clear();
             return bfsDirection;
         }
 
+        rc.setIndicatorDot(rc.getLocation(), 0, 0,255);
         return bugNav(rc, destination);
     }
 

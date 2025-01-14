@@ -113,6 +113,7 @@ public class Soldier {
             rc.move(dir);
         }
     }
+
     //attempts to fill the ruin we can see
     public static void fillRuin(RobotController rc) throws GameActionException {
         MapLocation targetLoc = curObjective;
@@ -350,7 +351,7 @@ public class Soldier {
             else rc.setIndicatorString("reverse");
         }
         else {
-            Direction dir = BFS_7x7.pathfind(rc, curObjective);
+            Direction dir = BFS.moveTowards(rc, curObjective);
             if(dir != null && rc.canMove(dir)) {
                 rc.move(dir);
             }
@@ -592,7 +593,6 @@ public class Soldier {
 
     //update our info, changing our state as necessary
     public static void updateState(RobotController rc) throws GameActionException {
-        nearRuin = false;
         if(state != states.refill && state != states.fill && prevState != null) prevState = null;
         if(rc.getPaint() < 20 && nearestPaintTower != null) {
             if(state == states.fill) {
@@ -604,7 +604,7 @@ public class Soldier {
             state = states.refill;
             return;
         }
-        if(state == states.refill && (rc.getPaint() > 100 || nearestPaintTower == null)) {
+        if(state == states.refill && (rc.getPaint() > 75 || nearestPaintTower == null)) {
             state = prevState;
             prevState = null;
         }
@@ -624,7 +624,6 @@ public class Soldier {
         if(state != states.ruin) {
             // Search for a nearby ruin to complete.
             for (MapLocation tile : rc.senseNearbyRuins(-1)) {
-                nearRuin = true;
                 if (rc.senseRobotAtLocation(tile) == null && rc.getNumberTowers() < 25) {
                     if (rc.getMoney() < 1000 && rc.senseNearbyRobots(tile, 2, rc.getTeam()).length > 0) {
                         if (state == states.ruin) state = states.explore;
@@ -636,11 +635,8 @@ public class Soldier {
                 }
             }
         }
-        else {
-            nearRuin = true;
-        }
         if(state == states.ruin && rc.getLocation().isAdjacentTo(curObjective)) {
-            if ((rc.getMoney() < 1000 || enemyRobots.length == 0) && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
+            if (rc.getMoney() < 1000 && rc.senseNearbyRobots(curObjective, 2, rc.getTeam()).length > 0)
                 state = states.explore;
         }
         if(state == states.ruin && ((rc.canSenseLocation(curObjective) && rc.senseRobotAtLocation(curObjective) != null)) || rc.getNumberTowers() >= 25) {
@@ -656,26 +652,17 @@ public class Soldier {
             }
         }
         countEmpty = 0;
-        int countFilled = 0;
-        int fX = 0;
-        int fY = 0;
         int x = 0;
         int y = 0;
-        if((state == states.explore) || state == states.wallHug || state == states.fill) {
+        if(state == states.explore || state == states.wallHug || state == states.fill) {
             for(MapInfo tile : nearbyTiles) {
                 if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {
                     countEmpty++;
                     x += tile.getMapLocation().x;
                     y += tile.getMapLocation().y;
                 }
-                else if(tile.getPaint().isAlly()) {
-                    countFilled++;
-                    fX += tile.getMapLocation().x;
-                    fY += tile.getMapLocation().y;
-                }
             }
             averageEmpty = (countEmpty != 0) ? new MapLocation(x/countEmpty, y/countEmpty) : null;
-            averageFilled = countFilled != 0 ? new MapLocation(fX/countFilled, fY/countFilled) : null;
             if(countEmpty > 6 || state == states.fill && countEmpty >= 1){
                 if(prevState == null) prevState = state;
                 state = states.fill;
@@ -692,7 +679,6 @@ public class Soldier {
         }
         if(state == null) {
             state = states.explore;
-            //if(rc.getRoundNum() < 10) curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
             curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
             return;
         }

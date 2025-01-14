@@ -4,6 +4,7 @@ import battlecode.common.*;
 import static Version6.RobotPlayer.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,25 +19,6 @@ public class Communication
     private static int nextRuinToSend = 0;
 
     /*
-        Process all incoming messages for robots
-    */
-    public static void processMessagesRobot(RobotController rc)
-    {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
-
-        for(Message[] mArr : messages)
-        {
-            for(Message m : mArr)
-            {
-                if((m.getBytes() >> 2 & 0b11) == 0b00)
-                {
-                    updateRuinsMemory(messageToRuin(m));
-                }
-            }
-        }
-    }
-
-    /*
         Process all incoming messages for towers
     */
     public static void processMessagesTower(RobotController rc)
@@ -47,10 +29,31 @@ public class Communication
         {
             for(Message m : mArr)
             {
-                switch (m.getBytes() >> 2 & 0b11)
+                switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
                     case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+
+                }
+            }
+        }
+    }
+
+    /*
+    Process all incoming messages for robots
+*/
+    public static void processMessagesRobot(RobotController rc)
+    {
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+
+        for(Message[] mArr : messages)
+        {
+            for(Message m : mArr)
+            {
+                switch (m.getBytes() & 0b11)
+                {
+                    case 0b00 ->  updateRuinsMemory(messageToRuin(m));
+                    case 0b01 ->  updatePaintAveragesRobot(readAverageMessage(m));
                 }
             }
         }
@@ -121,6 +124,15 @@ public class Communication
     public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
         rc.sendMessage(tower, createAverageMessage());
+    }
+
+    public static void sendAveragesToRobot(RobotController rc, MapLocation robot) throws GameActionException
+    {
+        int message = createAverageMessage();
+        if(rc.canSendMessage(robot, message))
+        {
+            rc.sendMessage(robot, message);
+        }
     }
 
     /*
@@ -281,6 +293,24 @@ public class Communication
 //            }
 //        }
     }
+
+    private static void updatePaintAveragesRobot(MapLocation[] locations)
+    {
+        for(MapLocation location : locations)
+        {
+            if(paintAverage1.equals(new MapLocation(0,0)))
+            {
+                paintAverage1 = location;
+                paintCount1 = 1;
+            }
+            else if(paintAverage2.equals(new MapLocation(0,0)))
+            {
+                paintAverage2 = location;
+                paintCount2 = 1;
+            }
+        }
+    }
+
 
     /*
         Used for testing and debugging

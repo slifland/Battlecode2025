@@ -2,6 +2,7 @@ package Version6;
 
 import battlecode.common.*;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -137,16 +138,20 @@ public class RobotPlayer {
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                     rc.buildRobot(UnitType.SOLDIER, nextLoc);
+                    //System.out.println(Arrays.toString(Utilities.getEnemyPaintAverages()));
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     soldiers++;
                     totalBuilt++;
                 }
                 if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     moppers++;
                     totalBuilt++;
                 }
                 if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                     rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     soldiers = 0;
                     moppers = 0;
                     totalBuilt++;
@@ -168,7 +173,7 @@ public class RobotPlayer {
 
     static void bytecodeSensitiveOperations(RobotController rc) throws GameActionException
     {
-        if(Clock.getBytecodesLeft() > 3000)
+        if(Clock.getBytecodesLeft() > 3000 && rc.getType().isRobotType())
         {
             Utilities.updatePaintAverages(rc);
         }
@@ -186,18 +191,18 @@ public class RobotPlayer {
         if(rc.getType().isTowerType())
         {
             Communication.processMessagesTower(rc);
-            Communication.sendMessagesTower(rc);
-            //if(paintAverage1 != null) rc.setIndicatorDot(paintAverage1, 0,0,255);
-            //if(paintAverage2 != null) rc.setIndicatorDot(paintAverage2, 0,255,0);
+            Communication.sendMessagesTower(rc);;
         }
         else
         {
-            Communication.processMessagesRobot(rc);
             Communication.scanForRuins(rc);
+            Communication.processMessagesRobot(rc);
             Communication.sendMessagesRobot(rc);
+            if(turnCount < 5)
+            {
+                rc.setIndicatorDot(paintAverage1, 0,255,0);
+                rc.setIndicatorDot(paintAverage2, 0,0,255);
+            }
         }
     }
-
-
-
 }
