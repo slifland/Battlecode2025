@@ -516,7 +516,5 @@ public class MopperMicro {
             };
             default -> Direction.CENTER;
         };
-
-
     }
 }

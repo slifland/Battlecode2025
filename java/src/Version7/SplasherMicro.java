@@ -1,10 +1,11 @@
-package Version8;
+package Version7;
 
+import Version7.splasherUtil;
 import battlecode.common.*;
 
-import static Version8.Splasher.averageEnemyPaint;
-import static Version8.RobotPlayer.allyRobots;
-import static Version8.RobotPlayer.enemyRobots;
+import static Version7.RobotPlayer.allyRobots;
+import static Version7.RobotPlayer.enemyRobots;
+import static Version7.Splasher.averageEnemyPaint;
 
 class splasherMicroInfo {
     private static final int ALLY_PAINT = 1;
@@ -77,7 +78,7 @@ public class SplasherMicro {
     //2. Attack square with enemy tower - 0b100
     //3. Attack square with self -0b10
     //4. Attack square without moving -0b1
-    public static void integratedMopperMicro(RobotController rc, boolean fightingTower) throws GameActionException {
+    public static void integratedSplasherMicro(RobotController rc, boolean fightingTower) throws GameActionException {
         if (rc.isActionReady()) {
             MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, 1);
             if (bestAttack != null) {

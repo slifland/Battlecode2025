@@ -5,6 +5,7 @@ import battlecode.common.*;
 import java.util.HashSet;
 
 import static Version7.RobotPlayer.*;
+import Version7.Splasher.*;
 
 enum splasherStates {
     attack, refill, navigate, conquer, explore
@@ -32,13 +33,16 @@ public class Splasher {
     //used to direct splashers to other nearby paint towers if the current one is occupied
     private static MapLocation fillingStation = null;
 
+    public static MapLocation averageEnemyPaint;
+
     //information updated each turn
     public static void runSplasher(RobotController rc) throws GameActionException {
         updateInfo(rc);
         updateState(rc);
         switch(state) {
             case attack:
-                attack(rc);
+                //attack(rc);
+                SplasherMicro.integratedSplasherMicro(rc, nearestEnemyTower != null);
                 break;
             case refill:
                 refill(rc);
@@ -50,7 +54,8 @@ public class Splasher {
                 explore(rc);
                 break;
             case conquer:
-                conquer(rc);
+                //conquer(rc);
+                SplasherMicro.integratedSplasherMicro(rc, nearestEnemyTower != null);
                 break;
             default:
                 break;
@@ -362,6 +367,10 @@ public class Splasher {
     //updates the static arrays which keep track of useful info for the robots turn - also updates nearest paint tower
     public static void updateInfo(RobotController rc) throws GameActionException {
         maxScore = 0;
+        int x = 0;
+        int y = 0;
+        int count = 0;
+        averageEnemyPaint = null;
         //calculate the max score for a splasher attack to save bytecodes later
         for(MapInfo tile : nearbyTiles) {
             if(tile.getPaint() == PaintType.EMPTY && !tile.isWall() && !tile.hasRuin()) {
@@ -377,8 +386,15 @@ public class Splasher {
             if(tile.hasRuin() && rc.senseRobotAtLocation(tile.getMapLocation()) == null) {
                 nearestUnoccupiedRuin = tile.getMapLocation();
             }
+            if(tile.getPaint().isEnemy()) {
+                count++;
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                count++;
+            }
             //if(maxScore > 6) break;
         }
+        averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
         /*
         for(RobotInfo robot : allyRobots)
         {

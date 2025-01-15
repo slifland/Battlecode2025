@@ -22,6 +22,9 @@ public class Splasher {
     private static final int refillThreshold = 51;
     private static final int endRefillThreshold = 200;
 
+    public static MapLocation averageEnemyPaint;
+
+
     public static void runSplasher(RobotController rc) throws GameActionException {
         updateInfo(rc);
         updateState(rc);
@@ -92,31 +95,32 @@ public class Splasher {
 
     //attempts to steal enemy territory and potentially attack towers
     public static void contest(RobotController rc) throws GameActionException {
-        MapLocation toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
-        //no attacks that good
-        if(toAttack == null) {
-            if(rc.canAttack(seenEnemyTower.getLocation())) {
-                rc.attack(seenEnemyTower.getLocation());
-            }
-            else {
-                Direction dir = Micro.runMicro(rc, allyRobots.length - enemyRobots.length > 5);
-                if (rc.canMove(dir)) rc.move(dir);
-                toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
-                if (toAttack != null && rc.canAttack(toAttack)) {
-                    rc.attack(toAttack);
-                }
-                if (toAttack == null && rc.canAttack(seenEnemyTower.getLocation())) {
-                    rc.attack(seenEnemyTower.getLocation());
-                }
-            }
-        }
-        else if (rc.canAttack(toAttack)) {
-            rc.attack(toAttack);
-        }
-        if(rc.isMovementReady()) {
-            Direction dir = Micro.runMicro(rc);
-            if(rc.canMove(dir)) rc.move(dir);
-        }
+        SplasherMicro.integratedMopperMicro(rc, seenEnemyTower  != null);
+//        MapLocation toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
+//        //no attacks that good
+//        if(toAttack == null) {
+//            if(rc.canAttack(seenEnemyTower.getLocation())) {
+//                rc.attack(seenEnemyTower.getLocation());
+//            }
+//            else {
+//                Direction dir = Micro.runMicro(rc, allyRobots.length - enemyRobots.length > 5);
+//                if (rc.canMove(dir)) rc.move(dir);
+//                toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
+//                if (toAttack != null && rc.canAttack(toAttack)) {
+//                    rc.attack(toAttack);
+//                }
+//                if (toAttack == null && rc.canAttack(seenEnemyTower.getLocation())) {
+//                    rc.attack(seenEnemyTower.getLocation());
+//                }
+//            }
+//        }
+//        else if (rc.canAttack(toAttack)) {
+//            rc.attack(toAttack);
+//        }
+//        if(rc.isMovementReady()) {
+//            Direction dir = Micro.runMicro(rc);
+//            if(rc.canMove(dir)) rc.move(dir);
+//        }
     }
 
     //determines the current state for the splashers
@@ -125,6 +129,7 @@ public class Splasher {
         //reset turn by turn variables
         seenEnemyTower = null;
         numEnemyTiles = 0;
+        averageEnemyPaint = null;
 
         if(rc.getPaint() <= refillThreshold || (state == splasherStates.refill && rc.getPaint() <= endRefillThreshold)) {
             state = splasherStates.refill;
@@ -136,17 +141,22 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
+        int x = 0;
+        int y = 0;
         //now, check if we can see any enemy tiles
         for(MapInfo tile : nearbyTiles) {
             if(tile.getPaint().isEnemy()) {
                 state = splasherStates.contest;
                 numEnemyTiles++;
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
             }
             RobotInfo robot = rc.senseRobotAtLocation(tile.getMapLocation());
             if(robot != null && robot.getType().isTowerType() && robot.getTeam() != rc.getTeam()) {
                 seenEnemyTower = robot;
             }
         }
+        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
     }
 
     //updates the local information necessary for the splasher to run its turn
@@ -158,6 +168,7 @@ public class Splasher {
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
         }
+
     }
 
     //UTILITY METHODS
