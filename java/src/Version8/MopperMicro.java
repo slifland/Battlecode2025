@@ -147,7 +147,7 @@ public class MopperMicro {
                 if(rc.getTeam() == r.getTeam()) {
                     score |= 0b01;
                 }
-                else {
+                else if (r.getPaintAmount() > 0){
                     score |= 0b1000;
                 }
             }
