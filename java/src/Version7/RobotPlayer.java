@@ -112,7 +112,7 @@ public class RobotPlayer {
                     default: runTower(rc); break;
                     }
                 bytecodeSensitiveOperations(rc);
-                rc.setIndicatorString(knownSymmetry.toString());
+                //rc.setIndicatorString(knownSymmetry.toString());
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");

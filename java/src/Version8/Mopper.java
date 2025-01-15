@@ -1,6 +1,10 @@
 package Version8;
 
 import battlecode.common.*;
+import battlecode.instrumenter.inject.RobotMonitor;
+import battlecode.schema.RobotType;
+
+import java.util.ArrayList;
 
 import static Version8.RobotPlayer.*;
 
@@ -21,6 +25,8 @@ public class Mopper {
     public static MapLocation nearbyRuin;
 
     private static MapLocation spawnLocation;
+
+    static MapLocation averageEnemyPaint;
 
     public static void runMopper(RobotController rc) throws GameActionException {
         if(turnCount == 1) spawnLocation = rc.getLocation();
@@ -190,16 +196,26 @@ public class Mopper {
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
+        averageEnemyPaint = null;
+        int count = 0;
+        int x = 0;
+        int y = 0;
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
-                if(knownSymmetry != Symmetry.Unknown) break;
+                //if(knownSymmetry != symmetry.unknown) break;
             }
             if(knownSymmetry == Symmetry.Unknown) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
+            if(tile.getPaint().isEnemy()) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                count++;
+            }
         }
+        averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }
 
     public static Direction dirToSweep(RobotController rc) throws GameActionException {

@@ -1,8 +1,8 @@
-package Version8;
+package Version7;
 
 import battlecode.common.*;
-import static Version8.Mopper.*;
-import static Version8.RobotPlayer.*;
+import static Version7.Mopper.*;
+import static Version7.RobotPlayer.*;
 
 
 class mopperMicroInfo {
@@ -147,14 +147,14 @@ public class MopperMicro {
                 if(rc.getTeam() == r.getTeam()) {
                     score |= 0b01;
                 }
-                else if (r.getPaintAmount() > 0){
+                else {
                     score |= 0b1000;
                 }
             }
             if(temp.equals(rc.getLocation())) {
                 score |= 0b100;
             }
-            if(nearbyRuin != null && temp.isWithinDistanceSquared(nearbyRuin, 8)) {
+            if(nearestRuin != null && temp.isWithinDistanceSquared(nearestRuin, 8)) {
                 score |= 0b10000;
             }
             if(temp.isWithinDistanceSquared(rc.getLocation(), UnitType.MOPPER.actionRadiusSquared)) {

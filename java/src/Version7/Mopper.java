@@ -21,9 +21,11 @@ public class Mopper {
     private static MapInfo[] nearbyTiles;
     //location data
     private static MapLocation nearestEnemyTower;
-    private static MapLocation nearestRuin;
+    public static MapLocation nearestRuin;
     private int[] paintMap; //going in order that tiles are detected, 1 indicates enemy, 0 empty, -1 ally
     private static MapLocation curObjective = null;
+
+    public static MapLocation averageEnemyPaint;
 
     private static MapLocation home;
 
@@ -55,8 +57,8 @@ public class Mopper {
                 break;
         }
         //updateInfo(rc);
-        if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
-        else if(state != null) rc.setIndicatorString(state.toString());
+//        if(state != null && curObjective != null) rc.setIndicatorString(state.toString() + " : " + curObjective.toString());
+//        else if(state != null) rc.setIndicatorString(state.toString());
         //System.out.println(Clock.getBytecodesLeft());
         //if we are stll action ready, and have paint, lets transfer it to low paint soldiers nearby
 //        if(rc.isActionReady() && rc.getPaint() > 50 && rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()) {
@@ -70,14 +72,23 @@ public class Mopper {
 
     //updates our knowledege of nearby things
     public static void updateInfo(RobotController rc) throws GameActionException {
+        averageEnemyPaint = null;
         adjacentEnemyRobots = rc.senseNearbyRobots(2, rc.getTeam().opponent());
         nearbyTiles = rc.senseNearbyMapInfos(13);
+        int count = 0;
+        int x = 0;
+        int y = 0;
         for(MapInfo loc : nearbyTiles) {
-            if(loc.hasRuin()){
+            if(loc.hasRuin() && !rc.canSenseRobotAtLocation(loc.getMapLocation())) {
                 nearestRuin = loc.getMapLocation();
-                break;
+            }
+            if(loc.getPaint().isEnemy()) {
+                count++;
+                x += loc.getMapLocation().x;
+                y += loc.getMapLocation().y;
             }
         }
+        averageEnemyPaint = (count != 0) ? new MapLocation(x / count, y / count) : null;
     }
 
     //determins what state the mopper should be in
@@ -188,73 +199,74 @@ public class Mopper {
 
     //goal is to clean up some enemy paint
     public static void mop(RobotController rc) throws GameActionException {
+        MopperMicro.integratedMopperMicro(rc);
         //mop some shit up!
-        if(rc.isActionReady()) {
-            MapInfo loc = null;
-            boolean hasMark = false;
-            int minDist = Integer.MAX_VALUE;
-            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() && rc.canAttack(rc.getLocation())) {
-                rc.attack(rc.getLocation());
-            }
-            else {
-                for (MapInfo m : nearbyTiles) {
-                    if (m.getPaint().isEnemy()) {
-                        int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
-                        if (!hasMark && !m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                            if (dist < minDist) {
-                                minDist = dist;
-                                loc = m;
-                            }
-                        } else if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                            hasMark = true;
-                            minDist = dist;
-                            loc = m;
-                        } else {
-                            if (m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                                if (dist < minDist) {
-                                    minDist = dist;
-                                    loc = m;
-                                }
-                            }
-                        }
-
-                        if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
-                            hasMark = true;
-                            minDist = dist;
-                            loc = m;
-                        }
-                    }
-                }
-                assert loc != null;
-                if(rc.canAttack(loc.getMapLocation())) {
-                    rc.attack(loc.getMapLocation());
-                }
-            }
-
+//        if(rc.isActionReady()) {
+//            MapInfo loc = null;
+//            boolean hasMark = false;
+//            int minDist = Integer.MAX_VALUE;
+//            if(rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy() && rc.canAttack(rc.getLocation())) {
+//                rc.attack(rc.getLocation());
+//            }
+//            else {
+//                for (MapInfo m : nearbyTiles) {
+//                    if (m.getPaint().isEnemy()) {
+//                        int dist = rc.getLocation().distanceSquaredTo(m.getMapLocation());
+//                        if (!hasMark && !m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+//                            if (dist < minDist) {
+//                                minDist = dist;
+//                                loc = m;
+//                            }
+//                        } else if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+//                            hasMark = true;
+//                            minDist = dist;
+//                            loc = m;
+//                        } else {
+//                            if (m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+//                                if (dist < minDist) {
+//                                    minDist = dist;
+//                                    loc = m;
+//                                }
+//                            }
+//                        }
+//
+//                        if (!hasMark && m.getMapLocation().isWithinDistanceSquared(nearestRuin, 8)) {
+//                            hasMark = true;
+//                            minDist = dist;
+//                            loc = m;
+//                        }
+//                    }
+//                }
+//                assert loc != null;
+//                if(rc.canAttack(loc.getMapLocation())) {
+//                    rc.attack(loc.getMapLocation());
+//                }
+//            }
+//
+////            if(rc.isMovementReady()) {
+////                Direction dir = BFS_7x7.pathfind(rc, loc.getMapLocation());
+////                if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
+////                    rc.move(dir);
+////                }
+////            }
 //            if(rc.isMovementReady()) {
-//                Direction dir = BFS_7x7.pathfind(rc, loc.getMapLocation());
-//                if (dir != null && rc.canMove(dir) && !isEnemyTile(rc.senseMapInfo(rc.getLocation().add(dir))) && isSafeFromTower(rc, loc.getMapLocation())) {
+//                //int price = Clock.getBytecodesLeft();
+//                Direction dir = Micro.runMicro(rc);
+//                //System.out.println(price - Clock.getBytecodesLeft());
+//                if(rc.canMove(dir)) {
 //                    rc.move(dir);
 //                }
 //            }
-            if(rc.isMovementReady()) {
-                //int price = Clock.getBytecodesLeft();
-                Direction dir = Micro.runMicro(rc);
-                //System.out.println(price - Clock.getBytecodesLeft());
-                if(rc.canMove(dir)) {
-                    rc.move(dir);
-                }
-            }
-            //still havent mopped anything, try again
-            if(rc.isActionReady()) {
-                for(MapInfo m : nearbyTiles) {
-                    if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
-                        rc.attack(m.getMapLocation());
-                        break;
-                    }
-                }
-            }
-        }
+//            //still havent mopped anything, try again
+//            if(rc.isActionReady()) {
+//                for(MapInfo m : nearbyTiles) {
+//                    if(m.getPaint().isEnemy() && rc.canAttack(m.getMapLocation())) {
+//                        rc.attack(m.getMapLocation());
+//                        break;
+//                    }
+//                }
+//            }
+//        }
     }
 
     //goal is to explore... but try and stay on our own paint - main exploring is done by soldiers, we just wanna follow
