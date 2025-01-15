@@ -46,7 +46,10 @@ public class Communication
     static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
     static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
 
-    static final int maxRuinsToSend = 5; //GameConstants.MAX_MESSAGES_SENT_TOWER; //20
+    /*
+        The maximum number of Ruins messages a tower will send in any given turn
+     */
+    static final int maxRuinsToSend = GameConstants.MAX_MESSAGES_SENT_TOWER; //20
 
     /*
         Process all incoming messages for robots
