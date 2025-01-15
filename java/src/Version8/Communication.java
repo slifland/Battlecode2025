@@ -48,6 +48,7 @@ public class Communication
 
     /*
         The maximum number of Ruins messages a tower will send in any given turn
+            We might want to limit this to limit bytecode usage
      */
     static final int maxRuinsToSend = GameConstants.MAX_MESSAGES_SENT_TOWER; //20
 
