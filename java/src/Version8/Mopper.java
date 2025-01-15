@@ -22,7 +22,7 @@ public class Mopper {
     private static final int refillThreshold = 25;
     private static final int endRefillThreshold = 70;
 
-    private static MapLocation nearbyRuin;
+    public static MapLocation nearbyRuin;
 
     private static MapLocation spawnLocation;
 
@@ -81,16 +81,17 @@ public class Mopper {
 
     //attempts to contest by mopping up enemy stuff, and stealing paint from enemies
     public static void contest(RobotController rc) throws GameActionException {
-        if(rc.isActionReady()) {
-            MapLocation bestMop = findBestMop(rc);
-            if(rc.canAttack(bestMop)) rc.attack(bestMop);
-        }
-        Direction dir = Micro.runMicro(rc);
-        if(rc.canMove(dir)) rc.move(dir);
-        if(rc.isActionReady()) {
-            MapLocation bestMop = findBestMop(rc);
-            if(rc.canAttack(bestMop)) rc.attack(bestMop);
-        }
+//        if(rc.isActionReady()) {
+//            MapLocation bestMop = findBestMop(rc);
+//            if(rc.canAttack(bestMop)) rc.attack(bestMop);
+//        }
+//        Direction dir = Micro.runMicro(rc);
+//        if(rc.canMove(dir)) rc.move(dir);
+//        if(rc.isActionReady()) {
+//            MapLocation bestMop = findBestMop(rc);
+//            if(rc.canAttack(bestMop)) rc.attack(bestMop);
+//        }
+        MopperMicro.integratedMopperMicro(rc);
     }
 
     //attempts to refill by stealing paint from enemy robots
@@ -193,7 +194,6 @@ public class Mopper {
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
-        System.out.println(symmetries);
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
@@ -207,7 +207,7 @@ public class Mopper {
     }
 
     public static Direction dirToSweep(RobotController rc) throws GameActionException {
-        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(2, rc.getTeam());
+        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(8, rc.getTeam());
         Direction dirToSweep = null;
         if(adjacentEnemyRobots.length > 1) {
             //determine the amount of enemies we would hit with each cardinal sweep - 0: north, 1: east, etc...
@@ -261,6 +261,7 @@ public class Mopper {
         }
         return dirToSweep;
     }
+
     //checks whether a space is in firing range of any seen enemy towers
     public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
         for(RobotInfo enemy : enemyRobots) {
