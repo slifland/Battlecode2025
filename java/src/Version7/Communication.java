@@ -2,6 +2,8 @@ package Version7;
 
 import battlecode.common.*;
 import static Version7.RobotPlayer.*;
+import static Version7.RobotPlayer.knownSymmetry;
+import static Version7.RobotPlayer.symmetries;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -151,8 +153,9 @@ public class Communication
 
     public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
     {
-        if(ruinsMemory.isEmpty()) return;
-
+        if(ruinsMemory.isEmpty()) {
+            return;
+        }
         int startIndex;
 
         for(RobotInfo ri : allyRobots)
@@ -170,7 +173,7 @@ public class Communication
     public static int ruinToMessage(Ruin ruin)
     {
         int message = 0; //comm code for Ruin Info
-
+        message |= symmetries << 28;
         message |= (ruin.location.x << 2);          //Add x location to message
         message |= (ruin.location.y << 8);          //Add y location to message
         message |= ruin.status << 14;               //Add ruin status to message
@@ -183,6 +186,15 @@ public class Communication
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
     {
+        RobotPlayer.symmetries = message >> 28 & 0b1110;
+        System.out.println(RobotPlayer.symmetries);
+        if(RobotPlayer.knownSymmetry == RobotPlayer.symmetry.unknown) {
+            switch (RobotPlayer.symmetries) {
+                case 2 -> RobotPlayer.knownSymmetry = RobotPlayer.symmetry.rotational;
+                case 4 ->RobotPlayer.knownSymmetry = RobotPlayer.symmetry.vertical;
+                case 8 -> RobotPlayer.knownSymmetry = RobotPlayer.symmetry.horizontal;
+            }
+        }
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
         return new Ruin(loc, (message >> 14) & 3, ((message >> 16) & 1) == 1);
     }

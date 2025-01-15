@@ -67,14 +67,7 @@ public class Communication
                 {
                     updateRuinsMemory(messageToRuin(m));
                 }
-                symmetries = m.getBytes() >> 28 & 0b1110;
-                if(knownSymmetry == symmetry.unknown) {
-                    switch (symmetries) {
-                        case 2 -> knownSymmetry = symmetry.rotational;
-                        case 4 -> knownSymmetry = symmetry.vertical;
-                        case 8 -> knownSymmetry = symmetry.horizontal;
-                    }
-                }
+
             }
         }
     }
@@ -94,14 +87,6 @@ public class Communication
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
                     // case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
-                }
-                symmetries = m.getBytes() >> 28 & 0b1110;
-                if(knownSymmetry == symmetry.unknown) {
-                    switch (symmetries) {
-                        case 2 -> knownSymmetry = symmetry.rotational;
-                        case 4 -> knownSymmetry = symmetry.vertical;
-                        case 8 -> knownSymmetry = symmetry.horizontal;
-                    }
                 }
             }
         }
@@ -250,6 +235,16 @@ public class Communication
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
     {
+        System.out.println("HIIIIII");
+        symmetries = message >> 28 & 0b1110;
+        System.out.println(symmetries);
+        if(knownSymmetry == symmetry.unknown) {
+            switch (symmetries) {
+                case 2 -> knownSymmetry = symmetry.rotational;
+                case 4 -> knownSymmetry = symmetry.vertical;
+                case 8 -> knownSymmetry = symmetry.horizontal;
+            }
+        }
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
         return new Ruin(loc, (message >> 14) & 3, ((message >> 16) & 1) == 1);
     }

@@ -25,7 +25,12 @@ public class Mopper {
     private int[] paintMap; //going in order that tiles are detected, 1 indicates enemy, 0 empty, -1 ally
     private static MapLocation curObjective = null;
 
+    private static MapLocation home;
+
     public static void runMopper(RobotController rc) throws GameActionException {
+        if(turnCount == 1) {
+            home = rc.getLocation();
+        }
         updateInfo(rc);
         updateState(rc);
 //        if(isEnemyTile(rc.senseMapInfo(rc.getLocation()))) {

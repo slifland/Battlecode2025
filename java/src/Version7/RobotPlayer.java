@@ -92,7 +92,6 @@ public class RobotPlayer {
                     Complete all tasks which need to be completed in the beginning of the round
                 */
                 completeBeginningTasks(rc);
-                int price = Clock.getBytecodesLeft();
                 for(MapInfo tile : nearbyTiles){
                     if(tile.hasRuin()) {
                         map[tile.getMapLocation().x][tile.getMapLocation().y] = 3;
@@ -106,7 +105,6 @@ public class RobotPlayer {
                         map[tile.getMapLocation().x][tile.getMapLocation().y] = 1;
                     }
                 }
-                System.out.println(price - Clock.getBytecodesLeft());
                 if(knownSymmetry != symmetry.unknown) {
                     System.out.println(knownSymmetry);
                     //rc.resign();
@@ -118,6 +116,7 @@ public class RobotPlayer {
                     default: runTower(rc); break;
                     }
                 bytecodeSensitiveOperations(rc);
+                rc.setIndicatorString(knownSymmetry.toString());
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
