@@ -3,7 +3,7 @@ import battlecode.common.*;
 
 import java.util.Arrays;
 
-public class Vector {
+public class VectorMapLocation {
     private MapLocation[] array;
 
     private int size;
@@ -11,13 +11,13 @@ public class Vector {
 
     private static final int default_capacity = 250;
 
-    public Vector(int initialSize) {
+    public VectorMapLocation(int initialSize) {
         array = new MapLocation[initialSize];
         size = 0;
         capacity = initialSize;
     }
 
-    public Vector() {
+    public VectorMapLocation() {
         array = new MapLocation[default_capacity];
         size = 0;
         capacity = default_capacity;
