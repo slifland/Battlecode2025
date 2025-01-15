@@ -103,7 +103,6 @@ public class Micro {
         Micro.isRushing = isRushing;
         return switch (rc.getType()) {
             case UnitType.SOLDIER -> runSoldierMicro(rc);
-            case UnitType.SPLASHER -> runSplasherMicro(rc);
             default -> null;
         };
     }
@@ -115,7 +114,6 @@ public class Micro {
         Micro.isRushing = false;
         return switch (rc.getType()) {
             case UnitType.SOLDIER -> runSoldierMicro(rc);
-            case UnitType.SPLASHER -> runSplasherMicro(rc);
             default -> Direction.CENTER;
         };
     }
@@ -624,78 +622,6 @@ public class Micro {
         return (bestMicro.passable) ? rc.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
     }
 
-
-    //the micro method for soldiers
-    public static Direction runSplasherMicro(RobotController rc) {
-        int actionRadiusSquared = UnitType.SPLASHER.actionRadiusSquared;
-        int health = rc.getHealth();
-        microInfo bestMicro = microArray[0];
-        for(microInfo m : microArray) {
-            if(m.equals(bestMicro)) continue;
-            //if one space is passable and the other is not, then passable is better
-            if(!m.passable) continue;
-            if(!bestMicro.passable) {
-                bestMicro = m;
-                continue;
-            }
-            //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
-            if (rc.isActionReady() && health >= splasherHealthAttackThreshold || isRushing) {
-                //we are fine being in tower range as long as we can attack, because we have enough health
-                if(bestMicro.inTowerRange && !m.inTowerRange) continue;
-                if(!bestMicro.inTowerRange && m.inTowerRange) {
-                    bestMicro = m;
-                    continue;
-                }
-            }
-            //definitely don't be in tower range!
-            else {
-                //check if one space is in tower range and the other isn't
-                if(!bestMicro.inTowerRange && m.inTowerRange) continue;
-                if(bestMicro.inTowerRange && !m.inTowerRange) {
-                    bestMicro = m;
-                    continue;
-                }
-
-            }
-            //ty to be in a position to attack an enemy space
-            if(rc.isActionReady()) {
-                if(bestMicro.canSplash && !m.canSplash) continue;
-                if(!bestMicro.canSplash && m.canSplash) {
-                    bestMicro = m;
-                    continue;
-                }
-            }
-            //regardless of action readiness, the next considerations are unified:
-            //we prioritize allied paint over neutral paint over enemy paint
-            if(bestMicro.paint.isAlly() && !m.paint.isAlly()) continue;
-            if(!bestMicro.paint.isAlly() && m.paint.isAlly()) {
-                bestMicro = m;
-                continue;
-            }
-
-            if(!bestMicro.paint.isEnemy() && m.paint.isEnemy()) continue;
-            if(bestMicro.paint.isEnemy() && !m.paint.isEnemy()) {
-                bestMicro = m;
-                continue;
-            }
-
-            //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-            if(bestMicro.numAlliesCardinalAdjacent < m.numAlliesCardinalAdjacent) continue;
-            if(m.numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
-                bestMicro = m;
-                continue;
-            }
-            //next, lets try and be near allies
-            if(bestMicro.minDistanceToAlly < m.minDistanceToAlly) continue;
-            if(m.minDistanceToAlly < bestMicro.minDistanceToAlly) {
-                bestMicro = m;
-                continue;
-            }
-
-        }
-        return (bestMicro.passable) ? rc.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
-
-    }
 
     //UTILITY METHODS
 

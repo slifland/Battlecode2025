@@ -3,6 +3,7 @@ package Version8;
 import battlecode.common.*;
 
 import static Version8.splasherUtil.*;
+import static Version8.Communication.*;
 
 import static Version8.RobotPlayer.*;
 
@@ -12,17 +13,21 @@ enum splasherStates {
 
 public class Splasher {
 
+    private static final int PAINT_TOWER_REFRESH = 25;
+
     private static MapLocation curObjective;
     private static splasherStates state;
     private static RobotInfo seenEnemyTower; //records whether we can see an enemy tower, and if so, the enemy tower's info
     private static int numEnemyTiles; //records the number of enemy tiles we can see
     private static MapLocation fillingStation;
     private static MapLocation nearestPaintTower;
+    public static int distanceToNearestPaintTower = -1;
     //final variables
     private static final int refillThreshold = 51;
     private static final int endRefillThreshold = 200;
 
     public static MapLocation averageEnemyPaint;
+
 
 
     public static void runSplasher(RobotController rc) throws GameActionException {
@@ -78,10 +83,12 @@ public class Splasher {
 
     //attempts to return to a known allied paint tower and refill
     public static void refill(RobotController rc) throws GameActionException {
-        // we have a problem if it tries to fill but doesn't know of any paint towers
-        if(fillingStation == null) return;
         //navigate to the nearest paint tower
         //if that tower is surrounded, navigate to the next nearest
+        if(fillingStation == null || rc.canSenseLocation(fillingStation) && rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 3) {
+            fillingStation = nextNearestPaintTower(rc);
+            if(fillingStation == null) return;
+        }
         if(rc.getLocation().isAdjacentTo(fillingStation)) {
             if(rc.canTransferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1))){
                 rc.transferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1));
@@ -91,6 +98,23 @@ public class Splasher {
             Direction dir = BFS_7x7.pathfind(rc, fillingStation);
             if(rc.canMove(dir)) rc.move(dir);
         }
+    }
+
+    //returns the closest paint tower that is not currently the filling station or the nearestPaintTower
+    private static MapLocation nextNearestPaintTower(RobotController rc) throws GameActionException {
+        MapLocation curLoc = rc.getLocation();
+        int curClosest = Integer.MAX_VALUE;
+        MapLocation temp = null;
+        for (Ruin r : alliedPaintTowers) {
+            if (r.location == nearestPaintTower || r.location == fillingStation) continue;
+            else {
+                if(curLoc.distanceSquaredTo(r.location) < curClosest) {
+                    curClosest = curLoc.distanceSquaredTo(r.location);
+                    temp = r.location;
+                }
+            }
+        }
+        return temp;
     }
 
     //attempts to steal enemy territory and potentially attack towers
@@ -161,7 +185,17 @@ public class Splasher {
 
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
-        //TODO: add code for getting the nearest paint tower
+        MapLocation curLoc = rc.getLocation();
+
+        //gets the nearest paint tower, updating every so often
+        if(rc.getRoundNum() % PAINT_TOWER_REFRESH == 0) {
+            for (Ruin r : alliedPaintTowers) {
+                if (nearestPaintTower == null || curLoc.distanceSquaredTo(r.location) < distanceToNearestPaintTower) {
+                    distanceToNearestPaintTower = curLoc.distanceSquaredTo(r.location);
+                    nearestPaintTower = r.location;
+                }
+            }
+        }
         if(knownSymmetry == Symmetry.Unknown) {
             for (MapInfo tile : nearbyTiles) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
