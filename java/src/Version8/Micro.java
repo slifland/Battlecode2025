@@ -11,7 +11,7 @@ class microInfo {
     public PaintType paint;
     public int minDistanceToAlly;
     public boolean inTowerRange;
-    public int numAlliesCardinalAdjacent;
+    public int numAlliesAdjacent;
     public boolean canSplash;
 
     //creates a micro Info tile, populating its information based on a map info tile
@@ -21,13 +21,10 @@ class microInfo {
         if(!passable) return;
         loc = tile.getMapLocation();
         paint = tile.getPaint();
-        numAlliesCardinalAdjacent = 0;
+        numAlliesAdjacent = 0;
         minDistanceToAlly = Integer.MAX_VALUE;
         minDistanceToEnemy = Integer.MAX_VALUE;
         populateMicro();
-        if(checkForSplash) {
-            checkForSplash();
-        }
     }
     //default constructor for a microInfo, setting passable to false so it will never be considered
     //used for spaces which are not on the map
@@ -36,17 +33,7 @@ class microInfo {
     }
 
     //UTILITY METHODS
-
-    //checks for:
-    // if there is a tile in splashing radius (canSplash)
-    public void checkForSplash() {
-        for(MapInfo tile : nearbyTiles) {
-            if(tile.getPaint().isEnemy() && tile.getMapLocation().isWithinDistanceSquared(loc, UnitType.SPLASHER.actionRadiusSquared)) {
-                canSplash = true;
-                return;
-            }
-        }
-    }
+    
 
     //takes in a map info, and populates this relevant micro info object using it, as well as known information
     public void populateMicro() {
@@ -70,8 +57,8 @@ class microInfo {
             if(dist < minDistanceToAlly) {
                 minDistanceToAlly = dist;
             }
-            if(dist == 1) {
-                numAlliesCardinalAdjacent++;
+            if(dist <= 2) {
+                numAlliesAdjacent++;
             }
         }
     }
@@ -164,8 +151,8 @@ public class Micro {
 //            }
 //
 //            //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-//            if (bestMicro.numAlliesCardinalAdjacent < m.numAlliesCardinalAdjacent) continue;
-//            if (m.numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+//            if (bestMicro.numAlliesAdjacent < m.numAlliesAdjacent) continue;
+//            if (m.numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
 //                bestMicro = m;
 //                continue;
 //            }
@@ -219,8 +206,8 @@ public class Micro {
 //                }
 //
 //                //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-//                if (bestMicro.numAlliesCardinalAdjacent < microArray[i].numAlliesCardinalAdjacent) break;
-//                if (microArray[i].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+//                if (bestMicro.numAlliesAdjacent < microArray[i].numAlliesAdjacent) break;
+//                if (microArray[i].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
 //                    bestMicro = microArray[i];
 //                    break;
 //                }
@@ -272,8 +259,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[1].numAlliesCardinalAdjacent) break;
-            if (microArray[1].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[1].numAlliesAdjacent) break;
+            if (microArray[1].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[1];
                 break;
             }
@@ -318,8 +305,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[2].numAlliesCardinalAdjacent) break;
-            if (microArray[2].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[2].numAlliesAdjacent) break;
+            if (microArray[2].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[2];
                 break;
             }
@@ -367,8 +354,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[3].numAlliesCardinalAdjacent) break;
-            if (microArray[3].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[3].numAlliesAdjacent) break;
+            if (microArray[3].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[3];
                 break;
             }
@@ -416,8 +403,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[4].numAlliesCardinalAdjacent) break;
-            if (microArray[4].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[4].numAlliesAdjacent) break;
+            if (microArray[4].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[4];
                 break;
             }
@@ -464,8 +451,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[5].numAlliesCardinalAdjacent) break;
-            if (microArray[5].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[5].numAlliesAdjacent) break;
+            if (microArray[5].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[5];
                 break;
             }
@@ -512,8 +499,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[6].numAlliesCardinalAdjacent) break;
-            if (microArray[6].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[6].numAlliesAdjacent) break;
+            if (microArray[6].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[6];
                 break;
             }
@@ -559,8 +546,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[7].numAlliesCardinalAdjacent) break;
-            if (microArray[7].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[7].numAlliesAdjacent) break;
+            if (microArray[7].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[7];
                 break;
             }
@@ -607,8 +594,8 @@ public class Micro {
                 break;
             }
 
-            if (bestMicro.numAlliesCardinalAdjacent < microArray[8].numAlliesCardinalAdjacent) break;
-            if (microArray[8].numAlliesCardinalAdjacent < bestMicro.numAlliesCardinalAdjacent) {
+            if (bestMicro.numAlliesAdjacent < microArray[8].numAlliesAdjacent) break;
+            if (microArray[8].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
                 bestMicro = microArray[8];
                 break;
             }
