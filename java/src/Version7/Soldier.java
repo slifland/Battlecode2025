@@ -32,6 +32,9 @@ public class Soldier {
     //information updated each turn
 
     public static void runSoldier(RobotController rc) throws GameActionException {
+        int price = Clock.getBytecodesLeft();
+        Micro.runMicro(rc);
+        System.out.println(price - Clock.getBytecodesLeft());
         updateInfo(rc);
         updateState(rc);
         switch(state) {

@@ -6,6 +6,11 @@ import static Version8.RobotPlayer.nearbyTiles;
 import static Version8.Splasher.*;
 
 public class splasherUtil {
+    public static MapLocation bestAttackBinary(RobotController rc) {
+        return null;
+
+    }
+
     //used to see if we can run cheapBestAttack
     public static boolean farFromEdge(RobotController rc, MapLocation loc) {
         //if(!loc.equals(rc.getLocation()) && !farFromEdge(rc, rc.getLocation())) return true;

@@ -105,10 +105,6 @@ public class RobotPlayer {
                         map[tile.getMapLocation().x][tile.getMapLocation().y] = 1;
                     }
                 }
-                if(knownSymmetry != symmetry.unknown) {
-                    System.out.println(knownSymmetry);
-                    //rc.resign();
-                }
                     switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;

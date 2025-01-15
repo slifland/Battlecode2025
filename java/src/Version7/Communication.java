@@ -187,7 +187,7 @@ public class Communication
     public static Ruin messageToRuin(int message)
     {
         RobotPlayer.symmetries = message >> 28 & 0b1110;
-        System.out.println(RobotPlayer.symmetries);
+        //.println(RobotPlayer.symmetries);
         if(RobotPlayer.knownSymmetry == RobotPlayer.symmetry.unknown) {
             switch (RobotPlayer.symmetries) {
                 case 2 -> RobotPlayer.knownSymmetry = RobotPlayer.symmetry.rotational;

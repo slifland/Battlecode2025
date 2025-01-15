@@ -63,9 +63,10 @@ public class Communication
         {
             for(Message m : mArr)
             {
-                if((m.getBytes() & 0b11) == 0b00)
+                switch (m.getBytes() & 0b11)
                 {
-                    updateRuinsMemory(messageToRuin(m));
+                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                    case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
                 }
 
             }
@@ -86,7 +87,7 @@ public class Communication
                 switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    // case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                    case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
                 }
             }
         }
@@ -112,7 +113,14 @@ public class Communication
         }
         if(i == 0) return;
 
-        sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+        //sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+        MapLocation towerToSend = tower[rng.nextInt(0, i)];
+        //We have different kinds of messages to send so let's alternate every round
+        switch (rc.getRoundNum() % 2)
+        {
+            case 0 -> sendRuinLocationsToTower(rc, towerToSend);
+            case 1 -> sendAveragesToTower(rc, towerToSend);
+        }
     }
 
     /*
@@ -149,12 +157,12 @@ public class Communication
         }
     }
 
-    /*
+
     public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
         rc.sendMessage(tower, createAverageMessage());
     }
-    */
+
 
     /*
         Send known ruin locations to a nearby tower
@@ -235,9 +243,9 @@ public class Communication
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
     {
-        System.out.println("HIIIIII");
+        //System.out.println("HIIIIII");
         symmetries = message >> 28 & 0b1110;
-        System.out.println(symmetries);
+        //System.out.println(symmetries);
         if(knownSymmetry == symmetry.unknown) {
             switch (symmetries) {
                 case 2 -> knownSymmetry = symmetry.rotational;
@@ -312,10 +320,11 @@ public class Communication
         }
     }
 
-    /*
+
     public static int createAverageMessage()
     {
         int message = 0b01;
+        message |= symmetries << 28;
         message |= (paintCount1 == 0 ? 0 : 1) << 2; //Indicate average1's emptiness
         message |= paintAverage1.x << 3;
         message |= paintAverage1.y << 9;
@@ -332,6 +341,16 @@ public class Communication
 
     public static MapLocation[] readAverageMessage(int message)
     {
+        //System.out.println("HIIIIII");
+        symmetries = message >> 28 & 0b1110;
+        //System.out.println(symmetries);
+        if(knownSymmetry == symmetry.unknown) {
+            switch (symmetries) {
+                case 2 -> knownSymmetry = symmetry.rotational;
+                case 4 -> knownSymmetry = symmetry.vertical;
+                case 8 -> knownSymmetry = symmetry.horizontal;
+            }
+        }
         if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 0)      //Both locations are empty
         {
             return new MapLocation[0];
@@ -362,33 +381,33 @@ public class Communication
         {
             paintAverage2 = locations[0];
         }
-//        for(MapLocation location : locations)
-//        {
-//            System.out.println(location);
-//            if(paintCount1 == 0)
-//            {
-//                paintAverage1 = location;
-//                paintCount1++;
-//                continue;
-//            }
-//
-//            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
-//            {
-//                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
-//                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
-//                paintAverage1 = new MapLocation(x, y);
-//                paintCount1++;
-//            }
-//            else
-//            {
-//                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
-//                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
-//                paintAverage2 = new MapLocation(x, y);
-//                paintCount2++;
-//            }
-//        }
+        for(MapLocation location : locations)
+        {
+            System.out.println(location);
+            if(paintCount1 == 0)
+            {
+                paintAverage1 = location;
+                paintCount1++;
+                continue;
+            }
+
+            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
+            {
+                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
+                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
+                paintAverage1 = new MapLocation(x, y);
+                paintCount1++;
+            }
+            else
+            {
+                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
+                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
+                paintAverage2 = new MapLocation(x, y);
+                paintCount2++;
+            }
+        }
     }
-    */
+
 
     /*
         Used for testing and debugging
