@@ -94,20 +94,20 @@ public class Communication
 
     public static void sendMessagesRobot(RobotController rc) throws GameActionException
     {
-        //Check if there is an available tower to broadcast to
-        MapLocation tower = null;
+        //Find available towers to broadcast to, select one randomly
+
+        int i = 0;
+        MapLocation[] tower = new MapLocation[30];
         for(RobotInfo robot : allyRobots)
         {
-            if(robot.getType().isTowerType())
+            if(robot.getType().isTowerType() && rc.canSendMessage(robot.location))
             {
-                tower = robot.getLocation();
-                break;
+                tower[i++] = robot.getLocation();
             }
         }
-        if(tower == null || !rc.canSendMessage(tower)) return;
+        if(i == 0) return;
 
-        sendRuinLocationsToTower(rc, tower);
-
+        sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
     }
 
     /*
