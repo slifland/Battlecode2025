@@ -26,6 +26,8 @@ public class Mopper {
 
     private static MapLocation spawnLocation;
 
+    static MapLocation averageEnemyPaint;
+
     public static void runMopper(RobotController rc) throws GameActionException {
         if(turnCount == 1) spawnLocation = rc.getLocation();
         updateInfo(rc);
@@ -194,16 +196,26 @@ public class Mopper {
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
+        averageEnemyPaint = null;
+        int count = 0;
+        int x = 0;
+        int y = 0;
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
-                if(knownSymmetry != symmetry.unknown) break;
+                //if(knownSymmetry != symmetry.unknown) break;
             }
             if(knownSymmetry == symmetry.unknown) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
+            if(tile.getPaint().isEnemy()) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                count++;
+            }
         }
+        averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }
 
     public static Direction dirToSweep(RobotController rc) throws GameActionException {
