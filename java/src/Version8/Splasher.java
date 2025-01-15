@@ -1,12 +1,7 @@
 package Version8;
 
-import Version8.BFS_7x7;
-import Version8.Communication;
-import Version8.Ruin;
 import battlecode.common.*;
 
-import java.awt.*;
-import java.util.HashSet;
 import static Version8.splasherUtil.*;
 
 import static Version8.RobotPlayer.*;
@@ -54,16 +49,16 @@ public class Splasher {
         }
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null) {
-            symmetry[] possible = Utilities.possibleSymmetry();
+            Symmetry[] possible = Utilities.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
-                case symmetry.horizontal:
+                case Horizontal:
                     curObjective = new MapLocation(rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
                     break;
-                case symmetry.rotational:
+                case Rotational:
                     curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
                     break;
-                case symmetry.vertical:
+                case Vertical:
                     curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getLocation().y);
                     break;
             }
@@ -157,7 +152,7 @@ public class Splasher {
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
         //TODO: add code for getting the nearest paint tower
-        if(knownSymmetry == symmetry.unknown) {
+        if(knownSymmetry == Symmetry.Unknown) {
             for (MapInfo tile : nearbyTiles) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());

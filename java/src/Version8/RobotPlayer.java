@@ -12,8 +12,9 @@ import java.util.Random;
  * is created!
  */
 public class RobotPlayer {
-    public enum symmetry {
-    horizontal, vertical, rotational, unknown
+    public enum Symmetry
+    {
+        Horizontal, Vertical, Rotational, Unknown
     }
 
     /**
@@ -48,7 +49,7 @@ public class RobotPlayer {
 
     public static int[][] map; //used for map symmetry - 0 is not checked, 1 is not of interest, 2 is wall, 3 is ruin
     public static int symmetries = 0b1110; //used to store what symmetries are true - horizontal, vertical, rotational (LSB is always zero)
-    public static symmetry knownSymmetry = symmetry.unknown; //0 - horizontal, 1 = vertical, 2 = rotational, -1 = unknown
+    public static Symmetry knownSymmetry = Symmetry.Unknown; //0 - horizontal, 1 = vertical, 2 = rotational, -1 = unknown
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random

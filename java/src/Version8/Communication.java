@@ -250,11 +250,11 @@ public class Communication
         //System.out.println("HIIIIII");
         symmetries = message >> 28 & 0b1110;
         //System.out.println(symmetries);
-        if(knownSymmetry == symmetry.unknown) {
+        if(knownSymmetry == Symmetry.Unknown) {
             switch (symmetries) {
-                case 2 -> knownSymmetry = symmetry.rotational;
-                case 4 -> knownSymmetry = symmetry.vertical;
-                case 8 -> knownSymmetry = symmetry.horizontal;
+                case 2 -> knownSymmetry = Symmetry.Rotational;
+                case 4 -> knownSymmetry = Symmetry.Vertical;
+                case 8 -> knownSymmetry = Symmetry.Horizontal;
             }
         }
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
@@ -364,11 +364,11 @@ public class Communication
         //System.out.println("HIIIIII");
         symmetries = message >> 28 & 0b1110;
         //System.out.println(symmetries);
-        if(knownSymmetry == symmetry.unknown) {
+        if(knownSymmetry == Symmetry.Unknown) {
             switch (symmetries) {
-                case 2 -> knownSymmetry = symmetry.rotational;
-                case 4 -> knownSymmetry = symmetry.vertical;
-                case 8 -> knownSymmetry = symmetry.horizontal;
+                case 2 -> knownSymmetry = Symmetry.Rotational;
+                case 4 -> knownSymmetry = Symmetry.Vertical;
+                case 8 -> knownSymmetry = Symmetry.Horizontal;
             }
         }
         if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 0)      //Both locations are empty

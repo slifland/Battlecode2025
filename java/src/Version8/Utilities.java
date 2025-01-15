@@ -2,7 +2,6 @@ package Version8;
 
 import battlecode.common.*;
 
-import java.awt.*;
 import static Version8.RobotPlayer.*;
 
 public class Utilities
@@ -154,9 +153,32 @@ public class Utilities
         }
     }
 
+    public static MapLocation oppositeLocation(RobotController rc, MapLocation location, Symmetry symmetry)
+    {
+        switch (symmetry)
+        {
+            case Horizontal ->
+            {
+                return new MapLocation(location.x, rc.getMapHeight() - location.y - 1);
+            }
+            case Vertical ->
+            {
+                return new MapLocation(rc.getMapWidth() - location.x - 1, location.y);
+            }
+            case Rotational ->
+            {
+                return new MapLocation(rc.getMapWidth() - location.x - 1, rc.getMapHeight() - location.y - 1);
+            }
+            default ->
+            {
+                return new MapLocation(0,0);
+            }
+        }
+    }
+
     //if isRuin, check for a ruin - otherwise check for a wall
     public static void validateSymmetry(MapLocation toCheck, boolean isRuin) {
-        if(knownSymmetry != symmetry.unknown) return;
+        if(knownSymmetry != Symmetry.Unknown) return;
         int x = toCheck.x;
         int y = toCheck.y;
         int toCompareHorizontal = map[x][map[0].length - 1 - y];
@@ -178,20 +200,20 @@ public class Utilities
         }
         symmetries &= finalMask;
         switch (symmetries) {
-            case 2 -> knownSymmetry = symmetry.rotational;
-            case 4 -> knownSymmetry = symmetry.vertical;
-            case 8 -> knownSymmetry = symmetry.horizontal;
+            case 2 -> knownSymmetry = Symmetry.Rotational;
+            case 4 -> knownSymmetry = Symmetry.Vertical;
+            case 8 -> knownSymmetry = Symmetry.Horizontal;
         }
     }
 
     //returns an array of possible symmetries
-    public static symmetry[] possibleSymmetry() {
+    public static Symmetry[] possibleSymmetry() {
         return switch (symmetries) {
-            case 2, 4, 8 -> new symmetry[]{knownSymmetry};
-            case 6 -> new symmetry[]{symmetry.vertical, symmetry.rotational};
-            case 10 -> new symmetry[]{symmetry.horizontal, symmetry.rotational};
-            case 12 -> new symmetry[]{symmetry.horizontal, symmetry.vertical};
-            default -> new symmetry[]{symmetry.horizontal, symmetry.vertical, symmetry.rotational};
+            case 2, 4, 8 -> new Symmetry[]{knownSymmetry};
+            case 6 -> new Symmetry[]{Symmetry.Vertical, Symmetry.Rotational};
+            case 10 -> new Symmetry[]{Symmetry.Horizontal, Symmetry.Rotational};
+            case 12 -> new Symmetry[]{Symmetry.Horizontal, Symmetry.Vertical};
+            default -> new Symmetry[]{Symmetry.Horizontal, Symmetry.Vertical, Symmetry.Rotational};
         };
     }
 }
