@@ -43,6 +43,7 @@ public class Communication
 
     static final Queue sendQueue = new Queue();
 
+    static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>();
     static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
     static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
 
@@ -173,7 +174,7 @@ public class Communication
     */
     public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
-        if(enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) return;
+        if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) return;
 
         if(sendQueue.isEmpty())
             fillSendQueue();
@@ -191,7 +192,7 @@ public class Communication
     */
     public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
     {
-        if(allyRobots.length == 0 || (enemyTowers.isEmpty() && alliedPaintTowers.isEmpty())) return;
+        if(allyRobots.length == 0 || (unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty())) return;
 
         if(sendQueue.isEmpty())
             fillSendQueue();
@@ -218,6 +219,9 @@ public class Communication
 
     private static void fillSendQueue()
     {
+        for(Ruin r : unclaimedRuins)
+            sendQueue.add(r);
+
         for(Ruin r : enemyTowers)
             sendQueue.add(r);
 
@@ -266,7 +270,24 @@ public class Communication
     {
         Ruin next;
 
-        ListIterator<Ruin> iterator = enemyTowers.listIterator();
+        ListIterator<Ruin> iterator = unclaimedRuins.listIterator();
+        while(iterator.hasNext())
+        {
+            next = iterator.next();
+            if(next.location.equals(ruin.location))
+            {
+                if(next.equals(ruin))
+                {
+                    return; //we already know of this exact Ruin
+                }
+                else
+                {
+                    iterator.remove();
+                }
+            }
+        }
+
+        iterator = enemyTowers.listIterator();
         while(iterator.hasNext())
         {
             next = iterator.next();
@@ -302,10 +323,9 @@ public class Communication
 
         switch(ruin.status)
         {
-            /*
             case 0: //unclaimed
+                unclaimedRuins.add(ruin);
                 break;
-             */
 
             case 1: //ally
                 if(ruin.isPaintTower)
@@ -414,13 +434,19 @@ public class Communication
      */
     public static void printRuinsMemory()
     {
+        System.out.println(unclaimedRuins.size() + " Unclaimed ruins:");
+        for(Ruin r : unclaimedRuins)
+        {
+            System.out.println(r);
+        }
+
         System.out.println(enemyTowers.size() + " Enemy towers:");
         for(Ruin r : enemyTowers)
         {
             System.out.println(r);
         }
 
-        System.out.println(alliedPaintTowers.size() + "Allied paint towers:");
+        System.out.println(alliedPaintTowers.size() + " Allied paint towers:");
         for(Ruin r : alliedPaintTowers)
         {
             System.out.println(r);
