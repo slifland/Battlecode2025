@@ -67,6 +67,14 @@ public class Communication
                 {
                     updateRuinsMemory(messageToRuin(m));
                 }
+                symmetries = m.getBytes() >> 28 & 0b1110;
+                if(knownSymmetry == symmetry.unknown) {
+                    switch (symmetries) {
+                        case 2 -> knownSymmetry = symmetry.rotational;
+                        case 4 -> knownSymmetry = symmetry.vertical;
+                        case 8 -> knownSymmetry = symmetry.horizontal;
+                    }
+                }
             }
         }
     }
@@ -86,6 +94,14 @@ public class Communication
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
                     // case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                }
+                symmetries = m.getBytes() >> 28 & 0b1110;
+                if(knownSymmetry == symmetry.unknown) {
+                    switch (symmetries) {
+                        case 2 -> knownSymmetry = symmetry.rotational;
+                        case 4 -> knownSymmetry = symmetry.vertical;
+                        case 8 -> knownSymmetry = symmetry.horizontal;
+                    }
                 }
             }
         }
@@ -219,12 +235,14 @@ public class Communication
     public static int ruinToMessage(Ruin ruin)
     {
         int message = 0; //comm code for Ruin Info
-
+        //use the leftmost three digits to communicate symmetry
+        message |= symmetries << 28;
+        //use the rightmost 17 digits to communicate ruins
         message |= (ruin.location.x << 2);          //Add x location to message
         message |= (ruin.location.y << 8);          //Add y location to message
         message |= ruin.status << 14;               //Add ruin status to message
         message |= ruin.isPaintTower ? 1 << 16 : 0; //Add isPaintTower to message
-
+        //System.out.println(symmetries);
         return message;
     }
 

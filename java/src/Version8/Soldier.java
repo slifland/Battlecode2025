@@ -18,6 +18,7 @@ public class Soldier {
     static SoldierState currentState;
     static MapLocation target;
 
+
     //Constants
     static float refillThreshold = 15;
 

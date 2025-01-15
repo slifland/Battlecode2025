@@ -159,9 +159,8 @@ public class Splasher {
         //TODO: add code for getting the nearest paint tower
         if(knownSymmetry == symmetry.unknown) {
             for (MapInfo tile : nearbyTiles) {
-                if (!tile.isPassable()) {
-                    Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-                }
+                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
         }
     }

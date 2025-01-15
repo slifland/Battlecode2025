@@ -177,14 +177,10 @@ public class Utilities
             finalMask &= 0b1100;
         }
         symmetries &= finalMask;
-        if(symmetries == 2) {
-            knownSymmetry = symmetry.rotational;
-        }
-        else if(symmetries == 4) {
-            knownSymmetry = symmetry.vertical;
-        }
-        else if (symmetries == 8) {
-            knownSymmetry = symmetry.horizontal;
+        switch (symmetries) {
+            case 2 -> knownSymmetry = symmetry.rotational;
+            case 4 -> knownSymmetry = symmetry.vertical;
+            case 8 -> knownSymmetry = symmetry.horizontal;
         }
     }
 

@@ -45,7 +45,8 @@ public class Mopper {
 
     //attempts to navigate to a known location
     public static void navigate(RobotController rc) throws GameActionException {
-        if(rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
+        if(curObjective != null && rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
+        //if(curObjective == null) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
         MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
@@ -192,13 +193,15 @@ public class Mopper {
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
+        System.out.println(symmetries);
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
                 if(knownSymmetry != symmetry.unknown) break;
             }
-            if(knownSymmetry == symmetry.unknown && !tile.isPassable()) {
-                Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+            if(knownSymmetry == symmetry.unknown) {
+                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
         }
     }
