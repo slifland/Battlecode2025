@@ -45,11 +45,28 @@ public class Splasher {
 
     //attempts to navigate to a known location - enemy average, usually
     public static void navigate(RobotController rc) throws GameActionException {
+        if(rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
         MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
         if(enemyAverages.length != 0) {
             curObjective = enemyAverages[0];
+        }
+        //finally, navigate to the opposite of where we spawned
+        if(curObjective == null) {
+            symmetry[] possible = Utilities.possibleSymmetry();
+            int sym = rng.nextInt(possible.length);
+            switch(possible[sym]) {
+                case symmetry.horizontal:
+                    curObjective = new MapLocation(rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    break;
+                case symmetry.rotational:
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    break;
+                case symmetry.vertical:
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getLocation().y);
+                    break;
+            }
         }
         //next, if we have enemy towers, go there
         //last resort - just go to the center
@@ -140,6 +157,13 @@ public class Splasher {
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
         //TODO: add code for getting the nearest paint tower
+        if(knownSymmetry == symmetry.unknown) {
+            for (MapInfo tile : nearbyTiles) {
+                if (!tile.isPassable()) {
+                    Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+                }
+            }
+        }
     }
 
     //UTILITY METHODS

@@ -5,12 +5,17 @@ import battlecode.common.*;
 import java.util.Random;
 
 
+
 /**
  * RobotPlayer is the class that describes your main robot strategy.
  * The run() method inside this class is like your main function: this is what we'll call once your robot
  * is created!
  */
 public class RobotPlayer {
+    public enum symmetry {
+    horizontal, vertical, rotational, unknown
+    }
+
     /**
      * We will use this variable to count the number of turns this robot has been alive.
      * You can use static variables like this to save any information you want. Keep in mind that even though
@@ -41,6 +46,9 @@ public class RobotPlayer {
     public static RobotInfo[] enemyRobots;
     public static MapLocation[] nearbyRuins;
 
+    public static int[][] map; //used for map symmetry - 0 is not checked, 1 is not of interest, 2 is wall, 3 is ruin
+    public static int symmetries = 0b1110; //used to store what symmetries are true - horizontal, vertical, rotational (LSB is always zero)
+    public static symmetry knownSymmetry = symmetry.unknown; //0 - horizontal, 1 = vertical, 2 = rotational, -1 = unknown
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random
@@ -79,6 +87,9 @@ public class RobotPlayer {
             turnCount += 1;  // We have now been alive for one more turn!
 
             try {
+                if(rc.getRoundNum() == 1 || turnCount == 1) {
+                    map = new int[rc.getMapWidth()][rc.getMapHeight()];
+                }
                 /*
                     Complete all tasks which need to be completed in the beginning of the round
                 */

@@ -11,6 +11,9 @@ import java.util.Random;
  * is created!
  */
 public class RobotPlayer {
+    public enum symmetry {
+        horizontal, vertical, rotational, unknown
+    }
     /**
      * We will use this variable to count the number of turns this robot has been alive.
      * You can use static variables like this to save any information you want. Keep in mind that even though
@@ -40,6 +43,10 @@ public class RobotPlayer {
     public static RobotInfo[] allyRobots;
     public static RobotInfo[] enemyRobots;
     public static MapLocation[] nearbyRuins;
+
+    public static int[][] map; //used for map symmetry - 0 is not checked, 1 is not of interest, 2 is wall, 3 is ruin
+    public static int symmetries = 0b1110; //used to store what symmetries are true - horizontal, vertical, rotational (LSB is always zero)
+    public static symmetry knownSymmetry = symmetry.unknown; //0 - horizontal, 1 = vertical, 2 = rotational, -1 = unknown
 
     /**
      * A random number generator.
@@ -73,17 +80,38 @@ public class RobotPlayer {
 
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
-
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
 
             try {
+                if(rc.getRoundNum() == 1 || turnCount == 1) {
+                    map = new int[rc.getMapWidth()][rc.getMapHeight()];
+                }
                 /*
                     Complete all tasks which need to be completed in the beginning of the round
                 */
                 completeBeginningTasks(rc);
-                switch (rc.getType()){
+                int price = Clock.getBytecodesLeft();
+                for(MapInfo tile : nearbyTiles){
+                    if(tile.hasRuin()) {
+                        map[tile.getMapLocation().x][tile.getMapLocation().y] = 3;
+                        Utilities.validateSymmetry(tile.getMapLocation(), true);
+                    }
+                    else if(tile.isWall()) {
+                        map[tile.getMapLocation().x][tile.getMapLocation().y] = 2;
+                        Utilities.validateSymmetry(tile.getMapLocation(), false);
+                    }
+                    else {
+                        map[tile.getMapLocation().x][tile.getMapLocation().y] = 1;
+                    }
+                }
+                System.out.println(price - Clock.getBytecodesLeft());
+                if(knownSymmetry != symmetry.unknown) {
+                    System.out.println(knownSymmetry);
+                    //rc.resign();
+                }
+                    switch (rc.getType()){
                     case SOLDIER: Soldier.runSoldier(rc); break;
                     case MOPPER: Mopper.runMopper(rc); break;
                     case SPLASHER: Splasher.runSplasher(rc); break;

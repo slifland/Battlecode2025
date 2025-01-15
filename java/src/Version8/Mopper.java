@@ -24,7 +24,10 @@ public class Mopper {
 
     private static MapLocation nearbyRuin;
 
+    private static MapLocation spawnLocation;
+
     public static void runMopper(RobotController rc) throws GameActionException {
+        if(turnCount == 1) spawnLocation = rc.getLocation();
         updateInfo(rc);
         updateState(rc);
         switch(state) {
@@ -42,6 +45,7 @@ public class Mopper {
 
     //attempts to navigate to a known location
     public static void navigate(RobotController rc) throws GameActionException {
+        if(rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
         MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
@@ -49,6 +53,22 @@ public class Mopper {
             curObjective = enemyAverages[0];
         }
         //next, if we have enemy towers, go there
+        //finally, navigate to the opposite of where we spawned
+        if(curObjective == null) {
+            symmetry[] possible = Utilities.possibleSymmetry();
+            int sym = rng.nextInt(possible.length);
+            switch(possible[sym]) {
+                case symmetry.horizontal:
+                    curObjective = new MapLocation(rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    break;
+                case symmetry.rotational:
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    break;
+                case symmetry.vertical:
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getLocation().y);
+                    break;
+            }
+        }
         //last resort - just go to the center
         if(curObjective == null) {
             curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
@@ -175,7 +195,10 @@ public class Mopper {
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
-                break;
+                if(knownSymmetry != symmetry.unknown) break;
+            }
+            if(knownSymmetry == symmetry.unknown && !tile.isPassable()) {
+                Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
         }
     }
