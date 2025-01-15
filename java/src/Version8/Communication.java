@@ -5,11 +5,43 @@ import static Version8.RobotPlayer.*;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.Queue;
 
 public class Communication
 {
-    static final Queue<Ruin> sendQueue = new LinkedList<>();
+
+    private static class Queue
+    {
+        private static final int len = 250;
+
+        private final Ruin[] ruins;
+        private int head = 0, tail = -1;
+
+        public Queue()
+        {
+            ruins = new Ruin[len];
+        }
+
+        public void add(Ruin r)
+        {
+            tail = (tail + 1) % len;
+            ruins[tail] = r;
+        }
+
+        //pre: !isEmpty()
+        public Ruin pop()
+        {
+            Ruin ret = ruins[head];
+            head = (head + 1) % len;
+            return ret;
+        }
+
+        public boolean isEmpty()
+        {
+            return tail == head - 1; //slight jank, but I'm assuming we never get to len number of items
+        }
+    }
+
+    static final Queue sendQueue = new Queue();
 
     static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
     static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
@@ -27,7 +59,7 @@ public class Communication
         {
             for(Message m : mArr)
             {
-                if((m.getBytes() >> 2 & 0b11) == 0b00)
+                if((m.getBytes() & 0b11) == 0b00)
                 {
                     updateRuinsMemory(messageToRuin(m));
                 }
@@ -46,7 +78,7 @@ public class Communication
         {
             for(Message m : mArr)
             {
-                switch (m.getBytes() >> 2 & 0b11)
+                switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
                     // case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
@@ -134,7 +166,9 @@ public class Communication
             fillSendQueue();
 
         if(rc.canSendMessage(tower))
-            rc.sendMessage(tower, ruinToMessage(sendQueue.poll()));
+        {
+            rc.sendMessage(tower, ruinToMessage(sendQueue.pop()));
+        }
     }
 
     /*
@@ -144,28 +178,38 @@ public class Communication
     */
     public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
     {
-        if(enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) return;
+        if(allyRobots.length == 0 || (enemyTowers.isEmpty() && alliedPaintTowers.isEmpty())) return;
 
         if(sendQueue.isEmpty())
             fillSendQueue();
 
         int messagesSent = 0;
-        for(RobotInfo ri : allyRobots)
-        {
-            if(!rc.canSendMessage(ri.getLocation())) continue;
 
-            while(!sendQueue.isEmpty())
+        int i = rng.nextInt(0, allyRobots.length);
+        int first = i;
+        do
+        {
+            if(rc.canSendMessage(allyRobots[i].getLocation()))
             {
-                rc.sendMessage(ri.location, ruinToMessage(sendQueue.poll()));
-                if(++messagesSent >= maxRuinsToSend) return;
+                while(!sendQueue.isEmpty())
+                {
+                    rc.sendMessage(allyRobots[i].location, ruinToMessage(sendQueue.pop()));
+                    if(++messagesSent >= maxRuinsToSend) return;
+                }
             }
+
+            i = (i + 1) % allyRobots.length;
         }
+        while(i != first);
     }
 
     private static void fillSendQueue()
     {
-        sendQueue.addAll(enemyTowers);
-        sendQueue.addAll(alliedPaintTowers);
+        for(Ruin r : enemyTowers)
+            sendQueue.add(r);
+
+        for(Ruin r : alliedPaintTowers)
+            sendQueue.add(r);
     }
 
     public static int ruinToMessage(Ruin ruin)
