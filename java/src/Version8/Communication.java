@@ -44,7 +44,8 @@ public class Communication
 
     static final Queue sendQueue = new Queue();
 
-    static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>();
+    static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
+
     static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
     static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
 
@@ -116,7 +117,10 @@ public class Communication
         }
         if(i == 0) return;
 
-        //sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+        sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+
+        /* uncomment this if we decide to send paint averages in comms
+
         MapLocation towerToSend = tower[rng.nextInt(0, i)];
         //We have different kinds of messages to send so let's alternate every round
         switch (rc.getRoundNum() % 2)
@@ -124,6 +128,7 @@ public class Communication
             case 0 -> sendRuinLocationsToTower(rc, towerToSend);
             case 1 -> sendAveragesToTower(rc, towerToSend);
         }
+        */
     }
 
     /*
@@ -161,6 +166,7 @@ public class Communication
     }
 
 
+    /*
     public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
         rc.sendMessage(tower, createAverageMessage());
@@ -174,6 +180,7 @@ public class Communication
             rc.sendMessage(robot, message);
         }
     }
+    */
 
 
     /*
@@ -379,7 +386,7 @@ public class Communication
         }
     }
 
-
+    /*
     public static int createAverageMessage()
     {
         int message = 0b01;
@@ -392,6 +399,7 @@ public class Communication
         message |= paintAverage2.y << 22;
         return message;
     }
+    */
 
     public static MapLocation[] readAverageMessage(Message m)
     {
