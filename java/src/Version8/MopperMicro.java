@@ -40,7 +40,14 @@ class mopperMicroInfo {
 
     //populates the info you can't get from only knowing the tile
     void populatemopperMicroInfo() {
-        distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
+        //distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
+        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
+        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
+            case 0 -> Integer.MAX_VALUE;
+            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
+            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
+            default -> Integer.MAX_VALUE;
+        };
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());

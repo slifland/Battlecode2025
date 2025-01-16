@@ -165,22 +165,23 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        int x = 0;
-        int y = 0;
+        //int x = 0;
+        //int y = 0;
         //now, check if we can see any enemy tiles
         for(MapInfo tile : nearbyTiles) {
             if(tile.getPaint().isEnemy()) {
                 state = splasherStates.contest;
-                numEnemyTiles++;
-                x += tile.getMapLocation().x;
-                y += tile.getMapLocation().y;
+                //numEnemyTiles++;
+                //x += tile.getMapLocation().x;
+                //y += tile.getMapLocation().y;
             }
             RobotInfo robot = rc.senseRobotAtLocation(tile.getMapLocation());
             if(robot != null && robot.getType().isTowerType() && robot.getTeam() != rc.getTeam()) {
                 seenEnemyTower = robot;
             }
+            if(seenEnemyTower != null && state == splasherStates.contest) break;
         }
-        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
+        //averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
     }
 
     //updates the local information necessary for the splasher to run its turn
