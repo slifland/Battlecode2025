@@ -219,8 +219,8 @@ public class Communication
 
     private static void fillSendQueue()
     {
-        for(Ruin r : unclaimedRuins)
-            sendQueue.add(r);
+//        for(Ruin r : unclaimedRuins)
+//            sendQueue.add(r);
 
         for(Ruin r : enemyTowers)
             sendQueue.add(r);

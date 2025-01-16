@@ -167,14 +167,16 @@ public class RobotPlayer {
             }
         }
        // }
-
-
-        //try and attack if we can
-        RobotInfo[] enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+        int minHealth = Integer.MAX_VALUE;
+        RobotInfo r = null;
         for(RobotInfo robot : enemyRobots) {
-            if(rc.canAttack(robot.getLocation())) {
-                rc.attack(robot.getLocation());
+            if(robot.health < minHealth && rc.canAttack(robot.getLocation())) {
+                r = robot;
+                minHealth = robot.health;
             }
+        }
+        if(r != null && rc.canAttack(r.getLocation())) {
+            rc.attack(r.getLocation());
         }
         if(enemyRobots.length != 0) rc.attack(null);
     }
