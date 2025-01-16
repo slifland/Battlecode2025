@@ -89,6 +89,7 @@ public class Communication
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
                     case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                    case 0b10 -> processSymmetryMessageTower(m.getBytes());
                 }
             }
         }
@@ -186,6 +187,15 @@ public class Communication
     }
 
     /*
+    Broadcasts information the tower has to nearby towers - currently only sends info about symmetry
+     */
+    public static void broadcastMessages(RobotController rc) throws GameActionException {
+        if(rc.canBroadcastMessage()) {
+            rc.broadcastMessage(symmetriesToMessage(symmetries));
+        }
+    }
+
+    /*
         Send known ruin locations to a nearby troops
             Sends as many Ruins to as many robots as possible each time this method is called (up to 20 messages total)
         This method should be called by towers and not robots
@@ -263,6 +273,25 @@ public class Communication
     public static Ruin messageToRuin(Message m)
     {
         return messageToRuin(m.getBytes());
+    }
+
+    //uses the robots knowledege of symmetry to create a message containing only symmetry information
+    public static int symmetriesToMessage(int symmetries) {
+        int message = 0b10;
+        message |= symmetries << 28;
+        return message;
+    }
+
+    //takes in a message, and updates known symmetry information
+    public static void processSymmetryMessageTower(int message) {
+        message >>= 28;
+        symmetries = message & 0b1110;
+        switch(symmetries) {
+            case 2 -> knownSymmetry = Symmetry.Rotational;
+            case 4 -> knownSymmetry = Symmetry.Vertical;
+            case 8 -> knownSymmetry = Symmetry.Horizontal;
+            default -> knownSymmetry = Symmetry.Unknown;
+        }
     }
 
     //Takes in a Ruin; If we already have knowledge of this Ruin, update the status, otherwise add it to memory
