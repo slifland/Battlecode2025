@@ -56,13 +56,14 @@ class microInfo {
                 numAlliesAdjacent++;
             }
         }
-        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
-        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
-            case 0 -> Integer.MAX_VALUE;
-            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
-            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
-            default -> Integer.MAX_VALUE;
-        };
+        distanceToEnemyAverage = (Soldier.averageEnemyPaint != null) ? loc.distanceSquaredTo(Soldier.averageEnemyPaint) : Integer.MAX_VALUE;
+//        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
+//        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
+//            case 0 -> Integer.MAX_VALUE;
+//            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
+//            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
+//            default -> Integer.MAX_VALUE;
+//        };
     }
 
     @Override
@@ -282,8 +283,8 @@ public class Micro {
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {

@@ -28,13 +28,14 @@ public class Soldier {
     private static MapLocation nearestPaintTower = null;
     //used to track if we should be painting under ourselves for the resource pattern
     private static boolean nearRuin = false;
+    public static MapLocation averageEnemyPaint;
 
     //information updated each turn
 
     public static void runSoldier(RobotController rc) throws GameActionException {
-        int price = Clock.getBytecodesLeft();
-        Micro.runMicro(rc);
-        System.out.println(price - Clock.getBytecodesLeft());
+        //int price = Clock.getBytecodesLeft();
+        //Micro.runMicro(rc);
+        //System.out.println(price - Clock.getBytecodesLeft());
         updateInfo(rc);
         updateState(rc);
         switch(state) {
@@ -134,7 +135,7 @@ public class Soldier {
                 desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
             }
             else {
-                int ranNum = rng.nextInt(2);
+                int ranNum = (rc.getRoundNum() < 100) ? 0 : rng.nextInt(2);
                 if(ranNum == 0) {
                     desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
                 }
@@ -587,6 +588,15 @@ public class Soldier {
             if(r.isPaintTower && (nearestPaintTower == null || rc.getLocation().distanceSquaredTo(r.location) < rc.getLocation().distanceSquaredTo(nearestPaintTower)))
                 nearestPaintTower = r.location;
         }
+        int x = 0; int y = 0; int count = 0;
+        for(MapInfo tile : nearbyTiles) {
+            if(tile.getPaint().isEnemy()) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                count++;
+            }
+        }
+        averageEnemyPaint = (count != 0) ? new MapLocation(x/count, y/count) : null;
         /*
         if(nearestPaintTower != null && rc.canSenseLocation(nearestPaintTower) && rc.senseRobotAtLocation(nearestPaintTower) == null) {
             nearestPaintTower = null;

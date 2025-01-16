@@ -31,7 +31,7 @@ class mopperMicroInfo {
             case PaintType.ENEMY_SECONDARY -> ENEMY_PAINT;
             case PaintType.ENEMY_PRIMARY -> ENEMY_PAINT;
         };
-        populatemopperMicroInfo();
+        populateMopperMicroInfo();
     }
 
     public mopperMicroInfo() {
@@ -39,15 +39,15 @@ class mopperMicroInfo {
     }
 
     //populates the info you can't get from only knowing the tile
-    void populatemopperMicroInfo() {
-        //distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
-        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
-        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
-            case 0 -> Integer.MAX_VALUE;
-            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
-            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
-            default -> Integer.MAX_VALUE;
-        };
+    void populateMopperMicroInfo() {
+        distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
+//        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
+//        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
+//            case 0 -> Integer.MAX_VALUE;
+//            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
+//            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
+//            default -> Integer.MAX_VALUE;
+//        };
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -56,10 +56,9 @@ class mopperMicroInfo {
             }
             if(robot.type.isTowerType() && dist <= robot.type.actionRadiusSquared) {
                 inTowerRange = true;
+                if(minDistanceToEnemy == 1) break;
             }
-            //nothing can be closer, and we have already determined tower safety
-            //if we haven't, then breaking out can risk missing out on information
-            if(!inTowerRange && minDistanceToEnemy == 1) break;
+            if(minDistanceToEnemy == 1 && inTowerRange) break;
         }
         //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
         for(RobotInfo robot : allyRobots) {
@@ -105,6 +104,7 @@ public class MopperMicro {
             }
             //nowhere to attack
             if (bestScore == -1) {
+                rc.setIndicatorString("aggroMopperMicro");
                 aggroMopperMicro(rc);
                 if (Clock.getBytecodesLeft() > 3000)
                     attackAnything(rc);
@@ -113,11 +113,12 @@ public class MopperMicro {
                 MapLocation target = new MapLocation(bestX, bestY);
                 if (rc.canAttack(target)) {
                     rc.attack(target);
+                    rc.setIndicatorString("safeMopperMicro");
                     safeMopperMicro(rc);
                     return;
                 } else {
                     rc.setIndicatorString("targetedMopperMicro: " + target.toString() + " : " + customLocationTo(rc.getLocation(), target));
-                    targetedMopperMicro(rc, customLocationTo(rc.getLocation(), target));
+                    targetedMopperMicro(rc, customLocationTo(rc.getLocation(), target), target);
                     if (rc.canAttack(target)) {
                         rc.attack(target);
                     } else {
@@ -128,6 +129,7 @@ public class MopperMicro {
             }
         }
         else {
+            rc.setIndicatorString("safeMopperMicro");
             safeMopperMicro(rc);
         }
     }
@@ -167,6 +169,9 @@ public class MopperMicro {
             if(temp.isWithinDistanceSquared(rc.getLocation(), UnitType.MOPPER.actionRadiusSquared)) {
                 score |= 0b10;
             }
+        }
+        else {
+            return -1;
         }
         return score;
     }
@@ -228,7 +233,7 @@ public class MopperMicro {
                 continue;
             }
         }
-        if(rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
+        if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
     }
     //we already mopped, or otherwise have no action cooldown, so we should try and stay out of harms way
     public static void safeMopperMicro(RobotController rc) throws GameActionException {
@@ -287,10 +292,10 @@ public class MopperMicro {
                 continue;
             }
         }
-        if(rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
+        if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
     }
     //we have a target that we can't mop yet, so we should try and move towards it then mop it
-    public static void targetedMopperMicro(RobotController rc, Direction dir) throws GameActionException {
+    public static void targetedMopperMicro(RobotController rc, Direction dir, MapLocation target) throws GameActionException {
         //mopperMicroInfo currentSquare = new mopperMicroInfo(rc.senseMapInfo(rc.getLocation()));
         //populating the array
         switch(dir) {
@@ -347,9 +352,11 @@ public class MopperMicro {
                 return;
             }
         };
+        int actionRadius = UnitType.MOPPER.actionRadiusSquared;
         //determining the best space
-        mopperMicroInfo bestMicro = microArray[0];
-        for(int i = 1; i < microArray.length; i++) {
+        //mopperMicroInfo bestMicro = microArray[0];
+        mopperMicroInfo bestMicro = new mopperMicroInfo(rc.senseMapInfo(rc.getLocation()));
+        for(int i = 0; i < microArray.length; i++) {
             mopperMicroInfo m = microArray[i];
             if(!m.passable) continue;
             if(!bestMicro.passable) {
@@ -364,12 +371,6 @@ public class MopperMicro {
                 continue;
             }
 
-            //if one space is on allied paint and the other isnt, go to allied paint
-            if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
-            if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
-                bestMicro = m;
-                continue;
-            }
 
             //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
             if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
@@ -377,6 +378,22 @@ public class MopperMicro {
                 bestMicro = m;
                 continue;
             }
+
+            int dist = bestMicro.loc.distanceSquaredTo(target);
+            int altDist = m.loc.distanceSquaredTo(target);
+            if(dist <= actionRadius && altDist > actionRadius) continue;
+            if(dist > actionRadius && altDist <= actionRadius) {
+                bestMicro = m;
+                continue;
+            }
+
+            //if one space is on allied paint and the other isnt, go to allied paint
+            if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
+            if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
+                bestMicro = m;
+                continue;
+            }
+
 
             if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
             if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
@@ -446,8 +463,8 @@ public class MopperMicro {
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
-                else microArray[totalFilled] = new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
+                /*else*/ microArray[totalFilled] = new mopperMicroInfo(rc.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
@@ -504,14 +521,16 @@ public class MopperMicro {
             case 1 -> switch(dy) {
                 case 1 -> Direction.NORTHEAST;
                 case -1 -> Direction.SOUTHEAST;
-                case -2,2 -> Direction.SOUTH;
+                case 2 -> Direction.NORTH;
+                case -2 -> Direction.SOUTH;
                 case 0 -> Direction.EAST;
                 default -> Direction.CENTER;
             };
             case -1 -> switch(dy) {
                 case 1 -> Direction.NORTHWEST;
                 case -1 -> Direction.SOUTHWEST;
-                case -2,2 -> Direction.SOUTH;
+                case 2 -> Direction.SOUTH;
+                case -2 -> Direction.SOUTH;
                 case 0 -> Direction.WEST;
                 default -> Direction.CENTER;
             };

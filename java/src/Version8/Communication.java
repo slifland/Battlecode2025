@@ -69,7 +69,7 @@ public class Communication
                 switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
+                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
                 }
 
             }
@@ -90,7 +90,7 @@ public class Communication
                 switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                    //case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
                     case 0b10 -> processSymmetryMessageTower(m.getBytes());
                 }
             }
@@ -153,8 +153,10 @@ public class Communication
                 //get the team information
                 if(ruinInfo.team == rc.getTeam())
                     status = 1;
-                else
+                else {
                     status = 2;
+                    Splasher.seenEnemyTower = ruinInfo;
+                }
 
                 //get whether it is a paint tower
                 if(isPaintTower(ruinInfo))
@@ -197,7 +199,7 @@ public class Communication
         if(sendQueue.isEmpty())
             fillSendQueue();
 
-        if(rc.canSendMessage(tower))
+        if(rc.canSendMessage(tower) && !sendQueue.isEmpty())
         {
             rc.sendMessage(tower, ruinToMessage(sendQueue.pop()));
         }
@@ -450,7 +452,7 @@ public class Communication
         }
         for(MapLocation location : locations)
         {
-            System.out.println(location);
+            //System.out.println(location);
             if(paintCount1 == 0)
             {
                 paintAverage1 = location;

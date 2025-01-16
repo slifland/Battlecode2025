@@ -135,7 +135,7 @@ public class RobotPlayer {
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
         int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 3 : 2;
-        int mopperRatio = 1;
+        int mopperRatio = 2;
         //if you arent our first tower, always build a splasher first
         if(totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() < 50 || rc.getMapWidth() < 50)) {
             if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
@@ -156,7 +156,7 @@ public class RobotPlayer {
                 if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
                     //Communication.sendAveragesToRobot(rc, nextLoc);
-                    //moppers++;
+                    moppers++;
                     soldiers = 0;
                     totalBuilt++;
                 }

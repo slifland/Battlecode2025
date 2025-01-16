@@ -5,6 +5,7 @@ import battlecode.common.*;
 import static Version8.Splasher.averageEnemyPaint;
 import static Version8.RobotPlayer.allyRobots;
 import static Version8.RobotPlayer.enemyRobots;
+import static Version8.Splasher.numEnemyTiles;
 
 class splasherMicroInfo {
     private static final int ALLY_PAINT = 1;
@@ -41,14 +42,14 @@ class splasherMicroInfo {
 
     //populates the info you can't get from only knowing the tile
     void populateSplasherMicroInfo() {
-        //distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
-        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
-        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
-            case 0 -> Integer.MAX_VALUE;
-            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
-            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
-            default -> Integer.MAX_VALUE;
-        };
+        distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
+//        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
+//        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
+//            case 0 -> Integer.MAX_VALUE;
+//            case 1 -> loc.distanceSquaredTo(enemyPaintAverages[0]);
+//            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
+//            default -> Integer.MAX_VALUE;
+//        };
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -84,26 +85,31 @@ public class SplasherMicro {
     //2. Attack square with enemy tower - 0b100
     //3. Attack square with self -0b10
     //4. Attack square without moving -0b1
-    public static void integratedMopperMicro(RobotController rc, boolean fightingTower) throws GameActionException {
+    public static void integratedSplasherMicro(RobotController rc, boolean fightingTower) throws GameActionException {
         if (rc.isActionReady()) {
-            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, 1);
+            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(4, numEnemyTiles * 2));
             if (bestAttack != null) {
                 if (rc.canAttack(bestAttack)) {
                     rc.attack(bestAttack);
+                    rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                     runSafeSplasherMicro(rc);
                 } else {
-                    runTargetedSplasherMicro(rc, rc.getLocation().directionTo(bestAttack));
+                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint);
+                    runTargetedSplasherMicro(rc, rc.getLocation().directionTo(bestAttack), bestAttack);
+                    if(rc.canAttack(bestAttack)) rc.attack(bestAttack);
                 }
             } else {
+                rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                 runSafeSplasherMicro(rc);
             }
         } else {
+            rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
             runSafeSplasherMicro(rc);
         }
     }
 
     //runs the splasher micro trying to get within range of a target attack location
-    private static void runTargetedSplasherMicro(RobotController rc, Direction direction) throws GameActionException {
+    private static void runTargetedSplasherMicro(RobotController rc, Direction direction, MapLocation target) throws GameActionException {
         switch (direction) {
             case NORTH -> {
                 microArray = new splasherMicroInfo[3];
@@ -175,8 +181,10 @@ public class SplasherMicro {
             }
         };
         //determining the best space
-        splasherMicroInfo bestMicro = microArray[0];
-        for(int i = 1; i < microArray.length; i++) {
+        //splasherMicroInfo bestMicro = microArray[0];
+        int actionRadius = UnitType.SPLASHER.actionRadiusSquared;
+        splasherMicroInfo bestMicro = new splasherMicroInfo(rc.senseMapInfo(rc.getLocation()));
+        for(int i = 0; i < microArray.length; i++) {
             splasherMicroInfo m = microArray[i];
             if(!m.passable) continue;
             if(!bestMicro.passable) {
@@ -187,6 +195,14 @@ public class SplasherMicro {
             //if one is in tower range and the other isnt, get out of tower range
             if(!bestMicro.inTowerRange && m.inTowerRange) continue;
             if(bestMicro.inTowerRange && !m.inTowerRange) {
+                bestMicro = m;
+                continue;
+            }
+
+            int dist = bestMicro.loc.distanceSquaredTo(target);
+            int altDist = m.loc.distanceSquaredTo(target);
+            if(dist <= actionRadius && altDist > actionRadius) continue;
+            if(dist > actionRadius && altDist <= actionRadius) {
                 bestMicro = m;
                 continue;
             }
@@ -258,12 +274,6 @@ public class SplasherMicro {
                 continue;
             }
 
-            if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
-            if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
-                bestMicro = m;
-                continue;
-            }
-
             //lets avoid being adjacent to allies
             if(bestMicro.adjacentAllies < m.adjacentAllies) continue;
             if(bestMicro.adjacentAllies > m.adjacentAllies) {
@@ -271,6 +281,11 @@ public class SplasherMicro {
                 continue;
             }
 
+            if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
+            if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
+                bestMicro = m;
+                continue;
+            }
 
             //finally, lets try not to be directly next to an enemy
             if(bestMicro.minDistanceToEnemy > 2 && m.minDistanceToEnemy <= 2) continue;
@@ -279,7 +294,7 @@ public class SplasherMicro {
                 continue;
             }
         }
-        if(rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
+        if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
     }
 
     public static void populateSplasherMicroArray(RobotController rc) throws GameActionException {
@@ -332,8 +347,8 @@ public class SplasherMicro {
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {

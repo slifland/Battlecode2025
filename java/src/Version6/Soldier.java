@@ -247,7 +247,11 @@ public class Soldier {
         for(MapInfo tile : nearbyTiles) {
             MapLocation tempLoc = tile.getMapLocation();
             int dist = curLoc.distanceSquaredTo(tempLoc);
+            if(averageFilled == null) {
+                averageFilled = curLoc;
+            }
             int distFromAvg = curLoc.distanceSquaredTo(averageFilled);
+
             if(dist <= actionRadiusSquared && distFromAvg < closestDistance && tile.getPaint() == PaintType.EMPTY && !tile.hasRuin()) {
                 closest = tempLoc;
                 closestDistance = distFromAvg;

@@ -6,6 +6,7 @@ import battlecode.schema.RobotType;
 
 import java.util.ArrayList;
 
+import static Version8.Communication.enemyTowers;
 import static Version8.RobotPlayer.*;
 
 enum mopStates {
@@ -19,14 +20,14 @@ public class Mopper {
     private static MapLocation curObjective;
 
     //constants to tweak
-    private static final int refillThreshold = 25;
+    private static final int refillThreshold = 40;
     private static final int endRefillThreshold = 70;
 
     public static MapLocation nearbyRuin;
 
     private static MapLocation spawnLocation;
 
-    //static MapLocation averageEnemyPaint;
+    static MapLocation averageEnemyPaint;
 
     public static void runMopper(RobotController rc) throws GameActionException {
         if(turnCount == 1) spawnLocation = rc.getLocation();
@@ -43,17 +44,33 @@ public class Mopper {
                 refill(rc);
                 break;
         }
+//        if(curObjective != null ) rc.setIndicatorString(state + " : " + curObjective);
+//        else rc.setIndicatorString(state.toString());
+        //System.out.println(Clock.getBytecodesLeft());
     }
 
     //attempts to navigate to a known location
     public static void navigate(RobotController rc) throws GameActionException {
-        if(curObjective != null && rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
+        MapLocation curLoc = rc.getLocation();
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) curObjective = null;
+        //System.out.println("hi!");
         //if(curObjective == null) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
-        MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
-        if(enemyAverages.length != 0) {
-            curObjective = enemyAverages[0];
+        //MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
+//        if(enemyAverages.length != 0) {
+//            curObjective = enemyAverages[0];
+//            //System.out.println(curObjective);
+//            rc.setIndicatorDot(curObjective, 255, 0, 0);
+//        }
+        if(curObjective == null && !enemyTowers.isEmpty()) {
+            int minDist = Integer.MAX_VALUE;
+            for(Ruin r : enemyTowers) {
+                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+                    minDist = r.location.distanceSquaredTo(curLoc);
+                    curObjective = r.location;
+                }
+            }
         }
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
@@ -62,13 +79,13 @@ public class Mopper {
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
-                    curObjective = new MapLocation(rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    curObjective = new MapLocation(curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
                     break;
                 case Rotational:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
                     break;
                 case Vertical:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getLocation().y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, curLoc.y);
                     break;
             }
         }
@@ -127,12 +144,13 @@ public class Mopper {
             state = mopStates.refill;
             return;
         }
-        for(MapInfo tile : nearbyTiles) {
-            if(tile.getPaint().isEnemy()) {
-                state = mopStates.contest;
-                return;
-            }
-        }
+//        for(MapInfo tile : nearbyTiles) {
+//            if(tile.getPaint().isEnemy()) {
+//                state = mopStates.contest;
+//                return;
+//            }
+//        }
+        if(averageEnemyPaint != null) state = mopStates.contest;
     }
 
     //returns the best robot to target
@@ -210,13 +228,13 @@ public class Mopper {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
-//            if(tile.getPaint().isEnemy()) {
-//                x += tile.getMapLocation().x;
-//                y += tile.getMapLocation().y;
-//                count++;
-//            }
+            if(tile.getPaint().isEnemy()) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                count++;
+            }
         }
-        //averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
+        averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }
 
     public static Direction dirToSweep(RobotController rc) throws GameActionException {

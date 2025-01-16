@@ -14,16 +14,17 @@ enum splasherStates {
 public class Splasher {
 
     private static final int PAINT_TOWER_REFRESH = 25;
+    private static final int PAINT_AVERAGE_REFRESH = 5;
 
     private static MapLocation curObjective;
     private static splasherStates state;
-    private static RobotInfo seenEnemyTower; //records whether we can see an enemy tower, and if so, the enemy tower's info
-    private static int numEnemyTiles; //records the number of enemy tiles we can see
+    public static RobotInfo seenEnemyTower; //records whether we can see an enemy tower, and if so, the enemy tower's info
+    public static int numEnemyTiles; //records the number of enemy tiles we can see
     private static MapLocation fillingStation;
     private static MapLocation nearestPaintTower;
     public static int distanceToNearestPaintTower = -1;
     //final variables
-    private static final int refillThreshold = 51;
+    private static final int refillThreshold = 100;
     private static final int endRefillThreshold = 200;
 
     public static MapLocation averageEnemyPaint;
@@ -44,16 +45,28 @@ public class Splasher {
                 contest(rc);
                 break;
         }
+//        if(curObjective== null)rc.setIndicatorString(state.toString());
+//        else rc.setIndicatorString(state + " : " + curObjective);
     }
 
     //attempts to navigate to a known location - enemy average, usually
     public static void navigate(RobotController rc) throws GameActionException {
-        if(rc.getLocation().distanceSquaredTo(curObjective) < 8) curObjective = null;
+        MapLocation curLoc = rc.getLocation();
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) curObjective = null;
         //DETERMINE OBJECTIVE
         //if we have enemy paint averages, go there
-        MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
-        if(enemyAverages.length != 0) {
-            curObjective = enemyAverages[0];
+//        MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
+//        if(enemyAverages.length != 0) {
+//            curObjective = enemyAverages[0];
+//        }
+        if(curObjective == null && !enemyTowers.isEmpty()) {
+            int minDist = Integer.MAX_VALUE;
+            for(Ruin r : enemyTowers) {
+                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+                    minDist = r.location.distanceSquaredTo(curLoc);
+                    curObjective = r.location;
+                }
+            }
         }
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null) {
@@ -61,13 +74,13 @@ public class Splasher {
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
-                    curObjective = new MapLocation(rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    curObjective = new MapLocation(curLoc.x, rc.getMapHeight() - 1 - rc.getLocation().y);
                     break;
                 case Rotational:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
                     break;
                 case Vertical:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - rc.getLocation().x, rc.getLocation().y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getLocation().y);
                     break;
             }
         }
@@ -85,11 +98,27 @@ public class Splasher {
     public static void refill(RobotController rc) throws GameActionException {
         //navigate to the nearest paint tower
         //if that tower is surrounded, navigate to the next nearest
-        if(fillingStation == null || rc.canSenseLocation(fillingStation) && rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 3) {
+        if(fillingStation == null || rc.canSenseLocation(fillingStation) && (rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 2 || rc.canSenseLocation(fillingStation) && rc.senseRobotAtLocation(fillingStation) == null)) {
             fillingStation = nextNearestPaintTower(rc);
-            if(fillingStation == null) return;
+            if(fillingStation == null){
+                curObjective = null;
+                explore(rc);
+                return;
+            }
         }
         if(rc.getLocation().isAdjacentTo(fillingStation)) {
+            RobotInfo[] adjacentAllies = rc.senseNearbyRobots(2, rc.getTeam());
+            MapLocation[] fillingSpots = rc.getAllLocationsWithinRadiusSquared(fillingStation, 2);
+            for(RobotInfo r : adjacentAllies) {
+                if(!r.getType().isTowerType() && rc.getLocation().isAdjacentTo(r.getLocation())) {
+                    for(MapLocation spot : fillingSpots) {
+                        if(rc.canMove(rc.getLocation().directionTo(spot)) && !spot.isAdjacentTo(r.getLocation())) {
+                            rc.move(rc.getLocation().directionTo(spot));
+                            break;
+                        }
+                    }
+                }
+            }
             if(rc.canTransferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1))){
                 rc.transferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1));
             }
@@ -98,6 +127,13 @@ public class Splasher {
             Direction dir = BFS_7x7.pathfind(rc, fillingStation);
             if(rc.canMove(dir)) rc.move(dir);
         }
+    }
+
+    //used only when we are refilling and no of know paint towers
+    public static void explore(RobotController rc) throws GameActionException {
+        if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) <= 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+        Direction dir = BFS_7x7.pathfind(rc, curObjective);
+        if(rc.canMove(dir)) rc.move(dir);
     }
 
     //returns the closest paint tower that is not currently the filling station or the nearestPaintTower
@@ -119,7 +155,7 @@ public class Splasher {
 
     //attempts to steal enemy territory and potentially attack towers
     public static void contest(RobotController rc) throws GameActionException {
-        SplasherMicro.integratedMopperMicro(rc, seenEnemyTower  != null);
+        SplasherMicro.integratedSplasherMicro(rc, seenEnemyTower  != null);
 //        MapLocation toAttack = cheapBestAttack(rc, seenEnemyTower != null, Math.min(4, numEnemyTiles));
 //        //no attacks that good
 //        if(toAttack == null) {
@@ -150,10 +186,6 @@ public class Splasher {
     //determines the current state for the splashers
     public static void updateState(RobotController rc) throws GameActionException {
         state = splasherStates.navigate;
-        //reset turn by turn variables
-        seenEnemyTower = null;
-        numEnemyTiles = 0;
-        averageEnemyPaint = null;
 
         if(rc.getPaint() <= refillThreshold || (state == splasherStates.refill && rc.getPaint() <= endRefillThreshold)) {
             state = splasherStates.refill;
@@ -165,27 +197,18 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        //int x = 0;
-        //int y = 0;
-        //now, check if we can see any enemy tiles
-        for(MapInfo tile : nearbyTiles) {
-            if(tile.getPaint().isEnemy()) {
-                state = splasherStates.contest;
-                //numEnemyTiles++;
-                //x += tile.getMapLocation().x;
-                //y += tile.getMapLocation().y;
-            }
-            RobotInfo robot = rc.senseRobotAtLocation(tile.getMapLocation());
-            if(robot != null && robot.getType().isTowerType() && robot.getTeam() != rc.getTeam()) {
-                seenEnemyTower = robot;
-            }
-            if(seenEnemyTower != null && state == splasherStates.contest) break;
+        if(averageEnemyPaint != null) {
+            state = splasherStates.contest;
         }
-        //averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
     }
 
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
+        //reset turn by turn variables
+        seenEnemyTower = null;
+        numEnemyTiles = 0;
+        averageEnemyPaint = null;
+
         MapLocation curLoc = rc.getLocation();
 
         //gets the nearest paint tower, updating every so often
@@ -197,13 +220,33 @@ public class Splasher {
                 }
             }
         }
-        if(knownSymmetry == Symmetry.Unknown) {
-            for (MapInfo tile : nearbyTiles) {
+//        if(knownSymmetry == Symmetry.Unknown) {
+//            for (MapInfo tile : nearbyTiles) {
+//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+//            }
+//        }
+        int x = 0;
+        int y = 0;
+        //now, check if we can see any enemy tiles
+        for(MapInfo tile : nearbyTiles) {
+            if(knownSymmetry == Symmetry.Unknown) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
+            if(tile.getPaint().isEnemy()) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                numEnemyTiles++;
+            }
         }
-
+        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
+//        for(RobotInfo r : enemyRobots) {
+//            if(r.getType().isTowerType()){
+//                seenEnemyTower = r;
+//                break;
+//            }
+//        }
     }
 
     //UTILITY METHODS
