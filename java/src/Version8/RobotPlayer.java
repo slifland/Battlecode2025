@@ -149,17 +149,20 @@ public class RobotPlayer {
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
                     rc.buildRobot(UnitType.SOLDIER, nextLoc);
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     soldiers++;
                     totalBuilt++;
                 }
                 if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     //moppers++;
                     soldiers = 0;
                     totalBuilt++;
                 }
                 if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                     rc.buildRobot(UnitType.SPLASHER, nextLoc);
+                    Communication.sendAveragesToRobot(rc, nextLoc);
                     soldiers = 0;
                     moppers = 0;
                     totalBuilt++;

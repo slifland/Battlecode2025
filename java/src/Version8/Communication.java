@@ -1,6 +1,7 @@
 package Version8;
 
 import battlecode.common.*;
+
 import static Version8.RobotPlayer.*;
 
 import java.util.LinkedList;
@@ -67,7 +68,7 @@ public class Communication
                 switch (m.getBytes() & 0b11)
                 {
                     case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                    case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
                 }
 
             }
@@ -163,6 +164,15 @@ public class Communication
     public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
         rc.sendMessage(tower, createAverageMessage());
+    }
+
+    public static void sendAveragesToRobot(RobotController rc, MapLocation robot) throws GameActionException
+    {
+        int message = createAverageMessage();
+        if(rc.canSendMessage(robot, message))
+        {
+            rc.sendMessage(robot, message);
+        }
     }
 
 
@@ -479,6 +489,23 @@ public class Communication
         for(Ruin r : alliedPaintTowers)
         {
             System.out.println(r);
+        }
+    }
+
+    private static void updatePaintAveragesRobot(MapLocation[] locations)
+    {
+        for(MapLocation location : locations)
+        {
+            if(paintAverage1.equals(new MapLocation(0,0)))
+            {
+                paintAverage1 = location;
+                paintCount1 = 1;
+            }
+            else if(paintAverage2.equals(new MapLocation(0,0)))
+            {
+                paintAverage2 = location;
+                paintCount2 = 1;
+            }
         }
     }
 
