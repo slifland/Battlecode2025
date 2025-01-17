@@ -60,23 +60,11 @@ public class Communication
     */
     public static void processMessagesRobot(RobotController rc)
     {
-//        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
-//
-//        for(Message[] mArr : messages)
-//        {
-//            for(Message m : mArr)
-//            {
-//                switch (m.getBytes() & 0b11)
-//                {
-//                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-//                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
-//                }
-//
-//            }
-//        }
-        Message[] messages = rc.readMessages(rc.getRoundNum()-1);
-            System.out.println(messages.length);
-            for(Message m : messages)
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+
+        for(Message[] mArr : messages)
+        {
+            for(Message m : mArr)
             {
                 switch (m.getBytes() & 0b11)
                 {
@@ -85,6 +73,18 @@ public class Communication
                 }
 
             }
+        }
+//        Message[] messages = rc.readMessages(rc.getRoundNum()-1);
+//            System.out.println(messages.length);
+//            for(Message m : messages)
+//            {
+//                switch (m.getBytes() & 0b11)
+//                {
+//                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+//                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
+//                }
+//
+//            }
     }
 
     /*
@@ -147,6 +147,7 @@ public class Communication
      */
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
+        if(rc.getID() == 10011) System.out.println(nearbyRuins.length);
         for(MapLocation ruinLoc : nearbyRuins)
         {
             int status = 0;
@@ -166,7 +167,8 @@ public class Communication
                     status = 1;
                 else {
                     status = 2;
-                    Splasher.seenEnemyTower = ruinInfo;
+                    Version8.Splasher.seenEnemyTower = ruinInfo;
+                    Version8.Mopper.seenEnemyTower = ruinInfo;
                 }
 
                 //get whether it is a paint tower

@@ -217,12 +217,13 @@ public class RobotPlayer {
                 Communication.processMessagesRobot(rc);
                 //System.out.println("Price 1: " + (price - Clock.getBytecodesLeft()));
                 //price = Clock.getBytecodesLeft();
-                Communication.scanForRuins(rc);
+//                Communication.scanForRuins(rc);
                 //System.out.println("Price 2: " + (price - Clock.getBytecodesLeft()));
                 //price = Clock.getBytecodesLeft();
                 Communication.sendMessagesRobot(rc);
                 //System.out.println("Price 3: " + (price - Clock.getBytecodesLeft()));
             }
+            Communication.scanForRuins(rc); //isnt expensive, and constitutes good info - lets do it every turn
         }
     }
 

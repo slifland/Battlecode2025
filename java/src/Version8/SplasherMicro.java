@@ -87,7 +87,8 @@ public class SplasherMicro {
     //4. Attack square without moving -0b1
     public static void integratedSplasherMicro(RobotController rc, boolean fightingTower) throws GameActionException {
         if (rc.isActionReady()) {
-            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(4, numEnemyTiles * 2));
+            int minScore = (rc.getPaint() > 150) ? 4 : 5;
+            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(minScore, numEnemyTiles));
             if (bestAttack != null) {
                 if (rc.canAttack(bestAttack)) {
                     rc.attack(bestAttack);
@@ -98,7 +99,7 @@ public class SplasherMicro {
                     runTargetedSplasherMicro(rc, rc.getLocation().directionTo(bestAttack), bestAttack);
                     if(rc.canAttack(bestAttack)) rc.attack(bestAttack);
                     else if(Clock.getBytecodesLeft() > 4000) {
-                        bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, 4);
+                        bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, minScore);
                         if(bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack);
                     }
                 }

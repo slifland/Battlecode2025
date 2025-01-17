@@ -27,6 +27,8 @@ public class Mopper {
 
     private static MapLocation spawnLocation;
 
+    public static RobotInfo seenEnemyTower;
+
     static MapLocation averageEnemyPaint;
 
     public static void runMopper(RobotController rc) throws GameActionException {
@@ -79,13 +81,13 @@ public class Mopper {
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
-                    curObjective = new MapLocation(curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
+                    curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
                     break;
                 case Rotational:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
                     break;
                 case Vertical:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, curLoc.y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                     break;
             }
         }
@@ -166,50 +168,12 @@ public class Mopper {
         return target;
     }
 
-    //finds the best tile to mop
-    //TODO: if we have the bytecodes available, also check if there are enemies on the tile so we can steal paint too
-    public static MapLocation findBestMop(RobotController rc) {
-        MapLocation toMop = null;
-        int minDist = Integer.MAX_VALUE;
-        boolean nearRuin = false;
-        MapLocation curLoc = rc.getLocation();
-        boolean checkRuin = (nearbyRuin != null);
-        for(MapInfo tile : nearbyTiles) {
-            MapLocation tileLoc = tile.getMapLocation();
-            if(checkRuin) {
-                if(!nearRuin && nearbyRuin.distanceSquaredTo(tileLoc) <= 8) {
-                    nearRuin = true;
-                    minDist = curLoc.distanceSquaredTo(tileLoc);
-                    toMop = tileLoc;
-                }
-                else if(nearRuin && curLoc.distanceSquaredTo(tileLoc) < minDist) {
-                    minDist = curLoc.distanceSquaredTo(tileLoc);
-                    toMop = tileLoc;
-                }
-                else if(!nearRuin) {
-                    int dist = curLoc.distanceSquaredTo(tileLoc);
-                    if(dist < minDist) {
-                        minDist = dist;
-                        toMop = tileLoc;
-                    }
-                }
-            }
-            else {
-                int dist = curLoc.distanceSquaredTo(tileLoc);
-                if(dist < minDist) {
-                    minDist = dist;
-                    toMop = tileLoc;
-                }
-            }
-        }
-        return toMop;
-    }
 
     //updates necessary info specific to the mopper
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
         nearbyRuin = null;
-        //averageEnemyPaint = null;
+        averageEnemyPaint = null;
         int count = 0;
         int x = 0;
         int y = 0;

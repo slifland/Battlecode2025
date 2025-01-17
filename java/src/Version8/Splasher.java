@@ -29,12 +29,15 @@ public class Splasher {
 
     public static MapLocation averageEnemyPaint;
 
+    private static MapLocation home;
+
 
 
     public static void runSplasher(RobotController rc) throws GameActionException {
         if(rc.getRoundNum() > 1000) {
             endRefillThreshold = 250;
         }
+        if(turnCount == 1) home = rc.getLocation();
         updateInfo(rc);
         updateState(rc);
         switch(state) {
@@ -48,8 +51,8 @@ public class Splasher {
                 contest(rc);
                 break;
         }
-//        if(curObjective== null)rc.setIndicatorString(state.toString());
-//        else rc.setIndicatorString(state + " : " + curObjective);
+        if(curObjective== null)rc.setIndicatorString(state.toString());
+        else rc.setIndicatorString(state + " : " + curObjective);
     }
 
     //attempts to navigate to a known location - enemy average, usually
@@ -77,13 +80,13 @@ public class Splasher {
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
-                    curObjective = new MapLocation(curLoc.x, rc.getMapHeight() - 1 - rc.getLocation().y);
+                    curObjective = new MapLocation(home.x, rc.getMapHeight() - 1 - home.y);
                     break;
                 case Rotational:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getMapHeight() - 1 - curLoc.y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, rc.getMapHeight() - 1 - home.y);
                     break;
                 case Vertical:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - curLoc.x, rc.getLocation().y);
+                    curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, home.y);
                     break;
             }
         }
@@ -207,7 +210,7 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if(averageEnemyPaint != null) {
+        if(averageEnemyPaint != null && !(numEnemyTiles == 1 && Utilities.locationIsBehindWall(rc, averageEnemyPaint))) {
             state = splasherStates.contest;
         }
     }

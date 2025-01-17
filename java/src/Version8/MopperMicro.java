@@ -160,6 +160,15 @@ public class MopperMicro {
             MapInfo m = rc.senseMapInfo(temp);
             RobotInfo r = rc.senseRobotAtLocation(temp);
             if(!m.getPaint().isEnemy()) return -1;
+            //roughly determines whether we would have to move into tower range to attack this square
+            if(seenEnemyTower != null) {
+                boolean withinFunctionalTowerRange = switch (seenEnemyTower.getType()) {
+                    case LEVEL_ONE_DEFENSE_TOWER, LEVEL_TWO_DEFENSE_TOWER, LEVEL_THREE_DEFENSE_TOWER ->
+                            temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 8);
+                    default -> temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 3);
+                };
+                if (withinFunctionalTowerRange) return -1;
+            }
             if(r != null) {
                 if(rc.getTeam() == r.getTeam()) {
                     score |= 0b01;
