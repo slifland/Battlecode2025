@@ -119,12 +119,6 @@ public class Mopper {
         if(bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
             rc.attack(bestTarget.getLocation());
         }
-        if(rc.isActionReady()) {
-            Direction dirToSweep = MopperMicro.dirToSweep(rc, 2);
-            if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
-                rc.mopSwing(dirToSweep);
-            }
-        }
         //Direction dir = Micro.runMicro(rc);
         //if(rc.canMove(dir)) rc.move(dir);
         MopperMicro.integratedMopperMicro(rc);

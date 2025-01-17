@@ -86,8 +86,11 @@ public class MopperMicro {
     public static void integratedMopperMicro(RobotController rc) throws GameActionException {
         //MapInfo[] tiles = rc.senseNearbyMapInfos(8);
         if(rc.isActionReady()) {
-            Direction dirToSweep = dirToSweep(rc, 2);
+            //int price = Clock.getBytecodesLeft();
+            Direction dirToSweep = dirToSweep(rc, (rc.getPaint() > 30) ? 2 : 3);
+            //System.out.println(price - Clock.getBytecodesLeft());
             if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
+                System.out.println("We mopping fr" + " : " + dirToSweep.toString());
                 rc.mopSwing(dirToSweep);
                 safeMopperMicro(rc);
                 return;
@@ -185,13 +188,14 @@ public class MopperMicro {
     //returns the best direction to sweep, if there is any sweep direction which will have a score greater than
     //or equal to minScore. If there is no such direction, return null
     public static Direction dirToSweep(RobotController rc, int minScore) throws GameActionException {
-        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(8, rc.getTeam().opponent());
+        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(7, rc.getTeam().opponent());
         Direction dirToSweep = null;
         if(adjacentEnemyRobots.length >= minScore) {
             //determine the amount of enemies we would hit with each cardinal sweep - 0: north, 1: east, etc...
             int[] directionalSweep = {0,0,0,0};
             for(RobotInfo enemy : adjacentEnemyRobots) {
-                Direction dir = rc.getLocation().directionTo(enemy.getLocation());
+                //Direction dir = rc.getLocation().directionTo(enemy.getLocation());
+                Direction dir = customLocationTo(rc.getLocation(), enemy.getLocation());
                 switch(dir) {
                     case NORTH:
                         directionalSweep[0]++;
