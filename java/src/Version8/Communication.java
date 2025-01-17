@@ -60,11 +60,23 @@ public class Communication
     */
     public static void processMessagesRobot(RobotController rc)
     {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
-
-        for(Message[] mArr : messages)
-        {
-            for(Message m : mArr)
+//        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+//
+//        for(Message[] mArr : messages)
+//        {
+//            for(Message m : mArr)
+//            {
+//                switch (m.getBytes() & 0b11)
+//                {
+//                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+//                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
+//                }
+//
+//            }
+//        }
+        Message[] messages = rc.readMessages(rc.getRoundNum()-1);
+            System.out.println(messages.length);
+            for(Message m : messages)
             {
                 switch (m.getBytes() & 0b11)
                 {
@@ -73,7 +85,6 @@ public class Communication
                 }
 
             }
-        }
     }
 
     /*
@@ -316,6 +327,7 @@ public class Communication
     //Takes in a Ruin; If we already have knowledge of this Ruin, update the status, otherwise add it to memory
     public static void updateRuinsMemory(Ruin ruin)
     {
+        int price = Clock.getBytecodesLeft();
         Ruin next;
         ListIterator<Ruin> iterator = unclaimedRuins.listIterator();
         while(iterator.hasNext())
@@ -325,6 +337,7 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
+                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -342,6 +355,7 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
+                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -359,6 +373,7 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
+                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -385,6 +400,7 @@ public class Communication
                 enemyTowers.add(ruin);
                 break;
         }
+        //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
     }
 
     /*

@@ -98,7 +98,6 @@ public class Splasher {
             Direction dir = BFS_7x7.pathfind(rc, curObjective);
             if (rc.canMove(dir)) rc.move(dir);
         }
-        //System.out.println(price - Clock.getBytecodesLeft());
     }
 
     //attempts to return to a known allied paint tower and refill
@@ -215,7 +214,7 @@ public class Splasher {
 
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
-
+        int price = Clock.getBytecodesLeft();
         MapLocation curLoc = rc.getLocation();
 
         //gets the nearest paint tower, updating every so often
@@ -248,6 +247,7 @@ public class Splasher {
             }
             averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
         }
+        //System.out.println(price - Clock.getBytecodesLeft());
     }
 
     //UTILITY METHODS

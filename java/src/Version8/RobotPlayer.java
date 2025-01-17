@@ -194,6 +194,7 @@ public class RobotPlayer {
 
     static void completeBeginningTasks(RobotController rc) throws GameActionException
     {
+
         nearbyTiles = rc.senseNearbyMapInfos();
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
@@ -211,12 +212,19 @@ public class RobotPlayer {
         }
         else
         {
-            Communication.processMessagesRobot(rc);
-            Communication.scanForRuins(rc);
-            Communication.sendMessagesRobot(rc);
+            if(rc.getRoundNum() % 5 == 0) {
+                //int price = Clock.getBytecodesLeft();
+                Communication.processMessagesRobot(rc);
+                //System.out.println("Price 1: " + (price - Clock.getBytecodesLeft()));
+                //price = Clock.getBytecodesLeft();
+                Communication.scanForRuins(rc);
+                //System.out.println("Price 2: " + (price - Clock.getBytecodesLeft()));
+                //price = Clock.getBytecodesLeft();
+                Communication.sendMessagesRobot(rc);
+                //System.out.println("Price 3: " + (price - Clock.getBytecodesLeft()));
+            }
         }
     }
-
 
 
 }

@@ -90,7 +90,6 @@ public class MopperMicro {
             Direction dirToSweep = dirToSweep(rc, (rc.getPaint() > 30) ? 2 : 3);
             //System.out.println(price - Clock.getBytecodesLeft());
             if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
-                System.out.println("We mopping fr" + " : " + dirToSweep.toString());
                 rc.mopSwing(dirToSweep);
                 safeMopperMicro(rc);
                 return;
