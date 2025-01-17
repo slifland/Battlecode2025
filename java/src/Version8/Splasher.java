@@ -25,13 +25,16 @@ public class Splasher {
     public static int distanceToNearestPaintTower = -1;
     //final variables
     private static final int refillThreshold = 100;
-    private static final int endRefillThreshold = 200;
+    private static int endRefillThreshold = 200;
 
     public static MapLocation averageEnemyPaint;
 
 
 
     public static void runSplasher(RobotController rc) throws GameActionException {
+        if(rc.getRoundNum() > 1000) {
+            endRefillThreshold = 250;
+        }
         updateInfo(rc);
         updateState(rc);
         switch(state) {

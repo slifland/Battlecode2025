@@ -119,11 +119,11 @@ public class RobotPlayer {
     public static void runTower(RobotController rc) throws GameActionException{
         //We're a tower so might as well try and complete patterns with our extra bytecode
         Utilities.attemptCompletePatterns(rc);
-        if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER || rc.getType() == UnitType.LEVEL_THREE_PAINT_TOWER) {
-            if(rc.getMoney() > 4000 && rc.canUpgradeTower(rc.getLocation()))
+        if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(rc.getMoney() > 2000 && rc.canUpgradeTower(rc.getLocation()) && rc.getRoundNum() > 200)
                 rc.upgradeTower(rc.getLocation());
         }
-        else if(rc.getMoney() > 4500 && rc.canUpgradeTower(rc.getLocation())) {
+        else if(rc.getMoney() > 4500 && rc.canUpgradeTower(rc.getLocation()) && rc.getRoundNum() > 200) {
             rc.upgradeTower(rc.getLocation());
         }
         /* USE LATER...
