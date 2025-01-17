@@ -86,6 +86,12 @@ public class MopperMicro {
     public static void integratedMopperMicro(RobotController rc) throws GameActionException {
         //MapInfo[] tiles = rc.senseNearbyMapInfos(8);
         if(rc.isActionReady()) {
+            Direction dirToSweep = dirToSweep(rc, 2);
+            if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
+                rc.mopSwing(dirToSweep);
+                safeMopperMicro(rc);
+                return;
+            }
             int x = rc.getLocation().x;
             int y = rc.getLocation().y;
             int bestX = -1;
@@ -150,8 +156,8 @@ public class MopperMicro {
         MapLocation temp = new MapLocation(x, y);
         if(rc.onTheMap(temp)) {
             MapInfo m = rc.senseMapInfo(temp);
-            if(!m.getPaint().isEnemy()) return -1;
             RobotInfo r = rc.senseRobotAtLocation(temp);
+            if(!m.getPaint().isEnemy()) return -1;
             if(r != null) {
                 if(rc.getTeam() == r.getTeam()) {
                     score |= 0b01;
@@ -176,8 +182,67 @@ public class MopperMicro {
         return score;
     }
 
+    //returns the best direction to sweep, if there is any sweep direction which will have a score greater than
+    //or equal to minScore. If there is no such direction, return null
+    public static Direction dirToSweep(RobotController rc, int minScore) throws GameActionException {
+        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(8, rc.getTeam().opponent());
+        Direction dirToSweep = null;
+        if(adjacentEnemyRobots.length >= minScore) {
+            //determine the amount of enemies we would hit with each cardinal sweep - 0: north, 1: east, etc...
+            int[] directionalSweep = {0,0,0,0};
+            for(RobotInfo enemy : adjacentEnemyRobots) {
+                Direction dir = rc.getLocation().directionTo(enemy.getLocation());
+                switch(dir) {
+                    case NORTH:
+                        directionalSweep[0]++;
+                        break;
+                    case NORTHEAST:
+                        directionalSweep[0]++;
+                        directionalSweep[1]++;
+                        break;
+                    case EAST:
+                        directionalSweep[1]++;
+                        break;
+                    case SOUTHEAST:
+                        directionalSweep[1]++;
+                        directionalSweep[2]++;
+                        break;
+                    case SOUTH:
+                        directionalSweep[2]++;
+                        break;
+                    case SOUTHWEST:
+                        directionalSweep[2]++;
+                        directionalSweep[3]++;
+                        break;
+                    case WEST:
+                        directionalSweep[3]++;
+                        break;
+                    case NORTHWEST:
+                        directionalSweep[3]++;
+                        directionalSweep[0]++;
+                        break;
+                }
+            }
+            int highest = -1;
+            for(int i = 0; i < 4; i++) {
+                if(directionalSweep[i] >= minScore && directionalSweep[i] > highest) {
+                    highest = directionalSweep[i];
+                    dirToSweep = switch (i) {
+                        case 0 -> Direction.NORTH;
+                        case 1 -> Direction.EAST;
+                        case 2 -> Direction.SOUTH;
+                        case 3 -> Direction.WEST;
+                        default -> dirToSweep;
+                    };
+                }
+            }
+        }
+        return dirToSweep;
+    }
+
     //we can't mop anything, so we should try to move towards enemies and be aggressive
     public static void aggroMopperMicro(RobotController rc) throws GameActionException {
+        if(!rc.isMovementReady()) return;
         rc.setIndicatorString("aggroMopperMicro");
         microArray = new mopperMicroInfo[9];
         populateMopperMicroArray(rc);
@@ -237,6 +302,7 @@ public class MopperMicro {
     }
     //we already mopped, or otherwise have no action cooldown, so we should try and stay out of harms way
     public static void safeMopperMicro(RobotController rc) throws GameActionException {
+        if(!rc.isMovementReady()) return;
         rc.setIndicatorString("safeMopperMicro");
         microArray = new mopperMicroInfo[9];
         populateMopperMicroArray(rc);

@@ -317,7 +317,6 @@ public class Communication
     public static void updateRuinsMemory(Ruin ruin)
     {
         Ruin next;
-
         ListIterator<Ruin> iterator = unclaimedRuins.listIterator();
         while(iterator.hasNext())
         {

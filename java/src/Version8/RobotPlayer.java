@@ -101,7 +101,7 @@ public class RobotPlayer {
                     case SPLASHER: Splasher.runSplasher(rc); break;
                     default: runTower(rc); break;
                     }
-                bytecodeSensitiveOperations(rc);
+                //bytecodeSensitiveOperations(rc);
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");

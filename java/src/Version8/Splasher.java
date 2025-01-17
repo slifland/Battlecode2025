@@ -14,7 +14,7 @@ enum splasherStates {
 public class Splasher {
 
     private static final int PAINT_TOWER_REFRESH = 25;
-    private static final int PAINT_AVERAGE_REFRESH = 5;
+    private static final int PAINT_AVERAGE_REFRESH = 3;
 
     private static MapLocation curObjective;
     private static splasherStates state;
@@ -90,8 +90,12 @@ public class Splasher {
             curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
         }
         //MOVE TO OBJECTIVE
-        Direction dir = BFS_7x7.pathfind(rc, curObjective);
-        if(rc.canMove(dir)) rc.move(dir);
+        //int price = Clock.getBytecodesLeft();
+        if(rc.isMovementReady()) {
+            Direction dir = BFS_7x7.pathfind(rc, curObjective);
+            if (rc.canMove(dir)) rc.move(dir);
+        }
+        //System.out.println(price - Clock.getBytecodesLeft());
     }
 
     //attempts to return to a known allied paint tower and refill
@@ -124,16 +128,20 @@ public class Splasher {
             }
         }
         else {
-            Direction dir = BFS_7x7.pathfind(rc, fillingStation);
-            if(rc.canMove(dir)) rc.move(dir);
+            if(rc.isMovementReady()) {
+                Direction dir = BFS_7x7.pathfind(rc, fillingStation);
+                if(rc.canMove(dir)) rc.move(dir);
+            }
         }
     }
 
     //used only when we are refilling and no of know paint towers
     public static void explore(RobotController rc) throws GameActionException {
         if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) <= 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
-        Direction dir = BFS_7x7.pathfind(rc, curObjective);
-        if(rc.canMove(dir)) rc.move(dir);
+        if(rc.isMovementReady()) {
+            Direction dir = BFS_7x7.pathfind(rc, curObjective);
+            if (rc.canMove(dir)) rc.move(dir);
+        }
     }
 
     //returns the closest paint tower that is not currently the filling station or the nearestPaintTower
@@ -204,10 +212,6 @@ public class Splasher {
 
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo(RobotController rc) {
-        //reset turn by turn variables
-        seenEnemyTower = null;
-        numEnemyTiles = 0;
-        averageEnemyPaint = null;
 
         MapLocation curLoc = rc.getLocation();
 
@@ -220,33 +224,27 @@ public class Splasher {
                 }
             }
         }
-//        if(knownSymmetry == Symmetry.Unknown) {
-//            for (MapInfo tile : nearbyTiles) {
-//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-//            }
-//        }
-        int x = 0;
-        int y = 0;
-        //now, check if we can see any enemy tiles
-        for(MapInfo tile : nearbyTiles) {
-            if(knownSymmetry == Symmetry.Unknown) {
-                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+        if(rc.getRoundNum() % PAINT_AVERAGE_REFRESH == 0) {
+            //reset turn by turn variables
+            seenEnemyTower = null;
+            numEnemyTiles = 0;
+            averageEnemyPaint = null;
+            int x = 0;
+            int y = 0;
+            //now, check if we can see any enemy tiles
+            for (MapInfo tile : nearbyTiles) {
+                if (knownSymmetry == Symmetry.Unknown) {
+                    map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+                    if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+                }
+                if (tile.getPaint().isEnemy()) {
+                    x += tile.getMapLocation().x;
+                    y += tile.getMapLocation().y;
+                    numEnemyTiles++;
+                }
             }
-            if(tile.getPaint().isEnemy()) {
-                x += tile.getMapLocation().x;
-                y += tile.getMapLocation().y;
-                numEnemyTiles++;
-            }
+            averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
         }
-        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
-//        for(RobotInfo r : enemyRobots) {
-//            if(r.getType().isTowerType()){
-//                seenEnemyTower = r;
-//                break;
-//            }
-//        }
     }
 
     //UTILITY METHODS

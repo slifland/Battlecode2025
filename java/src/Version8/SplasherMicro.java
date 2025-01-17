@@ -241,6 +241,7 @@ public class SplasherMicro {
 
     //attempts to stay safe while running a micro that optimizes for splashers
     private static void runSafeSplasherMicro(RobotController rc) throws GameActionException {
+        if(!rc.isMovementReady()) return;
         microArray = new splasherMicroInfo[9];
         populateSplasherMicroArray(rc);
         splasherMicroInfo bestMicro = microArray[0];

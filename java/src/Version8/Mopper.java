@@ -120,7 +120,7 @@ public class Mopper {
             rc.attack(bestTarget.getLocation());
         }
         if(rc.isActionReady()) {
-            Direction dirToSweep = dirToSweep(rc);
+            Direction dirToSweep = MopperMicro.dirToSweep(rc, 2);
             if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
                 rc.mopSwing(dirToSweep);
             }
@@ -237,61 +237,7 @@ public class Mopper {
         averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }
 
-    public static Direction dirToSweep(RobotController rc) throws GameActionException {
-        RobotInfo[] adjacentEnemyRobots = rc.senseNearbyRobots(8, rc.getTeam());
-        Direction dirToSweep = null;
-        if(adjacentEnemyRobots.length > 1) {
-            //determine the amount of enemies we would hit with each cardinal sweep - 0: north, 1: east, etc...
-            int[] directionalSweep = {0,0,0,0};
-            for(RobotInfo enemy : adjacentEnemyRobots) {
-                Direction dir = rc.getLocation().directionTo(enemy.getLocation());
-                switch(dir) {
-                    case NORTH:
-                        directionalSweep[0]++;
-                        break;
-                    case NORTHEAST:
-                        directionalSweep[0]++;
-                        directionalSweep[1]++;
-                        break;
-                    case EAST:
-                        directionalSweep[1]++;
-                        break;
-                    case SOUTHEAST:
-                        directionalSweep[1]++;
-                        directionalSweep[2]++;
-                        break;
-                    case SOUTH:
-                        directionalSweep[2]++;
-                        break;
-                    case SOUTHWEST:
-                        directionalSweep[2]++;
-                        directionalSweep[3]++;
-                        break;
-                    case WEST:
-                        directionalSweep[3]++;
-                        break;
-                    case NORTHWEST:
-                        directionalSweep[3]++;
-                        directionalSweep[0]++;
-                        break;
-                }
-            }
-            int highest = -1;
-            for(int i = 0; i < 4; i++) {
-                if(directionalSweep[i] > 1 && directionalSweep[i] > highest) {
-                    highest = directionalSweep[i];
-                    dirToSweep = switch (i) {
-                        case 0 -> Direction.NORTH;
-                        case 1 -> Direction.EAST;
-                        case 2 -> Direction.SOUTH;
-                        case 3 -> Direction.WEST;
-                        default -> dirToSweep;
-                    };
-                }
-            }
-        }
-        return dirToSweep;
-    }
+
 
     //checks whether a space is in firing range of any seen enemy towers
     public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
