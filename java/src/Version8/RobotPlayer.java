@@ -212,7 +212,7 @@ public class RobotPlayer {
         }
         else
         {
-            if(rc.getRoundNum() % 5 == 0) {
+            if(rc.getRoundNum() % 10 == 0) {
                 //int price = Clock.getBytecodesLeft();
                 Communication.processMessagesRobot(rc);
                 //System.out.println("Price 1: " + (price - Clock.getBytecodesLeft()));

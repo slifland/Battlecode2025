@@ -31,6 +31,8 @@ public class Splasher {
 
     private static MapLocation home;
 
+    static int uselessTurnsCount = 0;
+
 
 
     public static void runSplasher(RobotController rc) throws GameActionException {
@@ -51,8 +53,8 @@ public class Splasher {
                 contest(rc);
                 break;
         }
-        if(curObjective== null)rc.setIndicatorString(state.toString());
-        else rc.setIndicatorString(state + " : " + curObjective);
+//        if(curObjective== null)rc.setIndicatorString(state.toString());
+//        else rc.setIndicatorString(state + " : " + curObjective);
     }
 
     //attempts to navigate to a known location - enemy average, usually
@@ -210,16 +212,14 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if(averageEnemyPaint != null && !(numEnemyTiles == 1 && Utilities.locationIsBehindWall(rc, averageEnemyPaint))) {
+        if(averageEnemyPaint != null) {
             state = splasherStates.contest;
         }
     }
 
     //updates the local information necessary for the splasher to run its turn
-    public static void updateInfo(RobotController rc) {
-        int price = Clock.getBytecodesLeft();
+    public static void updateInfo(RobotController rc) throws GameActionException {
         MapLocation curLoc = rc.getLocation();
-
         //gets the nearest paint tower, updating every so often
         if(rc.getRoundNum() % PAINT_TOWER_REFRESH == 0) {
             for (Ruin r : alliedPaintTowers) {
@@ -234,6 +234,7 @@ public class Splasher {
             seenEnemyTower = null;
             numEnemyTiles = 0;
             averageEnemyPaint = null;
+            boolean hasSeenNoWall = false;
             int x = 0;
             int y = 0;
             //now, check if we can see any enemy tiles
@@ -242,10 +243,12 @@ public class Splasher {
                     map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                     if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
                 }
-                if (tile.getPaint().isEnemy()) {
+                if (tile.getPaint().isEnemy() && (hasSeenNoWall || !Utilities.locationIsBehindWall(rc, tile.getMapLocation()))) {
                     x += tile.getMapLocation().x;
                     y += tile.getMapLocation().y;
                     numEnemyTiles++;
+                    hasSeenNoWall = true;
+                    //rc.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
                 }
             }
             averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);

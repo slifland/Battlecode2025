@@ -1678,7 +1678,6 @@ public class splasherUtil {
             highestIndex = 24;
             highest = potentialAttackSquares[24];
         }
-
         if(potentialAttackSquares[25] > highest) {
             highestIndex = 25;
             highest = potentialAttackSquares[25];
@@ -1695,7 +1694,6 @@ public class splasherUtil {
             highestIndex = 28;
             highest = potentialAttackSquares[28];
         }
-
         if(potentialAttackSquares[29] > highest) {
             highestIndex = 29;
             highest = potentialAttackSquares[29];
@@ -1712,7 +1710,6 @@ public class splasherUtil {
             highestIndex = 32;
             highest = potentialAttackSquares[32];
         }
-
         if(potentialAttackSquares[33] > highest) {
             highestIndex = 33;
             highest = potentialAttackSquares[33];
@@ -1729,7 +1726,6 @@ public class splasherUtil {
             highestIndex = 36;
             highest = potentialAttackSquares[36];
         }
-
         if(potentialAttackSquares[37] > highest) {
             highestIndex = 37;
             highest = potentialAttackSquares[37];
@@ -1746,7 +1742,6 @@ public class splasherUtil {
             highestIndex = 40;
             highest = potentialAttackSquares[40];
         }
-
         if(potentialAttackSquares[41] > highest) {
             highestIndex = 41;
             highest = potentialAttackSquares[41];
@@ -1780,7 +1775,6 @@ public class splasherUtil {
             highestIndex = 48;
             highest = potentialAttackSquares[48];
         }
-
         if(potentialAttackSquares[49] > highest) {
             highestIndex = 49;
             highest = potentialAttackSquares[49];
@@ -1797,7 +1791,6 @@ public class splasherUtil {
             highestIndex = 52;
             highest = potentialAttackSquares[52];
         }
-
         if(potentialAttackSquares[53] > highest) {
             highestIndex = 53;
             highest = potentialAttackSquares[53];
@@ -1814,7 +1807,6 @@ public class splasherUtil {
             highestIndex = 56;
             highest = potentialAttackSquares[56];
         }
-
         if(potentialAttackSquares[57] > highest) {
             highestIndex = 57;
             highest = potentialAttackSquares[57];

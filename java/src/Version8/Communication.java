@@ -147,7 +147,6 @@ public class Communication
      */
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
-        if(rc.getID() == 10011) System.out.println(nearbyRuins.length);
         for(MapLocation ruinLoc : nearbyRuins)
         {
             int status = 0;

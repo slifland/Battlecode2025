@@ -95,8 +95,8 @@ public class SplasherMicro {
                     rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                     runSafeSplasherMicro(rc);
                 } else {
-                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint);
-                    runTargetedSplasherMicro(rc, rc.getLocation().directionTo(bestAttack), bestAttack);
+                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(rc.getLocation(), bestAttack));
+                    runTargetedSplasherMicro(rc, MopperMicro.customLocationTo(rc.getLocation(), bestAttack), bestAttack);
                     if(rc.canAttack(bestAttack)) rc.attack(bestAttack);
                     else if(Clock.getBytecodesLeft() > 4000) {
                         bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, minScore);
