@@ -103,7 +103,7 @@ public class RobotPlayer {
                     case SPLASHER: Splasher.runSplasher(rc); break;
                     default: runTower(rc); break;
                     }
-                //bytecodeSensitiveOperations(rc);
+                bytecodeSensitiveOperations(rc);
                 rc.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
@@ -191,7 +191,11 @@ public class RobotPlayer {
     {
         if(Clock.getBytecodesLeft() > 3000)
         {
-            Utilities.updatePaintAverages(rc);
+            int price = Clock.getBytecodesLeft();
+            for(MapInfo info : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
+                Utilities.attemptCompleteResourcePattern(rc, info.getMapLocation());
+            }
+            System.out.println(price - Clock.getBytecodesLeft());
         }
     }
 
