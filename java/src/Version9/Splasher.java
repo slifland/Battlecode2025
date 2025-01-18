@@ -240,6 +240,7 @@ public class Splasher {
             int y = 0;
             //now, check if we can see any enemy tiles
             for (MapInfo tile : nearbyTiles) {
+                Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
                 if (knownSymmetry == Symmetry.Unknown) {
                     map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                     if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
