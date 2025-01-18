@@ -139,7 +139,7 @@ public class RobotPlayer {
         int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 3 : 2;
         int mopperRatio = 2;
         //if you arent our first tower, always build a splasher first
-        if(totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() < 50 || rc.getMapWidth() < 50)) {
+        if(totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() <= 50 && rc.getMapWidth() <= 50) && rc.getMoney() > 1200) {
             if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
                 rc.buildRobot(UnitType.SPLASHER, nextLoc);
                 totalBuilt++;
@@ -149,13 +149,13 @@ public class RobotPlayer {
             if (totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
                 if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
 
-                if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && soldiers < soldierRatio) {
+                if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
                     rc.buildRobot(UnitType.SOLDIER, nextLoc);
                     //Communication.sendAveragesToRobot(rc, nextLoc);
                     soldiers++;
                     totalBuilt++;
                 }
-                if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio) {
+                if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio && (rc.getRoundNum() > 50 || (rc.getMapHeight() < 30 || rc.getMapWidth() < 30))) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
                     //Communication.sendAveragesToRobot(rc, nextLoc);
                     moppers++;
@@ -222,8 +222,6 @@ public class RobotPlayer {
             Communication.scanForRuins(rc);
             Communication.sendMessagesRobot(rc);
         }
-
-        Communication.printRuinsMemory();
     }
 
 

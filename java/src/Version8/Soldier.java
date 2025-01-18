@@ -135,8 +135,8 @@ public class Soldier {
                 desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
             }
             else {
-                int ranNum = (rc.getRoundNum() < 100) ? 0 : rng.nextInt(2);
-                if(ranNum == 0) {
+                int ranNum = (rc.getRoundNum() < 100) ? 0 : rng.nextInt(3);
+                if(ranNum <= 1) {
                     desiredPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
                 }
                 else {

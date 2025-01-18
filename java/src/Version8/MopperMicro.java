@@ -100,14 +100,214 @@ public class MopperMicro {
             int bestY = -1;
             int bestScore = -1;
             //int[][] scores = new int[5][5];
-            for (int dx = -2; dx <= 2; dx++) {
-                for (int dy = -2; dy <= 2; dy++) {
-                    int score = determineScore(rc, x + dx, y + dy);
-                    if (score > bestScore) {
-                        bestX = x + dx;
-                        bestY = y + dy;
-                        bestScore = score;
-                    }
+//            for (int dx = -2; dx <= 2; dx++) {
+//                for (int dy = -2; dy <= 2; dy++) {
+//                    int score = determineScore(rc, x + dx, y + dy);
+//                    if (score > bestScore) {
+//                        bestX = x + dx;
+//                        bestY = y + dy;
+//                        bestScore = score;
+//                    }
+//                }
+//            }
+            {
+                int score = determineScore(rc, x + -2, y + -2);
+                if (score > bestScore) {
+                    bestX = x + -2;
+                    bestY = y + -2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -2, y + -1);
+                if (score > bestScore) {
+                    bestX = x + -2;
+                    bestY = y + -1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -2, y + 0);
+                if (score > bestScore) {
+                    bestX = x + -2;
+                    bestY = y + 0;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -2, y + 1);
+                if (score > bestScore) {
+                    bestX = x + -2;
+                    bestY = y + 1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -2, y + 2);
+                if (score > bestScore) {
+                    bestX = x + -2;
+                    bestY = y + 2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -1, y + -2);
+                if (score > bestScore) {
+                    bestX = x + -1;
+                    bestY = y + -2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -1, y + -1);
+                if (score > bestScore) {
+                    bestX = x + -1;
+                    bestY = y + -1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -1, y + 0);
+                if (score > bestScore) {
+                    bestX = x + -1;
+                    bestY = y + 0;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -1, y + 1);
+                if (score > bestScore) {
+                    bestX = x + -1;
+                    bestY = y + 1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + -1, y + 2);
+                if (score > bestScore) {
+                    bestX = x + -1;
+                    bestY = y + 2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 0, y + -2);
+                if (score > bestScore) {
+                    bestX = x + 0;
+                    bestY = y + -2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 0, y + -1);
+                if (score > bestScore) {
+                    bestX = x + 0;
+                    bestY = y + -1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 0, y + 0);
+                if (score > bestScore) {
+                    bestX = x + 0;
+                    bestY = y + 0;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 0, y + 1);
+                if (score > bestScore) {
+                    bestX = x + 0;
+                    bestY = y + 1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 0, y + 2);
+                if (score > bestScore) {
+                    bestX = x + 0;
+                    bestY = y + 2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 1, y + -2);
+                if (score > bestScore) {
+                    bestX = x + 1;
+                    bestY = y + -2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 1, y + -1);
+                if (score > bestScore) {
+                    bestX = x + 1;
+                    bestY = y + -1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 1, y + 0);
+                if (score > bestScore) {
+                    bestX = x + 1;
+                    bestY = y + 0;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 1, y + 1);
+                if (score > bestScore) {
+                    bestX = x + 1;
+                    bestY = y + 1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 1, y + 2);
+                if (score > bestScore) {
+                    bestX = x + 1;
+                    bestY = y + 2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 2, y + -2);
+                if (score > bestScore) {
+                    bestX = x + 2;
+                    bestY = y + -2;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 2, y + -1);
+                if (score > bestScore) {
+                    bestX = x + 2;
+                    bestY = y + -1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 2, y + 0);
+                if (score > bestScore) {
+                    bestX = x + 2;
+                    bestY = y + 0;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 2, y + 1);
+                if (score > bestScore) {
+                    bestX = x + 2;
+                    bestY = y + 1;
+                    bestScore = score;
+                }
+            }
+            {
+                int score = determineScore(rc, x + 2, y + 2);
+                if (score > bestScore) {
+                    bestX = x + 2;
+                    bestY = y + 2;
+                    bestScore = score;
                 }
             }
             //nowhere to attack
@@ -158,8 +358,8 @@ public class MopperMicro {
         MapLocation temp = new MapLocation(x, y);
         if(rc.onTheMap(temp)) {
             MapInfo m = rc.senseMapInfo(temp);
+            if(!m.getPaint().isEnemy() || !m.isPassable()) return -1;
             RobotInfo r = rc.senseRobotAtLocation(temp);
-            if(!m.getPaint().isEnemy()) return -1;
             //roughly determines whether we would have to move into tower range to attack this square
             if(seenEnemyTower != null) {
                 boolean withinFunctionalTowerRange = switch (seenEnemyTower.getType()) {
@@ -168,6 +368,10 @@ public class MopperMicro {
                     default -> temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 3);
                 };
                 if (withinFunctionalTowerRange) return -1;
+            }
+            if(Utilities.basicLocationIsBehindWall(rc, m.getMapLocation())){
+                rc.setIndicatorDot(temp, 0, 0, 255);
+                return -1;
             }
             if(r != null) {
                 if(rc.getTeam() == r.getTeam()) {
@@ -275,6 +479,7 @@ public class MopperMicro {
                 continue;
             }
 
+
             if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
             if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
                 bestMicro = m;
@@ -284,13 +489,6 @@ public class MopperMicro {
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
             if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
-                bestMicro = m;
-                continue;
-            }
-
-            //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
-            if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
-            if(bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
                 bestMicro = m;
                 continue;
             }
@@ -361,7 +559,6 @@ public class MopperMicro {
                 bestMicro = m;
                 continue;
             }
-
 
             //finally, lets try not to be directly next to an enemy
             if(bestMicro.minDistanceToEnemy > 2 && m.minDistanceToEnemy <= 2) continue;
@@ -586,11 +783,13 @@ public class MopperMicro {
         int dy = loc2.y - loc1.y;
         return switch(dx) {
             case 0 -> switch(dy) {
-                case -2, -1 -> Direction.SOUTH;
-                case 2, 1 -> Direction.NORTH;
+                case -2, -1, -3, -4 -> Direction.SOUTH;
+                case 2, 1, 3, 4 -> Direction.NORTH;
                 default -> Direction.CENTER;
             };
             case 2 -> switch(dy) {
+                case 3, 4 -> Direction.NORTH;
+                case -3, -4 -> Direction.SOUTH;
                 case 2 -> Direction.NORTHEAST;
                 case -2 -> Direction.SOUTHEAST;
                 case -1,0,1 -> Direction.EAST;
@@ -599,23 +798,53 @@ public class MopperMicro {
             case 1 -> switch(dy) {
                 case 1 -> Direction.NORTHEAST;
                 case -1 -> Direction.SOUTHEAST;
-                case 2 -> Direction.NORTH;
-                case -2 -> Direction.SOUTH;
+                case 2, 3, 4 -> Direction.NORTH;
+                case -2, -3, -4 -> Direction.SOUTH;
                 case 0 -> Direction.EAST;
                 default -> Direction.CENTER;
             };
             case -1 -> switch(dy) {
                 case 1 -> Direction.NORTHWEST;
                 case -1 -> Direction.SOUTHWEST;
-                case 2 -> Direction.SOUTH;
-                case -2 -> Direction.SOUTH;
+                case 2, 3, 4 -> Direction.NORTH;
+                case -2, -3, -4 -> Direction.SOUTH;
                 case 0 -> Direction.WEST;
                 default -> Direction.CENTER;
             };
             case -2 -> switch(dy) {
+                case 3, 4 -> Direction.NORTH;
+                case -3, -4 -> Direction.SOUTH;
                 case 2 -> Direction.NORTHWEST;
                 case -2 -> Direction.SOUTHWEST;
                 case -1,0,1 -> Direction.WEST;
+                default -> Direction.CENTER;
+            };
+            case 3 -> switch(dy) {
+                case -2, -1, 0, 1, 2 -> Direction.EAST;
+                case -4 -> Direction.SOUTH;
+                case 4 -> Direction.NORTH;
+                case 3 -> Direction.NORTHEAST;
+                case -3 -> Direction.SOUTHEAST;
+                default -> Direction.CENTER;
+            };
+            case -3 -> switch(dy) {
+                case -2, -1, 0, 1, 2 -> Direction.WEST;
+                case -4 -> Direction.SOUTH;
+                case 4 -> Direction.NORTH;
+                case 3 -> Direction.NORTHWEST;
+                case -3 -> Direction.SOUTHWEST;
+                default -> Direction.CENTER;
+            };
+            case -4 -> switch(dy) {
+                case -2, -1, 0, 1, 2, 3, -3 -> Direction.WEST;
+                case -4 -> Direction.SOUTHWEST;
+                case 4 -> Direction.NORTHWEST;
+                default -> Direction.CENTER;
+            };
+            case 4 -> switch(dy) {
+                case -2, -1, 0, 1, 2, 3, -3 -> Direction.EAST;
+                case -4 -> Direction.SOUTHEAST;
+                case 4 -> Direction.NORTHEAST;
                 default -> Direction.CENTER;
             };
             default -> Direction.CENTER;

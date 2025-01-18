@@ -78,6 +78,8 @@ public class SplasherMicro {
     private static final int ALLY_PAINT = 1;
     private static final int ENEMY_PAINT = -1;
     private static final int NEUTRAL_PAINT = 0;
+
+    private static int health;
     
     //splasher micro - will find the best place to splash, and move, both within this method
     //priorities list:
@@ -86,17 +88,18 @@ public class SplasherMicro {
     //3. Attack square with self -0b10
     //4. Attack square without moving -0b1
     public static void integratedSplasherMicro(RobotController rc, boolean fightingTower) throws GameActionException {
+        health = rc.getHealth();
         if (rc.isActionReady()) {
-            int minScore = (rc.getPaint() > 150) ? 4 : 5;
-            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(minScore, numEnemyTiles));
+            int minScore = (rc.getPaint() > 150) ? 5 : 6;
+            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(minScore, numEnemyTiles * 2));
             if (bestAttack != null) {
                 if (rc.canAttack(bestAttack)) {
                     rc.attack(bestAttack);
                     rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                     runSafeSplasherMicro(rc);
                 } else {
-                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint);
-                    runTargetedSplasherMicro(rc, rc.getLocation().directionTo(bestAttack), bestAttack);
+                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(rc.getLocation(), bestAttack));
+                    runTargetedSplasherMicro(rc, MopperMicro.customLocationTo(rc.getLocation(), bestAttack), bestAttack);
                     if(rc.canAttack(bestAttack)) rc.attack(bestAttack);
                     else if(Clock.getBytecodesLeft() > 4000) {
                         bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, minScore);
@@ -107,7 +110,7 @@ public class SplasherMicro {
                 rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                 runSafeSplasherMicro(rc);
                 if(Clock.getBytecodesLeft() > 4000) {
-                    bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, 4);
+                    bestAttack = splasherUtil.cheapBestAttack(rc, fightingTower, minScore);
                     if(bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack);
                 }
             }
@@ -201,12 +204,15 @@ public class SplasherMicro {
                 continue;
             }
 
-            //if one is in tower range and the other isnt, get out of tower range
-            if(!bestMicro.inTowerRange && m.inTowerRange) continue;
-            if(bestMicro.inTowerRange && !m.inTowerRange) {
-                bestMicro = m;
-                continue;
+            if(health <= 100) {
+                //if one is in tower range and the other isnt, get out of tower range
+                if(!bestMicro.inTowerRange && m.inTowerRange) continue;
+                if(bestMicro.inTowerRange && !m.inTowerRange) {
+                    bestMicro = m;
+                    continue;
+                }
             }
+
 
             int dist = bestMicro.loc.distanceSquaredTo(target);
             int altDist = m.loc.distanceSquaredTo(target);
@@ -262,13 +268,13 @@ public class SplasherMicro {
                 continue;
             }
 
-            //since we want to be safe, lets try and stay somewhat away from enemies - otherwise, the usual criteria
-            //if one is in tower range and the other isnt, get out of tower range
-            if(!bestMicro.inTowerRange && m.inTowerRange) continue;
-            if(bestMicro.inTowerRange && !m.inTowerRange) {
-                bestMicro = m;
-                continue;
-            }
+                //since we want to be safe, lets try and stay somewhat away from enemies - otherwise, the usual criteria
+                //if one is in tower range and the other isnt, get out of tower range
+                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
+                if (bestMicro.inTowerRange && !m.inTowerRange) {
+                    bestMicro = m;
+                    continue;
+                }
 
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;

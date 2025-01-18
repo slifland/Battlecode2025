@@ -200,8 +200,8 @@ public class RobotPlayer {
             Communication.sendMessagesRobot(rc);
             if(turnCount < 5)
             {
-                rc.setIndicatorDot(paintAverage1, 0,255,0);
-                rc.setIndicatorDot(paintAverage2, 0,0,255);
+                //rc.setIndicatorDot(paintAverage1, 0,255,0);
+                //rc.setIndicatorDot(paintAverage2, 0,0,255);
             }
         }
     }

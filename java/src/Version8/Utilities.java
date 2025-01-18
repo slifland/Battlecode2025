@@ -148,7 +148,7 @@ public class Utilities
         {
             for(int j = 0; j < rc.getMapWidth(); j += 5)
             {
-                rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
+                //rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
             }
         }
     }
@@ -227,14 +227,14 @@ public class Utilities
     }
     public static boolean locationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
         //return locationIsBehindWall(rc,L,rc.getLocation());
-        return locationIsBehindWall(rc, L, rc.getLocation(), 8);
+        return locationIsBehindWall(rc, L, rc.getLocation(), 4);
     }
     public static boolean locationIsBehindWall(RobotController rc, MapLocation L, MapLocation R){
         double m  = (R.y-L.y+0.0)/(R.x-L.x);
         double c = (m*L.x-L.y);
         for(MapInfo T: nearbyTiles){
             MapLocation t = T.getMapLocation();
-            if(t.equals(L) || t.equals(R)) continue;
+            if(t.equals(L)) continue;
             if(!angleIsGreaterThan90(t.directionTo(L),t.directionTo(R))){
                 /*If the directions point in the same way that means that t
                 is not inbetween L and R. If it was inbetween the the
@@ -286,5 +286,18 @@ public class Utilities
             }
         }
         return false;
+    }
+    public static boolean basicLocationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
+        //Direction dir = rc.getLocation().directionTo(L);
+        Direction dir = MopperMicro.customLocationTo(rc.getLocation(), L);
+        MapLocation check1 = rc.getLocation().add(dir);
+        MapLocation check2 = rc.getLocation().add(dir.rotateLeft());
+        MapLocation check3 = rc.getLocation().add(dir.rotateRight());
+        int numTrue = 0;
+        if(rc.onTheMap(check1) && rc.senseMapInfo(check1).isWall()) numTrue++;
+        if(rc.onTheMap(check2) && rc.senseMapInfo(check2).isWall()) numTrue++;
+        if(rc.onTheMap(check3) && rc.senseMapInfo(check3).isWall()) numTrue++;
+        return numTrue >= 2;
+        //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
     }
 }

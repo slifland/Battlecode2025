@@ -31,6 +31,10 @@ public class Mopper {
 
     static MapLocation averageEnemyPaint;
 
+    static int numEnemyTiles;
+
+    //static int uselessTurnsCount = 0;
+
     public static void runMopper(RobotController rc) throws GameActionException {
         if(turnCount == 1) spawnLocation = rc.getLocation();
         updateInfo(rc);
@@ -41,9 +45,13 @@ public class Mopper {
                 break;
             case contest:
                 contest(rc);
+                //if(rc.isActionReady()) uselessTurnsCount++;
+                //else uselessTurnsCount = 0;
                 break;
             case refill:
                 refill(rc);
+                //if(rc.isActionReady()) uselessTurnsCount++;
+                //else uselessTurnsCount = 0;
                 break;
         }
 //        if(curObjective != null ) rc.setIndicatorString(state + " : " + curObjective);
@@ -54,7 +62,10 @@ public class Mopper {
     //attempts to navigate to a known location
     public static void navigate(RobotController rc) throws GameActionException {
         MapLocation curLoc = rc.getLocation();
-        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) curObjective = null;
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
+            curObjective = null;
+            //if(uselessTurnsCount > 0) uselessTurnsCount = 0;
+        }
         //System.out.println("hi!");
         //if(curObjective == null) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
         //DETERMINE OBJECTIVE
@@ -123,7 +134,14 @@ public class Mopper {
         }
         //Direction dir = Micro.runMicro(rc);
         //if(rc.canMove(dir)) rc.move(dir);
-        MopperMicro.integratedMopperMicro(rc);
+        if(averageEnemyPaint != null) MopperMicro.integratedMopperMicro(rc);
+        else {
+            Direction dirToSweep = MopperMicro.dirToSweep(rc, (rc.getPaint() > 30) ? 2 : 3);
+            if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
+                rc.mopSwing(dirToSweep);
+                return;
+            }
+        }
         if(rc.isActionReady() && Clock.getBytecodesLeft() > 3000) {
             bestTarget = findBestTarget(rc);
             if(bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
@@ -133,20 +151,16 @@ public class Mopper {
     }
 
     //determine a moppers state for this turn
-    public static void updateState(RobotController rc) {
+    public static void updateState(RobotController rc) throws GameActionException {
         state = mopStates.navigate;
         //try to steal paint from the enemy
         if((rc.getPaint() <= refillThreshold || (rc.getPaint() <= endRefillThreshold && state == mopStates.refill)) && enemyRobots.length > 2) {
             state = mopStates.refill;
             return;
         }
-//        for(MapInfo tile : nearbyTiles) {
-//            if(tile.getPaint().isEnemy()) {
-//                state = mopStates.contest;
-//                return;
-//            }
-//        }
+
         if(averageEnemyPaint != null) state = mopStates.contest;
+
     }
 
     //returns the best robot to target
@@ -177,21 +191,24 @@ public class Mopper {
         int count = 0;
         int x = 0;
         int y = 0;
+        boolean hasSeenNoWall = false;
         for(MapInfo tile : nearbyTiles) {
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
-                //if(knownSymmetry != symmetry.unknown) break;
             }
             if(knownSymmetry == Symmetry.Unknown) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
-            if(tile.getPaint().isEnemy()) {
+            if(tile.getPaint().isEnemy() && (hasSeenNoWall || !Utilities.locationIsBehindWall(rc, tile.getMapLocation()))) {
                 x += tile.getMapLocation().x;
                 y += tile.getMapLocation().y;
                 count++;
+                hasSeenNoWall = true;
+                //rc.setIndicatorDot(tile.getMapLocation(), 255, 0, 0);
             }
         }
+        numEnemyTiles = count;
         averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }
 
