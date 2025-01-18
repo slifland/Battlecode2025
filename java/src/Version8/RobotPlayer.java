@@ -2,6 +2,7 @@ package Version8;
 
 import battlecode.common.*;
 
+import java.util.Map;
 import java.util.Random;
 
 
@@ -36,8 +37,7 @@ public class RobotPlayer {
     static MapLocation paintAverage2 = new MapLocation(0,0);
     static int paintCount1;
     static int paintCount2;
-    static int greatestDelta;
-    static boolean returnFirst = true;
+    static Sector[] sectors;
 
     /*
     Store all methods initially to avoid redundant calls
@@ -84,6 +84,7 @@ public class RobotPlayer {
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
         Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
+        sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
 
         while (true) {
 
@@ -128,6 +129,7 @@ public class RobotPlayer {
         else if(rc.getMoney() > 4500 && rc.canUpgradeTower(rc.getLocation()) && rc.getRoundNum() > 200) {
             rc.upgradeTower(rc.getLocation());
         }
+
         /* USE LATER...
         if (isDefenseTower()) runDefenseTower();
         if (isMoneyTower()) runMoneyTower();
@@ -146,7 +148,7 @@ public class RobotPlayer {
             }
         }
         else {
-            if (totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
+            if (rc.getMoney() > 1200) {
                 if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
@@ -201,8 +203,6 @@ public class RobotPlayer {
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyRuins = rc.senseNearbyRuins(-1);
-
-        Utilities.attemptCompleteResourcePattern(rc);
 
         if(rc.getType().isTowerType())
         {

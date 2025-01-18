@@ -92,7 +92,7 @@ public class Micro {
         populateMicroArray(rc);
         Micro.isRushing = isRushing;
         return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+            case SOLDIER -> runSoldierMicro(rc);
             default -> null;
         };
     }
@@ -103,7 +103,7 @@ public class Micro {
         populateMicroArray(rc);
         Micro.isRushing = false;
         return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+            case SOLDIER -> runSoldierMicro(rc);
             default -> Direction.CENTER;
         };
     }
