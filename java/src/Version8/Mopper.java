@@ -86,16 +86,16 @@ public class Mopper {
                 }
             }
         }
-        //if we know of any unclaimed ruins, lets try to help out there
-        if(curObjective == null && knownSymmetry == Symmetry.Unknown && !unclaimedRuins.isEmpty()) {
-            int minDist = Integer.MAX_VALUE;
-            for(Ruin r : unclaimedRuins) {
-                if(r.location.distanceSquaredTo(curLoc) < minDist) {
-                    minDist = r.location.distanceSquaredTo(curLoc);
-                    curObjective = r.location;
-                }
-            }
-        }
+//        //if we know of any unclaimed ruins, lets try to help out there
+//        if(curObjective == null && knownSymmetry == Symmetry.Unknown && !unclaimedRuins.isEmpty()) {
+//            int minDist = Integer.MAX_VALUE;
+//            for(Ruin r : unclaimedRuins) {
+//                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+//                    minDist = r.location.distanceSquaredTo(curLoc);
+//                    curObjective = r.location;
+//                }
+//            }
+//        }
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null) {
