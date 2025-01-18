@@ -12,8 +12,8 @@ public class Utilities
      */
     public static boolean getColorFromOriginPattern(MapLocation location, boolean[][] pattern)
     {
-        MapLocation corner = new MapLocation((location.x / pattern[0].length) * pattern[0].length,
-                (location.y / pattern.length) * pattern.length);
+        MapLocation corner = new MapLocation((location.x / 4) * 4,
+                (location.y / 4) * 4);
         return pattern[location.y - corner.y][location.x - corner.x];
     }
     //returns the color a square should be in a pattern starting from a custom origin
@@ -47,11 +47,14 @@ public class Utilities
         else return paintPattern;
     }
 
-    public static void attemptCompleteResourcePattern(RobotController rc) throws GameActionException
+    public static void attemptCompleteResourcePattern(RobotController rc, MapLocation location) throws GameActionException
     {
-        if(rc.canCompleteResourcePattern(rc.getLocation()))
+        if(location.x % 4 == 0 && location.y % 4 == 0)
         {
-            rc.completeResourcePattern(rc.getLocation());
+            if(rc.canCompleteResourcePattern(rc.getLocation()))
+            {
+                rc.completeResourcePattern(rc.getLocation());
+            }
         }
     }
 

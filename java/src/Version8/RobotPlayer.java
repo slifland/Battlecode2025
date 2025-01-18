@@ -202,8 +202,7 @@ public class RobotPlayer {
         allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
         enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
         nearbyRuins = rc.senseNearbyRuins(-1);
-
-        Utilities.attemptCompleteResourcePattern(rc);
+        Utilities.attemptCompleteResourcePattern(rc, rc.getLocation());
 
         if(rc.getType().isTowerType())
         {

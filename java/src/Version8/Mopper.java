@@ -204,6 +204,7 @@ public class Mopper {
         int y = 0;
         boolean hasSeenNoWall = false;
         for(MapInfo tile : nearbyTiles) {
+            Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
             if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
                 nearbyRuin = tile.getMapLocation();
             }
