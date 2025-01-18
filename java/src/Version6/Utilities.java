@@ -150,7 +150,7 @@ public class Utilities
         {
             for(int j = 0; j < rc.getMapWidth(); j += 5)
             {
-                rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
+                //rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
             }
         }
     }

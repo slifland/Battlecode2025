@@ -657,7 +657,7 @@ public class BFS_7x7
       int closestIndex = -1;
       if(exists24)
       {
-         rc.setIndicatorDot(l24, 0, 255,0);
+         //rc.setIndicatorDot(l24, 0, 255,0);
          if(exists16 && dist24 + 1 < dist16)
          {
             dist16 = dist24 + 1;
@@ -741,7 +741,7 @@ public class BFS_7x7
       }
       if(exists16)
       {
-         rc.setIndicatorDot(l16, 0, 255,0);
+         //rc.setIndicatorDot(l16, 0, 255,0);
          if(exists8 && dist16 + 1 < dist8)
          {
             dist8 = dist16 + 1;
@@ -825,7 +825,7 @@ public class BFS_7x7
       }
       if(exists17)
       {
-         rc.setIndicatorDot(l17, 0, 255,0);
+         //rc.setIndicatorDot(l17, 0, 255,0);
          if(exists9 && dist17 + 1 < dist9)
          {
             dist9 = dist17 + 1;

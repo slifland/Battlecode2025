@@ -148,7 +148,7 @@ public class Utilities
         {
             for(int j = 0; j < rc.getMapWidth(); j += 5)
             {
-                rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
+                //rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
             }
         }
     }
@@ -294,9 +294,9 @@ public class Utilities
         MapLocation check2 = rc.getLocation().add(dir.rotateLeft());
         MapLocation check3 = rc.getLocation().add(dir.rotateRight());
         int numTrue = 0;
-        if(rc.senseMapInfo(check1).isWall()) numTrue++;
-        if(rc.senseMapInfo(check2).isWall()) numTrue++;
-        if(rc.senseMapInfo(check3).isWall()) numTrue++;
+        if(rc.onTheMap(check1) && rc.senseMapInfo(check1).isWall()) numTrue++;
+        if(rc.onTheMap(check2) && rc.senseMapInfo(check2).isWall()) numTrue++;
+        if(rc.onTheMap(check3) && rc.senseMapInfo(check3).isWall()) numTrue++;
         return numTrue >= 2;
         //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
     }

@@ -91,7 +91,7 @@ public class Pathfinding
             return bfsDirection;
         }
 
-        rc.setIndicatorDot(rc.getLocation(), 0, 0,255);
+        //rc.setIndicatorDot(rc.getLocation(), 0, 0,255);
         return bugNav(rc, destination);
     }
 
