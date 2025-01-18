@@ -294,9 +294,9 @@ public class Utilities
         MapLocation check2 = rc.getLocation().add(dir.rotateLeft());
         MapLocation check3 = rc.getLocation().add(dir.rotateRight());
         int numTrue = 0;
-        if(rc.onTheMap(check1) && rc.senseMapInfo(check1).isWall()) numTrue++;
-        if(rc.onTheMap(check2) && rc.senseMapInfo(check2).isWall()) numTrue++;
-        if(rc.onTheMap(check3) && rc.senseMapInfo(check3).isWall()) numTrue++;
+        if(rc.onTheMap(check1) && !rc.senseMapInfo(check1).isPassable()) numTrue++;
+        if(rc.onTheMap(check2) && !rc.senseMapInfo(check2).isPassable()) numTrue++;
+        if(rc.onTheMap(check3) && !rc.senseMapInfo(check3).isPassable()) numTrue++;
         return numTrue >= 2;
         //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
     }

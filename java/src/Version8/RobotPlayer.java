@@ -217,9 +217,9 @@ public class RobotPlayer {
         {
             if(rc.getRoundNum() % 5 == 0 || turnCount == 1)
             {
-                int price = Clock.getBytecodesLeft();
+                //int price = Clock.getBytecodesLeft();
                 Communication.processMessagesRobot(rc);
-                System.out.println(price - Clock.getBytecodesLeft());
+                //System.out.println(price - Clock.getBytecodesLeft());
             }
 
             Communication.scanForRuins(rc);
