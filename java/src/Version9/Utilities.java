@@ -290,6 +290,7 @@ public class Utilities
         }
         return false;
     }
+
     public static boolean basicLocationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
         //Direction dir = rc.getLocation().directionTo(L);
         Direction dir = MopperMicro.customLocationTo(rc.getLocation(), L);
@@ -302,5 +303,40 @@ public class Utilities
         if(rc.onTheMap(check3) && !rc.senseMapInfo(check3).isPassable()) numTrue++;
         return (dir == Direction.NORTHEAST || dir == Direction.NORTHWEST || dir == Direction.SOUTHEAST || dir == Direction.SOUTHWEST) ? !rc.senseMapInfo(check1).isPassable() : numTrue >= 2;
         //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
+    }
+
+    public static MapLocation generateRandomLocation(RobotController rc, MapLocation currentLocation, int radiusSquared)
+    {
+        int max = (int) Math.sqrt(radiusSquared);
+        int xOffset = rng.nextInt(-1 * max, max + 1);
+        int yOffset = (int) Math.sqrt(radiusSquared - (xOffset * xOffset));
+        yOffset = rng.nextBoolean() ? -1 * yOffset : yOffset;
+
+        int origX = xOffset;
+        int origY = yOffset;
+
+        if(currentLocation.x + xOffset < 0)
+        {
+            xOffset *= -1;
+        }
+        if(currentLocation.x + xOffset >= rc.getMapWidth())
+        {
+            xOffset *= -1;
+        }
+        if(currentLocation.y + yOffset < 0)
+        {
+            yOffset *= -1;
+        }
+        if(currentLocation.y + yOffset >= rc.getMapHeight())
+        {
+            yOffset *= -1;
+        }
+
+        if(Sector.getSector(rc, new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset)) < 0)
+        {
+            System.out.println(currentLocation + " " +  new MapLocation(currentLocation.x + origX, currentLocation.y + origY));
+        }
+
+        return new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset);
     }
 }

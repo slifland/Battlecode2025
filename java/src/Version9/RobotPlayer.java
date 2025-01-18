@@ -26,6 +26,7 @@ public class RobotPlayer {
     static int soldiers = 0;
     static int moppers = 0;
     static int totalBuilt = 0;
+    static Sector[] sectors;
 
 
     /*
@@ -84,6 +85,7 @@ public class RobotPlayer {
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
         Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
+        sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
 
         while (true) {
 
