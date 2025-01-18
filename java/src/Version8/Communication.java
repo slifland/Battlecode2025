@@ -4,10 +4,7 @@ import battlecode.common.*;
 
 import static Version8.RobotPlayer.*;
 
-import java.sql.SQLOutput;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 public class Communication
 {
