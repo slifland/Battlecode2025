@@ -297,7 +297,7 @@ public class Utilities
         if(rc.onTheMap(check1) && !rc.senseMapInfo(check1).isPassable()) numTrue++;
         if(rc.onTheMap(check2) && !rc.senseMapInfo(check2).isPassable()) numTrue++;
         if(rc.onTheMap(check3) && !rc.senseMapInfo(check3).isPassable()) numTrue++;
-        return numTrue >= 2;
+        return (dir == Direction.NORTHEAST || dir == Direction.NORTHWEST || dir == Direction.SOUTHEAST || dir == Direction.SOUTHWEST) ? !rc.senseMapInfo(check1).isPassable() : numTrue >= 2;
         //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
     }
 }

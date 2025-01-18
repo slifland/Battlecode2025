@@ -79,8 +79,8 @@ public class MopperMicro {
     //mopper micro - will find the best place to mop, and move, both within this method
     //priorities list:
     //1. Attack square within radius of contested ruin - 0b10000
-    //2. Attack square with enemy -0b1000
-    //3. Attack square with self -0b100
+    //2. Attack square with self -0b1000
+    //3. Attack square with enemy -0b100
     //4. Attack square without moving -0b10
     //5. Attack square with ally robot - 0b01
     public static void integratedMopperMicro(RobotController rc) throws GameActionException {
@@ -432,11 +432,11 @@ public class MopperMicro {
                     score |= 0b01;
                 }
                 else if (r.getPaintAmount() > 0){
-                    score |= 0b1000;
+                    score |= 0b100;
                 }
             }
             if(temp.equals(rc.getLocation())) {
-                score |= 0b100;
+                score |= 0b1000;
             }
             if(nearbyRuin != null && temp.isWithinDistanceSquared(nearbyRuin, 8)) {
                 score |= 0b10000;
