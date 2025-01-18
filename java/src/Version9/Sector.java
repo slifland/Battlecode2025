@@ -3,12 +3,16 @@ package Version9;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 
+import static Version9.RobotPlayer.rng;
+
 public class Sector
 {
     int sectorIndex;
     MapLocation sectorCorner;
 
-    int numCovered; //ranges from 0 - 15
+    int numCovered;//ranges from 0 - 15
+
+    public static boolean[] hasTraveled;
 
 
     public Sector(RobotController rc, int sectorIndex)
@@ -33,6 +37,12 @@ public class Sector
     {
         int numPerRow = ceil(rc.getMapWidth(), 7);
         return new MapLocation( sectorIndex % numPerRow * 7 , sectorIndex / numPerRow * 7 );
+    }
+
+    //returns a random location within the given sector
+    public static MapLocation getRandomLocation(RobotController rc, int sectorIndex) {
+        int numPerRow = ceil(rc.getMapWidth(), 7);
+        return new MapLocation( sectorIndex % numPerRow * 7 + rng.nextInt(7) , sectorIndex / numPerRow * 7 + rng.nextInt(7));
     }
 
     public void updateAllyTiles(int numAllyTiles)

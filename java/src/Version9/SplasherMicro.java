@@ -18,6 +18,7 @@ class splasherMicroInfo {
     int paintType;
     boolean inTowerRange;
     int distanceToEnemyAverage;
+    int paintLoss;
 
     public splasherMicroInfo(MapInfo tile) {
         if(!tile.isPassable()) {
@@ -69,6 +70,12 @@ class splasherMicroInfo {
                 adjacentAllies++;
             }
         }
+        paintLoss = switch(paintType) {
+            case ENEMY_PAINT -> 2 + adjacentAllies;
+            case ALLY_PAINT -> adjacentAllies;
+            case NEUTRAL_PAINT -> 1 + adjacentAllies;
+            default -> 0;
+        };
     }
 }
 
@@ -222,6 +229,13 @@ public class SplasherMicro {
                 continue;
             }
 
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                break;
+            }
+
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
             if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
@@ -275,6 +289,13 @@ public class SplasherMicro {
                     bestMicro = m;
                     continue;
                 }
+
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                break;
+            }
 
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;

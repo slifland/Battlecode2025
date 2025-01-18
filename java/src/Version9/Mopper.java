@@ -11,7 +11,7 @@ import static Version9.Communication.unclaimedRuins;
 import static Version9.RobotPlayer.*;
 
 enum mopStates {
-    navigate, contest, refill
+    navigate, contest, refill, clear
 }
 
 public class Mopper {
@@ -34,6 +34,8 @@ public class Mopper {
 
     static int numEnemyTiles;
 
+    static boolean needsClearing = false;
+
     //static int uselessTurnsCount = 0;
 
     public static void runMopper(RobotController rc) throws GameActionException {
@@ -53,6 +55,9 @@ public class Mopper {
                 refill(rc);
                 //if(rc.isActionReady()) uselessTurnsCount++;
                 //else uselessTurnsCount = 0;
+                break;
+            case clear:
+                clear(rc);
                 break;
         }
 //        if(curObjective != null ) rc.setIndicatorString(state + " : " + curObjective);
@@ -159,6 +164,23 @@ public class Mopper {
                 rc.attack(bestTarget.getLocation());
             }
         }
+        if(rc.isActionReady()) MopperMicro.attackAnything(rc);
+    }
+
+    //tries to clear the enemy paint around one of our ruins
+    public static void clear(RobotController rc) throws GameActionException {
+        MapLocation bestLoc = bestClear(rc, nearbyRuin);
+        if(bestLoc != null) {
+            MopperMicro.targetedMopperMicro(rc, MopperMicro.customLocationTo(rc.getLocation(), bestLoc), bestLoc);
+        }
+        else {
+            MopperMicro.integratedMopperMicro(rc);
+        }
+        if(rc.canAttack(bestLoc)) rc.attack(bestLoc);
+        if(rc.isActionReady()) {
+            MopperMicro.attackAnything(rc);
+        }
+        rc.setIndicatorString("clear! " + bestLoc);
     }
 
     //determine a moppers state for this turn
@@ -169,9 +191,25 @@ public class Mopper {
             state = mopStates.refill;
             return;
         }
-
+        if(needsClearing) {
+            state = mopStates.clear;
+            return;
+        }
         if(averageEnemyPaint != null) state = mopStates.contest;
+    }
 
+    public static MapLocation bestClear(RobotController rc, MapLocation ruin) throws GameActionException {
+        int minDist = Integer.MAX_VALUE;
+        MapLocation bestLoc = null;
+        for(MapInfo tile : rc.senseNearbyMapInfos(ruin, 8)) {
+            int dist = rc.getLocation().distanceSquaredTo(tile.getMapLocation());
+            if(tile.getPaint().isEnemy() && dist < minDist) {
+                bestLoc = tile.getMapLocation();
+                minDist = dist;
+                if(minDist <= 2) return bestLoc;
+            }
+        }
+        return bestLoc;
     }
 
     //returns the best robot to target
@@ -182,7 +220,7 @@ public class Mopper {
         for(RobotInfo robot : enemyRobots) {
             if(robot.getLocation().distanceSquaredTo(curLoc) > UnitType.MOPPER.actionRadiusSquared) continue;
             MapInfo loc = rc.senseMapInfo(robot.getLocation());
-            int score = (robot.getPaintAmount() == 0) ? 1 : robot.getType().paintCapacity - robot.getPaintAmount();
+            int score = (robot.getPaintAmount() == 0) ? 10 : robot.getType().paintCapacity - robot.getPaintAmount();
             //add a big bonus if we are also removing paint from the tile
             if(loc.getPaint().isEnemy()) score += 50;
             if(score > highestScore) {
@@ -197,22 +235,26 @@ public class Mopper {
     //updates necessary info specific to the mopper
     public static void updateInfo(RobotController rc) throws GameActionException {
         //finds a nearby unclaimed ruins
-        nearbyRuin = null;
+        //updates turn by turn variables
         averageEnemyPaint = null;
+        needsClearing = false;
         int count = 0;
         int x = 0;
         int y = 0;
         boolean hasSeenNoWall = false;
         for(MapInfo tile : nearbyTiles) {
             Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
-            if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
-                nearbyRuin = tile.getMapLocation();
-            }
+//            if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
+//                nearbyRuin = tile.getMapLocation();
+//            }
             if(knownSymmetry == Symmetry.Unknown) {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
             if(tile.getPaint().isEnemy() && (hasSeenNoWall || !Utilities.locationIsBehindWall(rc, tile.getMapLocation()))) {
+                if(!needsClearing && nearbyRuin != null && tile.getMapLocation().isWithinDistanceSquared(nearbyRuin, 8)) {
+                    needsClearing = true;
+                }
                 x += tile.getMapLocation().x;
                 y += tile.getMapLocation().y;
                 count++;

@@ -146,6 +146,7 @@ public class Communication
      */
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
+        Mopper.nearbyRuin = null;
         //TESTING*/System.out.println("~Scanning for ruins");
 
         for(MapLocation ruinLoc : nearbyRuins)
@@ -174,6 +175,9 @@ public class Communication
                 //get whether it is a paint tower
                 if(isPaintTower(ruinInfo))
                     isPaintTower = true;
+            }
+            else {
+                Mopper.nearbyRuin = ruinLoc;
             }
 
             updateRuinsMemory(new Ruin(ruinLoc, status, isPaintTower));
@@ -372,7 +376,38 @@ public class Communication
         }
         else //we have heard of a Ruin at this location before, and need to update its status
         {
-            mem.update(ruin);
+            switch(mem.status) {
+                case 0:
+                    unclaimedRuins.remove(mem);
+                    break;
+                case 1:
+                    if(ruin.isPaintTower) {
+                        alliedPaintTowers.remove(mem);
+                    }
+                    break;
+                case 2:
+                    enemyTowers.remove(mem);
+                    break;
+            }
+            allMemory[ruin.location.x][ruin.location.y] = ruin;
+
+            switch(ruin.status)
+            {
+                case 0: //unclaimed
+                    unclaimedRuins.add(ruin);
+                    break;
+
+                case 1: //ally
+                    if(ruin.isPaintTower)
+                    {
+                        alliedPaintTowers.add(ruin);
+                    }
+                    break;
+
+                case 2: //enemy
+                    enemyTowers.add(ruin);
+                    break;
+            }
         }
 
 

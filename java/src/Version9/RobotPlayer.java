@@ -26,7 +26,7 @@ public class RobotPlayer {
     static int soldiers = 0;
     static int moppers = 0;
     static int totalBuilt = 0;
-    static Sector[] sectors;
+    //static Sector[] sectors;
 
 
     /*
@@ -39,6 +39,8 @@ public class RobotPlayer {
     static int paintCount2;
     static int greatestDelta;
     static boolean returnFirst = true;
+
+    static final int STOP_BUILDING_SOLDIERS = 400;
 
     /*
     Store all methods initially to avoid redundant calls
@@ -85,7 +87,8 @@ public class RobotPlayer {
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
         Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
-        sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
+        //sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
+        Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
 
         while (true) {
 
@@ -106,7 +109,7 @@ public class RobotPlayer {
                     default: runTower(rc); break;
                     }
                 bytecodeSensitiveOperations(rc);
-                rc.setIndicatorString(String.valueOf(knownSymmetry));
+                //rc.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
@@ -139,7 +142,8 @@ public class RobotPlayer {
         // Pick a direction to build in.
         Direction dir = directions[rng.nextInt(directions.length)];
         MapLocation nextLoc = rc.getLocation().add(dir);
-        int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 3 : 2;
+        //int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 2 : 1;
+        int soldierRatio = (rc.getRoundNum() < STOP_BUILDING_SOLDIERS) ? 2 : 1;
         int mopperRatio = 2;
         //if you arent our first tower, always build a splasher first
         if(totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() <= 50 && rc.getMapWidth() <= 50) && rc.getMoney() > 1200) {
@@ -148,8 +152,8 @@ public class RobotPlayer {
                 totalBuilt++;
             }
         }
-        else {
-            if ((totalBuilt <= 1 && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1300) {
+        //if(rc.getRoundNum() < STOP_BUILDING_SOLDIERS || rc.getNumberTowers() < 4){
+            else if ((totalBuilt <= 1 && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1300) {
                 if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
@@ -173,7 +177,21 @@ public class RobotPlayer {
                     totalBuilt++;
                 }
             }
-        }
+        //}
+//        else {
+//            if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio && (rc.getRoundNum() > 50 || (rc.getMapHeight() < 30 || rc.getMapWidth() < 30))) {
+//                rc.buildRobot(UnitType.MOPPER, nextLoc);
+//                //Communication.sendAveragesToRobot(rc, nextLoc);
+//                moppers++;
+//                totalBuilt++;
+//            }
+//            if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
+//                rc.buildRobot(UnitType.SPLASHER, nextLoc);
+//                //Communication.sendAveragesToRobot(rc, nextLoc);
+//                moppers = 0;
+//                totalBuilt++;
+//            }
+//        }
        // }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
@@ -193,11 +211,9 @@ public class RobotPlayer {
     {
         if(Clock.getBytecodesLeft() > 3000)
         {
-            int price = Clock.getBytecodesLeft();
             for(MapInfo info : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
                 Utilities.attemptCompleteResourcePattern(rc, info.getMapLocation());
             }
-            System.out.println(price - Clock.getBytecodesLeft());
         }
     }
 

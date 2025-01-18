@@ -10,8 +10,9 @@ class microInfo {
     public int minDistanceToEnemy;
     public PaintType paint;
     public boolean inTowerRange;
-    public int numAlliesAdjacent;
+    public int adjacentAllies;
     public int distanceToEnemyAverage;
+    public int paintLoss;
 
     //creates a micro Info tile, populating its information based on a map info tile
     public microInfo(MapInfo tile, boolean checkForMop, boolean checkForSplash) {
@@ -20,7 +21,7 @@ class microInfo {
         if(!passable) return;
         loc = tile.getMapLocation();
         paint = tile.getPaint();
-        numAlliesAdjacent = 0;
+        adjacentAllies = 0;
         minDistanceToEnemy = Integer.MAX_VALUE;
         populateMicro();
     }
@@ -53,9 +54,15 @@ class microInfo {
             int dist = loc.distanceSquaredTo(robot.getLocation());
             if(dist == 0) continue;
             if(dist <= 2) {
-                numAlliesAdjacent++;
+                adjacentAllies++;
             }
         }
+        paintLoss = switch(paint) {
+            case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> 2 + adjacentAllies;
+            case PaintType.ALLY_PRIMARY, PaintType.ALLY_SECONDARY-> adjacentAllies;
+            case PaintType.EMPTY -> 1 + adjacentAllies;
+            default -> 0;
+        };
         distanceToEnemyAverage = (Soldier.averageEnemyPaint != null) ? loc.distanceSquaredTo(Soldier.averageEnemyPaint) : Integer.MAX_VALUE;
 //        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
 //        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
@@ -154,8 +161,8 @@ public class Micro {
 //            }
 //
 //            //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-//            if (bestMicro.numAlliesAdjacent < m.numAlliesAdjacent) continue;
-//            if (m.numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
+//            if (bestMicro.adjacentAllies < m.adjacentAllies) continue;
+//            if (m.adjacentAllies < bestMicro.adjacentAllies) {
 //                bestMicro = m;
 //                continue;
 //            }
@@ -194,6 +201,12 @@ public class Micro {
                     }
 
                 }
+                //look at which place will lose us the least paint at the end of this turn
+                if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+                if (microArray[i].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[i];
+                    break;
+                }
                 //regardless of action readiness, the next considerations are unified:
                 //we prioritize allied paint over neutral paint over enemy paint
                 if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
@@ -209,8 +222,8 @@ public class Micro {
                 }
 
                 //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-                if (bestMicro.numAlliesAdjacent < microArray[i].numAlliesAdjacent) break;
-                if (microArray[i].numAlliesAdjacent < bestMicro.numAlliesAdjacent) {
+                if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+                if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
                     bestMicro = microArray[i];
                     break;
                 }

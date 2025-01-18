@@ -49,7 +49,7 @@ public class Utilities
 
     public static void attemptCompleteResourcePattern(RobotController rc, MapLocation location) throws GameActionException
     {
-        if(location.x % 4 == 0 && location.y % 4 == 0)
+        if((location.x - 2) % 4 == 0 && (location.y - 2) % 4 == 0)
         {
             if(rc.canCompleteResourcePattern(rc.getLocation()))
             {

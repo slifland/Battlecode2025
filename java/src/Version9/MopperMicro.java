@@ -16,6 +16,7 @@ class mopperMicroInfo {
     int paintType;
     boolean inTowerRange;
     int distanceToEnemyAverage;
+    int paintLoss;
 
     public mopperMicroInfo(MapInfo tile) {
         if(!tile.isPassable()) {
@@ -66,6 +67,12 @@ class mopperMicroInfo {
                 adjacentAllies++;
             }
         }
+        paintLoss = switch(paintType) {
+            case ENEMY_PAINT -> 4 + adjacentAllies;
+            case ALLY_PAINT -> adjacentAllies;
+            case NEUTRAL_PAINT -> 2 + adjacentAllies;
+            default -> 0;
+        };
     }
 }
 
@@ -397,7 +404,7 @@ public class MopperMicro {
     }
 
     //if we are at the end of a turn and haven't been able to attack what we wanted, just attack the first thing we can
-    private static void attackAnything(RobotController rc) throws GameActionException {
+    public static void attackAnything(RobotController rc) throws GameActionException {
         for(MapInfo tile : nearbyTiles) {
             if(rc.canAttack(tile.getMapLocation()) && (tile.getPaint().isEnemy() || rc.canSenseRobotAtLocation(tile.getMapLocation()) && rc.senseRobotAtLocation(tile.getMapLocation()).getTeam() == rc.getTeam().opponent())) {
                 rc.attack(tile.getMapLocation());
@@ -540,6 +547,13 @@ public class MopperMicro {
                 continue;
             }
 
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                break;
+            }
+
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
             if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
@@ -585,6 +599,13 @@ public class MopperMicro {
             if(bestMicro.inTowerRange && !m.inTowerRange) {
                 bestMicro = m;
                 continue;
+            }
+
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                break;
             }
 
             //if one space is on allied paint and the other isnt, go to allied paint
@@ -700,7 +721,6 @@ public class MopperMicro {
                 continue;
             }
 
-
             //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
             if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
             if(bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
@@ -714,6 +734,13 @@ public class MopperMicro {
             if(dist > actionRadius && altDist <= actionRadius) {
                 bestMicro = m;
                 continue;
+            }
+
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                break;
             }
 
             //if one space is on allied paint and the other isnt, go to allied paint
