@@ -173,7 +173,9 @@ public class Soldier {
         }
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && rc.senseNearbyRobots(closestUnfilledPatternCenter, 8, rc.getTeam()).length <= 1) {
-            if(closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25)   state = SoldierState.Fill;
+            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25) && validateLocation(rc, closestUnfilledPatternCenter)){
+                state = SoldierState.Fill;
+            }
         }
     }
 

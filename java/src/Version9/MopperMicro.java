@@ -548,10 +548,10 @@ public class MopperMicro {
             }
 
             //look at which place will lose us the least paint at the end of this turn
-            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
                 bestMicro = microArray[i];
-                break;
+                continue;
             }
 
             //if one space is on allied paint and the other isnt, go to allied paint
@@ -602,10 +602,10 @@ public class MopperMicro {
             }
 
             //look at which place will lose us the least paint at the end of this turn
-            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
                 bestMicro = microArray[i];
-                break;
+                continue;
             }
 
             //if one space is on allied paint and the other isnt, go to allied paint
@@ -705,6 +705,7 @@ public class MopperMicro {
         int actionRadius = UnitType.MOPPER.actionRadiusSquared;
         //determining the best space
         //mopperMicroInfo bestMicro = microArray[0];
+        //TURN 176 DEFAULT MEDIUM VERSION 9 GRAY VERSION 8 GOLD
         mopperMicroInfo bestMicro = new mopperMicroInfo(rc.senseMapInfo(rc.getLocation()));
         for(int i = 0; i < microArray.length; i++) {
             mopperMicroInfo m = microArray[i];
@@ -715,7 +716,9 @@ public class MopperMicro {
             }
 
             //if one is in tower range and the other isnt, get out of tower range
-            if(!bestMicro.inTowerRange && m.inTowerRange) continue;
+            if(!bestMicro.inTowerRange && m.inTowerRange) {
+                continue;
+            }
             if(bestMicro.inTowerRange && !m.inTowerRange) {
                 bestMicro = m;
                 continue;
@@ -730,6 +733,7 @@ public class MopperMicro {
 
             int dist = bestMicro.loc.distanceSquaredTo(target);
             int altDist = m.loc.distanceSquaredTo(target);
+            System.out.println(dist + " " + altDist + " : " + bestMicro.loc + " " + m.loc);
             if(dist <= actionRadius && altDist > actionRadius) continue;
             if(dist > actionRadius && altDist <= actionRadius) {
                 bestMicro = m;
@@ -737,10 +741,10 @@ public class MopperMicro {
             }
 
             //look at which place will lose us the least paint at the end of this turn
-            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
+            if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
                 bestMicro = microArray[i];
-                break;
+                continue;
             }
 
             //if one space is on allied paint and the other isnt, go to allied paint
@@ -764,6 +768,7 @@ public class MopperMicro {
                 continue;
             }
         }
+        System.out.println(bestMicro.loc);
         if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
             rc.move(rc.getLocation().directionTo(bestMicro.loc));
         }

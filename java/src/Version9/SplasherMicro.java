@@ -229,13 +229,6 @@ public class SplasherMicro {
                 continue;
             }
 
-            //look at which place will lose us the least paint at the end of this turn
-            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
-            if(microArray[i].paintLoss < bestMicro.paintLoss) {
-                bestMicro = microArray[i];
-                break;
-            }
-
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
             if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
@@ -290,17 +283,17 @@ public class SplasherMicro {
                     continue;
                 }
 
-            //look at which place will lose us the least paint at the end of this turn
-            if(bestMicro.paintLoss < microArray[i].paintLoss) break;
-            if(microArray[i].paintLoss < bestMicro.paintLoss) {
-                bestMicro = microArray[i];
-                break;
-            }
-
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
             if(bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
                 bestMicro = m;
+                continue;
+            }
+
+            //look at which place will lose us the least paint at the end of this turn
+            if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
+            if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
                 continue;
             }
 
