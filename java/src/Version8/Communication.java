@@ -64,18 +64,19 @@ public class Communication
     */
     public static void processMessagesRobot(RobotController rc)
     {
-        Message[] messages = rc.readMessages(rc.getRoundNum() - 1);
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
 
-        //TESTING*/System.out.println("-Processing " + messages.length + " messages");
-
-        for(Message m : messages)
+        for(Message[] mArr : messages)
         {
-            switch (m.getBytes() & 0b11)
+            for(Message m : mArr)
             {
-                case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
-            }
+                switch (m.getBytes() & 0b11)
+                {
+                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
+                }
 
+            }
         }
 
         //TESTING*/System.out.println("-");
@@ -86,17 +87,19 @@ public class Communication
     */
     public static void processMessagesTower(RobotController rc)
     {
-        Message[] messages = rc.readMessages(rc.getRoundNum() - 1);
+        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
 
-        //TESTING*/System.out.println("-Processing " + messages.length + " messages");
-
-        for(Message m : messages)
+        for(Message[] mArr : messages)
         {
-            switch (m.getBytes() & 0b11)
+            for(Message m : mArr)
             {
-                case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                //case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
-                case 0b10 -> processSymmetryMessageTower(m.getBytes());
+                switch (m.getBytes() & 0b11)
+                {
+                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
+                    case 0b01 -> processSymmetryMessageTower(m.getBytes());
+                }
+
             }
         }
 
@@ -124,6 +127,7 @@ public class Communication
         if(i == 0) return;
 
         sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+
 
         /* uncomment this if we decide to send paint averages in comms
 
@@ -205,7 +209,12 @@ public class Communication
     */
     public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
-        if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) return;
+        if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) {
+            if(knownSymmetry != Symmetry.Unknown && rc.canSendMessage(tower)) {
+                rc.sendMessage(tower, symmetriesToMessage(symmetries));
+            }
+            return;
+        }
 
         if(sendQueue.isEmpty())
             fillSendQueue();
@@ -220,7 +229,7 @@ public class Communication
     Broadcasts information the tower has to nearby towers - currently only sends info about symmetry
      */
     public static void broadcastMessages(RobotController rc) throws GameActionException {
-        if(rc.canBroadcastMessage()) {
+        if(rc.canBroadcastMessage() && knownSymmetry != Symmetry.Unknown) {
             rc.broadcastMessage(symmetriesToMessage(symmetries));
         }
     }
@@ -245,7 +254,7 @@ public class Communication
         {
             if(rc.canSendMessage(allyRobots[i].getLocation()))
             {
-                while(!sendQueue.isEmpty())
+                while(!sendQueue.isEmpty() && rc.canSendMessage(allyRobots[i].location))
                 {
                     rc.sendMessage(allyRobots[i].location, ruinToMessage(sendQueue.pop()));
                     if(++messagesSent >= maxRuinsToSend) return;
@@ -287,15 +296,13 @@ public class Communication
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
     {
-        //System.out.println("HIIIIII");
-        symmetries = message >> 28 & 0b1110;
-        //System.out.println(symmetries);
-        if(knownSymmetry == Symmetry.Unknown) {
-            switch (symmetries) {
-                case 2 -> knownSymmetry = Symmetry.Rotational;
-                case 4 -> knownSymmetry = Symmetry.Vertical;
-                case 8 -> knownSymmetry = Symmetry.Horizontal;
-            }
+        if(knownSymmetry == Symmetry.Unknown && (message >> 28 & 0b1110) != 0b1110) {
+            symmetries = message >> 28 & 0b1110;
+                switch (symmetries) {
+                    case 2 -> knownSymmetry = Symmetry.Rotational;
+                    case 4 -> knownSymmetry = Symmetry.Vertical;
+                    case 8 -> knownSymmetry = Symmetry.Horizontal;
+                }
         }
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
         return new Ruin(loc, (message >> 14) & 3, ((message >> 16) & 1) == 1);

@@ -104,6 +104,7 @@ public class RobotPlayer {
                     default: runTower(rc); break;
                     }
                 //bytecodeSensitiveOperations(rc);
+                rc.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
@@ -146,7 +147,7 @@ public class RobotPlayer {
             }
         }
         else {
-            if (totalBuilt <= 1 || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1200) {
+            if ((totalBuilt <= 1 && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1300) {
                 if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
@@ -207,16 +208,18 @@ public class RobotPlayer {
         if(rc.getType().isTowerType())
         {
             Communication.processMessagesTower(rc);
-            Communication.sendMessagesTower(rc);
             Communication.broadcastMessages(rc);
+            Communication.sendMessagesTower(rc);
             //if(paintAverage1 != null) rc.setIndicatorDot(paintAverage1, 0,0,255);
             //if(paintAverage2 != null) rc.setIndicatorDot(paintAverage2, 0,255,0);
         }
         else
         {
-            if(rc.getRoundNum() % 5 == 0)
+            if(rc.getRoundNum() % 5 == 0 || turnCount == 1)
             {
+                int price = Clock.getBytecodesLeft();
                 Communication.processMessagesRobot(rc);
+                System.out.println(price - Clock.getBytecodesLeft());
             }
 
             Communication.scanForRuins(rc);

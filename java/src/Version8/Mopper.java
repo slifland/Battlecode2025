@@ -7,6 +7,7 @@ import battlecode.schema.RobotType;
 import java.util.ArrayList;
 
 import static Version8.Communication.enemyTowers;
+import static Version8.Communication.unclaimedRuins;
 import static Version8.RobotPlayer.*;
 
 enum mopStates {
@@ -79,6 +80,16 @@ public class Mopper {
         if(curObjective == null && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
+                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+                    minDist = r.location.distanceSquaredTo(curLoc);
+                    curObjective = r.location;
+                }
+            }
+        }
+        //if we know of any unclaimed ruins, lets try to help out there
+        if(curObjective == null && knownSymmetry == Symmetry.Unknown && !unclaimedRuins.isEmpty()) {
+            int minDist = Integer.MAX_VALUE;
+            for(Ruin r : unclaimedRuins) {
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;

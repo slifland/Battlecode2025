@@ -76,6 +76,7 @@ public class Splasher {
                 }
             }
         }
+        //lets try and see if there are any unclaimed ruins that need our help
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null) {
             Symmetry[] possible = Utilities.possibleSymmetry();

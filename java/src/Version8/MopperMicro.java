@@ -99,215 +99,269 @@ public class MopperMicro {
             int bestX = -1;
             int bestY = -1;
             int bestScore = -1;
+            int basDist = 0;
+            int bestDist = Integer.MAX_VALUE;
             //int[][] scores = new int[5][5];
 //            for (int dx = -2; dx <= 2; dx++) {
 //                for (int dy = -2; dy <= 2; dy++) {
+//                    basDist = Math.abs(dx) + Math.abs(dy);
 //                    int score = determineScore(rc, x + dx, y + dy);
-//                    if (score > bestScore) {
+//                    if (score > bestScore || (score == bestScore && basDist < bestDist)) {
 //                        bestX = x + dx;
 //                        bestY = y + dy;
 //                        bestScore = score;
+//                        bestDist = basDist;
 //                    }
 //                }
 //            }
             {
+                basDist = 4;
                 int score = determineScore(rc, x + -2, y + -2);
-                if (score > bestScore) {
+                if (score >= bestScore) {
                     bestX = x + -2;
                     bestY = y + -2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + -2, y + -1);
-                if (score > bestScore) {
+                if (score >= bestScore) {
                     bestX = x + -2;
                     bestY = y + -1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 2;
                 int score = determineScore(rc, x + -2, y + 0);
-                if (score > bestScore) {
+                if (score >= bestScore) {
                     bestX = x + -2;
-                    bestY = y + 0;
+                    bestY = y;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + -2, y + 1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -2;
                     bestY = y + 1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 4;
                 int score = determineScore(rc, x + -2, y + 2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -2;
                     bestY = y + 2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + -1, y + -2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -1;
                     bestY = y + -2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 2;
                 int score = determineScore(rc, x + -1, y + -1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -1;
                     bestY = y + -1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + -1, y + 0);
-                if (score > bestScore) {
+                basDist = 1;
+                int score = determineScore(rc, x + -1, y);
+                if (score >= bestScore) {
                     bestX = x + -1;
-                    bestY = y + 0;
+                    bestY = y;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 2;
                 int score = determineScore(rc, x + -1, y + 1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -1;
                     bestY = y + 1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + -1, y + 2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + -1;
                     bestY = y + 2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 0, y + -2);
-                if (score > bestScore) {
-                    bestX = x + 0;
+                basDist = 2;
+                int score = determineScore(rc, x, y + -2);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                    bestX = x;
                     bestY = y + -2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 0, y + -1);
-                if (score > bestScore) {
-                    bestX = x + 0;
+                basDist = 1;
+                int score = determineScore(rc, x, y + -1);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                    bestX = x;
                     bestY = y + -1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 0, y + 0);
-                if (score > bestScore) {
-                    bestX = x + 0;
-                    bestY = y + 0;
+                basDist = 0;
+                int score = determineScore(rc, x, y);
+                if (score >= bestScore) {
+                    bestX = x;
+                    bestY = y;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 0, y + 1);
-                if (score > bestScore) {
-                    bestX = x + 0;
+                basDist = 1;
+                int score = determineScore(rc, x, y + 1);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                    bestX = x;
                     bestY = y + 1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 0, y + 2);
-                if (score > bestScore) {
-                    bestX = x + 0;
+                basDist = 2;
+                int score = determineScore(rc, x, y + 2);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                    bestX = x;
                     bestY = y + 2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + 1, y + -2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 1;
                     bestY = y + -2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 2;
                 int score = determineScore(rc, x + 1, y + -1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 1;
                     bestY = y + -1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 1, y + 0);
-                if (score > bestScore) {
+                basDist = 1;
+                int score = determineScore(rc, x + 1, y);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 1;
-                    bestY = y + 0;
+                    bestY = y;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 2;
                 int score = determineScore(rc, x + 1, y + 1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 1;
                     bestY = y + 1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + 1, y + 2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 1;
                     bestY = y + 2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 4;
                 int score = determineScore(rc, x + 2, y + -2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 2;
                     bestY = y + -2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + 2, y + -1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 2;
                     bestY = y + -1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
-                int score = determineScore(rc, x + 2, y + 0);
-                if (score > bestScore) {
+                basDist = 2;
+                int score = determineScore(rc, x + 2, y);
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 2;
-                    bestY = y + 0;
+                    bestY = y;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 3;
                 int score = determineScore(rc, x + 2, y + 1);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 2;
                     bestY = y + 1;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             {
+                basDist = 4;
                 int score = determineScore(rc, x + 2, y + 2);
-                if (score > bestScore) {
+                if (score > bestScore || (score == bestScore && basDist < bestDist)) {
                     bestX = x + 2;
                     bestY = y + 2;
                     bestScore = score;
+                    bestDist = basDist;
                 }
             }
             //nowhere to attack
