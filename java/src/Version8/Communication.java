@@ -4,6 +4,8 @@ import battlecode.common.*;
 
 import static Version8.RobotPlayer.*;
 
+import java.sql.SQLOutput;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -12,7 +14,7 @@ public class Communication
 
     private static class Queue
     {
-        private static final int len = 250;
+        private static final int len = 200;
 
         private final Ruin[] ruins;
         private int head = 0, tail = -1;
@@ -45,9 +47,14 @@ public class Communication
     static final Queue sendQueue = new Queue();
 
     static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
-
     static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
     static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
+
+    /*
+        Stores Ruins based on their location for instant access
+        [x position][y position]
+     */
+    static Ruin[][] allMemory;
 
     /*
         The maximum number of Ruins messages a tower will send in any given turn
@@ -60,31 +67,21 @@ public class Communication
     */
     public static void processMessagesRobot(RobotController rc)
     {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+        Message[] messages = rc.readMessages(rc.getRoundNum() - 1);
 
-        for(Message[] mArr : messages)
+        //TESTING*/System.out.println("-Processing " + messages.length + " messages");
+
+        for(Message m : messages)
         {
-            for(Message m : mArr)
+            switch (m.getBytes() & 0b11)
             {
-                switch (m.getBytes() & 0b11)
-                {
-                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
-                }
-
+                case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
             }
+
         }
-//        Message[] messages = rc.readMessages(rc.getRoundNum()-1);
-//            System.out.println(messages.length);
-//            for(Message m : messages)
-//            {
-//                switch (m.getBytes() & 0b11)
-//                {
-//                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-//                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
-//                }
-//
-//            }
+
+        //TESTING*/System.out.println("-");
     }
 
     /*
@@ -92,20 +89,21 @@ public class Communication
     */
     public static void processMessagesTower(RobotController rc)
     {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)};
+        Message[] messages = rc.readMessages(rc.getRoundNum() - 1);
 
-        for(Message[] mArr : messages)
+        //TESTING*/System.out.println("-Processing " + messages.length + " messages");
+
+        for(Message m : messages)
         {
-            for(Message m : mArr)
+            switch (m.getBytes() & 0b11)
             {
-                switch (m.getBytes() & 0b11)
-                {
-                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    //case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
-                    case 0b10 -> processSymmetryMessageTower(m.getBytes());
-                }
+                case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                //case 0b01 -> updatePaintAveragesTower(rc, readAverageMessage(m));
+                case 0b10 -> processSymmetryMessageTower(m.getBytes());
             }
         }
+
+        //TESTING*/System.out.println("-");
     }
 
     public static void sendMessagesTower(RobotController rc) throws GameActionException
@@ -147,7 +145,8 @@ public class Communication
      */
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
-        if(rc.getID() == 10011) System.out.println(nearbyRuins.length);
+        //TESTING*/System.out.println("~Scanning for ruins");
+
         for(MapLocation ruinLoc : nearbyRuins)
         {
             int status = 0;
@@ -178,6 +177,8 @@ public class Communication
 
             updateRuinsMemory(new Ruin(ruinLoc, status, isPaintTower));
         }
+
+        //TESTING*/System.out.println("~");
     }
 
 
@@ -326,11 +327,55 @@ public class Communication
         }
     }
 
-    //Takes in a Ruin; If we already have knowledge of this Ruin, update the status, otherwise add it to memory
-    public static void updateRuinsMemory(Ruin ruin)
+    //prints out the bytecode usage of a single call to updateRuinsMemory
+    private static void updateRuinsMemoryTest(Ruin ruin)
     {
         int price = Clock.getBytecodesLeft();
+        updateRuinsMemory(ruin);
+        System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
+    }
+
+    //Takes in a Ruin; If we already have knowledge of this Ruin, update the status, otherwise add it to memory
+    private static void updateRuinsMemory(Ruin ruin)
+    {
+        Ruin mem = allMemory[ruin.location.x][ruin.location.y]; //might be null
+
+        if(ruin.equals(mem)) //we already know of this exact Ruin
+        {
+            return;
+        }
+        else if(mem == null) //this is the first Ruin at this location we have heard of
+        {
+            allMemory[ruin.location.x][ruin.location.y] = ruin;
+
+            switch(ruin.status)
+            {
+                case 0: //unclaimed
+                    unclaimedRuins.add(ruin);
+                    break;
+
+                case 1: //ally
+                    if(ruin.isPaintTower)
+                    {
+                        alliedPaintTowers.add(ruin);
+                    }
+                    break;
+
+                case 2: //enemy
+                    enemyTowers.add(ruin);
+                    break;
+            }
+        }
+        else //we have heard of a Ruin at this location before, and need to update its status
+        {
+            mem.update(ruin);
+        }
+
+
+            /* OLD - nothing below here
+
         Ruin next;
+
         ListIterator<Ruin> iterator = unclaimedRuins.listIterator();
         while(iterator.hasNext())
         {
@@ -339,7 +384,6 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
-                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -357,7 +401,6 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
-                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -375,7 +418,6 @@ public class Communication
             {
                 if(next.equals(ruin))
                 {
-                    //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
                     return; //we already know of this exact Ruin
                 }
                 else
@@ -402,7 +444,8 @@ public class Communication
                 enemyTowers.add(ruin);
                 break;
         }
-        //System.out.println("Price of processing:" + (price - Clock.getBytecodesLeft()));
+
+            */
     }
 
     /*

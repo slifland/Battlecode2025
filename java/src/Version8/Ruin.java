@@ -30,6 +30,17 @@ public class Ruin
         return "Location: " + location + ", Owned by: " + ownership + (isPaintTower ? ", Paint Tower" : ", Non-Paint Tower");
     }
 
+    /*
+        Updates the info stored in this Ruin such that this.equals(r)
+        It is assumed that both Ruins already have the same location (small bytecode save)
+     */
+    public void update(Ruin r)
+    {
+        //location = r.location; //assume this is already true
+        status = r.status;
+        isPaintTower = r.isPaintTower;
+    }
+
     @Override
     public boolean equals(Object o)
     {

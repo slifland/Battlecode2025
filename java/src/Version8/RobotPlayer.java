@@ -83,6 +83,8 @@ public class RobotPlayer {
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
+        Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
+
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
@@ -212,19 +214,16 @@ public class RobotPlayer {
         }
         else
         {
-            if(rc.getRoundNum() % 5 == 0) {
-                //int price = Clock.getBytecodesLeft();
+            if(rc.getRoundNum() % 5 == 0)
+            {
                 Communication.processMessagesRobot(rc);
-                //System.out.println("Price 1: " + (price - Clock.getBytecodesLeft()));
-                //price = Clock.getBytecodesLeft();
-//                Communication.scanForRuins(rc);
-                //System.out.println("Price 2: " + (price - Clock.getBytecodesLeft()));
-                //price = Clock.getBytecodesLeft();
-                Communication.sendMessagesRobot(rc);
-                //System.out.println("Price 3: " + (price - Clock.getBytecodesLeft()));
             }
-            Communication.scanForRuins(rc); //isnt expensive, and constitutes good info - lets do it every turn
+
+            Communication.scanForRuins(rc);
+            Communication.sendMessagesRobot(rc);
         }
+
+        Communication.printRuinsMemory();
     }
 
 
