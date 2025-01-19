@@ -36,6 +36,7 @@ public class Soldier {
     public static RobotInfo seenEnemyTower;
     static boolean wallHug;
     static boolean clockwise;
+    static boolean canFinishRuin = false;
     //static MapLocation currentSector;
 
     public static MapLocation averageEnemyPaint;
@@ -52,6 +53,7 @@ public class Soldier {
     final static int TURN_TO_NAVIGATE_TO_TOWERS = 200; //indicates at what turn we will prioritize going towards enemy towers
     final static int STOP_EXPLORING = 200; //indicates when soldiers will began defaulting to navigate instead of explore
     final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 10; //records how often we will checked if our ruin claim has been thwarted by enemies
+    final static int TURN_TO_FILL = 20; //turn at which filling becomes allowed
 
     public static void runSoldier(RobotController rc) throws GameActionException
     {
@@ -97,6 +99,7 @@ public class Soldier {
         if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
             validateRuinClaim(rc);
         }
+        //if(claimedRuin != null) rc.setIndicatorString(claimedRuin.toString());
 
 //        if(target == null) rc.setIndicatorString(state.toString());
 //        else rc.setIndicatorString(state.toString() + " : " + target.toString());
@@ -212,33 +215,34 @@ public class Soldier {
     public static void updateState(RobotController rc) throws GameActionException
     {
         //check if we need to refill on paint
-        if(rc.getPaint() <= refillThreshold || (rc.getPaint() <= doneRefillingThreshold && state == SoldierState.Refill)){
+        if((rc.getPaint() <= refillThreshold || (rc.getPaint() <= doneRefillingThreshold && state == SoldierState.Refill)) && !canFinishRuin){
             state = SoldierState.Refill;
             if(fillingStation == null) fillingStation = nextNearestPaintTower(rc);
             return;
         }
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (rc.getRoundNum() < STOP_EXPLORING) ? SoldierState.Explore : SoldierState.Navigate;
-
-        if(numEnemyTiles > 7 && enemyRobots.length >= 2 ) {
-            state = SoldierState.Tower;
-            return;
-        }
         fillingStation = null;
-        //check if we see any nearby unclaimed ruins
-        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
-            state = SoldierState.RuinBuilding;
-            return;
-        }
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
             state = SoldierState.Tower;
             return;
         }
+        //check if we see any nearby unclaimed ruins
+        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
+            state = SoldierState.RuinBuilding;
+            return;
+        }
+        canFinishRuin = false;
+        if((numEnemyTiles > 7 && enemyRobots.length >= 2)) {
+            state = SoldierState.Tower;
+            return;
+        }
+
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && rc.senseNearbyRobots(closestUnfilledPatternCenter, 8, rc.getTeam()).length <= 1) {
             if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25) && validateLocation(rc, closestUnfilledPatternCenter)){
-                state = SoldierState.Fill;
+                if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
             }
         }
     }
@@ -246,10 +250,11 @@ public class Soldier {
     public static void explore(RobotController rc) throws GameActionException // use symmetry for this method
     {
         if(claimedRuin != null && state != SoldierState.Refill) {
+            validateRuinClaim(rc);
             navigate(rc);
             return;
         }
-        if((turnCount == 1 && rng.nextInt(6) == 0 && rc.getRoundNum() < 100) || wallHug) {
+        if((turnCount == 1 && rng.nextInt(6) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -275,7 +280,7 @@ public class Soldier {
             Direction dir = BFS_7x7.pathfind(rc, target);
             //rc.setIndicatorLine(rc.getLocation(), target, 255, 255, 255);
             if (rc.canMove(dir)) rc.move(dir);
-            //attemptFill(rc);
+            attemptFill(rc);
         }
     }
 
@@ -283,6 +288,7 @@ public class Soldier {
     //if we have nothing to do, just explore
     public static void navigate(RobotController rc) throws GameActionException
     {
+        if(claimedRuin != null) validateRuinClaim(rc);
         if(claimedRuin != null) {
             Direction dir = BFS_7x7.pathfind(rc, claimedRuin);
             if(rc.canMove(dir)) rc.move(dir);
@@ -412,6 +418,7 @@ public class Soldier {
     }
 
     public static void ruinBuilding(RobotController rc) throws GameActionException {
+
         if (attemptCompleteTowerPattern(rc, closestUnclaimedRuin)) {
             claimedRuin = null;
             return;
@@ -420,6 +427,14 @@ public class Soldier {
         boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, closestUnclaimedRuin, tilesNearRuin);
         if (desiredPattern == null) {
             desiredPattern = chooseDesiredPattern(rc, closestUnclaimedRuin);
+        }
+        canFinishRuin = false;
+        int neededToFinish = 0;
+        if(rc.getPaint() <= 50) {
+            for (MapInfo tile : tilesNearRuin) {
+                if (tile.getPaint() == PaintType.EMPTY || tile.getPaint().isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, closestUnclaimedRuin)) neededToFinish++;
+            }
+            if(neededToFinish * 5 < rc.getPaint()) canFinishRuin = true;
         }
         Micro.ruinBuildingMicro(rc, closestUnclaimedRuin, desiredPattern, tilesNearRuin); //finds the best spaces to move and attack, and acts on that
         if (attemptCompleteTowerPattern(rc, closestUnclaimedRuin)) {
@@ -671,17 +686,17 @@ public class Soldier {
         for(MapInfo tile : tilesNearRuin) {
             if(!tile.isPassable()) continue;
             if(tile.getPaint() == PaintType.EMPTY) {
-                return true;
+                hasEmpty = true;
             }
             if(tile.getPaint().isEnemy()){
                 return false;
             }
             if(pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
-                return true;
+                hasEmpty = true;
             }
-
         }
-        if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0 && rc.getChips() > 1200) return true;
+        if(hasEmpty) return true;
+        if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
         return false;
     }
 
