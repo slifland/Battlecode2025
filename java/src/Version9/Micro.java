@@ -15,7 +15,7 @@ class microInfo {
     public int paintLoss;
 
     //creates a micro Info tile, populating its information based on a map info tile
-    public microInfo(MapInfo tile, boolean checkForMop, boolean checkForSplash) {
+    public microInfo(MapInfo tile) {
         passable = tile.isPassable();
         //we don't need to populate info if the tile is not passable - waste of bytecodes
         if(!passable) return;
@@ -113,6 +113,122 @@ public class Micro {
             case UnitType.SOLDIER -> runSoldierMicro(rc);
             default -> Direction.CENTER;
         };
+    }
+    
+    //attempts to find the best place near the ruin to fill in, and also move to the best adjacent square
+    public static void ruinBuildingMicro(RobotController rc, MapLocation ruin, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
+        rc.setIndicatorString("Building a ruin!" + ruin.toString());
+        int curDist = rc.getLocation().distanceSquaredTo(ruin);
+        MapLocation bestAttack = null;
+        if(rc.isActionReady()) {
+            bestAttack = bestRuinAttack(rc, desiredPattern, tilesToFill, ruin);
+            if (bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
+        }
+        if(bestAttack == null && rc.getChips() > 1000) {
+            Direction dir = BFS_7x7.pathfind(rc, ruin);
+            if(rc.canMove(dir)) rc.move(dir);
+            return;
+        }
+        if(rc.isMovementReady()) {
+            if(curDist <= 8)
+                populateMicroArrayRuin(rc, ruin);
+            else
+                populateMicroArray(rc);
+            microInfo bestMicro = microArray[0];
+            for(int i = 1; i < 9; i++) {
+                do {
+                    //if one space is passable and the other is not, then passable is better
+                    if (!microArray[i].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    if(curDist > 8 ) {
+                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[i].loc.distanceSquaredTo(ruin);
+                        if(distToRuin < altDistToRuin) break;
+                        if(altDistToRuin < distToRuin) {
+                            bestMicro = microArray[i];
+                            break;
+                        }
+                    }
+
+                    //look at which place will lose us the least paint at the end of this turn
+                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+
+
+                    if(bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[i].loc.distanceSquaredTo(bestAttack);
+                        if(distToAction < altDistToAction) break;
+                        if(altDistToAction < distToAction) {
+                            bestMicro = microArray[i];
+                            break;
+                        }
+                    }
+
+                    //regardless of action readiness, the next considerations are unified:
+                    //we prioritize allied paint over neutral paint over enemy paint
+                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+                } while(false);
+            }
+            if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
+                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            }
+        }
+        if(rc.isActionReady() && bestAttack != null) {
+            if(rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
+        }
+
+    }
+
+    //finds the best square near the ruin for us to attack
+    //1. attack the tile we are on if empty
+    //2. attack an empty tile close to us
+    //3. attack an empty tile further away
+    //4. attack an allied tile with the wrong pattern close to us
+    //5. attack an allied tile further away with the wrong pattern
+    public static MapLocation bestRuinAttack(RobotController rc, boolean[][] desiredPattern, MapInfo[] tilesToFill, MapLocation ruin) throws GameActionException {
+        MapInfo bestTile = null;
+        int minDist = Integer.MAX_VALUE;
+        if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.getLocation().isWithinDistanceSquared(ruin, 8)) return rc.getLocation();
+        for(MapInfo tile : tilesToFill) {
+            int dist = rc.getLocation().distanceSquaredTo(tile.getMapLocation());
+            if(!tile.isPassable()) continue;
+            if(tile.getPaint() == PaintType.EMPTY && (bestTile == null || dist < minDist || bestTile.getPaint().isAlly())) {
+                bestTile = tile;
+                minDist = dist;
+            }
+            else if(tile.getPaint().isAlly() && (bestTile == null || (dist < minDist && bestTile.getPaint().isAlly()))
+             && Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, ruin) != tile.getPaint().isSecondary()) {
+                minDist = dist;
+                bestTile = tile;
+            }
+        }
+        return (bestTile != null) ? bestTile.getMapLocation() : null;
     }
 
     //the micro method for soldiers
@@ -252,8 +368,6 @@ public class Micro {
         int curX = curLoc.x;
         int curY = curLoc.y;
         int totalFilled = 0;
-        boolean checkForMop = rc.getType() == UnitType.MOPPER;
-        boolean checkForSplash = rc.getType() == UnitType.SPLASHER;
         //loop before being unrolled, in case changes need to be made
 //        for(int dx = -1; dx <= 1; dx++) {
 //            if(curX + dx >= 0 && curX + dx  <= mapWidth) {
@@ -261,7 +375,7 @@ public class Micro {
 //                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
 //                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
 //                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-//                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+//                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc));
 //                        totalFilled++;
 //                    }
 //                }
@@ -271,19 +385,19 @@ public class Micro {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
@@ -291,19 +405,19 @@ public class Micro {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
                 //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
@@ -311,19 +425,106 @@ public class Micro {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
                 if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo(newLoc), checkForMop, checkForSplash);
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+        }
+        //populate the rest of the array in case we are on the edge of the map and couldn't fill it all
+        for(int i = totalFilled; i < 9; i++) {
+            microArray[i] = new microInfo();
+        }
+    }
+    //populates the array of potential spaces we can move too for this turn
+    public static void populateMicroArrayRuin(RobotController rc, MapLocation ruin) throws GameActionException {
+        microArray = new microInfo[9];
+        int mapHeight = rc.getMapHeight() - 1;
+        int mapWidth = rc.getMapWidth() - 1;
+        MapLocation curLoc = rc.getLocation();
+        int curX = curLoc.x;
+        int curY = curLoc.y;
+        int totalFilled = 0;
+        //loop before being unrolled, in case changes need to be made
+//        for(int dx = -1; dx <= 1; dx++) {
+//            if(curX + dx >= 0 && curX + dx  <= mapWidth) {
+//                for (int dy = -1; dy <= 1; dy++) {
+//                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
+//                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
+//                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+//                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc));
+//                        totalFilled++;
+//                    }
+//                }
+//            }
+//        }
+        if (curX + -1 >= 0 && curX + -1 <= mapWidth) {
+            if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+        }
+        if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
+            if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
+                //if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+        }
+        if (curX + 1 >= 0 && curX + 1 <= mapWidth) {
+            if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                totalFilled++;
+            }
+            if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
+                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }

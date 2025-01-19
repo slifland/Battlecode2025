@@ -2,9 +2,6 @@ package Version9;
 
 import battlecode.common.*;
 
-import java.util.HashSet;
-
-import static Version9.Communication.unclaimedRuins;
 import static Version9.RobotPlayer.rng;
 import static Version9.Communication.alliedPaintTowers;
 import static Version9.RobotPlayer.*;
@@ -35,6 +32,7 @@ public class Soldier {
     static int sector_sizeX;
     static int sector_sizeY;
     static boolean beenToCorner = false;
+    static MapInfo[] tilesNearRuin;
     //static MapLocation currentSector;
 
     public static MapLocation averageEnemyPaint;
@@ -204,7 +202,7 @@ public class Soldier {
         }
         fillingStation = null;
         //check if we see any nearby unclaimed ruins
-        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && (!isOccupied(rc, closestUnclaimedRuin)) && rc.getNumberTowers() < 25) {
+        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
             state = SoldierState.RuinBuilding;
             return;
         }
@@ -376,101 +374,116 @@ public class Soldier {
 
     public static void ruinBuilding(RobotController rc) throws GameActionException
     {
-        if(claimedRuin != null && claimedRuin == closestUnclaimedRuin && rc.getLocation().distanceSquaredTo(claimedRuin) > 4 && rc.canSenseLocation(claimedRuin) && rc.senseNearbyRobots(claimedRuin, 2, rc.getTeam()).length >= 1) {
+        if(attemptCompleteTowerPattern(rc, closestUnclaimedRuin)) {
             claimedRuin = null;
-            navigate(rc);
             return;
         }
-        MapInfo[] attemptToFill = rc.senseNearbyMapInfos(closestUnclaimedRuin, 8);
-        int dist = rc.getLocation().distanceSquaredTo(closestUnclaimedRuin);
-        boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, closestUnclaimedRuin, attemptToFill);
+        claimedRuin = closestUnclaimedRuin;
+        boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, closestUnclaimedRuin, tilesNearRuin);
         if(desiredPattern == null) {
             desiredPattern = chooseDesiredPattern(rc, closestUnclaimedRuin);
         }
-        if(!isOccupied(rc, closestUnclaimedRuin) && claimedRuin == null) {
-            MapLocation toMark = closestUnclaimedRuin.add(rc.getLocation().directionTo(closestUnclaimedRuin).opposite());
-            if(rc.canMark(toMark)){
-                rc.mark(toMark, true);
-                claimedRuin = closestUnclaimedRuin;
-            }
-        }
-        if(dist > 2 && rc.isMovementReady()) {
-            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
-            if(rc.canMove(dir)) rc.move(dir);
-        }
-        //if we are on the pattern, and we are on empty paint, prioritize filling in around us
-        if (dist <= 8 && rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
-            if(rc.canAttack(rc.getLocation())) rc.attack(rc.getLocation(), Utilities.getColorFromCustomPattern(rc.getLocation(), desiredPattern, closestUnclaimedRuin));
-        }
-        MapInfo bestTile = null;
-        boolean isSecondary = false;
-        int bestDistToSelf = Integer.MAX_VALUE;
-        //find the best tile to attack, according to these priorities
-        //1. tile is within the radius of the unclaimed ruin
-        //2. tile is empty
-        //3. tile is allied
-        //4. distance to current location is tiebreak
-        //if we find a tile that is empty within the radius, just shirt circuit, otherwise keep going in case we find a better one
-        for(MapInfo tile : attemptToFill) {
-            if(!tile.isPassable()) continue;
-            PaintType paint = tile.getPaint();
-            int distToRuin = tile.getMapLocation().distanceSquaredTo(closestUnclaimedRuin);
-            int distToSelf = tile.getMapLocation().distanceSquaredTo(rc.getLocation());
-            boolean tempIsSecondary = Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, closestUnclaimedRuin);
-            if(paint == PaintType.EMPTY && distToRuin <= 8 && (distToSelf < bestDistToSelf || bestTile == null || !bestTile.getPaint().isEnemy())) {
-                if(rc.canAttack(tile.getMapLocation())) {
-                    rc.attack(tile.getMapLocation(), tempIsSecondary);
-                    break;
-                }
-                else {
-                    bestTile = tile;
-                    bestDistToSelf = distToSelf;
-                    isSecondary = tempIsSecondary;
-                }
-            }
-            else if (paint.isAlly() && distToRuin <= 8 && (distToSelf < bestDistToSelf || bestTile == null) && paint.isSecondary() != tempIsSecondary) {
-                bestTile = tile;
-                bestDistToSelf = distToSelf;
-                isSecondary = tempIsSecondary;
-            }
-        }
-        if(bestTile != null && rc.canAttack(bestTile.getMapLocation())) {
-            rc.attack(bestTile.getMapLocation(), isSecondary);
-        }
-        else if(bestTile != null && rc.isMovementReady() && rc.isActionReady()) {
-            Direction dir = BFS_7x7.pathfind(rc, bestTile.getMapLocation());
-            if(rc.canMove(dir)) rc.move(dir);
-            if(rc.canAttack(bestTile.getMapLocation())) rc.attack(bestTile.getMapLocation(), isSecondary);
-        }
-        if(bestTile == null && rc.isMovementReady()) {
-            Direction dir = Direction.allDirections()[rng.nextInt(Direction.allDirections().length)];
-            if(rc.canMove(dir) && rc.getLocation().add(dir).isWithinDistanceSquared(closestUnclaimedRuin, 2)) rc.move(dir);
-        }
-        if(rc.isActionReady() && rc.getPaint() > refillThreshold + 5) {
-            attemptFill(rc);
-        }
-
-        //try and complete the ruin pattern
-        if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1200) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, closestUnclaimedRuin)){
-            rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, closestUnclaimedRuin);
+        Micro.ruinBuildingMicro(rc, closestUnclaimedRuin, desiredPattern, tilesNearRuin); //finds the best spaces to move and attack, and acts on that
+        if(attemptCompleteTowerPattern(rc, closestUnclaimedRuin)) {
             claimedRuin = null;
+            return;
         }
-        else if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, closestUnclaimedRuin)){
-            rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, closestUnclaimedRuin);
-            claimedRuin = null;
-        }
-        else if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin)){
-            rc.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin);
-            claimedRuin = null;
-        }
-        if(rc.isMovementReady() && rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy()) {
-            for(MapLocation loc : rc.getAllLocationsWithinRadiusSquared(rc.getLocation(), 2)) {
-                if(rc.canMove(rc.getLocation().directionTo(loc)) && loc.isWithinDistanceSquared(closestUnclaimedRuin, 8) && !rc.senseMapInfo(loc).getPaint().isEnemy()) {
-                    rc.move(rc.getLocation().directionTo(loc));
-                    break;
-                }
-            }
-        }
+        if(rc.isActionReady()) attemptFill(rc);
+//        if(claimedRuin != null && claimedRuin == closestUnclaimedRuin && rc.getLocation().distanceSquaredTo(claimedRuin) > 4 && rc.canSenseLocation(claimedRuin) && rc.senseNearbyRobots(claimedRuin, 2, rc.getTeam()).length >= 1) {
+//            claimedRuin = null;
+//            navigate(rc);
+//            return;
+//        }
+//        MapInfo[] attemptToFill = rc.senseNearbyMapInfos(closestUnclaimedRuin, 8);
+//        int dist = rc.getLocation().distanceSquaredTo(closestUnclaimedRuin);
+//        boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, closestUnclaimedRuin, attemptToFill);
+//        if(desiredPattern == null) {
+//            desiredPattern = chooseDesiredPattern(rc, closestUnclaimedRuin);
+//        }
+//        if(!isOccupied(rc, closestUnclaimedRuin) && claimedRuin == null) {
+//            MapLocation toMark = closestUnclaimedRuin.add(rc.getLocation().directionTo(closestUnclaimedRuin).opposite());
+//            if(rc.canMark(toMark)){
+//                rc.mark(toMark, true);
+//                claimedRuin = closestUnclaimedRuin;
+//            }
+//        }
+//        if(dist > 2 && rc.isMovementReady()) {
+//            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
+//            if(rc.canMove(dir)) rc.move(dir);
+//        }
+//        //if we are on the pattern, and we are on empty paint, prioritize filling in around us
+//        if (dist <= 8 && rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
+//            if(rc.canAttack(rc.getLocation())) rc.attack(rc.getLocation(), Utilities.getColorFromCustomPattern(rc.getLocation(), desiredPattern, closestUnclaimedRuin));
+//        }
+//        MapInfo bestTile = null;
+//        boolean isSecondary = false;
+//        int bestDistToSelf = Integer.MAX_VALUE;
+//        //find the best tile to attack, according to these priorities
+//        //1. tile is within the radius of the unclaimed ruin
+//        //2. tile is empty
+//        //3. tile is allied
+//        //4. distance to current location is tiebreak
+//        //if we find a tile that is empty within the radius, just shirt circuit, otherwise keep going in case we find a better one
+//        for(MapInfo tile : attemptToFill) {
+//            if(!tile.isPassable()) continue;
+//            PaintType paint = tile.getPaint();
+//            int distToRuin = tile.getMapLocation().distanceSquaredTo(closestUnclaimedRuin);
+//            int distToSelf = tile.getMapLocation().distanceSquaredTo(rc.getLocation());
+//            boolean tempIsSecondary = Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, closestUnclaimedRuin);
+//            if(paint == PaintType.EMPTY && distToRuin <= 8 && (distToSelf < bestDistToSelf || bestTile == null || !bestTile.getPaint().isEnemy())) {
+//                if(rc.canAttack(tile.getMapLocation())) {
+//                    rc.attack(tile.getMapLocation(), tempIsSecondary);
+//                    break;
+//                }
+//                else {
+//                    bestTile = tile;
+//                    bestDistToSelf = distToSelf;
+//                    isSecondary = tempIsSecondary;
+//                }
+//            }
+//            else if (paint.isAlly() && distToRuin <= 8 && (distToSelf < bestDistToSelf || bestTile == null) && paint.isSecondary() != tempIsSecondary) {
+//                bestTile = tile;
+//                bestDistToSelf = distToSelf;
+//                isSecondary = tempIsSecondary;
+//            }
+//        }
+//        if(bestTile != null && rc.canAttack(bestTile.getMapLocation())) {
+//            rc.attack(bestTile.getMapLocation(), isSecondary);
+//        }
+//        else if(bestTile != null && rc.isMovementReady() && rc.isActionReady()) {
+//            Direction dir = BFS_7x7.pathfind(rc, bestTile.getMapLocation());
+//            if(rc.canMove(dir)) rc.move(dir);
+//            if(rc.canAttack(bestTile.getMapLocation())) rc.attack(bestTile.getMapLocation(), isSecondary);
+//        }
+//        if(bestTile == null && rc.isMovementReady()) {
+//            Direction dir = Direction.allDirections()[rng.nextInt(Direction.allDirections().length)];
+//            if(rc.canMove(dir) && rc.getLocation().add(dir).isWithinDistanceSquared(closestUnclaimedRuin, 2)) rc.move(dir);
+//        }
+//        if(rc.isActionReady() && rc.getPaint() > refillThreshold + 5) {
+//            attemptFill(rc);
+//        }
+//
+//        //try and complete the ruin pattern
+//        if ((rc.getNumberTowers() > 2 || rc.getMoney() >= 1200) && rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, closestUnclaimedRuin)){
+//            rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, closestUnclaimedRuin);
+//            claimedRuin = null;
+//        }
+//        else if (rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, closestUnclaimedRuin)){
+//            rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, closestUnclaimedRuin);
+//            claimedRuin = null;
+//        }
+//        else if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin)){
+//            rc.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin);
+//            claimedRuin = null;
+//        }
+//        if(rc.isMovementReady() && rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy()) {
+//            for(MapLocation loc : rc.getAllLocationsWithinRadiusSquared(rc.getLocation(), 2)) {
+//                if(rc.canMove(rc.getLocation().directionTo(loc)) && loc.isWithinDistanceSquared(closestUnclaimedRuin, 8) && !rc.senseMapInfo(loc).getPaint().isEnemy()) {
+//                    rc.move(rc.getLocation().directionTo(loc));
+//                    break;
+//                }
+//            }
+//        }
     }
     //where we decide what kind of pattern to use
     //logic currently copied from version 8
@@ -556,29 +569,33 @@ public class Soldier {
         return true;
     }
 
-    public static void attemptCompleteTowerPattern(RobotController rc) throws GameActionException
+    public static boolean attemptCompleteTowerPattern(RobotController rc, MapLocation ruin) throws GameActionException
     {
-        for(MapLocation ruin : nearbyRuins)
-        {
+//        for(MapLocation ruin : nearbyRuins)
+//        {
             if(!rc.canSenseRobotAtLocation(ruin) &&
                     rc.getLocation().isWithinDistanceSquared(ruin, UnitType.SOLDIER.actionRadiusSquared))
             {
-                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, target))
+                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin))
                 {
-                    rc.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, target);
+                    rc.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin);
+                    return true;
                 }
 
-                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, target))
+                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin))
                 {
-                    rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, target);
+                    rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin);
+                    return true;
                 }
 
-                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, target))
+                if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin))
                 {
-                    rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, target);
+                    rc.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin);
+                    return true;
                 }
-            }
+            //
         }
+        return false;
     }
 
     //returns whether the location is far enough from the edge to be a valid resource location center
@@ -703,12 +720,19 @@ public class Soldier {
 
     //checks whether a ruin is claimed, but also if it needs help
     public static boolean needsHelp(RobotController rc, MapLocation ruin) throws GameActionException {
-        if(claimedRuin != null && claimedRuin.equals(ruin)) return true;
-        for(MapInfo tile : rc.senseNearbyMapInfos(ruin, 8)) {
+        //if(claimedRuin != null && claimedRuin.equals(ruin)) return true;
+        tilesNearRuin = rc.senseNearbyMapInfos(ruin, 8);
+        for(MapInfo tile : tilesNearRuin) {
             if(tile.getPaint() == PaintType.EMPTY) {
                 return true;
             }
+            if(tile.getPaint().isEnemy()){
+                return false;
+            }
         }
+        if(rc.getChips() > 1200) return true;
+
+        if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
         return false;
     }
 
