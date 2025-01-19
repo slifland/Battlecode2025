@@ -26,11 +26,12 @@ public class Utilities
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(RobotController rc, MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
+        if(rc.getRoundNum() <= 100) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         int moneyScore = 0;
         int paintScore = 0;
         int totalAlly = 0;
         MapLocation fakeOrigin = new MapLocation(center.x - 2, center.y - 2);
-        boolean[][] moneyPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        boolean[][] moneyPattern = (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         boolean[][] paintPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
         for(MapInfo tile : ruinTiles) {
             PaintType paint = tile.getPaint();

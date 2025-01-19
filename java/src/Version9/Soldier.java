@@ -459,6 +459,10 @@ public class Soldier {
             rc.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, closestUnclaimedRuin);
             claimedRuin = null;
         }
+        else if(rc.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin)){
+            rc.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, closestUnclaimedRuin);
+            claimedRuin = null;
+        }
         if(rc.isMovementReady() && rc.senseMapInfo(rc.getLocation()).getPaint().isEnemy()) {
             for(MapLocation loc : rc.getAllLocationsWithinRadiusSquared(rc.getLocation(), 2)) {
                 if(rc.canMove(rc.getLocation().directionTo(loc)) && loc.isWithinDistanceSquared(closestUnclaimedRuin, 8) && !rc.senseMapInfo(loc).getPaint().isEnemy()) {
@@ -471,18 +475,14 @@ public class Soldier {
     //where we decide what kind of pattern to use
     //logic currently copied from version 8
     public static boolean[][] chooseDesiredPattern(RobotController rc, MapLocation m) throws GameActionException {
-        if(rc.getRoundNum() <= 5) {
-            return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-        }
-        else {
-            int ranNum = (rc.getRoundNum() < 100) ? 0 : RobotPlayer.rng.nextInt(3);
+
+            int ranNum = (rc.getRoundNum() < 100) ? 0 : RobotPlayer.rng.nextInt(2);
             if(ranNum <= 1) {
-                return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+                return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
             }
             else {
                 return rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
             }
-        }
     }
 
     //attempt fill assumes we have already moved - move, then paint
