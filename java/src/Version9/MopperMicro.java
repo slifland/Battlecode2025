@@ -733,7 +733,7 @@ public class MopperMicro {
 
             int dist = bestMicro.loc.distanceSquaredTo(target);
             int altDist = m.loc.distanceSquaredTo(target);
-            System.out.println(dist + " " + altDist + " : " + bestMicro.loc + " " + m.loc);
+            //System.out.println(dist + " " + altDist + " : " + bestMicro.loc + " " + m.loc);
             if(dist <= actionRadius && altDist > actionRadius) continue;
             if(dist > actionRadius && altDist <= actionRadius) {
                 bestMicro = m;
@@ -768,7 +768,7 @@ public class MopperMicro {
                 continue;
             }
         }
-        System.out.println(bestMicro.loc);
+        //Systemout.println(bestMicro.loc);
         if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
             rc.move(rc.getLocation().directionTo(bestMicro.loc));
         }

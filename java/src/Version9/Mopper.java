@@ -170,6 +170,10 @@ public class Mopper {
     //tries to clear the enemy paint around one of our ruins
     public static void clear(RobotController rc) throws GameActionException {
         MapLocation bestLoc = bestClear(rc, nearbyRuin);
+        Direction dir = MopperMicro.dirToSweep(rc, 2);
+        if(dir != null && rc.canMopSwing(dir)) {
+            rc.mopSwing(dir);
+        }
         if(bestLoc != null && rc.isActionReady()) {
             MopperMicro.targetedMopperMicro(rc, MopperMicro.customLocationTo(rc.getLocation(), bestLoc), bestLoc);
         }

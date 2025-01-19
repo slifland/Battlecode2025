@@ -88,7 +88,7 @@ public class RobotPlayer {
 
         Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
         //sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
-        Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
+        //Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
 
         while (true) {
 

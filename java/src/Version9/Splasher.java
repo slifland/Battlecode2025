@@ -53,8 +53,8 @@ public class Splasher {
                 contest(rc);
                 break;
         }
-//        if(curObjective== null)rc.setIndicatorString(state.toString());
-//        else rc.setIndicatorString(state + " : " + curObjective);
+        if(curObjective== null)rc.setIndicatorString(state.toString());
+        else rc.setIndicatorString(state + " : " + curObjective);
     }
 
     //attempts to navigate to a known location - enemy average, usually
@@ -203,7 +203,7 @@ public class Splasher {
     public static void updateState(RobotController rc) throws GameActionException {
         state = splasherStates.navigate;
 
-        if(rc.getPaint() <= refillThreshold || (state == splasherStates.refill && rc.getPaint() <= endRefillThreshold)) {
+        if((rc.getPaint() <= refillThreshold || (state == splasherStates.refill && rc.getPaint() <= endRefillThreshold)) && (nearestPaintTower != null || rc.getPaint() < 50)) {
             state = splasherStates.refill;
             fillingStation = nearestPaintTower;
             //go back to nearest tower
