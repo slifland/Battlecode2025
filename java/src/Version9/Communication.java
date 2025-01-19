@@ -147,6 +147,7 @@ public class Communication
     public static void scanForRuins(RobotController rc) throws GameActionException
     {
         Mopper.nearbyRuin = null;
+        Soldier.seenEnemyTower = null;
         //TESTING*/System.out.println("~Scanning for ruins");
 
         for(MapLocation ruinLoc : nearbyRuins)
@@ -170,6 +171,7 @@ public class Communication
                     status = 2;
                     Version9.Splasher.seenEnemyTower = ruinInfo;
                     Version9.Mopper.seenEnemyTower = ruinInfo;
+                    Version9.Soldier.seenEnemyTower = ruinInfo;
                 }
 
                 //get whether it is a paint tower

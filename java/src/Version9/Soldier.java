@@ -16,7 +16,7 @@ public class Soldier {
         Fill
     }
 
-    static SoldierState state = SoldierState.Navigate;
+    static SoldierState state = SoldierState.Explore;
     static MapLocation target;
     //static HashSet<MapLocation> completedRuins = new HashSet<>();
     //static MapLocation averageUnfilledLocation;
@@ -33,6 +33,7 @@ public class Soldier {
     static int sector_sizeY;
     static boolean beenToCorner = false;
     static MapInfo[] tilesNearRuin;
+    public static RobotInfo seenEnemyTower;
     //static MapLocation currentSector;
 
     public static MapLocation averageEnemyPaint;
@@ -48,6 +49,7 @@ public class Soldier {
     final static int SECTOR_CHECK = 2; //indicates how often we will check if we are in a previously unseen sector
     final static int TURN_TO_NAVIGATE_TO_TOWERS = 200; //indicates at what turn we will prioritize going towards enemy towers
     final static int STOP_EXPLORING = 200; //indicates when soldiers will began defaulting to navigate instead of explore
+    final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 25; //records how often we will checked if our ruin claim has been thwarted by enemies
 
     public static void runSoldier(RobotController rc) throws GameActionException
     {
@@ -89,6 +91,8 @@ public class Soldier {
                 fill(rc);
             }
         }
+        if(closestUnclaimedRuin != null) attemptCompleteTowerPattern(rc, closestUnclaimedRuin);
+
 //        if(target == null) rc.setIndicatorString(state.toString());
 //        else rc.setIndicatorString(state.toString() + " : " + target.toString());
 //        if(rc.isMovementReady() && !rc.senseMapInfo(rc.getLocation()).getPaint().isAlly()){
@@ -175,6 +179,23 @@ public class Soldier {
         if(claimedRuin != null && rc.canSenseLocation(claimedRuin) && rc.canSenseRobotAtLocation(claimedRuin)) {
             claimedRuin = null;
         }
+        else if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
+            validateRuinClaim(rc);
+        }
+    }
+
+    //checks whether we should still "claim" this ruin
+    //if there is an obstacle stopping us from completing it, then we should abandon t
+    public static void validateRuinClaim(RobotController rc) throws GameActionException {
+        if(rc.getLocation().distanceSquaredTo(claimedRuin) <= 8) {
+            MapInfo[] tilesNearRuin = rc.senseNearbyMapInfos(claimedRuin, 8);
+            for(MapInfo tile : tilesNearRuin) {
+                if(tile.getPaint().isEnemy()) {
+                    claimedRuin = null;
+                    return;
+                }
+            }
+        }
     }
 
 
@@ -188,14 +209,15 @@ public class Soldier {
     //6. just explore
     public static void updateState(RobotController rc) throws GameActionException
     {
-        //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (rc.getRoundNum() < STOP_EXPLORING) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we need to refill on paint
         if(rc.getPaint() <= refillThreshold || (rc.getPaint() <= doneRefillingThreshold && state == SoldierState.Refill)){
             state = SoldierState.Refill;
             if(fillingStation == null) fillingStation = nextNearestPaintTower(rc);
             return;
         }
+        //default to navigate, which defaults to explore if there is nothing to navigate to
+        state = (rc.getRoundNum() < STOP_EXPLORING) ? SoldierState.Explore : SoldierState.Navigate;
+
         if(numEnemyTiles > 7 && enemyRobots.length >= 2 ) {
             state = SoldierState.Tower;
             return;
@@ -221,7 +243,7 @@ public class Soldier {
 
     public static void explore(RobotController rc) throws GameActionException // use symmetry for this method
     {
-        if(claimedRuin != null) {
+        if(claimedRuin != null && state != SoldierState.Refill) {
             navigate(rc);
             return;
         }
@@ -328,8 +350,17 @@ public class Soldier {
         if(fillingStation == null || (rc.canSenseLocation(fillingStation) && (rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 3 )||( rc.canSenseLocation(fillingStation) && !rc.canSenseRobotAtLocation(fillingStation)))) {
             fillingStation = nextNearestPaintTower(rc);
             if(fillingStation == null){
-                explore(rc);
+                if(seenEnemyTower != null) {
+                    if(rc.canAttack(seenEnemyTower.getLocation())) rc.attack(seenEnemyTower.getLocation());
+                    Direction dir = Micro.runMicro(rc, true);
+                    if(rc.canMove(dir)) rc.move(dir);
+                    if(rc.canAttack(seenEnemyTower.getLocation())) rc.attack(seenEnemyTower.getLocation());
+                }
+                else{
+                    explore(rc);
+                }
                 return;
+
             }
         }
         if(rc.getLocation().isAdjacentTo(fillingStation)) {
