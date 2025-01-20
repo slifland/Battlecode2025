@@ -29,13 +29,13 @@ jobs:
       - name: Make Executable
         run: chmod +x java/gradlew
       - name: Gradle Update
-        run: ./gradlew update
+        run: ./java/gradlew update
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./java/gradlew build
       - name: List Tasks
-        run: ./gradlew tasks
+        run: ./java/gradlew tasks
       - name: Run Match
-        run: python run_matches.py
+        run: python ./java/run_matches.py
       # upload match files as artifact
       - name: Archive Match Files
         uses: actions/upload-artifact@v4
