@@ -298,7 +298,7 @@ public class Soldier {
     public static void navigate(RobotController rc) throws GameActionException
     {
         if(claimedRuin != null) validateRuinClaim(rc);
-        if(claimedRuin != null) {
+        if(claimedRuin != null && rc.getNumberTowers() < 25) {
             Direction dir = BFS_7x7.pathfind(rc, claimedRuin);
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
@@ -308,11 +308,11 @@ public class Soldier {
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
-        else if(!Communication.unclaimedRuins.isEmpty()) {
-            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
-            if(rc.canMove(dir)) rc.move(dir);
-            attemptFill(rc);
-        }
+//        else if(!Communication.unclaimedRuins.isEmpty()) {
+//            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
+//            if(rc.canMove(dir)) rc.move(dir);
+//            attemptFill(rc);
+//        }
         else {
             explore(rc);
         }
@@ -418,7 +418,30 @@ public class Soldier {
             claimedRuin = null;
             return;
         }
-        claimedRuin = closestUnclaimedRuin;
+        int dist = rc.getLocation().distanceSquaredTo(closestUnclaimedRuin);
+        if(claimedRuin == null) {
+            if (dist > 8) {
+                if (rc.senseNearbyRobots(closestUnclaimedRuin, 8, rc.getTeam()).length == 0) {
+                    claimedRuin = closestUnclaimedRuin;
+                }
+            } else {
+                if (rc.senseNearbyRobots(closestUnclaimedRuin, 8, rc.getTeam()).length == 1) {
+                    claimedRuin = closestUnclaimedRuin;
+                }
+            }
+        }
+        else {
+                if(dist > 2) {
+                    if (rc.senseNearbyRobots(closestUnclaimedRuin, 2, rc.getTeam()).length > 0) {
+                        claimedRuin = null;
+                    }
+                }
+                else {
+                    if (rc.senseNearbyRobots(closestUnclaimedRuin, 2, rc.getTeam()).length > 1) {
+                        claimedRuin = null;
+                    }
+                }
+        }
         boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(rc, closestUnclaimedRuin, tilesNearRuin);
         if (desiredPattern == null) {
             desiredPattern = chooseDesiredPattern(rc, closestUnclaimedRuin);
@@ -675,21 +698,24 @@ public class Soldier {
 
     //checks whether a ruin is claimed, but also if it needs help
     public static boolean needsHelp(RobotController rc, MapLocation ruin) throws GameActionException {
-        //if(claimedRuin != null && claimedRuin.equals(ruin)) return true;
-        boolean hasEmpty = false;
         tilesNearRuin = rc.senseNearbyMapInfos(ruin, 8);
+        boolean hasEmpty = false;
+        if(claimedRuin != null && claimedRuin.equals(ruin)){
+            return true;
+        }
         boolean[][] pattern = Utilities.inferPatternFromExistingSpots(rc, ruin, tilesNearRuin);
         for(MapInfo tile : tilesNearRuin) {
             if(!tile.isPassable()) continue;
-            if(tile.getPaint() == PaintType.EMPTY) {
-                hasEmpty = true;
-            }
             if(tile.getPaint().isEnemy()){
-                contestedAndWaitingRuins.add(ruin);
                 return false;
             }
-            if(pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
-                hasEmpty = true;
+            else if(!hasEmpty) {
+                if (tile.getPaint() == PaintType.EMPTY) {
+                    hasEmpty = true;
+                }
+                if (pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
+                    hasEmpty = true;
+                }
             }
         }
         if(hasEmpty) return true;
