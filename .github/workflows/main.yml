@@ -27,7 +27,7 @@ jobs:
       - name: Java Version
         run: java -version
       - name: Make Executable
-        run: chmod +x ./gradlew
+        run: chmod +x java/gradlew
       - name: Gradle Update
         run: ./gradlew update
       - name: Build with Gradle
