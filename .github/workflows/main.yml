@@ -5,7 +5,11 @@ permissions: write-all
 concurrency:
   group: pr-${{ github.event.pull_request.number }}
   cancel-in-progress: false
+defaults:
+  run:
+    working-directory: ./java
 jobs:
+
   test_private_action_job:
     name: Run Matches
     runs-on: ubuntu-latest
