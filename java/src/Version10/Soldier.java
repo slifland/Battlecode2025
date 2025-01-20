@@ -460,7 +460,7 @@ public class Soldier {
     //logic currently copied from version 8
     public static boolean[][] chooseDesiredPattern(RobotController rc, MapLocation m) throws GameActionException {
 
-            int ranNum = (rc.getRoundNum() < 100) ? 0 : RobotPlayer.rng.nextInt(2);
+            int ranNum = (rc.getRoundNum() < 100) ? 0 : RobotPlayer.rng.nextInt(3);
             if(ranNum <= 1) {
                 return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
             }
