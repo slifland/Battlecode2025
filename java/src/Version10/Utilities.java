@@ -26,12 +26,16 @@ public class Utilities
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(RobotController rc, MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
-        if(rc.getRoundNum() <= 100) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        if(rc.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        //if(enemyRobots.length > 1) return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         int moneyScore = 0;
         int paintScore = 0;
+        int defenseScore = 0;
         int totalAlly = 0;
         MapLocation fakeOrigin = new MapLocation(center.x - 2, center.y - 2);
-        boolean[][] moneyPattern = (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        //boolean[][] moneyPattern = (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        boolean[][] moneyPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        boolean [][] defensePattern = rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         boolean[][] paintPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
         for(MapInfo tile : ruinTiles) {
             PaintType paint = tile.getPaint();
@@ -40,12 +44,16 @@ public class Utilities
                 int offsetY = tile.getMapLocation().y - fakeOrigin.y;
                 if(paint.isSecondary() == moneyPattern[offsetX][offsetY]) moneyScore++;
                 if(paint.isSecondary() == paintPattern[offsetX][offsetY]) paintScore++;
+                if(paint.isSecondary() == paintPattern[offsetX][offsetY]) defenseScore++;
                 totalAlly++;
             }
         }
+        //defenseScore += Math.max(enemyRobots.length, 2);
+        //if(rc.getRoundNum() <= ) moneyScore++;
         if(totalAlly == 0) return null;
-        if(moneyScore >= paintScore) return moneyPattern;
-        else return paintPattern;
+        if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
+        else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;
+        else return defensePattern;
     }
 
     public static void attemptCompleteResourcePattern(RobotController rc, MapLocation location) throws GameActionException

@@ -39,6 +39,7 @@ public class Soldier {
     static boolean clockwise;
     static boolean canFinishRuin = false;
     static int neededToFinish = Integer.MAX_VALUE;
+    static MapLocation spawnLocation;
 
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
@@ -54,16 +55,20 @@ public class Soldier {
     final static int congestionThreshold = 2;
     public static final int randomRadius = 100;
     final static int SECTOR_CHECK = 2; //indicates how often we will check if we are in a previously unseen sector
-    static int TURN_TO_NAVIGATE_TO_TOWERS = 200; //indicates at what turn we will prioritize going towards enemy towers
-    static int STOP_EXPLORING = 200; //indicates when soldiers will began defaulting to navigate instead of explore
+    static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers
+    static int STOP_EXPLORING; //indicates when soldiers will began defaulting to navigate instead of explore
     final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 20; //records how often we will checked if our ruin claim has been thwarted by enemies
-    static int TURN_TO_FILL = 20; //turn at which filling becomes allowed
+    static int TURN_TO_FILL; //turn at which filling becomes allowed
+    static int INCENTIVIZE_MONEY_ROUND; //turn at which any time before that soldiers will give a slight weight to building money towers
+    static int FORCE_MONEY_ROUND; //turn at which any time before that soldiers will always build money towers
+    static int START_RUSHING_TOWER_NUMBER; //indicate at which point we should start rushing because we just have too many towers and therefore prob too many robots
 
     public static void runSoldier(RobotController rc) throws GameActionException
     {
         if(turnCount == 1){
             clockwise = rng.nextInt(2) == 0;
             initializeMapDependentVariables(rc);
+            spawnLocation = rc.getLocation();
         }
         //attemptCompleteTowerPattern(rc);
         updateInfo(rc);
@@ -119,7 +124,12 @@ public class Soldier {
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         TURN_TO_NAVIGATE_TO_TOWERS = (int)(mapSize / 12.5); //indicates at what turn we will prioritize going towards enemy towers
         STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
-       TURN_TO_FILL = (int)(mapSize / 40); //turn at which filling becomes allowed
+        TURN_TO_FILL = (int)(mapSize / 40); //turn at which filling becomes allowed
+        INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
+        FORCE_MONEY_ROUND = 100;//turn at which any time before that soldiers will always build money towers
+        //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
+        START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
+
 
     }
     //initalizes the sector array to be the right size, and full of falses
@@ -173,6 +183,10 @@ public class Soldier {
         int resourcePatternDist = Integer.MAX_VALUE;
         //do all the tasks which require looping through all nearbyTiles
         for(MapInfo tile : nearbyTiles) {
+//            if(knownSymmetry == Symmetry.Unknown) {
+//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+//            }
             MapLocation tileLoc = tile.getMapLocation();
             if(tile.getPaint().isEnemy()) {
                 x += tileLoc.x;
@@ -252,7 +266,7 @@ public class Soldier {
 
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && rc.senseNearbyRobots(closestUnfilledPatternCenter, 8, rc.getTeam()).length <= 1) {
-            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25) && validateLocation(rc, closestUnfilledPatternCenter)){
+            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25)){
                 if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
             }
         }
@@ -310,6 +324,24 @@ public class Soldier {
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
+//        else {
+//            Symmetry[] possible = Utilities.possibleSymmetry();
+//            int sym = rng.nextInt(possible.length);
+//            switch(possible[sym]) {
+//                case Horizontal:
+//                    target = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+//                    break;
+//                case Rotational:
+//                    target = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+//                    break;
+//                case Vertical:
+//                    target = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+//                    break;
+//            }
+//            Direction dir = BFS_7x7.pathfind(rc, target);
+//            if(rc.canMove(dir)) rc.move(dir);
+//            attemptFill(rc);
+//        }
 //        else if(!Communication.unclaimedRuins.isEmpty()) {
 //            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
 //            if(rc.canMove(dir)) rc.move(dir);
@@ -372,7 +404,7 @@ public class Soldier {
     {
         //navigate to the nearest paint tower
         //if that tower is surrounded, navigate to the next nearest
-        if(fillingStation == null || (rc.canSenseLocation(fillingStation) && (rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 3 )||( rc.canSenseLocation(fillingStation) && !rc.canSenseRobotAtLocation(fillingStation)))) {
+        if(fillingStation == null || (rc.canSenseLocation(fillingStation) && (rc.senseNearbyRobots(fillingStation, 2, rc.getTeam()).length > 3)||( rc.canSenseLocation(fillingStation) && !rc.canSenseRobotAtLocation(fillingStation)))) {
             fillingStation = nextNearestPaintTower(rc);
             if(fillingStation == null){
                 if(seenEnemyTower != null) {
@@ -405,7 +437,7 @@ public class Soldier {
             rc.attack(closestEnemyTower);
         }
         if(rc.isMovementReady()) {
-            Direction dir = Micro.runMicro(rc, allyRobots.length - enemyRobots.length > 5 && rc.getHealth() > 25);
+            Direction dir = Micro.runMicro(rc, ((allyRobots.length - enemyRobots.length > 5 && rc.getHealth() > 25) || rc.getNumberTowers() >= START_RUSHING_TOWER_NUMBER));
             if(rc.canMove(dir)) rc.move(dir);
         }
         if(rc.canAttack(closestEnemyTower)) {
@@ -459,14 +491,14 @@ public class Soldier {
     //where we decide what kind of pattern to use
     //logic currently copied from version 8
     public static boolean[][] chooseDesiredPattern(RobotController rc, MapLocation m) throws GameActionException {
-
-            int ranNum = (rc.getRoundNum() < 100) ? 0 : RobotPlayer.rng.nextInt(3);
-            if(ranNum <= 1) {
-                return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-            }
-            else {
-                return rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
-            }
+        //if(enemyRobots.length >= 1) return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        int ranNum = (rc.getRoundNum() < FORCE_MONEY_ROUND) ? 0 : RobotPlayer.rng.nextInt(2);
+        if(ranNum == 0) {
+            return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        }
+        else {
+            return rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+        }
     }
 
     //attempt fill assumes we have already moved - move, then paint
@@ -507,6 +539,7 @@ public class Soldier {
 
     //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
     public static boolean validateLocation(RobotController rc, MapLocation loc) throws GameActionException {
+       // int price = Clock.getBytecodesLeft();
         MapInfo[] tiles = rc.senseNearbyMapInfos(loc, 8);
         if(tiles.length < 25) return false;
 //        for(MapInfo tile : tiles) {
@@ -537,6 +570,18 @@ public class Soldier {
         if (!tiles[22].isPassable() || tiles[22].getPaint().isEnemy()) return false;
         if (!tiles[23].isPassable() || tiles[23].getPaint().isEnemy()) return false;
         if (!tiles[24].isPassable() || tiles[24].getPaint().isEnemy()) return false;
+       // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
+        return true;
+    }
+    //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
+    public static boolean validateLocationTest(RobotController rc, MapLocation loc) throws GameActionException {
+        int price = Clock.getBytecodesLeft();
+        MapInfo[] tiles = rc.senseNearbyMapInfos(loc, 8);
+        if(!farFromEdge(rc, loc)) return false;
+        for(MapInfo tile : tiles) {
+            if(!tile.isPassable() || tile.getPaint().isEnemy()) return false;
+        }
+        System.out.println("test price: " + (price - Clock.getBytecodesLeft()));
         return true;
     }
 
@@ -737,20 +782,20 @@ public class Soldier {
         int mapWidthHalf = mapWidth / 2;
         int closestX;
         if (curX > mapWidthHalf) {
-            closestX = mapWidth;
+            closestX = mapWidth - 1;
         }
         else {
-            closestX = 0;
+            closestX = 1;
         }
         int curY = rc.getLocation().y;
         int mapHeight = rc.getMapHeight() - 2;
         int mapHeightHalf = mapHeight / 2;
         int closestY;
         if (curY > mapHeightHalf) {
-            closestY = mapHeight;
+            closestY = mapHeight - 1;
         }
         else {
-            closestY = 0;
+            closestY = 1;
         }
         int diffX = Math.abs(closestX - curX);
         int diffY = Math.abs(closestY - curY);
@@ -788,85 +833,85 @@ public class Soldier {
         int curY = rc.getLocation().y;
         int mapHeight = rc.getMapHeight() - 1;
         //we aren't even chasing a corner yet - need to return the closest one in the direction we are going
-        if(!(target.x == 0 || target.x == mapWidth && target.y == 0 || target.y == mapHeight)) {
+        if(!(target.x == 1 || target.x == mapWidth - 1 && target.y == 1 || target.y == mapHeight - 1)) {
             int newX;
             int newY;
             //top edge
             if(mapHeight - curY <= 4) {
                 if(clockwise) {
-                    newX = mapWidth;
+                    newX = mapWidth - 1;
                 }
                 else {
-                    newX = 0;
+                    newX = 1;
                 }
-                newY = mapHeight;
+                newY = mapHeight - 1;
             }
             //right edge
             else if(mapWidth - curX <= 4) {
                 if(clockwise) {
-                    newY = 0;
+                    newY = 1;
                 }
                 else {
-                    newY = mapHeight;
+                    newY = mapHeight - 1;
                 }
-                newX = mapWidth;
+                newX = mapWidth - 1;
             }
             //bottom edge
             else if (curY <= 4) {
                 if(clockwise) {
-                    newX = 0;
+                    newX = 1;
                 }
                 else {
-                    newX = mapWidth;
+                    newX = mapWidth - 1;
                 }
-                newY = 0;
+                newY = 1;
             }
             // left edge
             else {
                 if(clockwise) {
-                    newY = mapHeight;
+                    newY = mapHeight - 1;
                 }
                 else {
-                    newY = 0;
+                    newY = 1;
                 }
-                newX = 0;
+                newX = 1;
             }
             return new MapLocation(newX, newY);
         }
         //bottom corner -> clockwise needs to go to top left, CCW needs to go to bottom right
         if(curX < 5 && curY < 5) {
             if(clockwise) {
-                return new MapLocation(0, mapHeight);
+                return new MapLocation(1, mapHeight - 1);
             }
             else {
-                return new MapLocation(mapWidth, 0);
+                return new MapLocation(mapWidth - 1, 1);
             }
         }
         //bottom right corner
         else if(curX > 5 && curY < 5) {
             if(clockwise) {
-                return new MapLocation(0, 0);
+                return new MapLocation(1, 1);
             }
             else {
-                return new MapLocation(mapWidth, mapHeight);
+                return new MapLocation(mapWidth - 1, mapHeight - 1);
             }
         }
         //top right
         else if(curX > 5 && curY > 5) {
             if(clockwise) {
-                return new MapLocation(mapWidth, 0);
+                return new MapLocation(mapWidth - 1, 1);
             }
             else {
-                return new MapLocation(0, mapHeight);
+                return new MapLocation(1, mapHeight - 1);
             }
         }
         //top left
         else {
             if(clockwise) {
-                return new MapLocation(mapWidth, mapHeight);
+                return new MapLocation(mapWidth - 1, mapHeight - 1);
             }
             else {
-                return new MapLocation(0, 0);
+                return new MapLocation(1, 1);
             }
         }
     }

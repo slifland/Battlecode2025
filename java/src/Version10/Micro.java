@@ -133,9 +133,10 @@ public class Micro {
                 populateMicroArrayRuin(rc, ruin);
             else
                 populateMicroArray(rc);
-            microInfo bestMicro = microArray[0];
-            for(int i = 1; i < 9; i++) {
+            microInfo bestMicro = new microInfo(rc.senseMapInfo(rc.getLocation()));
+            for(int i = 0; i < 9; i++) {
                 do {
+                    if(bestMicro.equals(microArray[i])) continue;
                     //if one space is passable and the other is not, then passable is better
                     if (!microArray[i].passable) break;
                     if (!bestMicro.passable) {
@@ -143,7 +144,7 @@ public class Micro {
                         break;
                     }
 
-                    if(curDist > 8 ) {
+                    if(curDist > 8) {
                         int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
                         int altDistToRuin = microArray[i].loc.distanceSquaredTo(ruin);
                         if(distToRuin < altDistToRuin) break;
@@ -153,12 +154,14 @@ public class Micro {
                         }
                     }
 
+
                     //look at which place will lose us the least paint at the end of this turn
                     if (bestMicro.paintLoss < microArray[i].paintLoss) break;
                     if (microArray[i].paintLoss < bestMicro.paintLoss) {
                         bestMicro = microArray[i];
                         break;
                     }
+
 
 
 
