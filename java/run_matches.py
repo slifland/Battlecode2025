@@ -48,12 +48,12 @@ def run_match(bot, map):
         winBString = '{} (B) wins'.format(currentBot)
         loseAString = '{} (B) wins'.format(bot)
         loseBString = '{} (A) wins'.format(bot)
-        
+
         numWins = 0
-        
+
         gameLengthA = retrieveGameLength(outputA)
         gameLengthB = retrieveGameLength(outputB)
-        
+
         if winAString in outputA:
             numWins += 1
         else:
@@ -74,7 +74,7 @@ for bot, map in matches:
     if not bot in botsSet or not map in mapsSet:
         errors.append('Unable to parse bot={}, map={}'.format(bot, map))
     # run run_match.py
-    
+
     results[(bot, map)] = run_match(bot, map)
 
 # Construct table
