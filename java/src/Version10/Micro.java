@@ -91,7 +91,6 @@ class microInfo {
 public class Micro {
 
     private static final int soldierHealthAttackThreshold = 100;
-    private static final int splasherHealthAttackThreshold = 100;
     private static microInfo[] microArray;
     private static boolean isRushing;
     //the method any robot will use to interact with micro - directs the robot to the correct micro method
@@ -284,13 +283,17 @@ public class Micro {
     public static MapLocation bestRuinAttack(RobotController rc, boolean[][] desiredPattern, MapInfo[] tilesToFill, MapLocation ruin) throws GameActionException {
         MapInfo bestTile = null;
         int minDist = Integer.MAX_VALUE;
+        int minDistToEnemy = Integer.MAX_VALUE;
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.getLocation().isWithinDistanceSquared(ruin, 8)) return rc.getLocation();
         for(MapInfo tile : tilesToFill) {
+            int distToEnemy = Integer.MAX_VALUE;
+            if(Soldier.averageEnemyPaint != null) distToEnemy = tile.getMapLocation().distanceSquaredTo(Soldier.averageEnemyPaint);
             int dist = rc.getLocation().distanceSquaredTo(tile.getMapLocation());
             if(!tile.isPassable()) continue;
-            if(tile.getPaint() == PaintType.EMPTY && (bestTile == null || dist < minDist || bestTile.getPaint().isAlly())) {
+            if(tile.getPaint() == PaintType.EMPTY && (bestTile == null || dist < minDist || bestTile.getPaint().isAlly() || (dist == minDist && distToEnemy < minDistToEnemy))) {
                 bestTile = tile;
                 minDist = dist;
+                minDistToEnemy = distToEnemy;
             }
             else if(tile.getPaint().isAlly() && (bestTile == null || (dist < minDist && bestTile.getPaint().isAlly()))
              && Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, ruin) != tile.getPaint().isSecondary()) {
@@ -369,7 +372,7 @@ public class Micro {
                 }
 
                 //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
-                if (rc.isActionReady() && health >= soldierHealthAttackThreshold || isRushing) {
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     //we are fine being in tower range as long as we can attack, because we have enough health
                     if (bestMicro.inTowerRange && !microArray[i].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[i].inTowerRange) {

@@ -724,26 +724,33 @@ public class MopperMicro {
                 continue;
             }
 
-            //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
-            if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
-            if(bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
-                bestMicro = m;
-                continue;
-            }
-
             int dist = bestMicro.loc.distanceSquaredTo(target);
             int altDist = m.loc.distanceSquaredTo(target);
             //System.out.println(dist + " " + altDist + " : " + bestMicro.loc + " " + m.loc);
-            if(dist <= actionRadius && altDist > actionRadius) continue;
-            if(dist > actionRadius && altDist <= actionRadius) {
-                bestMicro = m;
-                continue;
+//            if(dist <= actionRadius && altDist > actionRadius) continue;
+//            if(dist > actionRadius && altDist <= actionRadius) {
+//                bestMicro = m;
+//                continue;
+//            }
+            if(dist > actionRadius || altDist > actionRadius) {
+                if(dist < altDist) continue;
+                if(dist > altDist) {
+                    bestMicro = m;
+                    continue;
+                }
             }
 
             //look at which place will lose us the least paint at the end of this turn
             if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
                 bestMicro = microArray[i];
+                continue;
+            }
+
+            //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
+            if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
+            if(bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
+                bestMicro = m;
                 continue;
             }
 

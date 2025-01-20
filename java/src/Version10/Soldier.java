@@ -39,7 +39,6 @@ public class Soldier {
     static boolean clockwise;
     static boolean canFinishRuin = false;
 
-    static HashSet<MapLocation> contestedAndWaitingRuins; //keeps track of contested ruins so we don't waste our time continually trying to build them or move to them
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
 
@@ -54,16 +53,16 @@ public class Soldier {
     final static int congestionThreshold = 2;
     public static final int randomRadius = 100;
     final static int SECTOR_CHECK = 2; //indicates how often we will check if we are in a previously unseen sector
-    final static int TURN_TO_NAVIGATE_TO_TOWERS = 200; //indicates at what turn we will prioritize going towards enemy towers
-    final static int STOP_EXPLORING = 200; //indicates when soldiers will began defaulting to navigate instead of explore
-    final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 10; //records how often we will checked if our ruin claim has been thwarted by enemies
-    final static int TURN_TO_FILL = 20; //turn at which filling becomes allowed
+    static int TURN_TO_NAVIGATE_TO_TOWERS = 200; //indicates at what turn we will prioritize going towards enemy towers
+    static int STOP_EXPLORING = 200; //indicates when soldiers will began defaulting to navigate instead of explore
+    final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 20; //records how often we will checked if our ruin claim has been thwarted by enemies
+    static int TURN_TO_FILL = 20; //turn at which filling becomes allowed
 
     public static void runSoldier(RobotController rc) throws GameActionException
     {
         if(turnCount == 1){
             clockwise = rng.nextInt(2) == 0;
-            contestedAndWaitingRuins = new HashSet<MapLocation>();
+            initializeMapDependentVariables(rc);
         }
         //attemptCompleteTowerPattern(rc);
         updateInfo(rc);
@@ -115,6 +114,13 @@ public class Soldier {
 //        }
     }
 
+    public static void initializeMapDependentVariables(RobotController rc) throws GameActionException {
+        int mapSize = rc.getMapHeight() * rc.getMapWidth();
+        TURN_TO_NAVIGATE_TO_TOWERS = (int)(mapSize / 12.5); //indicates at what turn we will prioritize going towards enemy towers
+        STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
+       TURN_TO_FILL = (int)(mapSize / 40); //turn at which filling becomes allowed
+
+    }
     //initalizes the sector array to be the right size, and full of falses
     private static void initializeSectors(RobotController rc) throws GameActionException{
         int sizeX = 2 + rc.getMapWidth() / 10;
@@ -155,13 +161,9 @@ public class Soldier {
         closestEnemyTower = null;
         averageEnemyPaint = null;
         closestUnfilledPatternCenter = null;
-//        if(rc.getRoundNum() % SECTOR_CHECK == 0) {
-//            recordSector(rc);
+//        if(claimedRuin != null && rc.getRoundNum() % VALIDATE_RUIN_CLAIM_FREQUENCY == 0) {
+//            validateRuinClaim(rc);
 //        }
-        if(rc.getRoundNum() % clearContestedRuinsAndWaitingRuins == 0) {
-            contestedAndWaitingRuins.clear();
-        }
-
         closestUnclaimedRuin = closestUnclaimedRuin(rc);
         closestEnemyTower = closestEnemyTower(rc);
 
@@ -289,7 +291,7 @@ public class Soldier {
             Direction dir = BFS_7x7.pathfind(rc, target);
             //rc.setIndicatorLine(rc.getLocation(), target, 255, 255, 255);
             if (rc.canMove(dir)) rc.move(dir);
-            attemptFill(rc);
+            //attemptFill(rc);
         }
     }
 
@@ -669,7 +671,6 @@ public class Soldier {
         Ruin r = null;
         boolean isOccupied = false;
         for(Ruin ruin : Communication.unclaimedRuins) {
-            if(contestedAndWaitingRuins.contains(ruin)) continue;
             if(ruin.location.distanceSquaredTo(rc.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(rc.getLocation());
                 r = ruin;
