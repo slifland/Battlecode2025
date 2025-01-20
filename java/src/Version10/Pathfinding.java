@@ -1,4 +1,4 @@
-package PathfindingTest;
+package Version10;
 
 import battlecode.common.*;
 public class Pathfinding

@@ -3928,6 +3928,11 @@ public class BFS_7x7
          }
       }
 
+      if(closestDistance >= Pathfinding.closestDistanceOnPath)
+      {
+         return null;
+      }
+      Pathfinding.closestDistanceOnPath = closestDistance;
       return closestIndex != -1 ? dirToMove(closestIndex) : Direction.CENTER;
    }
 }

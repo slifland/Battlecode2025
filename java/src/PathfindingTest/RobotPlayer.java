@@ -58,7 +58,6 @@ public class RobotPlayer {
 
         // You can also use indicators to save debug notes in replays.
         rc.setIndicatorString("Hello world!");
-        Pathfinding.initializeMapKnowledge(rc);
 
         while (true) {
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
@@ -81,9 +80,15 @@ public class RobotPlayer {
                 else
                 {
 //                  Pathfinding.bugNav(rc, new MapLocation(0,0));
+                    if(rc.getRoundNum() == 200)
+                    {
+                        rc.resign();
+                    }
+
                     if(rc.getType().isRobotType())
                     {
-                        Direction dir = BFS_7x7.pathfind(rc, new MapLocation(11,13));
+                        Direction dir = Pathfinding.bugBFS(rc, new MapLocation(0,0));
+                       // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
                         if(rc.canMove(dir))
                         {
                             rc.move(dir);
