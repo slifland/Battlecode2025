@@ -38,14 +38,14 @@ jobs:
         run: python run_matches.py
       # upload match files as artifact
       - name: Archive Match Files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: matches
           path: matches
           retention-days: 90
       # upload summary as artifact
       - name: Archive Summary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: matches-summary
           path: matches-summary.txt
