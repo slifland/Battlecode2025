@@ -12,7 +12,10 @@ jobs:
     steps:
       # checkout this repo
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            java
       # run python/java to play against precompiled programs - pipe results to file
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -27,15 +30,15 @@ jobs:
       - name: Java Version
         run: java -version
       - name: Make Executable
-        run: chmod +x java/gradlew
+        run: chmod +x gradlew
       - name: Gradle Update
-        run: ./java/gradlew update
+        run: ./gradlew update
       - name: Build with Gradle
-        run: ./java/gradlew build
+        run: ./gradlew build
       - name: List Tasks
-        run: ./java/gradlew tasks
+        run: ./gradlew tasks
       - name: Run Match
-        run: python ./java/run_matches.py
+        run: python run_matches.py
       # upload match files as artifact
       - name: Archive Match Files
         uses: actions/upload-artifact@v4
