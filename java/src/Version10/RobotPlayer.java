@@ -26,6 +26,7 @@ public class RobotPlayer {
     static int soldiers = 0;
     static int moppers = 0;
     static int totalBuilt = 0;
+    static final int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     //static Sector[] sectors;
 
 
@@ -153,7 +154,7 @@ public class RobotPlayer {
             }
         }
         //if(rc.getRoundNum() < STOP_BUILDING_SOLDIERS || rc.getNumberTowers() < 4){
-            else if ((totalBuilt <= 1 && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / 50 || rc.getMoney() > 1300) {
+            else if (((totalBuilt <= 1 && rc.getNumberTowers() == 2) && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / BUILD_ROUND_NUM_DIVISOR || rc.getMoney() > 1300) {
                 if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
 
                 if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
@@ -162,7 +163,7 @@ public class RobotPlayer {
                     soldiers++;
                     totalBuilt++;
                 }
-                if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio && (rc.getRoundNum() > 50 || (rc.getMapHeight() < 30 || rc.getMapWidth() < 30))) {
+                if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio && (rc.getRoundNum() > 50 || (rc.getMapHeight() * rc.getMapWidth() < 900))) {
                     rc.buildRobot(UnitType.MOPPER, nextLoc);
                     //Communication.sendAveragesToRobot(rc, nextLoc);
                     moppers++;

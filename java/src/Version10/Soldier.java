@@ -38,6 +38,7 @@ public class Soldier {
     static boolean wallHug;
     static boolean clockwise;
     static boolean canFinishRuin = false;
+    static int neededToFinish = Integer.MAX_VALUE;
 
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
@@ -166,7 +167,6 @@ public class Soldier {
 //        }
         closestUnclaimedRuin = closestUnclaimedRuin(rc);
         closestEnemyTower = closestEnemyTower(rc);
-
         int enemyCount = 0;
         int x = 0;
         int y = 0;
@@ -448,20 +448,12 @@ public class Soldier {
         if (desiredPattern == null) {
             desiredPattern = chooseDesiredPattern(rc, closestUnclaimedRuin);
         }
-        canFinishRuin = false;
-        int neededToFinish = 0;
-        if(rc.getPaint() <= 50) {
-            for (MapInfo tile : tilesNearRuin) {
-                if (tile.getPaint() == PaintType.EMPTY || tile.getPaint().isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, closestUnclaimedRuin)) neededToFinish++;
-            }
-            if(neededToFinish * 5 < rc.getPaint()) canFinishRuin = true;
-        }
         Micro.ruinBuildingMicro(rc, closestUnclaimedRuin, desiredPattern, tilesNearRuin); //finds the best spaces to move and attack, and acts on that
         if (attemptCompleteTowerPattern(rc, closestUnclaimedRuin)) {
             claimedRuin = null;
             return;
         }
-        if (rc.isActionReady()) attemptFill(rc);
+        if (rc.isActionReady() && (neededToFinish * 5) + 5 < rc.getPaint()) attemptFill(rc);
     }
 
     //where we decide what kind of pattern to use
@@ -699,11 +691,10 @@ public class Soldier {
 
     //checks whether a ruin is claimed, but also if it needs help
     public static boolean needsHelp(RobotController rc, MapLocation ruin) throws GameActionException {
+        neededToFinish = 0;
+        canFinishRuin = false;
         tilesNearRuin = rc.senseNearbyMapInfos(ruin, 8);
         boolean hasEmpty = false;
-        if(claimedRuin != null && claimedRuin.equals(ruin)){
-            return true;
-        }
         boolean[][] pattern = Utilities.inferPatternFromExistingSpots(rc, ruin, tilesNearRuin);
         for(MapInfo tile : tilesNearRuin) {
             if(!tile.isPassable()) continue;
@@ -712,14 +703,17 @@ public class Soldier {
             }
             else if(!hasEmpty) {
                 if (tile.getPaint() == PaintType.EMPTY) {
+                    neededToFinish++;
                     hasEmpty = true;
                 }
                 if (pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
+                    neededToFinish++;
                     hasEmpty = true;
                 }
             }
         }
-        if(hasEmpty) return true;
+        if(neededToFinish * 5 < rc.getPaint()) canFinishRuin = true;
+        if(hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))) return true;
         //int dist = rc.getLocation().distanceSquaredTo(ruin);
         //if((dist <= 8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 1) || (dist >8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0)) return true;
         if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
