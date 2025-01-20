@@ -5,6 +5,7 @@ import battlecode.common.*;
 import static Version10.RobotPlayer.rng;
 import static Version10.Communication.alliedPaintTowers;
 import static Version10.RobotPlayer.*;
+import java.util.HashSet;
 
 public class Soldier {
     enum SoldierState {
@@ -37,6 +38,9 @@ public class Soldier {
     static boolean wallHug;
     static boolean clockwise;
     static boolean canFinishRuin = false;
+
+    static HashSet<MapLocation> contestedAndWaitingRuins; //keeps track of contested ruins so we don't waste our time continually trying to build them or move to them
+    static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
 
     public static MapLocation averageEnemyPaint;
@@ -57,7 +61,10 @@ public class Soldier {
 
     public static void runSoldier(RobotController rc) throws GameActionException
     {
-        if(turnCount == 1) clockwise = rng.nextInt(2) == 0;
+        if(turnCount == 1){
+            clockwise = rng.nextInt(2) == 0;
+            contestedAndWaitingRuins = new HashSet<MapLocation>();
+        }
         //attemptCompleteTowerPattern(rc);
         updateInfo(rc);
         //update the state
@@ -151,6 +158,9 @@ public class Soldier {
 //        if(rc.getRoundNum() % SECTOR_CHECK == 0) {
 //            recordSector(rc);
 //        }
+        if(rc.getRoundNum() % clearContestedRuinsAndWaitingRuins == 0) {
+            contestedAndWaitingRuins.clear();
+        }
 
         closestUnclaimedRuin = closestUnclaimedRuin(rc);
         closestEnemyTower = closestEnemyTower(rc);
@@ -193,7 +203,6 @@ public class Soldier {
     //if there is an obstacle stopping us from completing it, then we should abandon t
     public static void validateRuinClaim(RobotController rc) throws GameActionException {
         if(rc.getLocation().distanceSquaredTo(claimedRuin) <= 8) {
-            MapInfo[] tilesNearRuin = rc.senseNearbyMapInfos(claimedRuin, 8);
             for(MapInfo tile : tilesNearRuin) {
                 if(tile.getPaint().isEnemy()) {
                     claimedRuin = null;
@@ -223,17 +232,17 @@ public class Soldier {
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (rc.getRoundNum() < STOP_EXPLORING) ? SoldierState.Explore : SoldierState.Navigate;
         fillingStation = null;
+        //check if we see any nearby unclaimed ruins
+        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
+            state = SoldierState.RuinBuilding;
+            return;
+        }
+        canFinishRuin = false;
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
             state = SoldierState.Tower;
             return;
         }
-        //check if we see any nearby unclaimed ruins
-        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
-            state = SoldierState.RuinBuilding;
-            return;
-        }
-        canFinishRuin = false;
         if((numEnemyTiles > 7 && enemyRobots.length >= 2)) {
             state = SoldierState.Tower;
             return;
@@ -254,7 +263,7 @@ public class Soldier {
             navigate(rc);
             return;
         }
-        if((turnCount == 1 && rng.nextInt(6) == 0) || wallHug) {
+        if((turnCount == 1 && rng.nextInt(5) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -299,11 +308,11 @@ public class Soldier {
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
-//        else if(!Communication.unclaimedRuins.isEmpty()) {
-//            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
-//            if(rc.canMove(dir)) rc.move(dir);
-//            attemptFill(rc);
-//        }
+        else if(!Communication.unclaimedRuins.isEmpty()) {
+            Direction dir = BFS_7x7.pathfind(rc, closestUnclaimedRuin);
+            if(rc.canMove(dir)) rc.move(dir);
+            attemptFill(rc);
+        }
         else {
             explore(rc);
         }
@@ -377,22 +386,8 @@ public class Soldier {
 
             }
         }
-        if(rc.getLocation().isAdjacentTo(fillingStation)) {
-            RobotInfo[] adjacentAllies = rc.senseNearbyRobots(2, rc.getTeam());
-            MapLocation[] fillingSpots = rc.getAllLocationsWithinRadiusSquared(fillingStation, 2);
-            for(RobotInfo r : adjacentAllies) {
-                if(!r.getType().isTowerType() && rc.getLocation().isAdjacentTo(r.getLocation())) {
-                    for(MapLocation spot : fillingSpots) {
-                        if(rc.canMove(rc.getLocation().directionTo(spot)) && !spot.isAdjacentTo(r.getLocation())) {
-                            rc.move(rc.getLocation().directionTo(spot));
-                            break;
-                        }
-                    }
-                }
-            }
-            if(rc.canTransferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1))){
-                rc.transferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1));
-            }
+        if(rc.getLocation().isWithinDistanceSquared(fillingStation, 9)) {
+            Micro.refillingMicro(rc, fillingStation);
         }
         else {
             if(rc.isMovementReady()) {
@@ -651,6 +646,7 @@ public class Soldier {
         Ruin r = null;
         boolean isOccupied = false;
         for(Ruin ruin : Communication.unclaimedRuins) {
+            if(contestedAndWaitingRuins.contains(ruin)) continue;
             if(ruin.location.distanceSquaredTo(rc.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(rc.getLocation());
                 r = ruin;
@@ -689,6 +685,7 @@ public class Soldier {
                 hasEmpty = true;
             }
             if(tile.getPaint().isEnemy()){
+                contestedAndWaitingRuins.add(ruin);
                 return false;
             }
             if(pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
@@ -696,6 +693,8 @@ public class Soldier {
             }
         }
         if(hasEmpty) return true;
+        //int dist = rc.getLocation().distanceSquaredTo(ruin);
+        //if((dist <= 8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 1) || (dist >8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0)) return true;
         if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
         return false;
     }

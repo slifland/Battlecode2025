@@ -202,7 +202,77 @@ public class Micro {
         if(rc.isActionReady() && bestAttack != null) {
             if(rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
+    }
 
+    //finds and moves to the best square for refilling
+    //differentiates if we are:
+    //1. able to refill this turn (actionReady AND tower has paint)
+    //2. not able to refill this turn (not action ready, tower doesnt have paint)
+    //in case 1, we should move to the best spot available next to the paint tower
+    //in case 2, we move to the best spot within radius squared 8 of the paint tower
+    public static void refillingMicro(RobotController rc, MapLocation refillLoc) throws GameActionException {
+        int towerPaint = rc.senseRobotAtLocation(refillLoc).paintAmount;
+        boolean canRefill = rc.isActionReady() && towerPaint > 10;
+        if (!rc.canSenseRobotAtLocation(refillLoc)) {
+            System.out.println("Somethings wrong!");
+            return;
+        }
+        if(rc.isMovementReady()) {
+            populateMicroArrayRuin(rc, refillLoc);
+            microInfo bestMicro = microArray[0];
+            for (int i = 1; i < 9; i++) {
+                do {
+                    //if one space is passable and the other is not, then passable is better
+                    if (!microArray[i].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    if (canRefill) {
+                        int distToRefill = bestMicro.loc.distanceSquaredTo(refillLoc);
+                        int altDistToRefill = microArray[i].loc.distanceSquaredTo(refillLoc);
+                        if (distToRefill < altDistToRefill && altDistToRefill > 2) break;
+                        if (altDistToRefill < distToRefill && distToRefill > 2) {
+                            bestMicro = microArray[i];
+                        }
+                    }
+
+                    //look at which place will lose us the least paint at the end of this turn
+                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+                    //regardless of action readiness, the next considerations are unified:
+                    //we prioritize allied paint over neutral paint over enemy paint
+                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+                } while (false);
+            }
+            if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
+                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            }
+        }
+        if(canRefill && rc.canTransferPaint(refillLoc, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(refillLoc).paintAmount * -1))){
+            rc.transferPaint(refillLoc, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(refillLoc).paintAmount * -1));
+        }
     }
 
     //finds the best square near the ruin for us to attack

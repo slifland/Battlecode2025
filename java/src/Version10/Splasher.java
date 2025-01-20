@@ -118,22 +118,8 @@ public class Splasher {
                 return;
             }
         }
-        if(rc.getLocation().isAdjacentTo(fillingStation)) {
-            RobotInfo[] adjacentAllies = rc.senseNearbyRobots(2, rc.getTeam());
-            MapLocation[] fillingSpots = rc.getAllLocationsWithinRadiusSquared(fillingStation, 2);
-            for(RobotInfo r : adjacentAllies) {
-                if(!r.getType().isTowerType() && rc.getLocation().isAdjacentTo(r.getLocation())) {
-                    for(MapLocation spot : fillingSpots) {
-                        if(rc.canMove(rc.getLocation().directionTo(spot)) && !spot.isAdjacentTo(r.getLocation())) {
-                            rc.move(rc.getLocation().directionTo(spot));
-                            break;
-                        }
-                    }
-                }
-            }
-            if(rc.canTransferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1))){
-                rc.transferPaint(fillingStation, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(fillingStation).paintAmount * -1));
-            }
+        if(rc.getLocation().isWithinDistanceSquared(fillingStation, 9)) {
+            Micro.refillingMicro(rc, fillingStation);
         }
         else {
             if(rc.isMovementReady()) {
