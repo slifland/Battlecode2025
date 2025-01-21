@@ -123,7 +123,7 @@ public class Mopper {
             curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
         }
         //MOVE TO OBJECTIVE
-        Direction dir = BFS_7x7.pathfind(rc, curObjective);
+        Direction dir = Pathfinding.bugBFS(rc, curObjective);
         if(rc.canMove(dir)) rc.move(dir);
     }
 

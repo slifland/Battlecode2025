@@ -28,11 +28,11 @@ class splasherMicroInfo {
         passable = true;
         loc = tile.getMapLocation();
         paintType = switch(tile.getPaint()) {
-            case PaintType.EMPTY -> NEUTRAL_PAINT;
-            case PaintType.ALLY_PRIMARY -> ALLY_PAINT;
-            case PaintType.ALLY_SECONDARY -> ALLY_PAINT;
-            case PaintType.ENEMY_SECONDARY -> ENEMY_PAINT;
-            case PaintType.ENEMY_PRIMARY -> ENEMY_PAINT;
+            case EMPTY -> NEUTRAL_PAINT;
+            case ALLY_PRIMARY -> ALLY_PAINT;
+            case ALLY_SECONDARY -> ALLY_PAINT;
+            case ENEMY_SECONDARY -> ENEMY_PAINT;
+            case ENEMY_PRIMARY -> ENEMY_PAINT;
         };
         populateSplasherMicroInfo();
     }

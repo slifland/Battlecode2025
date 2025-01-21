@@ -101,7 +101,7 @@ public class Splasher {
         //MOVE TO OBJECTIVE
         //int price = Clock.getBytecodesLeft();
         if(rc.isMovementReady()) {
-            Direction dir = BFS_7x7.pathfind(rc, curObjective);
+            Direction dir = Pathfinding.bugBFS(rc, curObjective);
             if (rc.canMove(dir)) rc.move(dir);
         }
     }
@@ -123,7 +123,7 @@ public class Splasher {
         }
         else {
             if(rc.isMovementReady()) {
-                Direction dir = BFS_7x7.pathfind(rc, fillingStation);
+                Direction dir = Pathfinding.bugBFS(rc, fillingStation);
                 if(rc.canMove(dir)) rc.move(dir);
             }
         }
@@ -133,7 +133,7 @@ public class Splasher {
     public static void explore(RobotController rc) throws GameActionException {
         if(curObjective == null || rc.getLocation().distanceSquaredTo(curObjective) <= 8) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         if(rc.isMovementReady()) {
-            Direction dir = BFS_7x7.pathfind(rc, curObjective);
+            Direction dir = Pathfinding.bugBFS(rc, curObjective);
             if (rc.canMove(dir)) rc.move(dir);
         }
     }

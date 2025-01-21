@@ -3,7 +3,6 @@ import battlecode.common.*;
 
 public class PaintFill
 {
-
     public static MapLocation getLocationFromIndex(int nodeIndex, MapLocation center)
     {
         return new MapLocation(center.x - 3 + nodeIndex % 7, center.y - 3 + 6 - nodeIndex / 7);

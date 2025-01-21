@@ -291,7 +291,7 @@ public class Soldier {
                 else rc.setIndicatorString("reverse");
             }
             else {
-                Direction dir = Version8.BFS_7x7.pathfind(rc, target);
+                Direction dir = Pathfinding.bugBFS(rc, target);
                 if(dir != null && rc.canMove(dir)) {
                     rc.move(dir);
                 }
@@ -302,7 +302,7 @@ public class Soldier {
                 //target = generateExploreLocation(rc);
                 target = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
             }
-            Direction dir = BFS_7x7.pathfind(rc, target);
+            Direction dir = Pathfinding.bugBFS(rc, target);
             //rc.setIndicatorLine(rc.getLocation(), target, 255, 255, 255);
             if (rc.canMove(dir)) rc.move(dir);
             //attemptFill(rc);
@@ -315,12 +315,12 @@ public class Soldier {
     {
         if(claimedRuin != null) validateRuinClaim(rc);
         if(claimedRuin != null && rc.getNumberTowers() < 25) {
-            Direction dir = BFS_7x7.pathfind(rc, claimedRuin);
+            Direction dir = Pathfinding.bugBFS(rc, claimedRuin);
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
         else if (rc.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS && !Communication.enemyTowers.isEmpty()) {
-            Direction dir = BFS_7x7.pathfind(rc, closestEnemyTower(rc));
+            Direction dir = Pathfinding.bugBFS(rc, closestEnemyTower(rc));
             if(rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
@@ -358,7 +358,7 @@ public class Soldier {
         boolean isSecondary = false;
         int dist = rc.getLocation().distanceSquaredTo(closestUnfilledPatternCenter);
         if(dist >= 8) {
-            Direction dir = BFS_7x7.pathfind(rc, closestUnfilledPatternCenter);
+            Direction dir = Pathfinding.bugBFS(rc, closestUnfilledPatternCenter);
             if(rc.canMove(dir)) rc.move(dir);
         }
         else {
@@ -387,7 +387,7 @@ public class Soldier {
         if(bestTile != null) {
             if(rc.canAttack(bestTile.getMapLocation())) rc.attack(bestTile.getMapLocation(), isSecondary);
             else if(rc.isMovementReady()) {
-                Direction dir = BFS_7x7.pathfind(rc, bestTile.getMapLocation());
+                Direction dir = Pathfinding.bugBFS(rc, bestTile.getMapLocation());
                 if(rc.canMove(dir)) rc.move(dir);
                 if(rc.canAttack(bestTile.getMapLocation())) rc.attack(bestTile.getMapLocation(), isSecondary);
             }
@@ -425,7 +425,7 @@ public class Soldier {
         }
         else {
             if(rc.isMovementReady()) {
-                Direction dir = BFS_7x7.pathfind(rc, fillingStation);
+                Direction dir = Pathfinding.bugBFS(rc, fillingStation);
                 if(rc.canMove(dir)) rc.move(dir);
             }
         }
@@ -652,7 +652,7 @@ public class Soldier {
 
     static void paintMove(RobotController rc, MapLocation target, boolean isSecondary) throws GameActionException
     {
-        Direction directionToMove = BFS_7x7.pathfind(rc, target);
+        Direction directionToMove = Pathfinding.bugBFS(rc, target);
         MapLocation futurePosition = rc.getLocation().add(directionToMove);
         if(rc.canPaint(futurePosition) && rc.canAttack(futurePosition) && !rc.senseMapInfo(futurePosition).getPaint().isAlly())
         {

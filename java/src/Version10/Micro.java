@@ -1,6 +1,7 @@
 package Version10;
 
 
+import PathfindingTest.Pathfinding;
 import battlecode.common.*;
 import static Version10.RobotPlayer.*;
 
@@ -124,7 +125,7 @@ public class Micro {
             if (bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
         if(bestAttack == null && rc.getChips() > 1000) {
-            Direction dir = BFS_7x7.pathfind(rc, ruin);
+            Direction dir = Pathfinding.bugBFS(rc, ruin);
             if(rc.canMove(dir)) rc.move(dir);
             return;
         }
