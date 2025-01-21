@@ -431,7 +431,6 @@ public class MopperMicro {
                 if (withinFunctionalTowerRange) return -1;
             }
             if(Utilities.basicLocationIsBehindWall(rc, m.getMapLocation())){
-                rc.setIndicatorDot(temp, 0, 0, 255);
                 return -1;
             }
             if(r != null) {

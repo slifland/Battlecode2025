@@ -245,7 +245,7 @@ public class Mopper {
         int count = 0;
         int x = 0;
         int y = 0;
-        boolean hasSeenNoWall = false;
+        //boolean hasSeenNoWall = false;
         for(MapInfo tile : nearbyTiles) {
             Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
 //            if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
@@ -255,16 +255,19 @@ public class Mopper {
                 map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                 if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
             }
-            if(tile.getPaint().isEnemy() && (hasSeenNoWall || !Utilities.locationIsBehindWall(rc, tile.getMapLocation()))) {
+            if(tile.getPaint().isEnemy() && /*(hasSeenNoWall || */!Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation()))/*)*/ {
                 if(!needsClearing && nearbyRuin != null && tile.getMapLocation().isWithinDistanceSquared(nearbyRuin, 8)) {
                     needsClearing = true;
                 }
                 x += tile.getMapLocation().x;
                 y += tile.getMapLocation().y;
                 count++;
-                hasSeenNoWall = true;
+                //hasSeenNoWall = true;
                 //rc.setIndicatorDot(tile.getMapLocation(), 255, 0, 0);
             }
+//            else if (tile.getPaint().isEnemy()){
+//                rc.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
+//            }
         }
         numEnemyTiles = count;
         averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
