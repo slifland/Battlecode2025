@@ -167,6 +167,12 @@ public class Pathfinding
                         currentDirection = currentDirection.rotateRight();
                     else
                         currentDirection =  currentDirection.rotateLeft();
+                    if(virtualStack.isFull())
+                    {
+                        virtualStack.clear();
+                        virtualStack.push(Direction.CENTER);
+                        break;
+                    }
                     virtualStack.push(currentDirection);
                 }
                 virtualBug = virtualBug.add(virtualStack.pop());
@@ -192,6 +198,12 @@ public class Pathfinding
                         currentDirection = currentDirection.rotateRight();
                     else
                         currentDirection =  currentDirection.rotateLeft();
+                    if(virtualStack.isFull())
+                    {
+                        virtualStack.clear();
+                        virtualStack.push(Direction.CENTER);
+                        break;
+                    }
                     virtualStack.push(currentDirection);
                 }
             }
@@ -265,7 +277,6 @@ class DirectionStack
 
     public void displayDirections(RobotController rc) throws GameActionException
     {
-        System.out.println(stackPointer);
         for(int i = 0; i < stackPointer; i++)
         {
             if(rc.onTheMap(rc.getLocation().add(directionStack[i])))
