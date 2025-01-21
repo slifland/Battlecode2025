@@ -127,7 +127,7 @@ public class Soldier {
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         TURN_TO_NAVIGATE_TO_TOWERS = (int)(mapSize / 12.5); //indicates at what turn we will prioritize going towards enemy towers
         STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
-        TURN_TO_FILL = (int)(mapSize / 40); //turn at which filling becomes allowed
+        TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
         FORCE_MONEY_ROUND = 100;//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
@@ -263,7 +263,7 @@ public class Soldier {
                 if(rc.canMark(rc.getLocation())) {
                     rc.mark(rc.getLocation(), true);
                     closestUnfilledPatternCenter = rc.getLocation();
-                    System.out.println(rc.getLocation());
+                    //out.println(rc.getLocation());
                     //rc.resign();
                 }
             }
@@ -326,7 +326,7 @@ public class Soldier {
 
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {
-            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25)){
+            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25) && validateLocation(rc, closestUnfilledPatternCenter)) {
                 if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
             }
         }
@@ -691,7 +691,7 @@ public class Soldier {
         for(MapInfo tile : tiles) {
             if(!tile.isPassable() || tile.getPaint().isEnemy()) return false;
         }
-        System.out.println("test price: " + (price - Clock.getBytecodesLeft()));
+        //out.println("test price: " + (price - Clock.getBytecodesLeft()));
         return true;
     }
 
