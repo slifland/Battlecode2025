@@ -41,8 +41,6 @@ public class Soldier {
     static boolean canFinishRuin = false;
     static int neededToFinish = Integer.MAX_VALUE;
     static MapLocation spawnLocation;
-    //static HashSet<MapLocation> invalidResourceCenters;
-    static MapLocation closestCustomPattern;
     static boolean[][] invalidResourceCenters;
 
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
@@ -54,12 +52,8 @@ public class Soldier {
     //Constants
     final static int refillThreshold = 20;    //Paint level at which soldiers go to refill
     final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
+    //final static int REFRESH_ENEMY_PAINT_AVERAGES = 5;
      static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
-    final static int attackThreshold = 2;     //Number of soldiers we need to rush a tower
-    final static int chipThreshold = 0; //Build money towers if we have fewer chips than the threshold
-    final static int congestionThreshold = 2;
-    public static final int randomRadius = 100;
-    final static int SECTOR_CHECK = 2; //indicates how often we will check if we are in a previously unseen sector
     static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers
     static int STOP_EXPLORING; //indicates when soldiers will began defaulting to navigate instead of explore
     final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 20; //records how often we will checked if our ruin claim has been thwarted by enemies
@@ -125,6 +119,9 @@ public class Soldier {
         if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
             validateRuinClaim(rc);
         }
+//        if(Clock.getBytecodesLeft() > 3000) {
+//            Utilities.updatePaintAverages(rc);
+//        }
         //if(claimedRuin != null) rc.setIndicatorString(claimedRuin.toString());
 
 //        if(target == null) rc.setIndicatorString(state.toString());
@@ -146,7 +143,6 @@ public class Soldier {
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
         EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
-
 
     }
     //initalizes the sector array to be the right size, and full of falses
@@ -574,7 +570,7 @@ public class Soldier {
     //logic currently copied from version 8
     public static boolean[][] chooseDesiredPattern(RobotController rc, MapLocation m) throws GameActionException {
         //if(enemyRobots.length >= 1) return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
-        int ranNum = (rc.getRoundNum() < FORCE_MONEY_ROUND) ? 0 : RobotPlayer.rng.nextInt(2);
+        int ranNum = (rc.getRoundNum() < FORCE_MONEY_ROUND) ? 0 : rng.nextInt(2);
         if(ranNum == 0) {
             return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         }

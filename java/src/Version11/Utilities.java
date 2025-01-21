@@ -6,6 +6,7 @@ import static Version11.RobotPlayer.*;
 
 public class Utilities
 {
+    final static int RADIUS_FROM_CENTER = 25;
     /*
         Uses the origin as the beginning of a tiling pattern and returns what color a tile on a specific MapLocation
         should be.
@@ -27,13 +28,14 @@ public class Utilities
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(RobotController rc, MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
         if(rc.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-        //if(enemyRobots.length > 1) return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        else if(rc.getNumberTowers() > 8 && center.distanceSquaredTo(new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles > 1) {
+            return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        }
         int moneyScore = 0;
         int paintScore = 0;
         int defenseScore = 0;
         int totalAlly = 0;
         MapLocation fakeOrigin = new MapLocation(center.x - 2, center.y - 2);
-        //boolean[][] moneyPattern = (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         boolean[][] moneyPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         boolean [][] defensePattern = rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         boolean[][] paintPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
@@ -48,8 +50,6 @@ public class Utilities
                 totalAlly++;
             }
         }
-        //defenseScore += Math.max(enemyRobots.length, 2);
-        //if(rc.getRoundNum() <= ) moneyScore++;
         if(totalAlly == 0) return null;
         if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
         else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;
@@ -85,7 +85,7 @@ public class Utilities
     public static void updatePaintAverages(RobotController rc)
     {
         if(rc.getType().isTowerType()) return; // We don't want towers contributing for simplicity
-        if(rc.getRoundNum() % 50 == 0)        // Clear frontlines every so often
+        if(turnCount % 50 == 0)        // Clear frontlines every so often
         {
             paintCount1 = 0;
             paintCount2 = 0;
