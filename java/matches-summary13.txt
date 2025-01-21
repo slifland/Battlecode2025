@@ -1,0 +1,13 @@
+|  | Version10 | Version9 | Version8 |
+| :---: | :---: | :---: | :---: |
+| DefaultSmall | Won (280, 247) | Tied (163, 184) | Tied (176, 171) |
+| DefaultLarge | Tied (321, 329) | Won (313, 497) | Tied (448, 268) |
+| DefaultHuge | Tied (501, 806) | Won (532, 496) | Won (343, 416) |
+| Money | Tied (470, 392) | Tied (325, 302) | Won (278, 272) |
+| Mirage | Tied (316, 386) | Tied (296, 317) | Won (246, 349) |
+| Justice | Lost (1387, 1020) | Tied (1764, 2000) | Lost (826, 728) |
+| gardenworld | Tied (512, 471) | Won (611, 1010) | Won (475, 415) |
+| memstore | Won (538, 374) | Won (411, 377) | Won (421, 390) |
+| Thirds | Won (439, 521) | Won (491, 715) | Won (351, 462) |
+| TargetPractice | Tied (348, 276) | Won (334, 239) | Won (474, 364) |
+
