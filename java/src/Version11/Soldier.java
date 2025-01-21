@@ -53,6 +53,7 @@ public class Soldier {
     //Constants
     final static int refillThreshold = 20;    //Paint level at which soldiers go to refill
     final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
+     static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
     final static int attackThreshold = 2;     //Number of soldiers we need to rush a tower
     final static int chipThreshold = 0; //Build money towers if we have fewer chips than the threshold
     final static int congestionThreshold = 2;
@@ -141,6 +142,8 @@ public class Soldier {
         FORCE_MONEY_ROUND = (int)(0.019 * mapSize + 32.4);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
+        //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
+        EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
 
 
     }
@@ -346,9 +349,8 @@ public class Soldier {
         if(claimedRuin != null && state != SoldierState.Refill) {
             validateRuinClaim(rc);
             navigate(rc);
-            return;
         }
-        if((turnCount == 1 && rng.nextInt(5) == 0) || wallHug) {
+        else if((turnCount == 1 && rng.nextInt(5) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -365,6 +367,7 @@ public class Soldier {
                     rc.move(dir);
                 }
             }
+
         }
         else {
             if (rc.getRoundNum() % 25 == 0 || target == null || rc.getLocation().distanceSquaredTo(target) < 8) {
@@ -375,6 +378,9 @@ public class Soldier {
             //rc.setIndicatorLine(rc.getLocation(), target, 255, 255, 255);
             if (dir != null && rc.canMove(dir)) rc.move(dir);
             //attemptFill(rc);
+        }
+        if(rc.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
+            attemptFill(rc);
         }
     }
 

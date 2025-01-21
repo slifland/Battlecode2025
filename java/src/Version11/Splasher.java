@@ -24,7 +24,7 @@ public class Splasher {
     private static MapLocation nearestPaintTower;
     public static int distanceToNearestPaintTower = -1;
     //final variables
-    private static final int refillThreshold = 100;
+    private static final int refillThreshold = 50;
     private static int endRefillThreshold = 200;
 
     public static MapLocation averageEnemyPaint;
@@ -221,7 +221,7 @@ public class Splasher {
             seenEnemyTower = null;
             numEnemyTiles = 0;
             averageEnemyPaint = null;
-            boolean hasSeenNoWall = false;
+            //boolean hasSeenNoWall = false;
             int x = 0;
             int y = 0;
             //now, check if we can see any enemy tiles
@@ -231,11 +231,11 @@ public class Splasher {
                     map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                     if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
                 }
-                if (tile.getPaint().isEnemy() && (hasSeenNoWall || !Utilities.locationIsBehindWall(rc, tile.getMapLocation()))) {
+                if (tile.getPaint().isEnemy() &&/* (hasSeenNoWall || */!Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation())) {
                     x += tile.getMapLocation().x;
                     y += tile.getMapLocation().y;
                     numEnemyTiles++;
-                    hasSeenNoWall = true;
+                    //hasSeenNoWall = true;
                     //rc.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
                 }
             }

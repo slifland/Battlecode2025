@@ -275,7 +275,7 @@ public class Utilities
         double c = (m*L.x-L.y);
         for(MapInfo T: rc.senseNearbyMapInfos(radius)){
             MapLocation t = T.getMapLocation();
-            if(t.equals(L) || t.equals(R)) continue;
+            if(t.equals(L)) continue;
             if(!angleIsGreaterThan90(t.directionTo(L),t.directionTo(R))){
                 /*If the directions point in the same way that means that t
                 is not inbetween L and R. If it was inbetween the the
@@ -302,7 +302,8 @@ public class Utilities
 
     public static boolean basicLocationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
         //Direction dir = rc.getLocation().directionTo(L);
-        Direction dir = MopperMicro.customLocationTo(rc.getLocation(), L);
+        Direction dir = MopperMicro.customLocationTo(rc.getLocation(), L); //turn 340
+        //System.out.println(rc.getLocation() + " : " + dir + " : " + L);
         MapLocation check1 = rc.getLocation().add(dir);
         MapLocation check2 = rc.getLocation().add(dir.rotateLeft());
         MapLocation check3 = rc.getLocation().add(dir.rotateRight());

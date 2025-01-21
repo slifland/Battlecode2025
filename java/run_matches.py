@@ -12,9 +12,9 @@ emojiMap = {
 errors = []
 currentBot = 'Version11'
 
-bots = ['Version10', 'Version9', 'Version8']
+bots = ['Version10', 'Version9']
 botsSet = set(bots)
-maps = ['DefaultSmall', 'DefaultLarge' , 'DefaultHuge', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice']
+maps = ['DefaultSmall', 'DefaultLarge' , 'DefaultHuge', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack']
 mapsSet = set(maps)
 
 matches = set(product(bots, maps))
