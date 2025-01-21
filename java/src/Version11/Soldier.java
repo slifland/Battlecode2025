@@ -6,6 +6,7 @@ import static Version11.RobotPlayer.rng;
 import static Version11.Communication.alliedPaintTowers;
 import static Version11.RobotPlayer.*;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Soldier {
     enum SoldierState {
@@ -73,6 +74,13 @@ public class Soldier {
             spawnLocation = rc.getLocation();
             invalidResourceCenters = new HashSet<MapLocation>();
         }
+//        int price = Clock.getBytecodesLeft();
+//        invalidResourceCenters.add(new MapLocation(-1, -1));
+//        if(invalidResourceCenters.contains(rc.getLocation())) {
+//            System.out.println("LOL!");
+//        }
+//        System.out.println(price - Clock.getBytecodesLeft());
+
         //attemptCompleteTowerPattern(rc);
         updateInfo(rc);
         //update the state
@@ -129,7 +137,8 @@ public class Soldier {
         STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
         TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
-        FORCE_MONEY_ROUND = 100;//turn at which any time before that soldiers will always build money towers
+        //y = 0.019x + 32.4 -> calibrates it to 40 at min size and 100 at max size
+        FORCE_MONEY_ROUND = (int)(0.019 * mapSize + 32.4);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
 
@@ -309,7 +318,7 @@ public class Soldier {
         state = (rc.getRoundNum() < STOP_EXPLORING) ? SoldierState.Explore : SoldierState.Navigate;
         fillingStation = null;
         //check if we see any nearby unclaimed ruins
-        if(closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(rc, closestUnclaimedRuin) && rc.getNumberTowers() < 25) {
+        if(rc.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(rc, closestUnclaimedRuin)) {
             state = SoldierState.RuinBuilding;
             return;
         }
@@ -326,7 +335,7 @@ public class Soldier {
 
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {
-            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25) && validateLocation(rc, closestUnfilledPatternCenter)) {
+            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25 || rc.getNumberTowers() == 25) && validateLocation(rc, closestUnfilledPatternCenter)) {
                 if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
             }
         }

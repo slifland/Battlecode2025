@@ -214,6 +214,9 @@ public class Micro {
     //in case 1, we should move to the best spot available next to the paint tower
     //in case 2, we move to the best spot within radius squared 8 of the paint tower
     public static void refillingMicro(RobotController rc, MapLocation refillLoc) throws GameActionException {
+        if(!rc.canSenseRobotAtLocation(refillLoc)) {
+            return;
+        }
         int towerPaint = rc.senseRobotAtLocation(refillLoc).paintAmount;
         boolean canRefill = rc.isActionReady() && towerPaint > 10;
         if (!rc.canSenseRobotAtLocation(refillLoc)) {
