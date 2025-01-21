@@ -304,7 +304,7 @@ public class Soldier {
             }
             Direction dir = Pathfinding.bugBFS(rc, target);
             //rc.setIndicatorLine(rc.getLocation(), target, 255, 255, 255);
-            if (rc.canMove(dir)) rc.move(dir);
+            if (dir != null && rc.canMove(dir)) rc.move(dir);
             //attemptFill(rc);
         }
     }
@@ -316,12 +316,12 @@ public class Soldier {
         if(claimedRuin != null) validateRuinClaim(rc);
         if(claimedRuin != null && rc.getNumberTowers() < 25) {
             Direction dir = Pathfinding.bugBFS(rc, claimedRuin);
-            if(rc.canMove(dir)) rc.move(dir);
+            if(dir != null && rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
         else if (rc.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS && !Communication.enemyTowers.isEmpty()) {
-            Direction dir = Pathfinding.bugBFS(rc, closestEnemyTower(rc));
-            if(rc.canMove(dir)) rc.move(dir);
+            Direction dir = Pathfinding.bugBFS(rc, closestEnemyTower);
+            if(dir != null && rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
 //        else {
