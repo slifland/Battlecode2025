@@ -41,8 +41,9 @@ public class Soldier {
     static boolean canFinishRuin = false;
     static int neededToFinish = Integer.MAX_VALUE;
     static MapLocation spawnLocation;
-    static HashSet<MapLocation> invalidResourceCenters;
+    //static HashSet<MapLocation> invalidResourceCenters;
     static MapLocation closestCustomPattern;
+    static boolean[][] invalidResourceCenters;
 
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
@@ -73,7 +74,8 @@ public class Soldier {
             clockwise = rng.nextInt(2) == 0;
             initializeMapDependentVariables(rc);
             spawnLocation = rc.getLocation();
-            invalidResourceCenters = new HashSet<MapLocation>();
+            //invalidResourceCenters = new HashSet<MapLocation>();
+            invalidResourceCenters = new boolean[rc.getMapWidth()][rc.getMapHeight()];
         }
 //        int price = Clock.getBytecodesLeft();
 //        invalidResourceCenters.add(new MapLocation(-1, -1));
@@ -232,7 +234,7 @@ public class Soldier {
             }
             if(tile.getMark() == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
                 //if(rc.canCompleteResourcePattern(tileLoc)) rc.completeResourcePattern(tileLoc);
-                if(!invalidResourceCenters.contains(tileLoc) && validatePlacement(rc, tileLoc)) {
+                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc)) {
                     int dist = rc.getLocation().distanceSquaredTo(tileLoc);
                     if(dist < minDistanceToValidLocation) {
                         minDistanceToValidLocation = dist;
@@ -657,13 +659,15 @@ public class Soldier {
     public static boolean validatePlacement(RobotController rc, MapLocation loc) throws GameActionException {
         MapInfo[] tiles = rc.senseNearbyMapInfos(loc, 8);
         if(!farFromEdge(rc, loc)) {
-            invalidResourceCenters.add(loc);
+            //invalidResourceCenters.add(loc);
+            invalidResourceCenters[loc.x][loc.y] = true;
             return false;
         }
         //if(tiles.length < 25) return false;
         for (MapInfo tile : tiles) {
             if (!tile.isPassable() || tile.getMark().isAlly()){
-                invalidResourceCenters.add(loc);
+                //invalidResourceCenters.add(loc);
+                invalidResourceCenters[loc.x][loc.y] = true;
                 return false;
             }
         }
