@@ -40,6 +40,8 @@ public class Soldier {
     static boolean canFinishRuin = false;
     static int neededToFinish = Integer.MAX_VALUE;
     static MapLocation spawnLocation;
+    static HashSet<MapLocation> invalidResourceCenters;
+    static MapLocation closestCustomPattern;
 
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
@@ -69,6 +71,7 @@ public class Soldier {
             clockwise = rng.nextInt(2) == 0;
             initializeMapDependentVariables(rc);
             spawnLocation = rc.getLocation();
+            invalidResourceCenters = new HashSet<MapLocation>();
         }
         //attemptCompleteTowerPattern(rc);
         updateInfo(rc);
@@ -172,6 +175,7 @@ public class Soldier {
         closestEnemyTower = null;
         averageEnemyPaint = null;
         closestUnfilledPatternCenter = null;
+        //closestCustomPattern = null; //tracks the closest center of a custom pattern, so that it doesn't get overridden by attemptFill
 //        if(claimedRuin != null && rc.getRoundNum() % VALIDATE_RUIN_CLAIM_FREQUENCY == 0) {
 //            validateRuinClaim(rc);
 //        }
@@ -181,6 +185,9 @@ public class Soldier {
         int x = 0;
         int y = 0;
         int resourcePatternDist = Integer.MAX_VALUE;
+        int failedPlacementLocations = 0;
+        int minDistanceToValidLocation = Integer.MAX_VALUE;
+        //int minDistanceToCustomPatternCenter = Integer.MAX_VALUE;
         //do all the tasks which require looping through all nearbyTiles
         for(MapInfo tile : nearbyTiles) {
 //            if(knownSymmetry == Symmetry.Unknown) {
@@ -196,15 +203,68 @@ public class Soldier {
             else if(!canSeeEmpty && !tile.getPaint().isAlly()) {
                 canSeeEmpty = true;
             }
-            if(tile.getMark() == PaintType.ALLY_PRIMARY && !tile.isResourcePatternCenter() && rc.getLocation().distanceSquaredTo(tileLoc) < resourcePatternDist) {
+            if(tile.getMark().isAlly() && !tile.isResourcePatternCenter() && rc.getLocation().distanceSquaredTo(tileLoc) < resourcePatternDist) {
                 closestUnfilledPatternCenter = tileLoc;
                 resourcePatternDist = rc.getLocation().distanceSquaredTo(tileLoc);
             }
-            if(tile.getMark() != PaintType.EMPTY && rc.canCompleteResourcePattern(tile.getMapLocation())) rc.completeResourcePattern(tile.getMapLocation());
+            if(tile.getMark() != PaintType.EMPTY){
+                int dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                if(dist < minDistanceToValidLocation) {
+                    minDistanceToValidLocation = dist;
+                }
+                if(rc.canCompleteResourcePattern(tile.getMapLocation())) rc.completeResourcePattern(tile.getMapLocation());
+//                if(tile.getMark().isSecondary() && dist < minDistanceToCustomPatternCenter) {
+//                    minDistanceToCustomPatternCenter = dist;
+//                    closestCustomPattern = tileLoc;
+//                }
+            }
             if(tile.getMark() == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
                 //if(rc.canCompleteResourcePattern(tileLoc)) rc.completeResourcePattern(tileLoc);
-                if(validateLocation(rc, tile.getMapLocation())) {
-                    if(rc.canMark(tile.getMapLocation())) rc.mark(tile.getMapLocation(), false);
+                if(!invalidResourceCenters.contains(tileLoc) && validatePlacement(rc, tileLoc)) {
+                    int dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    if(dist < minDistanceToValidLocation) {
+                        minDistanceToValidLocation = dist;
+                    }
+                    if(rc.canMark(tile.getMapLocation())) {
+                        rc.mark(tile.getMapLocation(), false);
+                        closestUnfilledPatternCenter = tile.getMapLocation();
+                    }
+                }
+                else {
+                    failedPlacementLocations++;
+                    //rc.setIndicatorDot(tileLoc, 255, 255, 255);
+                }
+                //check if there is a nearby valid placement
+//                else if(dir != null){
+//                    Direction opposite = dir.opposite();
+//                    opposite = opposite.rotateLeft();
+//                    for(int i =0; i < 3; i++) {
+//                        Direction dir2 = validatePlacement(rc, tileLoc.add(opposite));
+//                        if(dir2 == Direction.CENTER){
+//                            if(rc.canMark(tile.getMapLocation())) {
+//                                rc.mark(tile.getMapLocation(), true);
+//                                closestUnfilledPatternCenter = tile.getMapLocation();
+//                            }
+//                            break;
+//                        }
+//                        dir = dir.rotateRight();
+//                    }
+//                }
+            }
+//            else if(validateLocation(rc, rc.getLocation())) {
+//                if(rc.canMark(tile.getMapLocation())) {
+//                    rc.mark(tile.getMapLocation(), false);
+//                    closestUnfilledPatternCenter = tile.getMapLocation();
+//                }
+//            }
+        }
+        if(failedPlacementLocations >= 4 && minDistanceToValidLocation >= 25) {
+            if(validatePlacement(rc, rc.getLocation())) {
+                if(rc.canMark(rc.getLocation())) {
+                    rc.mark(rc.getLocation(), true);
+                    closestUnfilledPatternCenter = rc.getLocation();
+                    System.out.println(rc.getLocation());
+                    //rc.resign();
                 }
             }
         }
@@ -265,7 +325,7 @@ public class Soldier {
         }
 
         //check if we see any uncompleted resource patterns marked out
-        if(closestUnfilledPatternCenter != null && rc.senseNearbyRobots(closestUnfilledPatternCenter, 8, rc.getTeam()).length <= 1) {
+        if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {
             if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25)){
                 if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
             }
@@ -356,6 +416,8 @@ public class Soldier {
         MapInfo[] potentialTiles = rc.senseNearbyMapInfos(closestUnfilledPatternCenter, 8);
         MapInfo bestTile = null;
         boolean isSecondary = false;
+        //use the origin if the mark is primary, custom if the mark is primary
+        boolean markIsSecondary = rc.senseMapInfo(closestUnfilledPatternCenter).getMark().isSecondary();
         int dist = rc.getLocation().distanceSquaredTo(closestUnfilledPatternCenter);
         if(dist >= 8) {
             Direction dir = Pathfinding.bugBFS(rc, closestUnfilledPatternCenter);
@@ -363,12 +425,15 @@ public class Soldier {
         }
         else {
             if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY) {
-                rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+                boolean useSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(rc.getLocation(), rc.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern());
+                //rc.attack(rc.getLocation(), Utilities.getColorFromOriginPattern(rc.getLocation(), rc.getResourcePattern()));
+                rc.attack(rc.getLocation(), useSecondary);
                 return;
             }
         }
         for(MapInfo tile : potentialTiles) {
-            boolean shouldBeSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
+            //boolean shouldBeSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
+            boolean shouldBeSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(tile.getMapLocation(), rc.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
             if(tile.getPaint() == PaintType.EMPTY && tile.isPassable()) {
                 if(rc.canAttack(tile.getMapLocation())) {
                     rc.attack(tile.getMapLocation(), shouldBeSecondary);
@@ -524,12 +589,12 @@ public class Soldier {
                     return;
                 }
             }
-            else if(tile.getPaint().isAlly() && tile.isPassable() && (closestUnclaimedRuin == null || !tile.getMapLocation().isWithinDistanceSquared(closestUnclaimedRuin, 8))) {
-                if(tile.getPaint().isSecondary() != Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern())) {
-                    bestTile = tile;
-                    isSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
-                }
-            }
+//            else if(tile.getPaint().isAlly() && tile.isPassable() && (closestUnclaimedRuin == null || !tile.getMapLocation().isWithinDistanceSquared(closestUnclaimedRuin, 8))) {
+//                if((closestCustomPattern == null || !tile.getMapLocation().isWithinDistanceSquared(closestCustomPattern, 8)) && tile.getPaint().isSecondary() != Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern())) {
+//                    bestTile = tile;
+//                    isSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
+//                }
+//            }
         }
         if(bestTile != null && rc.canAttack(bestTile.getMapLocation())) {
             if(state == SoldierState.RuinBuilding && bestTile.getPaint().isAlly()) return;
@@ -542,8 +607,8 @@ public class Soldier {
        // int price = Clock.getBytecodesLeft();
         MapInfo[] tiles = rc.senseNearbyMapInfos(loc, 8);
         if(tiles.length < 25) return false;
-//        for(MapInfo tile : tiles) {
-//            if(!tile.isPassable() || tile.getPaint().isEnemy()) return false;
+//        for(int i = 0; i < 25; i++) {
+//            if(!tiles[i].isPassable() || tiles[i].getPaint().isEnemy()) return false;
 //        }
         if (!tiles[0].isPassable() || tiles[0].getPaint().isEnemy()) return false;
         if (!tiles[1].isPassable() || tiles[1].getPaint().isEnemy()) return false;
@@ -571,6 +636,51 @@ public class Soldier {
         if (!tiles[23].isPassable() || tiles[23].getPaint().isEnemy()) return false;
         if (!tiles[24].isPassable() || tiles[24].getPaint().isEnemy()) return false;
        // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
+        return true;
+    }
+    //checks whether the 5x5 area around a location is empty of obstacles
+    public static boolean validatePlacement(RobotController rc, MapLocation loc) throws GameActionException {
+        MapInfo[] tiles = rc.senseNearbyMapInfos(loc, 8);
+        if(!farFromEdge(rc, loc)) {
+            invalidResourceCenters.add(loc);
+            return false;
+        }
+        //if(tiles.length < 25) return false;
+        for (MapInfo tile : tiles) {
+            if (!tile.isPassable() || tile.getMark().isAlly()){
+                invalidResourceCenters.add(loc);
+                return false;
+            }
+        }
+//        for (int i = 0; i < 25; i++) {
+//            if (!tiles[i].isPassable()) return false;
+//        }
+        //        if (!tiles[0].isPassable()) return false;
+//        if (!tiles[1].isPassable()) return false;
+//        if (!tiles[2].isPassable()) return false;
+//        if (!tiles[3].isPassable()) return false;
+//        if (!tiles[4].isPassable()) return false;
+//        if (!tiles[5].isPassable()) return false;
+//        if (!tiles[6].isPassable()) return false;
+//        if (!tiles[7].isPassable()) return false;
+//        if (!tiles[8].isPassable()) return false;
+//        if (!tiles[9].isPassable()) return false;
+//        if (!tiles[10].isPassable()) return false;
+//        if (!tiles[11].isPassable()) return false;
+//        if (!tiles[12].isPassable()) return false;
+//        if (!tiles[13].isPassable()) return false;
+//        if (!tiles[14].isPassable()) return false;
+//        if (!tiles[15].isPassable()) return false;
+//        if (!tiles[16].isPassable()) return false;
+//        if (!tiles[17].isPassable()) return false;
+//        if (!tiles[18].isPassable()) return false;
+//        if (!tiles[19].isPassable()) return false;
+//        if (!tiles[20].isPassable()) return false;
+//        if (!tiles[21].isPassable()) return false;
+//        if (!tiles[22].isPassable()) return false;
+//        if (!tiles[23].isPassable()) return false;
+//        if (!tiles[24].isPassable()) return false;
+        // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
         return true;
     }
     //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
