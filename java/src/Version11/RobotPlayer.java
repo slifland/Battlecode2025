@@ -87,7 +87,8 @@ public class RobotPlayer {
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
-        Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];       //[x position][y position]
+        Communication.setup(rc);
+
         //sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
 
