@@ -176,6 +176,7 @@ public class Communication
     {
         Mopper.nearbyRuin = null;
         Soldier.seenEnemyTower = null;
+        Splasher.seenEnemyTower = null;
 
         for(MapLocation ruinLoc : nearbyRuins)
         {

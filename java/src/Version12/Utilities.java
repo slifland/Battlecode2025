@@ -6,7 +6,7 @@ import static Version12.RobotPlayer.*;
 
 public class Utilities
 {
-    final static int RADIUS_FROM_CENTER = 25;
+    final static int RADIUS_FROM_CENTER = 35;
     /*
         Uses the origin as the beginning of a tiling pattern and returns what color a tile on a specific MapLocation
         should be.

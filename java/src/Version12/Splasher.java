@@ -14,7 +14,9 @@ enum splasherStates {
 public class Splasher {
 
     private static final int PAINT_TOWER_REFRESH = 25;
-    private static final int PAINT_AVERAGE_REFRESH = 3;
+    private static final int PAINT_AVERAGE_REFRESH = 15;
+    static int turnsSincePaintRefresh = 0;
+    private static final int CLOSEST_EMPTY_RUIN_REFRESH = 3;
 
     private static MapLocation curObjective;
     private static splasherStates state;
@@ -27,9 +29,12 @@ public class Splasher {
     private static final int refillThreshold = 50;
     private static int endRefillThreshold = 200;
 
+    public static MapLocation nearestUnfilledRuin;
     public static MapLocation averageEnemyPaint;
 
     private static MapLocation home;
+
+    static boolean exploredSymmetry = false;
 
     static int uselessTurnsCount = 0;
 
@@ -53,12 +58,22 @@ public class Splasher {
                 contest(rc);
                 break;
         }
+        if(turnsSincePaintRefresh >= PAINT_AVERAGE_REFRESH || Clock.getBytecodesLeft() > 4000) {
+            refreshPaintAverages(rc);
+            turnsSincePaintRefresh = 0;
+        }
+        else {
+            turnsSincePaintRefresh++;
+        }
         if(curObjective== null)rc.setIndicatorString(state.toString());
         else rc.setIndicatorString(state + " : " + curObjective);
     }
 
     //attempts to navigate to a known location - enemy average, usually
     public static void navigate(RobotController rc) throws GameActionException {
+        if(turnCount % 100 == 0) {
+            exploredSymmetry = false;
+        }
         MapLocation curLoc = rc.getLocation();
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) curObjective = null;
         //DETERMINE OBJECTIVE
@@ -78,7 +93,7 @@ public class Splasher {
         }
         //lets try and see if there are any unclaimed ruins that need our help
         //finally, navigate to the opposite of where we spawned
-        if(curObjective == null) {
+        if(curObjective == null && !exploredSymmetry) {
             Symmetry[] possible = Utilities.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
@@ -93,10 +108,15 @@ public class Splasher {
                     break;
             }
         }
+        if(knownSymmetry != Symmetry.Unknown && curObjective != null && rc.getLocation().isWithinDistanceSquared(curObjective, 5)) {
+            exploredSymmetry = true;
+            curObjective = null;
+        }
         //next, if we have enemy towers, go there
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
+            //curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
+            curObjective = new MapLocation(rng.nextInt(rc.getMapHeight() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
         }
         //MOVE TO OBJECTIVE
         //int price = Clock.getBytecodesLeft();
@@ -199,7 +219,7 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if(averageEnemyPaint != null) {
+        if(averageEnemyPaint != null && numEnemyTiles > 1) {
             state = splasherStates.contest;
         }
     }
@@ -208,7 +228,7 @@ public class Splasher {
     public static void updateInfo(RobotController rc) throws GameActionException {
         MapLocation curLoc = rc.getLocation();
         //gets the nearest paint tower, updating every so often
-        if(rc.getRoundNum() % PAINT_TOWER_REFRESH == 0) {
+        if(turnCount % PAINT_TOWER_REFRESH == 0) {
             for (Ruin r : alliedPaintTowers) {
                 if (nearestPaintTower == null || curLoc.distanceSquaredTo(r.location) < distanceToNearestPaintTower) {
                     distanceToNearestPaintTower = curLoc.distanceSquaredTo(r.location);
@@ -216,9 +236,11 @@ public class Splasher {
                 }
             }
         }
-        if(rc.getRoundNum() % PAINT_AVERAGE_REFRESH == 0) {
-            //reset turn by turn variables
-            seenEnemyTower = null;
+        if(turnCount % CLOSEST_EMPTY_RUIN_REFRESH == 0 || turnCount == 1) {
+            nearestUnfilledRuin = closestUnclaimedRuin(rc);
+        }
+        //if(turnCount % PAINT_AVERAGE_REFRESH == 0) {
+        if(turnCount == 1) {
             numEnemyTiles = 0;
             averageEnemyPaint = null;
             //boolean hasSeenNoWall = false;
@@ -231,12 +253,10 @@ public class Splasher {
                     map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
                     if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
                 }
-                if (tile.getPaint().isEnemy() &&/* (hasSeenNoWall || */!Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation())) {
+                if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation())) {
                     x += tile.getMapLocation().x;
                     y += tile.getMapLocation().y;
                     numEnemyTiles++;
-                    //hasSeenNoWall = true;
-                    //rc.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
                 }
             }
             averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
@@ -244,8 +264,42 @@ public class Splasher {
         //System.out.println(price - Clock.getBytecodesLeft());
     }
 
-    //UTILITY METHODS
+    public static void refreshPaintAverages(RobotController rc) throws GameActionException {
+        numEnemyTiles = 0;
+        averageEnemyPaint = null;
+        //boolean hasSeenNoWall = false;
+        int x = 0;
+        int y = 0;
+        //now, check if we can see any enemy tiles
+        for (MapInfo tile : nearbyTiles) {
+            Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
+            if (knownSymmetry == Symmetry.Unknown) {
+                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+                if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+            }
+            if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation())) {
+                x += tile.getMapLocation().x;
+                y += tile.getMapLocation().y;
+                numEnemyTiles++;
+            }
+        }
+        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
+    }
 
+    //UTILITY METHODS
+    private static MapLocation closestUnclaimedRuin(RobotController rc) {
+        int minDist = Integer.MAX_VALUE;
+        Ruin r = null;
+        boolean isOccupied = false;
+        for(Ruin ruin : Communication.unclaimedRuins) {
+            if(ruin.location.distanceSquaredTo(rc.getLocation()) < minDist) {
+                minDist = ruin.location.distanceSquaredTo(rc.getLocation());
+                r = ruin;
+                if (minDist <= 25) return r.location;
+            }
+        }
+        return (minDist == Integer.MAX_VALUE) ? null : r.location;
+    }
     //checks whether a space is in firing range of any seen enemy towers
     public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
         for(RobotInfo enemy : enemyRobots) {
