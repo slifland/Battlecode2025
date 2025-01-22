@@ -218,7 +218,7 @@ public class Soldier {
                 closestUnfilledPatternCenter = tileLoc;
                 resourcePatternDist = rc.getLocation().distanceSquaredTo(tileLoc);
             }
-            if(tile.getMark() != PaintType.EMPTY){
+            if(tile.getMark() == PaintType.ALLY_SECONDARY || tile.getMark() == PaintType.ALLY_PRIMARY){
                 int dist = rc.getLocation().distanceSquaredTo(tileLoc);
                 if(dist < minDistanceToValidLocation) {
                     minDistanceToValidLocation = dist;
