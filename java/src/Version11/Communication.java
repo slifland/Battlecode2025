@@ -11,7 +11,7 @@ public class Communication
 
     private static class Queue
     {
-        //the number of items stored at any given time must not exceed this number
+        //the number of items stored at any given time must not reach this number
         private static final int len = 200;
 
         private final Ruin[] ruins;
@@ -74,7 +74,11 @@ public class Communication
 
         if(rc.getType().isTowerType())
         {
-            //rc.broadcastMessage(0b11);
+            rc.broadcastMessage(0b11);
+
+            Ruin r = new Ruin(rc.getLocation(), 1, isPaintTower(rc.getType()));
+            updateRuinsMemory(r);
+            broadcastRuinQueue.add(r);
         }
     }
 
@@ -83,18 +87,12 @@ public class Communication
     */
     public static void processMessagesRobot(RobotController rc)
     {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)}; //////////////////////////////
-
-        for(Message[] mArr : messages)
+        for(Message m : rc.readMessages(rc.getRoundNum() - 1))
         {
-            for(Message m : mArr)
+            switch (m.getBytes() & 0b11)
             {
-                switch (m.getBytes() & 0b11)
-                {
-                    case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                    //case 0b01 -> updatePaintAveragesRobot(readAverageMessage(m));
-                }
-
+                case 0b00 -> updateRuinsMemory(messageToRuin(m));
+                //case 0b01 ->
             }
         }
     }
@@ -104,33 +102,29 @@ public class Communication
     */
     public static void processMessagesTower(RobotController rc)
     {
-        Message[][] messages = {rc.readMessages(rc.getRoundNum()), rc.readMessages(rc.getRoundNum() - 1)}; ///////////////////////////////
-
-        for(Message[] mArr : messages)
+        for(Message m : rc.readMessages(rc.getRoundNum() - 1))
         {
-            for(Message m : mArr)
+            switch (m.getBytes() & 0b11)
             {
-                switch (m.getBytes() & 0b11)
-                {
-                    case 0b00:
-                        if(updateRuinsMemory(messageToRuin(m)));
-                        {
-                            broadcastRuinQueue.add(messageToRuin(m));
-                        }
-                        break;
-                    /*
-                    case 0b01:
-                        updatePaintAveragesRobot(readAverageMessage(m));
-                        break;
-                     */
-                    case 0b10:
-                        processSymmetryMessageTower(m.getBytes());
-                        break;
-                    case 0b11:
-                        fillBroadcastQueue();
-                }
+                case 0b00:
+                    if(updateRuinsMemory(messageToRuin(m)))
+                    {
+                        //if this Ruin contained new information, then broadcast to nearby towers
+                        broadcastRuinQueue.add(messageToRuin(m));
+                    }
+                    break;
+                /*
+                case 0b01:
 
+                    break;
+                 */
+                case 0b10:
+                    processSymmetryMessageTower(m.getBytes());
+                    break;
+                case 0b11:
+                    fillBroadcastQueue();
             }
+
         }
     }
 
@@ -155,18 +149,6 @@ public class Communication
         if(i == 0) return;
 
         sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
-
-
-        /* uncomment this if we decide to send paint averages in comms
-
-        MapLocation towerToSend = tower[rng.nextInt(0, i)];
-        //We have different kinds of messages to send so let's alternate every round
-        switch (rc.getRoundNum() % 2)
-        {
-            case 0 -> sendRuinLocationsToTower(rc, towerToSend);
-            case 1 -> sendAveragesToTower(rc, towerToSend);
-        }
-        */
     }
 
     /*
@@ -213,24 +195,6 @@ public class Communication
         }
     }
 
-
-    /*
-    public static void sendAveragesToTower(RobotController rc, MapLocation tower) throws GameActionException
-    {
-        rc.sendMessage(tower, createAverageMessage());
-    }
-
-    public static void sendAveragesToRobot(RobotController rc, MapLocation robot) throws GameActionException
-    {
-        int message = createAverageMessage();
-        if(rc.canSendMessage(robot, message))
-        {
-            rc.sendMessage(robot, message);
-        }
-    }
-    */
-
-
     /*
         Send known ruin locations to a nearby tower
             Sends one Ruin each time this method is called
@@ -238,7 +202,7 @@ public class Communication
     */
     public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
     {
-        if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) { /////////////////////////////////////////////////////
+        if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) {
             if(knownSymmetry != Symmetry.Unknown && rc.canSendMessage(tower)) {
                 rc.sendMessage(tower, symmetriesToMessage(symmetries));
             }
@@ -255,7 +219,7 @@ public class Communication
     }
 
     /*
-    Broadcasts information the tower has to nearby towers - currently only sends info about symmetry
+    Broadcasts information the tower has to nearby towers
      */
     public static void broadcastMessages(RobotController rc) throws GameActionException
     {
@@ -263,12 +227,11 @@ public class Communication
         {
             rc.broadcastMessage(symmetriesToMessage(symmetries));
         }
-        /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         while(rc.canBroadcastMessage() && !broadcastRuinQueue.isEmpty())
         {
             rc.broadcastMessage(ruinToMessage(broadcastRuinQueue.pop()));
         }
-        /**/
     }
 
     private static void fillBroadcastQueue()
@@ -383,10 +346,17 @@ public class Communication
     //prints out the bytecode usage of a single call to updateRuinsMemory
     private static boolean updateRuinsMemoryTest(Ruin ruin)
     {
-        int price = Clock.getBytecodesLeft();
+        int price;
+        boolean ret;
+
         System.out.println("Received: " + ruin);
-        boolean ret = updateRuinsMemory(ruin);
-        System.out.println("\tPrice of processing:" + (price - Clock.getBytecodesLeft()));
+
+        price = Clock.getBytecodesLeft();
+        ret = updateRuinsMemory(ruin);
+        price -= Clock.getBytecodesLeft();
+
+        System.out.println("\tPrice of processing:" + price);
+
         return ret;
     }
 
@@ -444,96 +414,6 @@ public class Communication
     }
 
     /*
-    public static int createAverageMessage()
-    {
-        int message = 0b01;
-        message |= symmetries << 28;
-        message |= (paintCount1 == 0 ? 0 : 1) << 2; //Indicate average1's emptiness
-        message |= paintAverage1.x << 3;
-        message |= paintAverage1.y << 9;
-        message |= (paintCount2 == 0 ? 0 : 1) << 15; //Indicate average2's emptiness
-        message |= paintAverage2.x << 16;
-        message |= paintAverage2.y << 22;
-        return message;
-    }
-    */
-
-    public static MapLocation[] readAverageMessage(Message m)
-    {
-        return readAverageMessage(m.getBytes());
-    }
-
-    public static MapLocation[] readAverageMessage(int message)
-    {
-        //System.out.println("HIIIIII");
-        symmetries = message >> 28 & 0b1110;
-        //System.out.println(symmetries);
-        if(knownSymmetry == Symmetry.Unknown) {
-            switch (symmetries) {
-                case 2 -> knownSymmetry = Symmetry.Rotational;
-                case 4 -> knownSymmetry = Symmetry.Vertical;
-                case 8 -> knownSymmetry = Symmetry.Horizontal;
-            }
-        }
-        if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 0)      //Both locations are empty
-        {
-            return new MapLocation[0];
-        }
-        else if((message >> 2 & 1) == 1 && (message >> 15 & 1) == 0) //Location1 is used, Location2 is empty
-        {
-            return new MapLocation[]{new MapLocation(message >> 3 & 63, message >> 9 & 63)};
-        }
-        else if((message >> 2 & 1) == 0 && (message >> 15 & 1) == 1) //Location2 is used, Location1 is empty
-        {
-            return new MapLocation[]{new MapLocation(message >> 16 & 63, message >> 22 & 63)};
-        }
-        else                                                         //Location 1 is used, Location2 is empty
-        {
-            return new MapLocation[]{new MapLocation(message >> 3 & 63, message >> 9 & 63),
-                    new MapLocation(message >> 16 & 63, message >> 22 & 63)};
-        }
-    }
-
-    public static void updatePaintAveragesTower(RobotController rc, MapLocation[] locations)
-    {
-        if(locations.length == 2)
-        {
-            paintAverage1 = locations[0];
-            paintAverage2 = locations[1];
-        }
-        if(locations.length == 1)
-        {
-            paintAverage2 = locations[0];
-        }
-        for(MapLocation location : locations)
-        {
-            //System.out.println(location);
-            if(paintCount1 == 0)
-            {
-                paintAverage1 = location;
-                paintCount1++;
-                continue;
-            }
-
-            if(location.isWithinDistanceSquared(paintAverage1, distanceThreshold))
-            {
-                int x = (location.x + paintAverage1.x * paintCount1) / (1 + paintCount1);
-                int y = (location.y + paintAverage1.y * paintCount1) / (1 + paintCount1);
-                paintAverage1 = new MapLocation(x, y);
-                paintCount1++;
-            }
-            else
-            {
-                int x = (location.x + paintAverage2.x * paintCount2) / (1 + paintCount2);
-                int y = (location.y + paintAverage1.y * paintCount2) / (1 + paintCount2);
-                paintAverage2 = new MapLocation(x, y);
-                paintCount2++;
-            }
-        }
-    }
-
-
-    /*
         Used for testing and debugging
      */
     public static void printRuinsMemory()
@@ -557,33 +437,19 @@ public class Communication
         }
     }
 
-    private static void updatePaintAveragesRobot(MapLocation[] locations)
-    {
-        for(MapLocation location : locations)
-        {
-            if(paintAverage1.equals(new MapLocation(0,0)))
-            {
-                paintAverage1 = location;
-                paintCount1 = 1;
-            }
-            else if(paintAverage2.equals(new MapLocation(0,0)))
-            {
-                paintAverage2 = location;
-                paintCount2 = 1;
-            }
-        }
-    }
-
     /*
         Returns whether a robot is a paint tower
      */
-    public static boolean isPaintTower(RobotInfo info)
+    public static boolean isPaintTower(UnitType type)
     {
-        UnitType type = info.getType();
-
         return     type == UnitType.LEVEL_ONE_PAINT_TOWER
                 || type == UnitType.LEVEL_TWO_PAINT_TOWER
                 || type == UnitType.LEVEL_THREE_PAINT_TOWER;
+
+    }
+    public static boolean isPaintTower(RobotInfo info)
+    {
+        return isPaintTower(info.getType());
     }
 
 }
