@@ -401,6 +401,12 @@ public class MopperMicro {
             rc.setIndicatorString("safeMopperMicro");
             safeMopperMicro(rc);
         }
+        if(rc.isActionReady()){
+            Direction dir = dirToSweep(rc, 4);
+            if(dir != null && rc.canMopSwing(dir)) {
+                rc.mopSwing(dir);
+            }
+        }
     }
 
     //if we are at the end of a turn and haven't been able to attack what we wanted, just attack the first thing we can
@@ -523,7 +529,7 @@ public class MopperMicro {
         microArray = new mopperMicroInfo[9];
         populateMopperMicroArray(rc);
         mopperMicroInfo bestMicro = microArray[0];
-        for(int i = 1; i < microArray.length; i++) {
+        for(int i = 1; i < 9; i++) {
             mopperMicroInfo m = microArray[i];
             if(!m.passable) continue;
             if(!bestMicro.passable) {
@@ -539,7 +545,6 @@ public class MopperMicro {
                 continue;
             }
 
-
             if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
             if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
                 bestMicro = m;
@@ -552,6 +557,7 @@ public class MopperMicro {
                 bestMicro = microArray[i];
                 continue;
             }
+
 
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
@@ -584,7 +590,7 @@ public class MopperMicro {
         microArray = new mopperMicroInfo[9];
         populateMopperMicroArray(rc);
         mopperMicroInfo bestMicro = microArray[0];
-        for(int i = 1; i < microArray.length; i++) {
+        for(int i = 1; i < 9; i++) {
             mopperMicroInfo m = microArray[i];
             if(!m.passable) continue;
             if(!bestMicro.passable) {
@@ -650,9 +656,17 @@ public class MopperMicro {
         switch(dir) {
             case NORTH -> {
                 microArray = new mopperMicroInfo[3];
-                for(int dx = -1; dx <= 1; dx++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + dx, rc.getLocation().y + 1);
-                    microArray[dx + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y + 1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 0, rc.getLocation().y + 1);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case NORTHEAST -> {
@@ -662,9 +676,17 @@ public class MopperMicro {
             }
             case EAST -> {
                 microArray = new mopperMicroInfo[3];
-                for(int dy = -1; dy <= 1; dy++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + dy);
-                    microArray[dy + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + -1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 0);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case SOUTHEAST -> {
@@ -674,9 +696,17 @@ public class MopperMicro {
             }
             case SOUTH -> {
                 microArray = new mopperMicroInfo[3];
-                for(int dx = -1; dx <= 1; dx++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + dx, rc.getLocation().y - 1);
-                    microArray[dx + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y - 1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 0, rc.getLocation().y - 1);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y - 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case SOUTHWEST -> {
@@ -686,9 +716,17 @@ public class MopperMicro {
             }
             case WEST -> {
                 microArray = new mopperMicroInfo[3];
-                for(int dy = -1; dy <= 1; dy++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + dy);
-                    microArray[dy + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + -1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 0);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case NORTHWEST -> {

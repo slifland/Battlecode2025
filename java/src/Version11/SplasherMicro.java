@@ -131,9 +131,17 @@ public class SplasherMicro {
         switch (direction) {
             case NORTH -> {
                 microArray = new splasherMicroInfo[3];
-                for (int dx = -1; dx <= 1; dx++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + dx, rc.getLocation().y + 1);
-                    microArray[dx + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y + 1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 0, rc.getLocation().y + 1);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case NORTHEAST -> {
@@ -147,9 +155,17 @@ public class SplasherMicro {
             }
             case EAST -> {
                 microArray = new splasherMicroInfo[3];
-                for (int dy = -1; dy <= 1; dy++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + dy);
-                    microArray[dy + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + -1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 0);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case SOUTHEAST -> {
@@ -163,9 +179,17 @@ public class SplasherMicro {
             }
             case SOUTH -> {
                 microArray = new splasherMicroInfo[3];
-                for (int dx = -1; dx <= 1; dx++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + dx, rc.getLocation().y - 1);
-                    microArray[dx + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y - 1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 0, rc.getLocation().y - 1);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y - 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case SOUTHWEST -> {
@@ -179,9 +203,17 @@ public class SplasherMicro {
             }
             case WEST -> {
                 microArray = new splasherMicroInfo[3];
-                for (int dy = -1; dy <= 1; dy++) {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + dy);
-                    microArray[dy + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + -1);
+                    microArray[-1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 0);
+                    microArray[0 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 1);
+                    microArray[1 + 1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
                 }
             }
             case NORTHWEST -> {

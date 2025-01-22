@@ -596,11 +596,16 @@ public class Soldier {
         boolean isSecondary = false;
         for(MapInfo tile : rc.senseNearbyMapInfos(UnitType.SOLDIER.actionRadiusSquared)) {
             if(tile.getPaint() == PaintType.EMPTY && tile.isPassable()) {
-                isSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
-                if(rc.canAttack(tile.getMapLocation())) {
-                    rc.attack(tile.getMapLocation(), isSecondary);
-                    return;
+                //isSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
+//                if(rc.canAttack(tile.getMapLocation())) {
+//                    rc.attack(tile.getMapLocation(), isSecondary);
+//                    return;
+//                }
+                if(bestTile == null || (rc.canSenseRobotAtLocation(tile.getMapLocation()) && !rc.canSenseRobotAtLocation(bestTile.getMapLocation()))) {
+                    bestTile = tile;
+                    isSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern());
                 }
+
             }
 //            else if(tile.getPaint().isAlly() && tile.isPassable() && (closestUnclaimedRuin == null || !tile.getMapLocation().isWithinDistanceSquared(closestUnclaimedRuin, 8))) {
 //                if((closestCustomPattern == null || !tile.getMapLocation().isWithinDistanceSquared(closestCustomPattern, 8)) && tile.getPaint().isSecondary() != Utilities.getColorFromOriginPattern(tile.getMapLocation(), rc.getResourcePattern())) {
@@ -610,7 +615,7 @@ public class Soldier {
 //            }
         }
         if(bestTile != null && rc.canAttack(bestTile.getMapLocation())) {
-            if(state == SoldierState.RuinBuilding && bestTile.getPaint().isAlly()) return;
+            //if(state == SoldierState.RuinBuilding && bestTile.getPaint().isAlly()) return;
             rc.attack(bestTile.getMapLocation(), isSecondary);
         }
     }

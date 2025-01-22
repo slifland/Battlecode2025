@@ -152,7 +152,7 @@ public class Mopper {
         //if(rc.canMove(dir)) rc.move(dir);
         if(averageEnemyPaint != null) MopperMicro.integratedMopperMicro(rc);
         else {
-            Direction dirToSweep = MopperMicro.dirToSweep(rc, (rc.getPaint() > 30) ? 2 : 3);
+            Direction dirToSweep = MopperMicro.dirToSweep(rc, 3);
             if(dirToSweep != null && rc.canMopSwing(dirToSweep)) {
                 rc.mopSwing(dirToSweep);
                 return;
