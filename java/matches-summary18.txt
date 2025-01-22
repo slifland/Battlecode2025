@@ -1,0 +1,16 @@
+|  | Version11 | Version10 |
+| :---: | :---: | :---: |
+| gridword | Error | Error |
+| sayhi | Tied (325, 277) | Won (498, 335) |
+| Money | Won (463, 394) | Lost (344, 284) |
+| Mirage | Tied (351, 341) | Lost (399, 422) |
+| Justice | Tied (356, 2000) | Won (791, 1714) |
+| gardenworld | Tied (498, 608) | Tied (644, 405) |
+| memstore | Tied (403, 453) | Tied (415, 414) |
+| Thirds | Lost (478, 397) | Won (382, 435) |
+| TargetPractice | Won (365, 744) | Won (565, 278) |
+| Racetrack | Won (388, 284) | Won (246, 509) |
+| catface | Tied (319, 935) | Won (382, 288) |
+| giver | Tied (382, 291) | Tied (396, 281) |
+| quack | Won (585, 511) | Lost (297, 433) |
+
