@@ -1,7 +1,7 @@
 package Version12;
 
 import battlecode.common.*;
-
+import battlecode.common.UnitType;
 import java.util.Random;
 
 
@@ -25,9 +25,11 @@ public class RobotPlayer {
     static int turnCount = 0;
     static int soldiers = 0;
     static int moppers = 0;
+    static int splashers = 0;
     static int totalBuilt = 0;
-    static final int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
-    //static Sector[] sectors;
+    static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
+    static int mapSize = 0;
+    static UnitType toBuild = null;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -37,10 +39,7 @@ public class RobotPlayer {
     static MapLocation paintAverage2 = new MapLocation(0,0);
     static int paintCount1;
     static int paintCount2;
-    static int greatestDelta;
-    static boolean returnFirst = true;
-
-    static final int STOP_BUILDING_SOLDIERS = 400;
+    
 
     /*
     Store all methods initially to avoid redundant calls
@@ -83,7 +82,7 @@ public class RobotPlayer {
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
 
-        int mapSize = rc.getMapHeight() * rc.getMapWidth();
+        mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
 
         Communication.setup(rc);
@@ -135,54 +134,26 @@ public class RobotPlayer {
         else if(rc.getMoney() > 2500 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3) {
             rc.upgradeTower(rc.getLocation());
         }
-        /* USE LATER...
-        if (isDefenseTower()) runDefenseTower();
-        if (isMoneyTower()) runMoneyTower();
-        if (isPaintTower()) runPaintTower();
-        */
-        //if(rc.isActionReady()) {
-            // Pick a direction to build in.
-            //Direction dir = directions[rng.nextInt(directions.length)];
-            //MapLocation nextLoc = rc.getLocation().add(dir);
-            MapLocation nextLoc = SpawnMicro.bestSpawn(rc);
-            if(nextLoc != null) {
-                //int soldierRatio = (rc.getNumberTowers() < 25 && rc.getRoundNum() < 300) ? 2 : 1;
-                int soldierRatio = (rc.getRoundNum() < STOP_BUILDING_SOLDIERS) ? 2 : 1;
-                int mopperRatio = 2;
-                //if you arent our first tower, always build a splasher first
-                if (totalBuilt == 0 && rc.getNumberTowers() > 2 && (rc.getMapHeight() <= 50 && rc.getMapWidth() <= 50) && rc.getMoney() > 1200) {
-                    if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
-                        rc.buildRobot(UnitType.SPLASHER, nextLoc);
-                        totalBuilt++;
-                    }
-                }
-                //if(rc.getRoundNum() < STOP_BUILDING_SOLDIERS || rc.getNumberTowers() < 4){
-                else if (((totalBuilt <= 1 && rc.getNumberTowers() == 2) && rc.getRoundNum() < 10) || totalBuilt < rc.getRoundNum() / BUILD_ROUND_NUM_DIVISOR || rc.getMoney() > 1300) {
-                    if (rc.getRoundNum() < 100 && rc.getMapHeight() < 25 && rc.getMapWidth() < 25) soldierRatio = 1;
-
-                    if (rc.canBuildRobot(UnitType.SOLDIER, nextLoc) && (soldiers < soldierRatio || (rc.getRoundNum() <= 50))) {
-                        rc.buildRobot(UnitType.SOLDIER, nextLoc);
-                        //Communication.sendAveragesToRobot(rc, nextLoc);
-                        soldiers++;
-                        totalBuilt++;
-                    }
-                    if (rc.canBuildRobot(UnitType.MOPPER, nextLoc) && moppers < mopperRatio && (rc.getRoundNum() > 50 || (rc.getMapHeight() * rc.getMapWidth() < 900))) {
-                        rc.buildRobot(UnitType.MOPPER, nextLoc);
-                        //Communication.sendAveragesToRobot(rc, nextLoc);
-                        moppers++;
-                        soldiers = 0;
-                        totalBuilt++;
-                    }
-                    if (rc.canBuildRobot(UnitType.SPLASHER, nextLoc)) {
-                        rc.buildRobot(UnitType.SPLASHER, nextLoc);
-                        //Communication.sendAveragesToRobot(rc, nextLoc);
-                        soldiers = 0;
-                        moppers = 0;
-                        totalBuilt++;
-                    }
-                }
+//        if(turnCount % 75 == 0) {
+//            totalBuilt = 0;
+//            splashers = 0;
+//            moppers = 0;
+//            soldiers = 0;
+//        }
+        MapLocation nextLoc = SpawnMicro.bestSpawn(rc);
+        if(toBuild == null || turnCount % 10 == 0) {
+            toBuild = chooseBuild(rc);
+        }
+        if(nextLoc != null && toBuild != null && rc.canBuildRobot(toBuild, nextLoc) && (rc.getMoney() > 1200 || totalBuilt < (rc.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
+            rc.buildRobot(toBuild, nextLoc);
+            switch(toBuild) {
+                case SOLDIER: soldiers++; break;
+                case MOPPER: moppers++; break;
+                case SPLASHER: splashers++; break;
+                default: break;
             }
-        //}
+            totalBuilt++;
+        }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
         for(RobotInfo robot : enemyRobots) {
@@ -194,7 +165,7 @@ public class RobotPlayer {
         if(r != null && rc.canAttack(r.getLocation())) {
             rc.attack(r.getLocation());
         }
-        if(enemyRobots.length != 0) rc.attack(null);
+        if(rc.canAttack(null)) rc.attack(null);
     }
 
     static void bytecodeSensitiveOperations(RobotController rc) throws GameActionException
@@ -237,6 +208,81 @@ public class RobotPlayer {
             Communication.scanForRuins(rc);
             Communication.sendMessagesRobot(rc);
         }
+    }
+
+    //things to consider:
+    //number of towers relative to map size
+    //number of each bot already built
+    //round number
+    //if it can see enemy robots
+    //map size
+    public static UnitType chooseBuild(RobotController rc) {
+        if(rc.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
+        else if(enemyRobots.length > 1) return UnitType.MOPPER;
+
+        //we have a finite total amount of paint, so make sure we use it wisely
+        if(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(rc.getPaint() < 300) {
+                if(rc.getPaint() >= 200) return UnitType.SOLDIER;
+                if(rc.getPaint() >= 100) return UnitType.MOPPER;
+            }
+        }
+
+        double[] idealWeights = calculateIdealWeights(rc);
+        int selector = rng.nextInt(100);
+        double oddsSoldier = idealWeights[0] * 100;
+        double oddsMopper = idealWeights[1] * 100;
+        double oddsSplasher = idealWeights[2] * 100;
+        //System.out.println(oddsSoldier + " : " + oddsMopper + " : " + oddsSplasher + " : " + selector);
+        if(selector < oddsSoldier) return UnitType.SOLDIER;
+        else if(selector < oddsMopper + oddsSoldier) return UnitType.MOPPER;
+        else return UnitType.SPLASHER;
+    }
+
+    //calculates the ideal weights for each robot, given the current situation
+    public static double[] calculateIdealWeights(RobotController rc) {
+        //constants specifically for this method
+        int earlyRoundDef = 200;
+        //double mapSizeScalar = 1.0 / 200.0;
+        //double adjustedMapSize = mapSize * mapSizeScalar;
+        //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
+        double adjustedMapSize = mapSize *  0.003 + 2.8;
+        int earlySoldierBonus = 5 + (int)adjustedMapSize;
+        int soldierScore;
+        int mopperScore;
+        int splasherScore;
+
+        if(rc.getRoundNum() < earlyRoundDef) {
+            soldierScore = earlySoldierBonus;
+            mopperScore = 1;
+            splasherScore = 1;
+            if(adjustedMapSize <= 6) {
+                mopperScore++;
+            }
+        }
+        else {
+            soldierScore = 2;
+            mopperScore = 2;
+            splasherScore = 2;
+            if(adjustedMapSize <= 8) {
+                int adjustment = (int) (8 - adjustedMapSize);
+                mopperScore += adjustment;
+                splasherScore += adjustment / 2;
+                soldierScore += adjustment / 4;
+            }
+            else {
+                int adjustment = (int) (adjustedMapSize - 8);
+                splasherScore += adjustment;
+                mopperScore += adjustment / 2;
+                soldierScore += adjustment / 4;
+            }
+            if(!(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
+                splasherScore += 2;
+            }
+        }
+
+        int denominator = soldierScore + mopperScore + splasherScore;
+        return new double[]{(double) soldierScore / denominator, (double) mopperScore / denominator, (double) splasherScore / denominator};
     }
 
 

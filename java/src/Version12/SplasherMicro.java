@@ -97,8 +97,8 @@ public class SplasherMicro {
         health = rc.getHealth();
         if (rc.isActionReady()) {
             int minScore = (rc.getPaint() > 150) ? 5 : 6;
-            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, minScore);
-            //MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(minScore, (Splasher.numEnemyTiles * 2) + 1));
+            //MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, minScore);
+            MapLocation bestAttack = splasherUtil.bestAttack(rc, fightingTower, Math.min(minScore, (Splasher.numEnemyTiles * 2)));
             if (bestAttack != null) {
                 if (rc.canAttack(bestAttack)) {
                     rc.attack(bestAttack);

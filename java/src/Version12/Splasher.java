@@ -71,7 +71,7 @@ public class Splasher {
 
     //attempts to navigate to a known location - enemy average, usually
     public static void navigate(RobotController rc) throws GameActionException {
-        if(turnCount % 100 == 0) {
+        if(turnCount % 200 == 0) {
             exploredSymmetry = false;
         }
         MapLocation curLoc = rc.getLocation();
@@ -108,7 +108,7 @@ public class Splasher {
                     break;
             }
         }
-        if(knownSymmetry != Symmetry.Unknown && curObjective != null && rc.getLocation().isWithinDistanceSquared(curObjective, 5)) {
+        if(knownSymmetry != Symmetry.Unknown && curObjective != null && rc.getLocation().isWithinDistanceSquared(curObjective, 5) && !exploredSymmetry) {
             exploredSymmetry = true;
             curObjective = null;
         }

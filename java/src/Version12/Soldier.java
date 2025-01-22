@@ -120,6 +120,7 @@ public class Soldier {
         if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
             validateRuinClaim(rc);
         }
+        rc.setIndicatorString(String.valueOf(canFinishRuin));
 //        if(Clock.getBytecodesLeft() > 3000) {
 //            Utilities.updatePaintAverages(rc);
 //        }
@@ -201,10 +202,10 @@ public class Soldier {
         //int minDistanceToCustomPatternCenter = Integer.MAX_VALUE;
         //do all the tasks which require looping through all nearbyTiles
         for(MapInfo tile : nearbyTiles) {
-//            if(knownSymmetry == Symmetry.Unknown) {
-//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-//            }
+            if(knownSymmetry == Symmetry.Unknown) {
+                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+            }
             MapLocation tileLoc = tile.getMapLocation();
             if(tile.getPaint().isEnemy()) {
                 x += tileLoc.x;
@@ -245,37 +246,13 @@ public class Soldier {
                     failedPlacementLocations++;
                     //rc.setIndicatorDot(tileLoc, 255, 255, 255);
                 }
-                //check if there is a nearby valid placement
-//                else if(dir != null){
-//                    Direction opposite = dir.opposite();
-//                    opposite = opposite.rotateLeft();
-//                    for(int i =0; i < 3; i++) {
-//                        Direction dir2 = validatePlacement(rc, tileLoc.add(opposite));
-//                        if(dir2 == Direction.CENTER){
-//                            if(rc.canMark(tile.getMapLocation())) {
-//                                rc.mark(tile.getMapLocation(), true);
-//                                closestUnfilledPatternCenter = tile.getMapLocation();
-//                            }
-//                            break;
-//                        }
-//                        dir = dir.rotateRight();
-//                    }
-//                }
             }
-//            else if(validateLocation(rc, rc.getLocation())) {
-//                if(rc.canMark(tile.getMapLocation())) {
-//                    rc.mark(tile.getMapLocation(), false);
-//                    closestUnfilledPatternCenter = tile.getMapLocation();
-//                }
-//            }
         }
         if(failedPlacementLocations >= 4 && minDistanceToValidLocation >= 25) {
             if(validatePlacement(rc, rc.getLocation())) {
                 if(rc.canMark(rc.getLocation())) {
                     rc.mark(rc.getLocation(), true);
                     closestUnfilledPatternCenter = rc.getLocation();
-                    //out.println(rc.getLocation());
-                    //rc.resign();
                 }
             }
         }
@@ -319,7 +296,7 @@ public class Soldier {
         canFinishPattern = false;
         canFinishRuin = false;
         //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(20) == 0) ? SoldierState.Explore : SoldierState.Navigate;
+        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         fillingStation = null;
         //check if we see any nearby unclaimed ruins
         if(rc.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(rc, closestUnclaimedRuin)) {
@@ -565,7 +542,7 @@ public class Soldier {
             claimedRuin = null;
             return;
         }
-        if (rc.isActionReady() && (neededToFinish * 5) + 5 < rc.getPaint()) attemptFill(rc);
+        if (rc.isActionReady() && (neededToFinish * 5) + 5 < rc.getPaint() && rc.getRoundNum() > EXPLORE_FILL_TOWER_THRESHOLD) attemptFill(rc);
     }
 
     //where we decide what kind of pattern to use

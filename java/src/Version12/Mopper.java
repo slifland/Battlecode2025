@@ -14,6 +14,11 @@ enum mopStates {
     navigate, contest, refill, clear
 }
 
+//used to track what we are currently navigating towards
+enum navState {
+    random, tower, ruin, symmetry
+}
+
 public class Mopper {
 
     private static mopStates state;
@@ -36,10 +41,21 @@ public class Mopper {
 
     static boolean needsClearing = false;
 
+    static boolean exploredSymmetry = false;
+
+    static boolean[][] checkedRuin;
+
+    static navState navTarget;
+
+
     //static int uselessTurnsCount = 0;
 
     public static void runMopper(RobotController rc) throws GameActionException {
-        if(turnCount == 1) spawnLocation = rc.getLocation();
+        if(turnCount == 1){
+            spawnLocation = rc.getLocation();
+            checkedRuin = new boolean[rc.getMapWidth()][rc.getMapHeight()];
+            navTarget = null;
+        }
         updateInfo(rc);
         updateState(rc);
         switch(state) {
@@ -67,43 +83,43 @@ public class Mopper {
 
     //attempts to navigate to a known location
     public static void navigate(RobotController rc) throws GameActionException {
-        MapLocation curLoc = rc.getLocation();
-        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
-            curObjective = null;
-            //if(uselessTurnsCount > 0) uselessTurnsCount = 0;
+        if(turnCount % 200 == 0) {
+            exploredSymmetry = false;
         }
-        //System.out.println("hi!");
-        //if(curObjective == null) curObjective = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
-        //DETERMINE OBJECTIVE
-        //if we have enemy paint averages, go there
-        //MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
-//        if(enemyAverages.length != 0) {
-//            curObjective = enemyAverages[0];
-//            //System.out.println(curObjective);
-//            rc.setIndicatorDot(curObjective, 255, 0, 0);
-//        }
+        MapLocation curLoc = rc.getLocation();
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 6) {
+            switch(navTarget) {
+                case navState.symmetry -> exploredSymmetry = true;
+                case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
+            }
+            curObjective = null;
+            navTarget = null;
+        }
+        //if we know of any unclaimed ruins, lets try to help out there
+        if(curObjective == null && !unclaimedRuins.isEmpty()) {
+            int minDist = Integer.MAX_VALUE;
+            for(Ruin r : unclaimedRuins) {
+                if(checkedRuin[r.location.x][r.location.y]) continue;
+                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+                    minDist = r.location.distanceSquaredTo(curLoc);
+                    curObjective = r.location;
+                    navTarget = navState.ruin;
+                }
+            }
+        }
         if(curObjective == null && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
+                    navTarget = navState.tower;
                 }
             }
         }
-//        //if we know of any unclaimed ruins, lets try to help out there
-//        if(curObjective == null && knownSymmetry == Symmetry.Unknown && !unclaimedRuins.isEmpty()) {
-//            int minDist = Integer.MAX_VALUE;
-//            for(Ruin r : unclaimedRuins) {
-//                if(r.location.distanceSquaredTo(curLoc) < minDist) {
-//                    minDist = r.location.distanceSquaredTo(curLoc);
-//                    curObjective = r.location;
-//                }
-//            }
-//        }
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
-        if(curObjective == null) {
+        if(curObjective == null && !exploredSymmetry) {
             Symmetry[] possible = Utilities.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
@@ -117,14 +133,27 @@ public class Mopper {
                     curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                     break;
             }
+            navTarget = navState.symmetry;
         }
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
+            curObjective = new MapLocation(rng.nextInt(rc.getMapHeight() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+            navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
         Direction dir = Pathfinding.bugBFS(rc, curObjective);
         if(rc.canMove(dir)) rc.move(dir);
+        if(rc.isActionReady() && enemyRobots.length >= 1) {
+            RobotInfo bestTarget = findBestTarget(rc);
+            if(bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
+                rc.attack(bestTarget.getLocation());
+            }
+            else {
+                Direction dirToSweep = MopperMicro.dirToSweep(rc, 1);
+                if(dirToSweep != null && rc.canMopSwing(dirToSweep)) rc.mopSwing(dirToSweep);
+            }
+        }
+        rc.setIndicatorString("navigate! " + curObjective + " : " + navTarget);
     }
 
     //attempts to contest by mopping up enemy stuff, and stealing paint from enemies
