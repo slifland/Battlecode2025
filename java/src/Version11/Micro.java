@@ -97,6 +97,7 @@ public class Micro {
     private static boolean isRushing;
     //the method any robot will use to interact with micro - directs the robot to the correct micro method
     public static Direction runMicro(RobotController rc, boolean isRushing) throws GameActionException {
+        if(!rc.isMovementReady()) return Direction.CENTER;
         populateMicroArray(rc);
         Micro.isRushing = isRushing;
         return switch (rc.getType()) {
@@ -156,16 +157,12 @@ public class Micro {
                         }
                     }
 
-
                     //look at which place will lose us the least paint at the end of this turn
                     if (bestMicro.paintLoss < microArray[i].paintLoss) break;
                     if (microArray[i].paintLoss < bestMicro.paintLoss) {
                         bestMicro = microArray[i];
                         break;
                     }
-
-
-
 
                     if(bestAttack != null) {
                         int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
@@ -294,8 +291,7 @@ public class Micro {
         int minDistToEnemy = Integer.MAX_VALUE;
         if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.getLocation().isWithinDistanceSquared(ruin, 8)) return rc.getLocation();
         for(MapInfo tile : tilesToFill) {
-            int distToEnemy = Integer.MAX_VALUE;
-            if(Soldier.averageEnemyPaint != null) distToEnemy = tile.getMapLocation().distanceSquaredTo(Soldier.averageEnemyPaint);
+            int distToEnemy = (Soldier.averageEnemyPaint == null) ? Integer.MAX_VALUE : tile.getMapLocation().distanceSquaredTo(Soldier.averageEnemyPaint);
             int dist = rc.getLocation().distanceSquaredTo(tile.getMapLocation());
             if(!tile.isPassable()) continue;
             if(tile.getPaint() == PaintType.EMPTY && (bestTile == null || dist < minDist || bestTile.getPaint().isAlly() || (dist == minDist && distToEnemy < minDistToEnemy))) {
@@ -312,64 +308,107 @@ public class Micro {
         return (bestTile != null) ? bestTile.getMapLocation() : null;
     }
 
+    //attempts to find the best place near the ruin to pattern in, and also move to the best adjacent square
+    public static void patternFillingMicro(RobotController rc, MapLocation patternCenter, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
+        rc.setIndicatorString("Building a patternCenter!" + patternCenter.toString());
+        int curDist = rc.getLocation().distanceSquaredTo(patternCenter);
+        MapLocation bestAttack = null;
+        if (rc.isActionReady()) {
+            bestAttack = bestRuinAttack(rc, desiredPattern, tilesToFill, patternCenter);
+            if (bestAttack != null && rc.canAttack(bestAttack))
+                rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
+        }
+//        if (bestAttack == null && rc.getChips() > 1000) {
+//            Direction dir = Pathfinding.bugBFS(rc, patternCenter);
+//            if (rc.canMove(dir)) rc.move(dir);
+//            return;
+//        }
+        if (rc.isMovementReady()) {
+            if (curDist <= 8)
+                populateMicroArrayRuin(rc, patternCenter);
+            else
+                populateMicroArray(rc);
+            microInfo bestMicro = new microInfo(rc.senseMapInfo(rc.getLocation()));
+            for (int i = 0; i < 9; i++) {
+                do {
+                    if (bestMicro.equals(microArray[i])) continue;
+                    //if one space is passable and the other is not, then passable is better
+                    if (!microArray[i].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+                    if (curDist >= 8) {
+                        int distTopatternCenter = bestMicro.loc.distanceSquaredTo(patternCenter);
+                        int altDistTopatternCenter = microArray[i].loc.distanceSquaredTo(patternCenter);
+                        if (distTopatternCenter < altDistTopatternCenter) break;
+                        if (altDistTopatternCenter < distTopatternCenter) {
+                            bestMicro = microArray[i];
+                            break;
+                        }
+                    } else if (curDist < 5) {
+                        //int distTopatternCenter = bestMicro.loc.distanceSquaredTo(patternCenter);
+                        int altDistTopatternCenter = microArray[i].loc.distanceSquaredTo(patternCenter);
+                        if (altDistTopatternCenter >= 5) break;
+                    }
+
+
+                    //look at which place will lose us the least paint at the end of this turn
+                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+
+                    if (bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[i].loc.distanceSquaredTo(bestAttack);
+                        if (distToAction < altDistToAction) break;
+                        if (altDistToAction < distToAction) {
+                            bestMicro = microArray[i];
+                            break;
+                        }
+                    }
+
+                    //regardless of action readiness, the next considerations are unified:
+                    //we prioritize allied paint over neutral paint over enemy paint
+                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+
+//                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+//                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+
+                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+                } while (false);
+            }
+            if (bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
+                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            }
+        }
+        if (rc.isActionReady() && bestAttack != null) {
+            if (rc.canAttack(bestAttack))
+                rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
+            Utilities.attemptCompleteResourcePattern(rc, bestAttack);
+        }
+    }
+
     //the micro method for soldiers
     public static Direction runSoldierMicro(RobotController rc) throws GameActionException {
         int health = rc.getHealth();
         microInfo bestMicro = microArray[0];
-//        for(microInfo m : microArray) {
-//            if (m.equals(bestMicro)) continue;
-//            //if one space is passable and the other is not, then passable is better
-//            if (!m.passable) continue;
-//            if (!bestMicro.passable) {
-//                bestMicro = m;
-//                continue;
-//            }
-//            //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
-//            if (rc.isActionReady() && health >= soldierHealthAttackThreshold || isRushing) {
-//                //we are fine being in tower range as long as we can attack, because we have enough health
-//                if (bestMicro.inTowerRange && !m.inTowerRange) continue;
-//                if (!bestMicro.inTowerRange && m.inTowerRange) {
-//                    bestMicro = m;
-//                    continue;
-//                }
-//            }
-//            //definitely don't be in tower range!
-//            else {
-//                //check if one space is in tower range and the other isn't
-//                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
-//                if (bestMicro.inTowerRange && !m.inTowerRange) {
-//                    bestMicro = m;
-//                    continue;
-//                }
-//
-//            }
-//            //regardless of action readiness, the next considerations are unified:
-//            //we prioritize allied paint over neutral paint over enemy paint
-//            if (bestMicro.paint.isAlly() && !m.paint.isAlly()) continue;
-//            if (!bestMicro.paint.isAlly() && m.paint.isAlly()) {
-//                bestMicro = m;
-//                continue;
-//            }
-//
-//            if (!bestMicro.paint.isEnemy() && m.paint.isEnemy()) continue;
-//            if (bestMicro.paint.isEnemy() && !m.paint.isEnemy()) {
-//                bestMicro = m;
-//                continue;
-//            }
-//
-//            //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-//            if (bestMicro.adjacentAllies < m.adjacentAllies) continue;
-//            if (m.adjacentAllies < bestMicro.adjacentAllies) {
-//                bestMicro = m;
-//                continue;
-//            }
-//            //next, lets try and be near allies
-//            if (bestMicro.minDistanceToAlly < m.minDistanceToAlly) continue;
-//            if (m.minDistanceToAlly < bestMicro.minDistanceToAlly) {
-//                bestMicro = m;
-//                continue;
-//            }
-//        }
         for(int i = 1; i < 9; i++) {
             do {
                 //if one space is passable and the other is not, then passable is better
@@ -429,6 +468,10 @@ public class Micro {
                 if(microArray[i].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
                     bestMicro = microArray[i];
                     break;
+                }
+
+                if(rng.nextInt(2) == 0) {
+                    bestMicro = microArray[i];
                 }
             } while(false);
 
