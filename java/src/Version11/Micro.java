@@ -3,6 +3,9 @@ package Version11;
 
 import PathfindingTest.Pathfinding;
 import battlecode.common.*;
+
+import java.util.Arrays;
+
 import static Version11.RobotPlayer.*;
 
 class microInfo {
@@ -52,9 +55,7 @@ class microInfo {
         }
         //find the closest ally, and count allies that are cardinally adjacent to this square
         for(RobotInfo robot : allyRobots) {
-            int dist = loc.distanceSquaredTo(robot.getLocation());
-            if(dist == 0) continue;
-            if(dist <= 2) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
                 adjacentAllies++;
             }
         }

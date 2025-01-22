@@ -2,9 +2,8 @@ package Version11;
 
 import battlecode.common.*;
 
+import static Version11.RobotPlayer.*;
 import static Version11.Splasher.averageEnemyPaint;
-import static Version11.RobotPlayer.allyRobots;
-import static Version11.RobotPlayer.enemyRobots;
 import static Version11.Splasher.numEnemyTiles;
 
 class splasherMicroInfo {
@@ -66,7 +65,7 @@ class splasherMicroInfo {
         }
         //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
         for(RobotInfo robot : allyRobots) {
-            if(loc.isWithinDistanceSquared(robot.getLocation(), 1)) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
                 adjacentAllies++;
             }
         }

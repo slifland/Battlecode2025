@@ -29,7 +29,6 @@ public class RobotPlayer {
     static final int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     //static Sector[] sectors;
 
-
     /*
         Variables responsible for tracking average location of enemy paint
      */

@@ -63,7 +63,7 @@ class mopperMicroInfo {
         }
         //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
         for(RobotInfo robot : allyRobots) {
-            if(loc.isWithinDistanceSquared(robot.getLocation(), 1)) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
                 adjacentAllies++;
             }
         }
