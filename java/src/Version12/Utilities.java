@@ -26,19 +26,19 @@ public class Utilities
 
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
-    public static boolean[][] inferPatternFromExistingSpots(RobotController rc, MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
-        if(rc.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-        else if(rc.getNumberTowers() > 8 && center.distanceSquaredTo(new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles > 1) {
-            return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+    public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
+        if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        else if(staticRC.getNumberTowers() > 8 && center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles > 1) {
+            return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         }
         int moneyScore = 0;
         int paintScore = 0;
         int defenseScore = 0;
         int totalAlly = 0;
         MapLocation fakeOrigin = new MapLocation(center.x - 2, center.y - 2);
-        boolean[][] moneyPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-        boolean [][] defensePattern = rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
-        boolean[][] paintPattern = rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+        boolean[][] moneyPattern = staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        boolean [][] defensePattern = staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        boolean[][] paintPattern = staticRC.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
         for(MapInfo tile : ruinTiles) {
             PaintType paint = tile.getPaint();
             if(paint.isAlly()) {
@@ -50,20 +50,20 @@ public class Utilities
                 totalAlly++;
             }
         }
-        if(rc.getMoney() > 7000) paintScore += 2;
+        if(staticRC.getMoney() > 7000) paintScore += 2;
         if(totalAlly == 0) return null;
         if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
         else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;
         else return defensePattern;
     }
 
-    public static void attemptCompleteResourcePattern(RobotController rc, MapLocation location) throws GameActionException
+    public static void attemptCompleteResourcePattern(MapLocation location) throws GameActionException
     {
         if((location.x - 2) % 4 == 0 && (location.y - 2) % 4 == 0)
         {
-            if(rc.canCompleteResourcePattern(rc.getLocation()))
+            if(staticRC.canCompleteResourcePattern(staticRC.getLocation()))
             {
-                rc.completeResourcePattern(rc.getLocation());
+                staticRC.completeResourcePattern(staticRC.getLocation());
             }
         }
     }
@@ -72,20 +72,20 @@ public class Utilities
         Attempt to complete resource pattern at all visible locations
      */
 
-    public static void attemptCompletePatterns(RobotController rc) throws GameActionException
+    public static void attemptCompletePatterns() throws GameActionException
     {
         for(int i = 0; i < nearbyTiles.length; i++)
         {
-            if(rc.canCompleteResourcePattern(nearbyTiles[i].getMapLocation()))
+            if(staticRC.canCompleteResourcePattern(nearbyTiles[i].getMapLocation()))
             {
-                rc.completeResourcePattern(nearbyTiles[i].getMapLocation());
+                staticRC.completeResourcePattern(nearbyTiles[i].getMapLocation());
             }
         }
     }
 
-    public static void updatePaintAverages(RobotController rc)
+    public static void updatePaintAverages()
     {
-        if(rc.getType().isTowerType()) return; // We don't want towers contributing for simplicity
+        if(staticRC.getType().isTowerType()) return; // We don't want towers contributing for simplicity
         if(turnCount % 50 == 0)        // Clear frontlines every so often
         {
             paintCount1 = 0;
@@ -155,32 +155,32 @@ public class Utilities
         }
     }
 
-    public static void setDotsAtGridStart(RobotController rc) throws GameActionException
+    public static void setDotsAtGridStart() throws GameActionException
     {
-        for(int i = 0; i < rc.getMapHeight(); i += 5)
+        for(int i = 0; i < staticRC.getMapHeight(); i += 5)
         {
-            for(int j = 0; j < rc.getMapWidth(); j += 5)
+            for(int j = 0; j < staticRC.getMapWidth(); j += 5)
             {
-                //rc.setIndicatorDot(new MapLocation(j, i), 0,0,255);
+                //staticRC.setIndicatorDot(new MapLocation(j, i), 0,0,255);
             }
         }
     }
 
-    public static MapLocation oppositeLocation(RobotController rc, MapLocation location, Symmetry symmetry)
+    public static MapLocation oppositeLocation(MapLocation location, Symmetry symmetry)
     {
         switch (symmetry)
         {
             case Horizontal ->
             {
-                return new MapLocation(location.x, rc.getMapHeight() - location.y - 1);
+                return new MapLocation(location.x, staticRC.getMapHeight() - location.y - 1);
             }
             case Vertical ->
             {
-                return new MapLocation(rc.getMapWidth() - location.x - 1, location.y);
+                return new MapLocation(staticRC.getMapWidth() - location.x - 1, location.y);
             }
             case Rotational ->
             {
-                return new MapLocation(rc.getMapWidth() - location.x - 1, rc.getMapHeight() - location.y - 1);
+                return new MapLocation(staticRC.getMapWidth() - location.x - 1, staticRC.getMapHeight() - location.y - 1);
             }
             default ->
             {
@@ -238,11 +238,11 @@ public class Utilities
         return b==Direction.NORTH || b==Direction.NORTHEAST || b==Direction.NORTHWEST;
 
     }
-    public static boolean locationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
-        //return locationIsBehindWall(rc,L,rc.getLocation());
-        return locationIsBehindWall(rc, L, rc.getLocation(), 4);
+    public static boolean locationIsBehindWall(MapLocation L) throws GameActionException {
+        //return locationIsBehindWall(rc,L,staticRC.getLocation());
+        return locationIsBehindWall(L, staticRC.getLocation(), 4);
     }
-    public static boolean locationIsBehindWall(RobotController rc, MapLocation L, MapLocation R){
+    public static boolean locationIsBehindWall(MapLocation L, MapLocation R){
         double m  = (R.y-L.y+0.0)/(R.x-L.x);
         double c = (m*L.x-L.y);
         for(MapInfo T: nearbyTiles){
@@ -271,10 +271,10 @@ public class Utilities
         }
         return false;
     }
-    public static boolean locationIsBehindWall(RobotController rc, MapLocation L, MapLocation R, int radius) throws GameActionException {
+    public static boolean locationIsBehindWall(MapLocation L, MapLocation R, int radius) throws GameActionException {
         double m  = (R.y-L.y+0.0)/(R.x-L.x);
         double c = (m*L.x-L.y);
-        for(MapInfo T: rc.senseNearbyMapInfos(radius)){
+        for(MapInfo T: staticRC.senseNearbyMapInfos(radius)){
             MapLocation t = T.getMapLocation();
             if(t.equals(L)) continue;
             if(!angleIsGreaterThan90(t.directionTo(L),t.directionTo(R))){
@@ -301,22 +301,22 @@ public class Utilities
         return false;
     }
 
-    public static boolean basicLocationIsBehindWall(RobotController rc, MapLocation L) throws GameActionException {
-        //Direction dir = rc.getLocation().directionTo(L);
-        Direction dir = MopperMicro.customLocationTo(rc.getLocation(), L); //turn 340
-        //System.out.println(rc.getLocation() + " : " + dir + " : " + L);
-        MapLocation check1 = rc.getLocation().add(dir);
-        MapLocation check2 = rc.getLocation().add(dir.rotateLeft());
-        MapLocation check3 = rc.getLocation().add(dir.rotateRight());
+    public static boolean basicLocationIsBehindWall(MapLocation L) throws GameActionException {
+        //Direction dir = staticRC.getLocation().directionTo(L);
+        Direction dir = MopperMicro.customLocationTo(staticRC.getLocation(), L); //turn 340
+        //System.out.println(staticRC.getLocation() + " : " + dir + " : " + L);
+        MapLocation check1 = staticRC.getLocation().add(dir);
+        MapLocation check2 = staticRC.getLocation().add(dir.rotateLeft());
+        MapLocation check3 = staticRC.getLocation().add(dir.rotateRight());
         int numTrue = 0;
-        if(rc.onTheMap(check1) && !rc.senseMapInfo(check1).isPassable()) numTrue++;
-        if(rc.onTheMap(check2) && !rc.senseMapInfo(check2).isPassable()) numTrue++;
-        if(rc.onTheMap(check3) && !rc.senseMapInfo(check3).isPassable()) numTrue++;
-        return (dir == Direction.NORTHEAST || dir == Direction.NORTHWEST || dir == Direction.SOUTHEAST || dir == Direction.SOUTHWEST) ? !rc.senseMapInfo(check1).isPassable() : numTrue >= 2;
-        //return rc.senseMapInfo(check1).isWall() && rc.senseMapInfo(check2).isWall() && rc.senseMapInfo(check3).isWall();
+        if(staticRC.onTheMap(check1) && !staticRC.senseMapInfo(check1).isPassable()) numTrue++;
+        if(staticRC.onTheMap(check2) && !staticRC.senseMapInfo(check2).isPassable()) numTrue++;
+        if(staticRC.onTheMap(check3) && !staticRC.senseMapInfo(check3).isPassable()) numTrue++;
+        return (dir == Direction.NORTHEAST || dir == Direction.NORTHWEST || dir == Direction.SOUTHEAST || dir == Direction.SOUTHWEST) ? !staticRC.senseMapInfo(check1).isPassable() : numTrue >= 2;
+        //return staticRC.senseMapInfo(check1).isWall() && staticRC.senseMapInfo(check2).isWall() && staticRC.senseMapInfo(check3).isWall();
     }
 
-    public static MapLocation generateRandomLocation(RobotController rc, MapLocation currentLocation, int radiusSquared)
+    public static MapLocation generateRandomLocation(MapLocation currentLocation, int radiusSquared)
     {
         int max = (int) Math.sqrt(radiusSquared);
         int xOffset = rng.nextInt(-1 * max, max + 1);
@@ -330,7 +330,7 @@ public class Utilities
         {
             xOffset *= -1;
         }
-        if(currentLocation.x + xOffset >= rc.getMapWidth())
+        if(currentLocation.x + xOffset >= staticRC.getMapWidth())
         {
             xOffset *= -1;
         }
@@ -338,7 +338,7 @@ public class Utilities
         {
             yOffset *= -1;
         }
-        if(currentLocation.y + yOffset >= rc.getMapHeight())
+        if(currentLocation.y + yOffset >= staticRC.getMapHeight())
         {
             yOffset *= -1;
         }

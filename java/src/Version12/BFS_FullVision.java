@@ -4,6 +4,7 @@ import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
+import static Version12.RobotPlayer.staticRC;
 
 public class BFS_FullVision
 {
@@ -479,211 +480,211 @@ public class BFS_FullVision
         return null;
     }
 
-    public static void initializeVariables(RobotController rc, MapLocation destination, MapLocation start) throws GameActionException
+    public static void initializeVariables(MapLocation destination, MapLocation start) throws GameActionException
     {
         l2 = getLocationFromIndex(2, start);
         dist2 = 1000000;
         h2 = l2.distanceSquaredTo(destination);
-        exists2 = rc.onTheMap(l2) && rc.sensePassability(l2) && !rc.canSenseRobotAtLocation(l2);
-        cost2 = exists2 && rc.senseMapInfo(l2).getPaint().isAlly() ? 10 : 20;
+        exists2 = staticRC.onTheMap(l2) && staticRC.sensePassability(l2) && !staticRC.canSenseRobotAtLocation(l2);
+        cost2 = exists2 && staticRC.senseMapInfo(l2).getPaint().isAlly() ? 10 : 20;
 
         l3 = getLocationFromIndex(3, start);
         dist3 = 1000000;
         h3 = l3.distanceSquaredTo(destination);
-        exists3 = rc.onTheMap(l3) && rc.sensePassability(l3) && !rc.canSenseRobotAtLocation(l3);
-        cost3 = exists3 && rc.senseMapInfo(l3).getPaint().isAlly() ? 10 : 20;
+        exists3 = staticRC.onTheMap(l3) && staticRC.sensePassability(l3) && !staticRC.canSenseRobotAtLocation(l3);
+        cost3 = exists3 && staticRC.senseMapInfo(l3).getPaint().isAlly() ? 10 : 20;
 
         l4 = getLocationFromIndex(4, start);
         dist4 = 1000000;
         h4 = l4.distanceSquaredTo(destination);
-        exists4 = rc.onTheMap(l4) && rc.sensePassability(l4) && !rc.canSenseRobotAtLocation(l4);
-        cost4 = exists4 && rc.senseMapInfo(l4).getPaint().isAlly() ? 10 : 20;
+        exists4 = staticRC.onTheMap(l4) && staticRC.sensePassability(l4) && !staticRC.canSenseRobotAtLocation(l4);
+        cost4 = exists4 && staticRC.senseMapInfo(l4).getPaint().isAlly() ? 10 : 20;
 
         l5 = getLocationFromIndex(5, start);
         dist5 = 1000000;
         h5 = l5.distanceSquaredTo(destination);
-        exists5 = rc.onTheMap(l5) && rc.sensePassability(l5) && !rc.canSenseRobotAtLocation(l5);
-        cost5 = exists5 && rc.senseMapInfo(l5).getPaint().isAlly() ? 10 : 20;
+        exists5 = staticRC.onTheMap(l5) && staticRC.sensePassability(l5) && !staticRC.canSenseRobotAtLocation(l5);
+        cost5 = exists5 && staticRC.senseMapInfo(l5).getPaint().isAlly() ? 10 : 20;
 
         l6 = getLocationFromIndex(6, start);
         dist6 = 1000000;
         h6 = l6.distanceSquaredTo(destination);
-        exists6 = rc.onTheMap(l6) && rc.sensePassability(l6) && !rc.canSenseRobotAtLocation(l6);
-        cost6 = exists6 && rc.senseMapInfo(l6).getPaint().isAlly() ? 10 : 20;
+        exists6 = staticRC.onTheMap(l6) && staticRC.sensePassability(l6) && !staticRC.canSenseRobotAtLocation(l6);
+        cost6 = exists6 && staticRC.senseMapInfo(l6).getPaint().isAlly() ? 10 : 20;
 
         l10 = getLocationFromIndex(10, start);
         dist10 = 1000000;
         h10 = l10.distanceSquaredTo(destination);
-        exists10 = rc.onTheMap(l10) && rc.sensePassability(l10) && !rc.canSenseRobotAtLocation(l10);
-        cost10 = exists10 && rc.senseMapInfo(l10).getPaint().isAlly() ? 10 : 20;
+        exists10 = staticRC.onTheMap(l10) && staticRC.sensePassability(l10) && !staticRC.canSenseRobotAtLocation(l10);
+        cost10 = exists10 && staticRC.senseMapInfo(l10).getPaint().isAlly() ? 10 : 20;
 
         l11 = getLocationFromIndex(11, start);
         dist11 = 1000000;
         h11 = l11.distanceSquaredTo(destination);
-        exists11 = rc.onTheMap(l11) && rc.sensePassability(l11) && !rc.canSenseRobotAtLocation(l11);
-        cost11 = exists11 && rc.senseMapInfo(l11).getPaint().isAlly() ? 10 : 20;
+        exists11 = staticRC.onTheMap(l11) && staticRC.sensePassability(l11) && !staticRC.canSenseRobotAtLocation(l11);
+        cost11 = exists11 && staticRC.senseMapInfo(l11).getPaint().isAlly() ? 10 : 20;
 
         l12 = getLocationFromIndex(12, start);
         dist12 = 1000000;
         h12 = l12.distanceSquaredTo(destination);
-        exists12 = rc.onTheMap(l12) && rc.sensePassability(l12) && !rc.canSenseRobotAtLocation(l12);
-        cost12 = exists12 && rc.senseMapInfo(l12).getPaint().isAlly() ? 10 : 20;
+        exists12 = staticRC.onTheMap(l12) && staticRC.sensePassability(l12) && !staticRC.canSenseRobotAtLocation(l12);
+        cost12 = exists12 && staticRC.senseMapInfo(l12).getPaint().isAlly() ? 10 : 20;
 
         l13 = getLocationFromIndex(13, start);
         dist13 = 1000000;
         h13 = l13.distanceSquaredTo(destination);
-        exists13 = rc.onTheMap(l13) && rc.sensePassability(l13) && !rc.canSenseRobotAtLocation(l13);
-        cost13 = exists13 && rc.senseMapInfo(l13).getPaint().isAlly() ? 10 : 20;
+        exists13 = staticRC.onTheMap(l13) && staticRC.sensePassability(l13) && !staticRC.canSenseRobotAtLocation(l13);
+        cost13 = exists13 && staticRC.senseMapInfo(l13).getPaint().isAlly() ? 10 : 20;
 
         l14 = getLocationFromIndex(14, start);
         dist14 = 1000000;
         h14 = l14.distanceSquaredTo(destination);
-        exists14 = rc.onTheMap(l14) && rc.sensePassability(l14) && !rc.canSenseRobotAtLocation(l14);
-        cost14 = exists14 && rc.senseMapInfo(l14).getPaint().isAlly() ? 10 : 20;
+        exists14 = staticRC.onTheMap(l14) && staticRC.sensePassability(l14) && !staticRC.canSenseRobotAtLocation(l14);
+        cost14 = exists14 && staticRC.senseMapInfo(l14).getPaint().isAlly() ? 10 : 20;
 
         l15 = getLocationFromIndex(15, start);
         dist15 = 1000000;
         h15 = l15.distanceSquaredTo(destination);
-        exists15 = rc.onTheMap(l15) && rc.sensePassability(l15) && !rc.canSenseRobotAtLocation(l15);
-        cost15 = exists15 && rc.senseMapInfo(l15).getPaint().isAlly() ? 10 : 20;
+        exists15 = staticRC.onTheMap(l15) && staticRC.sensePassability(l15) && !staticRC.canSenseRobotAtLocation(l15);
+        cost15 = exists15 && staticRC.senseMapInfo(l15).getPaint().isAlly() ? 10 : 20;
 
         l16 = getLocationFromIndex(16, start);
         dist16 = 1000000;
         h16 = l16.distanceSquaredTo(destination);
-        exists16 = rc.onTheMap(l16) && rc.sensePassability(l16) && !rc.canSenseRobotAtLocation(l16);
-        cost16 = exists16 && rc.senseMapInfo(l16).getPaint().isAlly() ? 10 : 20;
+        exists16 = staticRC.onTheMap(l16) && staticRC.sensePassability(l16) && !staticRC.canSenseRobotAtLocation(l16);
+        cost16 = exists16 && staticRC.senseMapInfo(l16).getPaint().isAlly() ? 10 : 20;
 
         l18 = getLocationFromIndex(18, start);
         dist18 = 1000000;
         h18 = l18.distanceSquaredTo(destination);
-        exists18 = rc.onTheMap(l18) && rc.sensePassability(l18) && !rc.canSenseRobotAtLocation(l18);
-        cost18 = exists18 && rc.senseMapInfo(l18).getPaint().isAlly() ? 10 : 20;
+        exists18 = staticRC.onTheMap(l18) && staticRC.sensePassability(l18) && !staticRC.canSenseRobotAtLocation(l18);
+        cost18 = exists18 && staticRC.senseMapInfo(l18).getPaint().isAlly() ? 10 : 20;
 
         l19 = getLocationFromIndex(19, start);
         dist19 = 1000000;
         h19 = l19.distanceSquaredTo(destination);
-        exists19 = rc.onTheMap(l19) && rc.sensePassability(l19) && !rc.canSenseRobotAtLocation(l19);
-        cost19 = exists19 && rc.senseMapInfo(l19).getPaint().isAlly() ? 10 : 20;
+        exists19 = staticRC.onTheMap(l19) && staticRC.sensePassability(l19) && !staticRC.canSenseRobotAtLocation(l19);
+        cost19 = exists19 && staticRC.senseMapInfo(l19).getPaint().isAlly() ? 10 : 20;
 
         l20 = getLocationFromIndex(20, start);
         dist20 = 1000000;
         h20 = l20.distanceSquaredTo(destination);
-        exists20 = rc.onTheMap(l20) && rc.sensePassability(l20) && !rc.canSenseRobotAtLocation(l20);
-        cost20 = exists20 && rc.senseMapInfo(l20).getPaint().isAlly() ? 10 : 20;
+        exists20 = staticRC.onTheMap(l20) && staticRC.sensePassability(l20) && !staticRC.canSenseRobotAtLocation(l20);
+        cost20 = exists20 && staticRC.senseMapInfo(l20).getPaint().isAlly() ? 10 : 20;
 
         l21 = getLocationFromIndex(21, start);
         dist21 = 1000000;
         h21 = l21.distanceSquaredTo(destination);
-        exists21 = rc.onTheMap(l21) && rc.sensePassability(l21) && !rc.canSenseRobotAtLocation(l21);
-        cost21 = exists21 && rc.senseMapInfo(l21).getPaint().isAlly() ? 10 : 20;
+        exists21 = staticRC.onTheMap(l21) && staticRC.sensePassability(l21) && !staticRC.canSenseRobotAtLocation(l21);
+        cost21 = exists21 && staticRC.senseMapInfo(l21).getPaint().isAlly() ? 10 : 20;
 
         l22 = getLocationFromIndex(22, start);
         dist22 = 1000000;
         h22 = l22.distanceSquaredTo(destination);
-        exists22 = rc.onTheMap(l22) && rc.sensePassability(l22) && !rc.canSenseRobotAtLocation(l22);
-        cost22 = exists22 && rc.senseMapInfo(l22).getPaint().isAlly() ? 10 : 20;
+        exists22 = staticRC.onTheMap(l22) && staticRC.sensePassability(l22) && !staticRC.canSenseRobotAtLocation(l22);
+        cost22 = exists22 && staticRC.senseMapInfo(l22).getPaint().isAlly() ? 10 : 20;
 
         l23 = getLocationFromIndex(23, start);
         dist23 = 1000000;
         h23 = l23.distanceSquaredTo(destination);
-        exists23 = rc.onTheMap(l23) && rc.sensePassability(l23) && !rc.canSenseRobotAtLocation(l23);
-        cost23 = exists23 && rc.senseMapInfo(l23).getPaint().isAlly() ? 10 : 20;
+        exists23 = staticRC.onTheMap(l23) && staticRC.sensePassability(l23) && !staticRC.canSenseRobotAtLocation(l23);
+        cost23 = exists23 && staticRC.senseMapInfo(l23).getPaint().isAlly() ? 10 : 20;
 
         l24 = getLocationFromIndex(24, start);
         dist24 = 1000000;
         h24 = l24.distanceSquaredTo(destination);
-        exists24 = rc.onTheMap(l24) && rc.sensePassability(l24) && !rc.canSenseRobotAtLocation(l24);
-        cost24 = exists24 && rc.senseMapInfo(l24).getPaint().isAlly() ? 10 : 20;
+        exists24 = staticRC.onTheMap(l24) && staticRC.sensePassability(l24) && !staticRC.canSenseRobotAtLocation(l24);
+        cost24 = exists24 && staticRC.senseMapInfo(l24).getPaint().isAlly() ? 10 : 20;
 
         l25 = getLocationFromIndex(25, start);
         dist25 = 1000000;
         h25 = l25.distanceSquaredTo(destination);
-        exists25 = rc.onTheMap(l25) && rc.sensePassability(l25) && !rc.canSenseRobotAtLocation(l25);
-        cost25 = exists25 && rc.senseMapInfo(l25).getPaint().isAlly() ? 10 : 20;
+        exists25 = staticRC.onTheMap(l25) && staticRC.sensePassability(l25) && !staticRC.canSenseRobotAtLocation(l25);
+        cost25 = exists25 && staticRC.senseMapInfo(l25).getPaint().isAlly() ? 10 : 20;
 
         l26 = getLocationFromIndex(26, start);
         dist26 = 1000000;
         h26 = l26.distanceSquaredTo(destination);
-        exists26 = rc.onTheMap(l26) && rc.sensePassability(l26) && !rc.canSenseRobotAtLocation(l26);
-        cost26 = exists26 && rc.senseMapInfo(l26).getPaint().isAlly() ? 10 : 20;
+        exists26 = staticRC.onTheMap(l26) && staticRC.sensePassability(l26) && !staticRC.canSenseRobotAtLocation(l26);
+        cost26 = exists26 && staticRC.senseMapInfo(l26).getPaint().isAlly() ? 10 : 20;
 
         l27 = getLocationFromIndex(27, start);
         dist27 = 1000000;
         h27 = l27.distanceSquaredTo(destination);
-        exists27 = rc.onTheMap(l27) && rc.sensePassability(l27) && !rc.canSenseRobotAtLocation(l27);
-        cost27 = exists27 && rc.senseMapInfo(l27).getPaint().isAlly() ? 10 : 20;
+        exists27 = staticRC.onTheMap(l27) && staticRC.sensePassability(l27) && !staticRC.canSenseRobotAtLocation(l27);
+        cost27 = exists27 && staticRC.senseMapInfo(l27).getPaint().isAlly() ? 10 : 20;
 
         l28 = getLocationFromIndex(28, start);
         dist28 = 1000000;
         h28 = l28.distanceSquaredTo(destination);
-        exists28 = rc.onTheMap(l28) && rc.sensePassability(l28) && !rc.canSenseRobotAtLocation(l28);
-        cost28 = exists28 && rc.senseMapInfo(l28).getPaint().isAlly() ? 10 : 20;
+        exists28 = staticRC.onTheMap(l28) && staticRC.sensePassability(l28) && !staticRC.canSenseRobotAtLocation(l28);
+        cost28 = exists28 && staticRC.senseMapInfo(l28).getPaint().isAlly() ? 10 : 20;
 
         l29 = getLocationFromIndex(29, start);
         dist29 = 1000000;
         h29 = l29.distanceSquaredTo(destination);
-        exists29 = rc.onTheMap(l29) && rc.sensePassability(l29) && !rc.canSenseRobotAtLocation(l29);
-        cost29 = exists29 && rc.senseMapInfo(l29).getPaint().isAlly() ? 10 : 20;
+        exists29 = staticRC.onTheMap(l29) && staticRC.sensePassability(l29) && !staticRC.canSenseRobotAtLocation(l29);
+        cost29 = exists29 && staticRC.senseMapInfo(l29).getPaint().isAlly() ? 10 : 20;
 
         l30 = getLocationFromIndex(30, start);
         dist30 = 1000000;
         h30 = l30.distanceSquaredTo(destination);
-        exists30 = rc.onTheMap(l30) && rc.sensePassability(l30) && !rc.canSenseRobotAtLocation(l30);
-        cost30 = exists30 && rc.senseMapInfo(l30).getPaint().isAlly() ? 10 : 20;
+        exists30 = staticRC.onTheMap(l30) && staticRC.sensePassability(l30) && !staticRC.canSenseRobotAtLocation(l30);
+        cost30 = exists30 && staticRC.senseMapInfo(l30).getPaint().isAlly() ? 10 : 20;
 
         l31 = getLocationFromIndex(31, start);
         dist31 = 1000000;
         h31 = l31.distanceSquaredTo(destination);
-        exists31 = rc.onTheMap(l31) && rc.sensePassability(l31) && !rc.canSenseRobotAtLocation(l31);
-        cost31 = exists31 && rc.senseMapInfo(l31).getPaint().isAlly() ? 10 : 20;
+        exists31 = staticRC.onTheMap(l31) && staticRC.sensePassability(l31) && !staticRC.canSenseRobotAtLocation(l31);
+        cost31 = exists31 && staticRC.senseMapInfo(l31).getPaint().isAlly() ? 10 : 20;
 
         l32 = getLocationFromIndex(32, start);
         dist32 = 1000000;
         h32 = l32.distanceSquaredTo(destination);
-        exists32 = rc.onTheMap(l32) && rc.sensePassability(l32) && !rc.canSenseRobotAtLocation(l32);
-        cost32 = exists32 && rc.senseMapInfo(l32).getPaint().isAlly() ? 10 : 20;
+        exists32 = staticRC.onTheMap(l32) && staticRC.sensePassability(l32) && !staticRC.canSenseRobotAtLocation(l32);
+        cost32 = exists32 && staticRC.senseMapInfo(l32).getPaint().isAlly() ? 10 : 20;
 
         l33 = getLocationFromIndex(33, start);
         dist33 = 1000000;
         h33 = l33.distanceSquaredTo(destination);
-        exists33 = rc.onTheMap(l33) && rc.sensePassability(l33) && !rc.canSenseRobotAtLocation(l33);
-        cost33 = exists33 && rc.senseMapInfo(l33).getPaint().isAlly() ? 10 : 20;
+        exists33 = staticRC.onTheMap(l33) && staticRC.sensePassability(l33) && !staticRC.canSenseRobotAtLocation(l33);
+        cost33 = exists33 && staticRC.senseMapInfo(l33).getPaint().isAlly() ? 10 : 20;
 
         l34 = getLocationFromIndex(34, start);
         dist34 = 1000000;
         h34 = l34.distanceSquaredTo(destination);
-        exists34 = rc.onTheMap(l34) && rc.sensePassability(l34) && !rc.canSenseRobotAtLocation(l34);
-        cost34 = exists34 && rc.senseMapInfo(l34).getPaint().isAlly() ? 10 : 20;
+        exists34 = staticRC.onTheMap(l34) && staticRC.sensePassability(l34) && !staticRC.canSenseRobotAtLocation(l34);
+        cost34 = exists34 && staticRC.senseMapInfo(l34).getPaint().isAlly() ? 10 : 20;
 
         l35 = getLocationFromIndex(35, start);
         dist35 = 1000000;
         h35 = l35.distanceSquaredTo(destination);
-        exists35 = rc.onTheMap(l35) && rc.sensePassability(l35) && !rc.canSenseRobotAtLocation(l35);
-        cost35 = exists35 && rc.senseMapInfo(l35).getPaint().isAlly() ? 10 : 20;
+        exists35 = staticRC.onTheMap(l35) && staticRC.sensePassability(l35) && !staticRC.canSenseRobotAtLocation(l35);
+        cost35 = exists35 && staticRC.senseMapInfo(l35).getPaint().isAlly() ? 10 : 20;
 
         l36 = getLocationFromIndex(36, start);
         dist36 = 1000000;
         h36 = l36.distanceSquaredTo(destination);
-        exists36 = rc.onTheMap(l36) && rc.sensePassability(l36) && !rc.canSenseRobotAtLocation(l36);
-        cost36 = exists36 && rc.senseMapInfo(l36).getPaint().isAlly() ? 10 : 20;
+        exists36 = staticRC.onTheMap(l36) && staticRC.sensePassability(l36) && !staticRC.canSenseRobotAtLocation(l36);
+        cost36 = exists36 && staticRC.senseMapInfo(l36).getPaint().isAlly() ? 10 : 20;
 
         l37 = getLocationFromIndex(37, start);
         dist37 = 1000000;
         h37 = l37.distanceSquaredTo(destination);
-        exists37 = rc.onTheMap(l37) && rc.sensePassability(l37) && !rc.canSenseRobotAtLocation(l37);
-        cost37 = exists37 && rc.senseMapInfo(l37).getPaint().isAlly() ? 10 : 20;
+        exists37 = staticRC.onTheMap(l37) && staticRC.sensePassability(l37) && !staticRC.canSenseRobotAtLocation(l37);
+        cost37 = exists37 && staticRC.senseMapInfo(l37).getPaint().isAlly() ? 10 : 20;
 
         l38 = getLocationFromIndex(38, start);
         dist38 = 1000000;
         h38 = l38.distanceSquaredTo(destination);
-        exists38 = rc.onTheMap(l38) && rc.sensePassability(l38) && !rc.canSenseRobotAtLocation(l38);
-        cost38 = exists38 && rc.senseMapInfo(l38).getPaint().isAlly() ? 10 : 20;
+        exists38 = staticRC.onTheMap(l38) && staticRC.sensePassability(l38) && !staticRC.canSenseRobotAtLocation(l38);
+        cost38 = exists38 && staticRC.senseMapInfo(l38).getPaint().isAlly() ? 10 : 20;
 
         l39 = getLocationFromIndex(39, start);
         dist39 = 1000000;
         h39 = l39.distanceSquaredTo(destination);
-        exists39 = rc.onTheMap(l39) && rc.sensePassability(l39) && !rc.canSenseRobotAtLocation(l39);
-        cost39 = exists39 && rc.senseMapInfo(l39).getPaint().isAlly() ? 10 : 20;
+        exists39 = staticRC.onTheMap(l39) && staticRC.sensePassability(l39) && !staticRC.canSenseRobotAtLocation(l39);
+        cost39 = exists39 && staticRC.senseMapInfo(l39).getPaint().isAlly() ? 10 : 20;
 
         l40 = getLocationFromIndex(40, start);
         dist40 = 0;
@@ -694,213 +695,213 @@ public class BFS_FullVision
         l41 = getLocationFromIndex(41, start);
         dist41 = 1000000;
         h41 = l41.distanceSquaredTo(destination);
-        exists41 = rc.onTheMap(l41) && rc.sensePassability(l41) && !rc.canSenseRobotAtLocation(l41);
-        cost41 = exists41 && rc.senseMapInfo(l41).getPaint().isAlly() ? 10 : 20;
+        exists41 = staticRC.onTheMap(l41) && staticRC.sensePassability(l41) && !staticRC.canSenseRobotAtLocation(l41);
+        cost41 = exists41 && staticRC.senseMapInfo(l41).getPaint().isAlly() ? 10 : 20;
 
         l42 = getLocationFromIndex(42, start);
         dist42 = 1000000;
         h42 = l42.distanceSquaredTo(destination);
-        exists42 = rc.onTheMap(l42) && rc.sensePassability(l42) && !rc.canSenseRobotAtLocation(l42);
-        cost42 = exists42 && rc.senseMapInfo(l42).getPaint().isAlly() ? 10 : 20;
+        exists42 = staticRC.onTheMap(l42) && staticRC.sensePassability(l42) && !staticRC.canSenseRobotAtLocation(l42);
+        cost42 = exists42 && staticRC.senseMapInfo(l42).getPaint().isAlly() ? 10 : 20;
 
         l43 = getLocationFromIndex(43, start);
         dist43 = 1000000;
         h43 = l43.distanceSquaredTo(destination);
-        exists43 = rc.onTheMap(l43) && rc.sensePassability(l43) && !rc.canSenseRobotAtLocation(l43);
-        cost43 = exists43 && rc.senseMapInfo(l43).getPaint().isAlly() ? 10 : 20;
+        exists43 = staticRC.onTheMap(l43) && staticRC.sensePassability(l43) && !staticRC.canSenseRobotAtLocation(l43);
+        cost43 = exists43 && staticRC.senseMapInfo(l43).getPaint().isAlly() ? 10 : 20;
 
         l44 = getLocationFromIndex(44, start);
         dist44 = 1000000;
         h44 = l44.distanceSquaredTo(destination);
-        exists44 = rc.onTheMap(l44) && rc.sensePassability(l44) && !rc.canSenseRobotAtLocation(l44);
-        cost44 = exists44 && rc.senseMapInfo(l44).getPaint().isAlly() ? 10 : 20;
+        exists44 = staticRC.onTheMap(l44) && staticRC.sensePassability(l44) && !staticRC.canSenseRobotAtLocation(l44);
+        cost44 = exists44 && staticRC.senseMapInfo(l44).getPaint().isAlly() ? 10 : 20;
 
         l45 = getLocationFromIndex(45, start);
         dist45 = 1000000;
         h45 = l45.distanceSquaredTo(destination);
-        exists45 = rc.onTheMap(l45) && rc.sensePassability(l45) && !rc.canSenseRobotAtLocation(l45);
-        cost45 = exists45 && rc.senseMapInfo(l45).getPaint().isAlly() ? 10 : 20;
+        exists45 = staticRC.onTheMap(l45) && staticRC.sensePassability(l45) && !staticRC.canSenseRobotAtLocation(l45);
+        cost45 = exists45 && staticRC.senseMapInfo(l45).getPaint().isAlly() ? 10 : 20;
 
         l46 = getLocationFromIndex(46, start);
         dist46 = 1000000;
         h46 = l46.distanceSquaredTo(destination);
-        exists46 = rc.onTheMap(l46) && rc.sensePassability(l46) && !rc.canSenseRobotAtLocation(l46);
-        cost46 = exists46 && rc.senseMapInfo(l46).getPaint().isAlly() ? 10 : 20;
+        exists46 = staticRC.onTheMap(l46) && staticRC.sensePassability(l46) && !staticRC.canSenseRobotAtLocation(l46);
+        cost46 = exists46 && staticRC.senseMapInfo(l46).getPaint().isAlly() ? 10 : 20;
 
         l47 = getLocationFromIndex(47, start);
         dist47 = 1000000;
         h47 = l47.distanceSquaredTo(destination);
-        exists47 = rc.onTheMap(l47) && rc.sensePassability(l47) && !rc.canSenseRobotAtLocation(l47);
-        cost47 = exists47 && rc.senseMapInfo(l47).getPaint().isAlly() ? 10 : 20;
+        exists47 = staticRC.onTheMap(l47) && staticRC.sensePassability(l47) && !staticRC.canSenseRobotAtLocation(l47);
+        cost47 = exists47 && staticRC.senseMapInfo(l47).getPaint().isAlly() ? 10 : 20;
 
         l48 = getLocationFromIndex(48, start);
         dist48 = 1000000;
         h48 = l48.distanceSquaredTo(destination);
-        exists48 = rc.onTheMap(l48) && rc.sensePassability(l48) && !rc.canSenseRobotAtLocation(l48);
-        cost48 = exists48 && rc.senseMapInfo(l48).getPaint().isAlly() ? 10 : 20;
+        exists48 = staticRC.onTheMap(l48) && staticRC.sensePassability(l48) && !staticRC.canSenseRobotAtLocation(l48);
+        cost48 = exists48 && staticRC.senseMapInfo(l48).getPaint().isAlly() ? 10 : 20;
 
         l49 = getLocationFromIndex(49, start);
         dist49 = 1000000;
         h49 = l49.distanceSquaredTo(destination);
-        exists49 = rc.onTheMap(l49) && rc.sensePassability(l49) && !rc.canSenseRobotAtLocation(l49);
-        cost49 = exists49 && rc.senseMapInfo(l49).getPaint().isAlly() ? 10 : 20;
+        exists49 = staticRC.onTheMap(l49) && staticRC.sensePassability(l49) && !staticRC.canSenseRobotAtLocation(l49);
+        cost49 = exists49 && staticRC.senseMapInfo(l49).getPaint().isAlly() ? 10 : 20;
 
         l50 = getLocationFromIndex(50, start);
         dist50 = 1000000;
         h50 = l50.distanceSquaredTo(destination);
-        exists50 = rc.onTheMap(l50) && rc.sensePassability(l50) && !rc.canSenseRobotAtLocation(l50);
-        cost50 = exists50 && rc.senseMapInfo(l50).getPaint().isAlly() ? 10 : 20;
+        exists50 = staticRC.onTheMap(l50) && staticRC.sensePassability(l50) && !staticRC.canSenseRobotAtLocation(l50);
+        cost50 = exists50 && staticRC.senseMapInfo(l50).getPaint().isAlly() ? 10 : 20;
 
         l51 = getLocationFromIndex(51, start);
         dist51 = 1000000;
         h51 = l51.distanceSquaredTo(destination);
-        exists51 = rc.onTheMap(l51) && rc.sensePassability(l51) && !rc.canSenseRobotAtLocation(l51);
-        cost51 = exists51 && rc.senseMapInfo(l51).getPaint().isAlly() ? 10 : 20;
+        exists51 = staticRC.onTheMap(l51) && staticRC.sensePassability(l51) && !staticRC.canSenseRobotAtLocation(l51);
+        cost51 = exists51 && staticRC.senseMapInfo(l51).getPaint().isAlly() ? 10 : 20;
 
         l52 = getLocationFromIndex(52, start);
         dist52 = 1000000;
         h52 = l52.distanceSquaredTo(destination);
-        exists52 = rc.onTheMap(l52) && rc.sensePassability(l52) && !rc.canSenseRobotAtLocation(l52);
-        cost52 = exists52 && rc.senseMapInfo(l52).getPaint().isAlly() ? 10 : 20;
+        exists52 = staticRC.onTheMap(l52) && staticRC.sensePassability(l52) && !staticRC.canSenseRobotAtLocation(l52);
+        cost52 = exists52 && staticRC.senseMapInfo(l52).getPaint().isAlly() ? 10 : 20;
 
         l53 = getLocationFromIndex(53, start);
         dist53 = 1000000;
         h53 = l53.distanceSquaredTo(destination);
-        exists53 = rc.onTheMap(l53) && rc.sensePassability(l53) && !rc.canSenseRobotAtLocation(l53);
-        cost53 = exists53 && rc.senseMapInfo(l53).getPaint().isAlly() ? 10 : 20;
+        exists53 = staticRC.onTheMap(l53) && staticRC.sensePassability(l53) && !staticRC.canSenseRobotAtLocation(l53);
+        cost53 = exists53 && staticRC.senseMapInfo(l53).getPaint().isAlly() ? 10 : 20;
 
         l54 = getLocationFromIndex(54, start);
         dist54 = 1000000;
         h54 = l54.distanceSquaredTo(destination);
-        exists54 = rc.onTheMap(l54) && rc.sensePassability(l54) && !rc.canSenseRobotAtLocation(l54);
-        cost54 = exists54 && rc.senseMapInfo(l54).getPaint().isAlly() ? 10 : 20;
+        exists54 = staticRC.onTheMap(l54) && staticRC.sensePassability(l54) && !staticRC.canSenseRobotAtLocation(l54);
+        cost54 = exists54 && staticRC.senseMapInfo(l54).getPaint().isAlly() ? 10 : 20;
 
         l55 = getLocationFromIndex(55, start);
         dist55 = 1000000;
         h55 = l55.distanceSquaredTo(destination);
-        exists55 = rc.onTheMap(l55) && rc.sensePassability(l55) && !rc.canSenseRobotAtLocation(l55);
-        cost55 = exists55 && rc.senseMapInfo(l55).getPaint().isAlly() ? 10 : 20;
+        exists55 = staticRC.onTheMap(l55) && staticRC.sensePassability(l55) && !staticRC.canSenseRobotAtLocation(l55);
+        cost55 = exists55 && staticRC.senseMapInfo(l55).getPaint().isAlly() ? 10 : 20;
 
         l56 = getLocationFromIndex(56, start);
         dist56 = 1000000;
         h56 = l56.distanceSquaredTo(destination);
-        exists56 = rc.onTheMap(l56) && rc.sensePassability(l56) && !rc.canSenseRobotAtLocation(l56);
-        cost56 = exists56 && rc.senseMapInfo(l56).getPaint().isAlly() ? 10 : 20;
+        exists56 = staticRC.onTheMap(l56) && staticRC.sensePassability(l56) && !staticRC.canSenseRobotAtLocation(l56);
+        cost56 = exists56 && staticRC.senseMapInfo(l56).getPaint().isAlly() ? 10 : 20;
 
         l57 = getLocationFromIndex(57, start);
         dist57 = 1000000;
         h57 = l57.distanceSquaredTo(destination);
-        exists57 = rc.onTheMap(l57) && rc.sensePassability(l57) && !rc.canSenseRobotAtLocation(l57);
-        cost57 = exists57 && rc.senseMapInfo(l57).getPaint().isAlly() ? 10 : 20;
+        exists57 = staticRC.onTheMap(l57) && staticRC.sensePassability(l57) && !staticRC.canSenseRobotAtLocation(l57);
+        cost57 = exists57 && staticRC.senseMapInfo(l57).getPaint().isAlly() ? 10 : 20;
 
         l58 = getLocationFromIndex(58, start);
         dist58 = 1000000;
         h58 = l58.distanceSquaredTo(destination);
-        exists58 = rc.onTheMap(l58) && rc.sensePassability(l58) && !rc.canSenseRobotAtLocation(l58);
-        cost58 = exists58 && rc.senseMapInfo(l58).getPaint().isAlly() ? 10 : 20;
+        exists58 = staticRC.onTheMap(l58) && staticRC.sensePassability(l58) && !staticRC.canSenseRobotAtLocation(l58);
+        cost58 = exists58 && staticRC.senseMapInfo(l58).getPaint().isAlly() ? 10 : 20;
 
         l59 = getLocationFromIndex(59, start);
         dist59 = 1000000;
         h59 = l59.distanceSquaredTo(destination);
-        exists59 = rc.onTheMap(l59) && rc.sensePassability(l59) && !rc.canSenseRobotAtLocation(l59);
-        cost59 = exists59 && rc.senseMapInfo(l59).getPaint().isAlly() ? 10 : 20;
+        exists59 = staticRC.onTheMap(l59) && staticRC.sensePassability(l59) && !staticRC.canSenseRobotAtLocation(l59);
+        cost59 = exists59 && staticRC.senseMapInfo(l59).getPaint().isAlly() ? 10 : 20;
 
         l60 = getLocationFromIndex(60, start);
         dist60 = 1000000;
         h60 = l60.distanceSquaredTo(destination);
-        exists60 = rc.onTheMap(l60) && rc.sensePassability(l60) && !rc.canSenseRobotAtLocation(l60);
-        cost60 = exists60 && rc.senseMapInfo(l60).getPaint().isAlly() ? 10 : 20;
+        exists60 = staticRC.onTheMap(l60) && staticRC.sensePassability(l60) && !staticRC.canSenseRobotAtLocation(l60);
+        cost60 = exists60 && staticRC.senseMapInfo(l60).getPaint().isAlly() ? 10 : 20;
 
         l61 = getLocationFromIndex(61, start);
         dist61 = 1000000;
         h61 = l61.distanceSquaredTo(destination);
-        exists61 = rc.onTheMap(l61) && rc.sensePassability(l61) && !rc.canSenseRobotAtLocation(l61);
-        cost61 = exists61 && rc.senseMapInfo(l61).getPaint().isAlly() ? 10 : 20;
+        exists61 = staticRC.onTheMap(l61) && staticRC.sensePassability(l61) && !staticRC.canSenseRobotAtLocation(l61);
+        cost61 = exists61 && staticRC.senseMapInfo(l61).getPaint().isAlly() ? 10 : 20;
 
         l62 = getLocationFromIndex(62, start);
         dist62 = 1000000;
         h62 = l62.distanceSquaredTo(destination);
-        exists62 = rc.onTheMap(l62) && rc.sensePassability(l62) && !rc.canSenseRobotAtLocation(l62);
-        cost62 = exists62 && rc.senseMapInfo(l62).getPaint().isAlly() ? 10 : 20;
+        exists62 = staticRC.onTheMap(l62) && staticRC.sensePassability(l62) && !staticRC.canSenseRobotAtLocation(l62);
+        cost62 = exists62 && staticRC.senseMapInfo(l62).getPaint().isAlly() ? 10 : 20;
 
         l64 = getLocationFromIndex(64, start);
         dist64 = 1000000;
         h64 = l64.distanceSquaredTo(destination);
-        exists64 = rc.onTheMap(l64) && rc.sensePassability(l64) && !rc.canSenseRobotAtLocation(l64);
-        cost64 = exists64 && rc.senseMapInfo(l64).getPaint().isAlly() ? 10 : 20;
+        exists64 = staticRC.onTheMap(l64) && staticRC.sensePassability(l64) && !staticRC.canSenseRobotAtLocation(l64);
+        cost64 = exists64 && staticRC.senseMapInfo(l64).getPaint().isAlly() ? 10 : 20;
 
         l65 = getLocationFromIndex(65, start);
         dist65 = 1000000;
         h65 = l65.distanceSquaredTo(destination);
-        exists65 = rc.onTheMap(l65) && rc.sensePassability(l65) && !rc.canSenseRobotAtLocation(l65);
-        cost65 = exists65 && rc.senseMapInfo(l65).getPaint().isAlly() ? 10 : 20;
+        exists65 = staticRC.onTheMap(l65) && staticRC.sensePassability(l65) && !staticRC.canSenseRobotAtLocation(l65);
+        cost65 = exists65 && staticRC.senseMapInfo(l65).getPaint().isAlly() ? 10 : 20;
 
         l66 = getLocationFromIndex(66, start);
         dist66 = 1000000;
         h66 = l66.distanceSquaredTo(destination);
-        exists66 = rc.onTheMap(l66) && rc.sensePassability(l66) && !rc.canSenseRobotAtLocation(l66);
-        cost66 = exists66 && rc.senseMapInfo(l66).getPaint().isAlly() ? 10 : 20;
+        exists66 = staticRC.onTheMap(l66) && staticRC.sensePassability(l66) && !staticRC.canSenseRobotAtLocation(l66);
+        cost66 = exists66 && staticRC.senseMapInfo(l66).getPaint().isAlly() ? 10 : 20;
 
         l67 = getLocationFromIndex(67, start);
         dist67 = 1000000;
         h67 = l67.distanceSquaredTo(destination);
-        exists67 = rc.onTheMap(l67) && rc.sensePassability(l67) && !rc.canSenseRobotAtLocation(l67);
-        cost67 = exists67 && rc.senseMapInfo(l67).getPaint().isAlly() ? 10 : 20;
+        exists67 = staticRC.onTheMap(l67) && staticRC.sensePassability(l67) && !staticRC.canSenseRobotAtLocation(l67);
+        cost67 = exists67 && staticRC.senseMapInfo(l67).getPaint().isAlly() ? 10 : 20;
 
         l68 = getLocationFromIndex(68, start);
         dist68 = 1000000;
         h68 = l68.distanceSquaredTo(destination);
-        exists68 = rc.onTheMap(l68) && rc.sensePassability(l68) && !rc.canSenseRobotAtLocation(l68);
-        cost68 = exists68 && rc.senseMapInfo(l68).getPaint().isAlly() ? 10 : 20;
+        exists68 = staticRC.onTheMap(l68) && staticRC.sensePassability(l68) && !staticRC.canSenseRobotAtLocation(l68);
+        cost68 = exists68 && staticRC.senseMapInfo(l68).getPaint().isAlly() ? 10 : 20;
 
         l69 = getLocationFromIndex(69, start);
         dist69 = 1000000;
         h69 = l69.distanceSquaredTo(destination);
-        exists69 = rc.onTheMap(l69) && rc.sensePassability(l69) && !rc.canSenseRobotAtLocation(l69);
-        cost69 = exists69 && rc.senseMapInfo(l69).getPaint().isAlly() ? 10 : 20;
+        exists69 = staticRC.onTheMap(l69) && staticRC.sensePassability(l69) && !staticRC.canSenseRobotAtLocation(l69);
+        cost69 = exists69 && staticRC.senseMapInfo(l69).getPaint().isAlly() ? 10 : 20;
 
         l70 = getLocationFromIndex(70, start);
         dist70 = 1000000;
         h70 = l70.distanceSquaredTo(destination);
-        exists70 = rc.onTheMap(l70) && rc.sensePassability(l70) && !rc.canSenseRobotAtLocation(l70);
-        cost70 = exists70 && rc.senseMapInfo(l70).getPaint().isAlly() ? 10 : 20;
+        exists70 = staticRC.onTheMap(l70) && staticRC.sensePassability(l70) && !staticRC.canSenseRobotAtLocation(l70);
+        cost70 = exists70 && staticRC.senseMapInfo(l70).getPaint().isAlly() ? 10 : 20;
 
         l74 = getLocationFromIndex(74, start);
         dist74 = 1000000;
         h74 = l74.distanceSquaredTo(destination);
-        exists74 = rc.onTheMap(l74) && rc.sensePassability(l74) && !rc.canSenseRobotAtLocation(l74);
-        cost74 = exists74 && rc.senseMapInfo(l74).getPaint().isAlly() ? 10 : 20;
+        exists74 = staticRC.onTheMap(l74) && staticRC.sensePassability(l74) && !staticRC.canSenseRobotAtLocation(l74);
+        cost74 = exists74 && staticRC.senseMapInfo(l74).getPaint().isAlly() ? 10 : 20;
 
         l75 = getLocationFromIndex(75, start);
         dist75 = 1000000;
         h75 = l75.distanceSquaredTo(destination);
-        exists75 = rc.onTheMap(l75) && rc.sensePassability(l75) && !rc.canSenseRobotAtLocation(l75);
-        cost75 = exists75 && rc.senseMapInfo(l75).getPaint().isAlly() ? 10 : 20;
+        exists75 = staticRC.onTheMap(l75) && staticRC.sensePassability(l75) && !staticRC.canSenseRobotAtLocation(l75);
+        cost75 = exists75 && staticRC.senseMapInfo(l75).getPaint().isAlly() ? 10 : 20;
 
         l76 = getLocationFromIndex(76, start);
         dist76 = 1000000;
         h76 = l76.distanceSquaredTo(destination);
-        exists76 = rc.onTheMap(l76) && rc.sensePassability(l76) && !rc.canSenseRobotAtLocation(l76);
-        cost76 = exists76 && rc.senseMapInfo(l76).getPaint().isAlly() ? 10 : 20;
+        exists76 = staticRC.onTheMap(l76) && staticRC.sensePassability(l76) && !staticRC.canSenseRobotAtLocation(l76);
+        cost76 = exists76 && staticRC.senseMapInfo(l76).getPaint().isAlly() ? 10 : 20;
 
         l77 = getLocationFromIndex(77, start);
         dist77 = 1000000;
         h77 = l77.distanceSquaredTo(destination);
-        exists77 = rc.onTheMap(l77) && rc.sensePassability(l77) && !rc.canSenseRobotAtLocation(l77);
-        cost77 = exists77 && rc.senseMapInfo(l77).getPaint().isAlly() ? 10 : 20;
+        exists77 = staticRC.onTheMap(l77) && staticRC.sensePassability(l77) && !staticRC.canSenseRobotAtLocation(l77);
+        cost77 = exists77 && staticRC.senseMapInfo(l77).getPaint().isAlly() ? 10 : 20;
 
         l78 = getLocationFromIndex(78, start);
         dist78 = 1000000;
         h78 = l78.distanceSquaredTo(destination);
-        exists78 = rc.onTheMap(l78) && rc.sensePassability(l78) && !rc.canSenseRobotAtLocation(l78);
-        cost78 = exists78 && rc.senseMapInfo(l78).getPaint().isAlly() ? 10 : 20;
+        exists78 = staticRC.onTheMap(l78) && staticRC.sensePassability(l78) && !staticRC.canSenseRobotAtLocation(l78);
+        cost78 = exists78 && staticRC.senseMapInfo(l78).getPaint().isAlly() ? 10 : 20;
 
     }
 
-    public static Direction pathfind(RobotController rc, MapLocation destination) throws GameActionException
+    public static Direction pathfind(MapLocation destination) throws GameActionException
     {
-        MapLocation start = rc.getLocation();
-        initializeVariables(rc, destination, start);
+        MapLocation start = staticRC.getLocation();
+        initializeVariables(destination, start);
         lookup = new Direction[9][9];
 
         int closestDistance = Integer.MAX_VALUE;

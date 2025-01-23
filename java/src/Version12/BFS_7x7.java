@@ -362,22 +362,22 @@ public class BFS_7x7
       return null;
    }
 
-   public static Direction pathfind(RobotController rc, MapLocation destination) throws GameActionException
+   public static Direction pathfind(MapLocation destination) throws GameActionException
    {
-      MapLocation start = rc.getLocation();
+      MapLocation start = staticRC.getLocation();
       lookup = new Direction[7][7];
 
 
       l0 = getLocationFromIndex(0, start);
-      boolean otm0 = rc.onTheMap(l0);
+      boolean otm0 = staticRC.onTheMap(l0);
       if(otm0)
       {
-         if(rc.sensePassability(l0) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l0)))
+         if(staticRC.sensePassability(l0) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l0)))
          {
             exists0 = true;
             dist0 = 1000000;
             h0 = l0.distanceSquaredTo(destination);
-            cost0 = exists0 && rc.senseMapInfo(l0).getPaint().isAlly() ? 1 : 2;
+            cost0 = exists0 && staticRC.senseMapInfo(l0).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l0.x][l0.y] = MapData.Passable;
          }
          else
@@ -388,15 +388,15 @@ public class BFS_7x7
       }
 
       l1 = getLocationFromIndex(1, start);
-      boolean otm1 = rc.onTheMap(l1);
+      boolean otm1 = staticRC.onTheMap(l1);
       if(otm1)
       {
-         if(rc.sensePassability(l1) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l1)))
+         if(staticRC.sensePassability(l1) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l1)))
          {
             exists1 = true;
             dist1 = 1000000;
             h1 = l1.distanceSquaredTo(destination);
-            cost1 = exists1 && rc.senseMapInfo(l1).getPaint().isAlly() ? 1 : 2;
+            cost1 = exists1 && staticRC.senseMapInfo(l1).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l1.x][l1.y] = MapData.Passable;
          }
          else
@@ -407,15 +407,15 @@ public class BFS_7x7
       }
 
       l2 = getLocationFromIndex(2, start);
-      boolean otm2 = rc.onTheMap(l2);
+      boolean otm2 = staticRC.onTheMap(l2);
       if(otm2)
       {
-         if(rc.sensePassability(l2) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l2)))
+         if(staticRC.sensePassability(l2) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l2)))
          {
             exists2 = true;
             dist2 = 1000000;
             h2 = l2.distanceSquaredTo(destination);
-            cost2 = exists2 && rc.senseMapInfo(l2).getPaint().isAlly() ? 1 : 2;
+            cost2 = exists2 && staticRC.senseMapInfo(l2).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l2.x][l2.y] = MapData.Passable;
          }
          else
@@ -426,15 +426,15 @@ public class BFS_7x7
       }
 
       l3 = getLocationFromIndex(3, start);
-      boolean otm3 = rc.onTheMap(l3);
+      boolean otm3 = staticRC.onTheMap(l3);
       if(otm3)
       {
-         if(rc.sensePassability(l3) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l3)))
+         if(staticRC.sensePassability(l3) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l3)))
          {
             exists3 = true;
             dist3 = 1000000;
             h3 = l3.distanceSquaredTo(destination);
-            cost3 = exists3 && rc.senseMapInfo(l3).getPaint().isAlly() ? 1 : 2;
+            cost3 = exists3 && staticRC.senseMapInfo(l3).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l3.x][l3.y] = MapData.Passable;
          }
          else
@@ -445,15 +445,15 @@ public class BFS_7x7
       }
 
       l4 = getLocationFromIndex(4, start);
-      boolean otm4 = rc.onTheMap(l4);
+      boolean otm4 = staticRC.onTheMap(l4);
       if(otm4)
       {
-         if(rc.sensePassability(l4) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l4)))
+         if(staticRC.sensePassability(l4) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l4)))
          {
             exists4 = true;
             dist4 = 1000000;
             h4 = l4.distanceSquaredTo(destination);
-            cost4 = exists4 && rc.senseMapInfo(l4).getPaint().isAlly() ? 1 : 2;
+            cost4 = exists4 && staticRC.senseMapInfo(l4).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l4.x][l4.y] = MapData.Passable;
          }
          else
@@ -464,15 +464,15 @@ public class BFS_7x7
       }
 
       l5 = getLocationFromIndex(5, start);
-      boolean otm5 = rc.onTheMap(l5);
+      boolean otm5 = staticRC.onTheMap(l5);
       if(otm5)
       {
-         if(rc.sensePassability(l5) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l5)))
+         if(staticRC.sensePassability(l5) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l5)))
          {
             exists5 = true;
             dist5 = 1000000;
             h5 = l5.distanceSquaredTo(destination);
-            cost5 = exists5 && rc.senseMapInfo(l5).getPaint().isAlly() ? 1 : 2;
+            cost5 = exists5 && staticRC.senseMapInfo(l5).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l5.x][l5.y] = MapData.Passable;
          }
          else
@@ -483,15 +483,15 @@ public class BFS_7x7
       }
 
       l6 = getLocationFromIndex(6, start);
-      boolean otm6 = rc.onTheMap(l6);
+      boolean otm6 = staticRC.onTheMap(l6);
       if(otm6)
       {
-         if(rc.sensePassability(l6) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l6)))
+         if(staticRC.sensePassability(l6) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l6)))
          {
             exists6 = true;
             dist6 = 1000000;
             h6 = l6.distanceSquaredTo(destination);
-            cost6 = exists6 && rc.senseMapInfo(l6).getPaint().isAlly() ? 1 : 2;
+            cost6 = exists6 && staticRC.senseMapInfo(l6).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l6.x][l6.y] = MapData.Passable;
          }
          else
@@ -502,15 +502,15 @@ public class BFS_7x7
       }
 
       l7 = getLocationFromIndex(7, start);
-      boolean otm7 = rc.onTheMap(l7);
+      boolean otm7 = staticRC.onTheMap(l7);
       if(otm7)
       {
-         if(rc.sensePassability(l7) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l7)))
+         if(staticRC.sensePassability(l7) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l7)))
          {
             exists7 = true;
             dist7 = 1000000;
             h7 = l7.distanceSquaredTo(destination);
-            cost7 = exists7 && rc.senseMapInfo(l7).getPaint().isAlly() ? 1 : 2;
+            cost7 = exists7 && staticRC.senseMapInfo(l7).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l7.x][l7.y] = MapData.Passable;
          }
          else
@@ -521,15 +521,15 @@ public class BFS_7x7
       }
 
       l8 = getLocationFromIndex(8, start);
-      boolean otm8 = rc.onTheMap(l8);
+      boolean otm8 = staticRC.onTheMap(l8);
       if(otm8)
       {
-         if(rc.sensePassability(l8) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l8)))
+         if(staticRC.sensePassability(l8) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l8)))
          {
             exists8 = true;
             dist8 = 1000000;
             h8 = l8.distanceSquaredTo(destination);
-            cost8 = exists8 && rc.senseMapInfo(l8).getPaint().isAlly() ? 1 : 2;
+            cost8 = exists8 && staticRC.senseMapInfo(l8).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l8.x][l8.y] = MapData.Passable;
          }
          else
@@ -540,15 +540,15 @@ public class BFS_7x7
       }
 
       l9 = getLocationFromIndex(9, start);
-      boolean otm9 = rc.onTheMap(l9);
+      boolean otm9 = staticRC.onTheMap(l9);
       if(otm9)
       {
-         if(rc.sensePassability(l9) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l9)))
+         if(staticRC.sensePassability(l9) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l9)))
          {
             exists9 = true;
             dist9 = 1000000;
             h9 = l9.distanceSquaredTo(destination);
-            cost9 = exists9 && rc.senseMapInfo(l9).getPaint().isAlly() ? 1 : 2;
+            cost9 = exists9 && staticRC.senseMapInfo(l9).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l9.x][l9.y] = MapData.Passable;
          }
          else
@@ -559,15 +559,15 @@ public class BFS_7x7
       }
 
       l10 = getLocationFromIndex(10, start);
-      boolean otm10 = rc.onTheMap(l10);
+      boolean otm10 = staticRC.onTheMap(l10);
       if(otm10)
       {
-         if(rc.sensePassability(l10) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l10)))
+         if(staticRC.sensePassability(l10) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l10)))
          {
             exists10 = true;
             dist10 = 1000000;
             h10 = l10.distanceSquaredTo(destination);
-            cost10 = exists10 && rc.senseMapInfo(l10).getPaint().isAlly() ? 1 : 2;
+            cost10 = exists10 && staticRC.senseMapInfo(l10).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l10.x][l10.y] = MapData.Passable;
          }
          else
@@ -578,15 +578,15 @@ public class BFS_7x7
       }
 
       l11 = getLocationFromIndex(11, start);
-      boolean otm11 = rc.onTheMap(l11);
+      boolean otm11 = staticRC.onTheMap(l11);
       if(otm11)
       {
-         if(rc.sensePassability(l11) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l11)))
+         if(staticRC.sensePassability(l11) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l11)))
          {
             exists11 = true;
             dist11 = 1000000;
             h11 = l11.distanceSquaredTo(destination);
-            cost11 = exists11 && rc.senseMapInfo(l11).getPaint().isAlly() ? 1 : 2;
+            cost11 = exists11 && staticRC.senseMapInfo(l11).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l11.x][l11.y] = MapData.Passable;
          }
          else
@@ -597,15 +597,15 @@ public class BFS_7x7
       }
 
       l12 = getLocationFromIndex(12, start);
-      boolean otm12 = rc.onTheMap(l12);
+      boolean otm12 = staticRC.onTheMap(l12);
       if(otm12)
       {
-         if(rc.sensePassability(l12) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l12)))
+         if(staticRC.sensePassability(l12) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l12)))
          {
             exists12 = true;
             dist12 = 1000000;
             h12 = l12.distanceSquaredTo(destination);
-            cost12 = exists12 && rc.senseMapInfo(l12).getPaint().isAlly() ? 1 : 2;
+            cost12 = exists12 && staticRC.senseMapInfo(l12).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l12.x][l12.y] = MapData.Passable;
          }
          else
@@ -616,15 +616,15 @@ public class BFS_7x7
       }
 
       l13 = getLocationFromIndex(13, start);
-      boolean otm13 = rc.onTheMap(l13);
+      boolean otm13 = staticRC.onTheMap(l13);
       if(otm13)
       {
-         if(rc.sensePassability(l13) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l13)))
+         if(staticRC.sensePassability(l13) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l13)))
          {
             exists13 = true;
             dist13 = 1000000;
             h13 = l13.distanceSquaredTo(destination);
-            cost13 = exists13 && rc.senseMapInfo(l13).getPaint().isAlly() ? 1 : 2;
+            cost13 = exists13 && staticRC.senseMapInfo(l13).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l13.x][l13.y] = MapData.Passable;
          }
          else
@@ -635,15 +635,15 @@ public class BFS_7x7
       }
 
       l14 = getLocationFromIndex(14, start);
-      boolean otm14 = rc.onTheMap(l14);
+      boolean otm14 = staticRC.onTheMap(l14);
       if(otm14)
       {
-         if(rc.sensePassability(l14) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l14)))
+         if(staticRC.sensePassability(l14) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l14)))
          {
             exists14 = true;
             dist14 = 1000000;
             h14 = l14.distanceSquaredTo(destination);
-            cost14 = exists14 && rc.senseMapInfo(l14).getPaint().isAlly() ? 1 : 2;
+            cost14 = exists14 && staticRC.senseMapInfo(l14).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l14.x][l14.y] = MapData.Passable;
          }
          else
@@ -654,15 +654,15 @@ public class BFS_7x7
       }
 
       l15 = getLocationFromIndex(15, start);
-      boolean otm15 = rc.onTheMap(l15);
+      boolean otm15 = staticRC.onTheMap(l15);
       if(otm15)
       {
-         if(rc.sensePassability(l15) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l15)))
+         if(staticRC.sensePassability(l15) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l15)))
          {
             exists15 = true;
             dist15 = 1000000;
             h15 = l15.distanceSquaredTo(destination);
-            cost15 = exists15 && rc.senseMapInfo(l15).getPaint().isAlly() ? 1 : 2;
+            cost15 = exists15 && staticRC.senseMapInfo(l15).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l15.x][l15.y] = MapData.Passable;
          }
          else
@@ -673,15 +673,15 @@ public class BFS_7x7
       }
 
       l16 = getLocationFromIndex(16, start);
-      boolean otm16 = rc.onTheMap(l16);
+      boolean otm16 = staticRC.onTheMap(l16);
       if(otm16)
       {
-         if(rc.sensePassability(l16) && !rc.canSenseRobotAtLocation(l16))
+         if(staticRC.sensePassability(l16) && !staticRC.canSenseRobotAtLocation(l16))
          {
             exists16 = true;
             dist16 = 1000000;
             h16 = l16.distanceSquaredTo(destination);
-            cost16 = exists16 && rc.senseMapInfo(l16).getPaint().isAlly() ? 1 : 2;
+            cost16 = exists16 && staticRC.senseMapInfo(l16).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l16.x][l16.y] = MapData.Passable;
          }
          else
@@ -692,15 +692,15 @@ public class BFS_7x7
       }
 
       l17 = getLocationFromIndex(17, start);
-      boolean otm17 = rc.onTheMap(l17);
+      boolean otm17 = staticRC.onTheMap(l17);
       if(otm17)
       {
-         if(rc.sensePassability(l17) && !rc.canSenseRobotAtLocation(l17))
+         if(staticRC.sensePassability(l17) && !staticRC.canSenseRobotAtLocation(l17))
          {
             exists17 = true;
             dist17 = 1000000;
             h17 = l17.distanceSquaredTo(destination);
-            cost17 = exists17 && rc.senseMapInfo(l17).getPaint().isAlly() ? 1 : 2;
+            cost17 = exists17 && staticRC.senseMapInfo(l17).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l17.x][l17.y] = MapData.Passable;
          }
          else
@@ -711,15 +711,15 @@ public class BFS_7x7
       }
 
       l18 = getLocationFromIndex(18, start);
-      boolean otm18 = rc.onTheMap(l18);
+      boolean otm18 = staticRC.onTheMap(l18);
       if(otm18)
       {
-         if(rc.sensePassability(l18) && !rc.canSenseRobotAtLocation(l18))
+         if(staticRC.sensePassability(l18) && !staticRC.canSenseRobotAtLocation(l18))
          {
             exists18 = true;
             dist18 = 1000000;
             h18 = l18.distanceSquaredTo(destination);
-            cost18 = exists18 && rc.senseMapInfo(l18).getPaint().isAlly() ? 1 : 2;
+            cost18 = exists18 && staticRC.senseMapInfo(l18).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l18.x][l18.y] = MapData.Passable;
          }
          else
@@ -730,15 +730,15 @@ public class BFS_7x7
       }
 
       l19 = getLocationFromIndex(19, start);
-      boolean otm19 = rc.onTheMap(l19);
+      boolean otm19 = staticRC.onTheMap(l19);
       if(otm19)
       {
-         if(rc.sensePassability(l19) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l19)))
+         if(staticRC.sensePassability(l19) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l19)))
          {
             exists19 = true;
             dist19 = 1000000;
             h19 = l19.distanceSquaredTo(destination);
-            cost19 = exists19 && rc.senseMapInfo(l19).getPaint().isAlly() ? 1 : 2;
+            cost19 = exists19 && staticRC.senseMapInfo(l19).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l19.x][l19.y] = MapData.Passable;
          }
          else
@@ -749,15 +749,15 @@ public class BFS_7x7
       }
 
       l20 = getLocationFromIndex(20, start);
-      boolean otm20 = rc.onTheMap(l20);
+      boolean otm20 = staticRC.onTheMap(l20);
       if(otm20)
       {
-         if(rc.sensePassability(l20) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l20)))
+         if(staticRC.sensePassability(l20) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l20)))
          {
             exists20 = true;
             dist20 = 1000000;
             h20 = l20.distanceSquaredTo(destination);
-            cost20 = exists20 && rc.senseMapInfo(l20).getPaint().isAlly() ? 1 : 2;
+            cost20 = exists20 && staticRC.senseMapInfo(l20).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l20.x][l20.y] = MapData.Passable;
          }
          else
@@ -768,15 +768,15 @@ public class BFS_7x7
       }
 
       l21 = getLocationFromIndex(21, start);
-      boolean otm21 = rc.onTheMap(l21);
+      boolean otm21 = staticRC.onTheMap(l21);
       if(otm21)
       {
-         if(rc.sensePassability(l21) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l21)))
+         if(staticRC.sensePassability(l21) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l21)))
          {
             exists21 = true;
             dist21 = 1000000;
             h21 = l21.distanceSquaredTo(destination);
-            cost21 = exists21 && rc.senseMapInfo(l21).getPaint().isAlly() ? 1 : 2;
+            cost21 = exists21 && staticRC.senseMapInfo(l21).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l21.x][l21.y] = MapData.Passable;
          }
          else
@@ -787,15 +787,15 @@ public class BFS_7x7
       }
 
       l22 = getLocationFromIndex(22, start);
-      boolean otm22 = rc.onTheMap(l22);
+      boolean otm22 = staticRC.onTheMap(l22);
       if(otm22)
       {
-         if(rc.sensePassability(l22) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l22)))
+         if(staticRC.sensePassability(l22) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l22)))
          {
             exists22 = true;
             dist22 = 1000000;
             h22 = l22.distanceSquaredTo(destination);
-            cost22 = exists22 && rc.senseMapInfo(l22).getPaint().isAlly() ? 1 : 2;
+            cost22 = exists22 && staticRC.senseMapInfo(l22).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l22.x][l22.y] = MapData.Passable;
          }
          else
@@ -806,15 +806,15 @@ public class BFS_7x7
       }
 
       l23 = getLocationFromIndex(23, start);
-      boolean otm23 = rc.onTheMap(l23);
+      boolean otm23 = staticRC.onTheMap(l23);
       if(otm23)
       {
-         if(rc.sensePassability(l23) && !rc.canSenseRobotAtLocation(l23))
+         if(staticRC.sensePassability(l23) && !staticRC.canSenseRobotAtLocation(l23))
          {
             exists23 = true;
             dist23 = 1000000;
             h23 = l23.distanceSquaredTo(destination);
-            cost23 = exists23 && rc.senseMapInfo(l23).getPaint().isAlly() ? 1 : 2;
+            cost23 = exists23 && staticRC.senseMapInfo(l23).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l23.x][l23.y] = MapData.Passable;
          }
          else
@@ -831,15 +831,15 @@ public class BFS_7x7
       cost24 = 0;
 
       l25 = getLocationFromIndex(25, start);
-      boolean otm25 = rc.onTheMap(l25);
+      boolean otm25 = staticRC.onTheMap(l25);
       if(otm25)
       {
-         if(rc.sensePassability(l25) && !rc.canSenseRobotAtLocation(l25))
+         if(staticRC.sensePassability(l25) && !staticRC.canSenseRobotAtLocation(l25))
          {
             exists25 = true;
             dist25 = 1000000;
             h25 = l25.distanceSquaredTo(destination);
-            cost25 = exists25 && rc.senseMapInfo(l25).getPaint().isAlly() ? 1 : 2;
+            cost25 = exists25 && staticRC.senseMapInfo(l25).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l25.x][l25.y] = MapData.Passable;
          }
          else
@@ -850,15 +850,15 @@ public class BFS_7x7
       }
 
       l26 = getLocationFromIndex(26, start);
-      boolean otm26 = rc.onTheMap(l26);
+      boolean otm26 = staticRC.onTheMap(l26);
       if(otm26)
       {
-         if(rc.sensePassability(l26) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l26)))
+         if(staticRC.sensePassability(l26) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l26)))
          {
             exists26 = true;
             dist26 = 1000000;
             h26 = l26.distanceSquaredTo(destination);
-            cost26 = exists26 && rc.senseMapInfo(l26).getPaint().isAlly() ? 1 : 2;
+            cost26 = exists26 && staticRC.senseMapInfo(l26).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l26.x][l26.y] = MapData.Passable;
          }
          else
@@ -869,15 +869,15 @@ public class BFS_7x7
       }
 
       l27 = getLocationFromIndex(27, start);
-      boolean otm27 = rc.onTheMap(l27);
+      boolean otm27 = staticRC.onTheMap(l27);
       if(otm27)
       {
-         if(rc.sensePassability(l27) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l27)))
+         if(staticRC.sensePassability(l27) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l27)))
          {
             exists27 = true;
             dist27 = 1000000;
             h27 = l27.distanceSquaredTo(destination);
-            cost27 = exists27 && rc.senseMapInfo(l27).getPaint().isAlly() ? 1 : 2;
+            cost27 = exists27 && staticRC.senseMapInfo(l27).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l27.x][l27.y] = MapData.Passable;
          }
          else
@@ -888,15 +888,15 @@ public class BFS_7x7
       }
 
       l28 = getLocationFromIndex(28, start);
-      boolean otm28 = rc.onTheMap(l28);
+      boolean otm28 = staticRC.onTheMap(l28);
       if(otm28)
       {
-         if(rc.sensePassability(l28) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l28)))
+         if(staticRC.sensePassability(l28) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l28)))
          {
             exists28 = true;
             dist28 = 1000000;
             h28 = l28.distanceSquaredTo(destination);
-            cost28 = exists28 && rc.senseMapInfo(l28).getPaint().isAlly() ? 1 : 2;
+            cost28 = exists28 && staticRC.senseMapInfo(l28).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l28.x][l28.y] = MapData.Passable;
          }
          else
@@ -907,15 +907,15 @@ public class BFS_7x7
       }
 
       l29 = getLocationFromIndex(29, start);
-      boolean otm29 = rc.onTheMap(l29);
+      boolean otm29 = staticRC.onTheMap(l29);
       if(otm29)
       {
-         if(rc.sensePassability(l29) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l29)))
+         if(staticRC.sensePassability(l29) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l29)))
          {
             exists29 = true;
             dist29 = 1000000;
             h29 = l29.distanceSquaredTo(destination);
-            cost29 = exists29 && rc.senseMapInfo(l29).getPaint().isAlly() ? 1 : 2;
+            cost29 = exists29 && staticRC.senseMapInfo(l29).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l29.x][l29.y] = MapData.Passable;
          }
          else
@@ -926,15 +926,15 @@ public class BFS_7x7
       }
 
       l30 = getLocationFromIndex(30, start);
-      boolean otm30 = rc.onTheMap(l30);
+      boolean otm30 = staticRC.onTheMap(l30);
       if(otm30)
       {
-         if(rc.sensePassability(l30) && !rc.canSenseRobotAtLocation(l30))
+         if(staticRC.sensePassability(l30) && !staticRC.canSenseRobotAtLocation(l30))
          {
             exists30 = true;
             dist30 = 1000000;
             h30 = l30.distanceSquaredTo(destination);
-            cost30 = exists30 && rc.senseMapInfo(l30).getPaint().isAlly() ? 1 : 2;
+            cost30 = exists30 && staticRC.senseMapInfo(l30).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l30.x][l30.y] = MapData.Passable;
          }
          else
@@ -945,15 +945,15 @@ public class BFS_7x7
       }
 
       l31 = getLocationFromIndex(31, start);
-      boolean otm31 = rc.onTheMap(l31);
+      boolean otm31 = staticRC.onTheMap(l31);
       if(otm31)
       {
-         if(rc.sensePassability(l31) && !rc.canSenseRobotAtLocation(l31))
+         if(staticRC.sensePassability(l31) && !staticRC.canSenseRobotAtLocation(l31))
          {
             exists31 = true;
             dist31 = 1000000;
             h31 = l31.distanceSquaredTo(destination);
-            cost31 = exists31 && rc.senseMapInfo(l31).getPaint().isAlly() ? 1 : 2;
+            cost31 = exists31 && staticRC.senseMapInfo(l31).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l31.x][l31.y] = MapData.Passable;
          }
          else
@@ -964,15 +964,15 @@ public class BFS_7x7
       }
 
       l32 = getLocationFromIndex(32, start);
-      boolean otm32 = rc.onTheMap(l32);
+      boolean otm32 = staticRC.onTheMap(l32);
       if(otm32)
       {
-         if(rc.sensePassability(l32) && !rc.canSenseRobotAtLocation(l32))
+         if(staticRC.sensePassability(l32) && !staticRC.canSenseRobotAtLocation(l32))
          {
             exists32 = true;
             dist32 = 1000000;
             h32 = l32.distanceSquaredTo(destination);
-            cost32 = exists32 && rc.senseMapInfo(l32).getPaint().isAlly() ? 1 : 2;
+            cost32 = exists32 && staticRC.senseMapInfo(l32).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l32.x][l32.y] = MapData.Passable;
          }
          else
@@ -983,15 +983,15 @@ public class BFS_7x7
       }
 
       l33 = getLocationFromIndex(33, start);
-      boolean otm33 = rc.onTheMap(l33);
+      boolean otm33 = staticRC.onTheMap(l33);
       if(otm33)
       {
-         if(rc.sensePassability(l33) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l33)))
+         if(staticRC.sensePassability(l33) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l33)))
          {
             exists33 = true;
             dist33 = 1000000;
             h33 = l33.distanceSquaredTo(destination);
-            cost33 = exists33 && rc.senseMapInfo(l33).getPaint().isAlly() ? 1 : 2;
+            cost33 = exists33 && staticRC.senseMapInfo(l33).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l33.x][l33.y] = MapData.Passable;
          }
          else
@@ -1002,15 +1002,15 @@ public class BFS_7x7
       }
 
       l34 = getLocationFromIndex(34, start);
-      boolean otm34 = rc.onTheMap(l34);
+      boolean otm34 = staticRC.onTheMap(l34);
       if(otm34)
       {
-         if(rc.sensePassability(l34) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l34)))
+         if(staticRC.sensePassability(l34) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l34)))
          {
             exists34 = true;
             dist34 = 1000000;
             h34 = l34.distanceSquaredTo(destination);
-            cost34 = exists34 && rc.senseMapInfo(l34).getPaint().isAlly() ? 1 : 2;
+            cost34 = exists34 && staticRC.senseMapInfo(l34).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l34.x][l34.y] = MapData.Passable;
          }
          else
@@ -1021,15 +1021,15 @@ public class BFS_7x7
       }
 
       l35 = getLocationFromIndex(35, start);
-      boolean otm35 = rc.onTheMap(l35);
+      boolean otm35 = staticRC.onTheMap(l35);
       if(otm35)
       {
-         if(rc.sensePassability(l35) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l35)))
+         if(staticRC.sensePassability(l35) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l35)))
          {
             exists35 = true;
             dist35 = 1000000;
             h35 = l35.distanceSquaredTo(destination);
-            cost35 = exists35 && rc.senseMapInfo(l35).getPaint().isAlly() ? 1 : 2;
+            cost35 = exists35 && staticRC.senseMapInfo(l35).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l35.x][l35.y] = MapData.Passable;
          }
          else
@@ -1040,15 +1040,15 @@ public class BFS_7x7
       }
 
       l36 = getLocationFromIndex(36, start);
-      boolean otm36 = rc.onTheMap(l36);
+      boolean otm36 = staticRC.onTheMap(l36);
       if(otm36)
       {
-         if(rc.sensePassability(l36) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l36)))
+         if(staticRC.sensePassability(l36) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l36)))
          {
             exists36 = true;
             dist36 = 1000000;
             h36 = l36.distanceSquaredTo(destination);
-            cost36 = exists36 && rc.senseMapInfo(l36).getPaint().isAlly() ? 1 : 2;
+            cost36 = exists36 && staticRC.senseMapInfo(l36).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l36.x][l36.y] = MapData.Passable;
          }
          else
@@ -1059,15 +1059,15 @@ public class BFS_7x7
       }
 
       l37 = getLocationFromIndex(37, start);
-      boolean otm37 = rc.onTheMap(l37);
+      boolean otm37 = staticRC.onTheMap(l37);
       if(otm37)
       {
-         if(rc.sensePassability(l37) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l37)))
+         if(staticRC.sensePassability(l37) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l37)))
          {
             exists37 = true;
             dist37 = 1000000;
             h37 = l37.distanceSquaredTo(destination);
-            cost37 = exists37 && rc.senseMapInfo(l37).getPaint().isAlly() ? 1 : 2;
+            cost37 = exists37 && staticRC.senseMapInfo(l37).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l37.x][l37.y] = MapData.Passable;
          }
          else
@@ -1078,15 +1078,15 @@ public class BFS_7x7
       }
 
       l38 = getLocationFromIndex(38, start);
-      boolean otm38 = rc.onTheMap(l38);
+      boolean otm38 = staticRC.onTheMap(l38);
       if(otm38)
       {
-         if(rc.sensePassability(l38) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l38)))
+         if(staticRC.sensePassability(l38) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l38)))
          {
             exists38 = true;
             dist38 = 1000000;
             h38 = l38.distanceSquaredTo(destination);
-            cost38 = exists38 && rc.senseMapInfo(l38).getPaint().isAlly() ? 1 : 2;
+            cost38 = exists38 && staticRC.senseMapInfo(l38).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l38.x][l38.y] = MapData.Passable;
          }
          else
@@ -1097,15 +1097,15 @@ public class BFS_7x7
       }
 
       l39 = getLocationFromIndex(39, start);
-      boolean otm39 = rc.onTheMap(l39);
+      boolean otm39 = staticRC.onTheMap(l39);
       if(otm39)
       {
-         if(rc.sensePassability(l39) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l39)))
+         if(staticRC.sensePassability(l39) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l39)))
          {
             exists39 = true;
             dist39 = 1000000;
             h39 = l39.distanceSquaredTo(destination);
-            cost39 = exists39 && rc.senseMapInfo(l39).getPaint().isAlly() ? 1 : 2;
+            cost39 = exists39 && staticRC.senseMapInfo(l39).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l39.x][l39.y] = MapData.Passable;
          }
          else
@@ -1116,15 +1116,15 @@ public class BFS_7x7
       }
 
       l40 = getLocationFromIndex(40, start);
-      boolean otm40 = rc.onTheMap(l40);
+      boolean otm40 = staticRC.onTheMap(l40);
       if(otm40)
       {
-         if(rc.sensePassability(l40) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l40)))
+         if(staticRC.sensePassability(l40) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l40)))
          {
             exists40 = true;
             dist40 = 1000000;
             h40 = l40.distanceSquaredTo(destination);
-            cost40 = exists40 && rc.senseMapInfo(l40).getPaint().isAlly() ? 1 : 2;
+            cost40 = exists40 && staticRC.senseMapInfo(l40).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l40.x][l40.y] = MapData.Passable;
          }
          else
@@ -1135,15 +1135,15 @@ public class BFS_7x7
       }
 
       l41 = getLocationFromIndex(41, start);
-      boolean otm41 = rc.onTheMap(l41);
+      boolean otm41 = staticRC.onTheMap(l41);
       if(otm41)
       {
-         if(rc.sensePassability(l41) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l41)))
+         if(staticRC.sensePassability(l41) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l41)))
          {
             exists41 = true;
             dist41 = 1000000;
             h41 = l41.distanceSquaredTo(destination);
-            cost41 = exists41 && rc.senseMapInfo(l41).getPaint().isAlly() ? 1 : 2;
+            cost41 = exists41 && staticRC.senseMapInfo(l41).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l41.x][l41.y] = MapData.Passable;
          }
          else
@@ -1154,15 +1154,15 @@ public class BFS_7x7
       }
 
       l42 = getLocationFromIndex(42, start);
-      boolean otm42 = rc.onTheMap(l42);
+      boolean otm42 = staticRC.onTheMap(l42);
       if(otm42)
       {
-         if(rc.sensePassability(l42) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l42)))
+         if(staticRC.sensePassability(l42) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l42)))
          {
             exists42 = true;
             dist42 = 1000000;
             h42 = l42.distanceSquaredTo(destination);
-            cost42 = exists42 && rc.senseMapInfo(l42).getPaint().isAlly() ? 1 : 2;
+            cost42 = exists42 && staticRC.senseMapInfo(l42).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l42.x][l42.y] = MapData.Passable;
          }
          else
@@ -1173,15 +1173,15 @@ public class BFS_7x7
       }
 
       l43 = getLocationFromIndex(43, start);
-      boolean otm43 = rc.onTheMap(l43);
+      boolean otm43 = staticRC.onTheMap(l43);
       if(otm43)
       {
-         if(rc.sensePassability(l43) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l43)))
+         if(staticRC.sensePassability(l43) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l43)))
          {
             exists43 = true;
             dist43 = 1000000;
             h43 = l43.distanceSquaredTo(destination);
-            cost43 = exists43 && rc.senseMapInfo(l43).getPaint().isAlly() ? 1 : 2;
+            cost43 = exists43 && staticRC.senseMapInfo(l43).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l43.x][l43.y] = MapData.Passable;
          }
          else
@@ -1192,15 +1192,15 @@ public class BFS_7x7
       }
 
       l44 = getLocationFromIndex(44, start);
-      boolean otm44 = rc.onTheMap(l44);
+      boolean otm44 = staticRC.onTheMap(l44);
       if(otm44)
       {
-         if(rc.sensePassability(l44) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l44)))
+         if(staticRC.sensePassability(l44) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l44)))
          {
             exists44 = true;
             dist44 = 1000000;
             h44 = l44.distanceSquaredTo(destination);
-            cost44 = exists44 && rc.senseMapInfo(l44).getPaint().isAlly() ? 1 : 2;
+            cost44 = exists44 && staticRC.senseMapInfo(l44).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l44.x][l44.y] = MapData.Passable;
          }
          else
@@ -1211,15 +1211,15 @@ public class BFS_7x7
       }
 
       l45 = getLocationFromIndex(45, start);
-      boolean otm45 = rc.onTheMap(l45);
+      boolean otm45 = staticRC.onTheMap(l45);
       if(otm45)
       {
-         if(rc.sensePassability(l45) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l45)))
+         if(staticRC.sensePassability(l45) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l45)))
          {
             exists45 = true;
             dist45 = 1000000;
             h45 = l45.distanceSquaredTo(destination);
-            cost45 = exists45 && rc.senseMapInfo(l45).getPaint().isAlly() ? 1 : 2;
+            cost45 = exists45 && staticRC.senseMapInfo(l45).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l45.x][l45.y] = MapData.Passable;
          }
          else
@@ -1230,15 +1230,15 @@ public class BFS_7x7
       }
 
       l46 = getLocationFromIndex(46, start);
-      boolean otm46 = rc.onTheMap(l46);
+      boolean otm46 = staticRC.onTheMap(l46);
       if(otm46)
       {
-         if(rc.sensePassability(l46) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l46)))
+         if(staticRC.sensePassability(l46) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l46)))
          {
             exists46 = true;
             dist46 = 1000000;
             h46 = l46.distanceSquaredTo(destination);
-            cost46 = exists46 && rc.senseMapInfo(l46).getPaint().isAlly() ? 1 : 2;
+            cost46 = exists46 && staticRC.senseMapInfo(l46).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l46.x][l46.y] = MapData.Passable;
          }
          else
@@ -1249,15 +1249,15 @@ public class BFS_7x7
       }
 
       l47 = getLocationFromIndex(47, start);
-      boolean otm47 = rc.onTheMap(l47);
+      boolean otm47 = staticRC.onTheMap(l47);
       if(otm47)
       {
-         if(rc.sensePassability(l47) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l47)))
+         if(staticRC.sensePassability(l47) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l47)))
          {
             exists47 = true;
             dist47 = 1000000;
             h47 = l47.distanceSquaredTo(destination);
-            cost47 = exists47 && rc.senseMapInfo(l47).getPaint().isAlly() ? 1 : 2;
+            cost47 = exists47 && staticRC.senseMapInfo(l47).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l47.x][l47.y] = MapData.Passable;
          }
          else
@@ -1268,15 +1268,15 @@ public class BFS_7x7
       }
 
       l48 = getLocationFromIndex(48, start);
-      boolean otm48 = rc.onTheMap(l48);
+      boolean otm48 = staticRC.onTheMap(l48);
       if(otm48)
       {
-         if(rc.sensePassability(l48) && (rng.nextFloat() > 0.7 || !rc.canSenseRobotAtLocation(l48)))
+         if(staticRC.sensePassability(l48) && (rng.nextFloat() > 0.7 || !staticRC.canSenseRobotAtLocation(l48)))
          {
             exists48 = true;
             dist48 = 1000000;
             h48 = l48.distanceSquaredTo(destination);
-            cost48 = exists48 && rc.senseMapInfo(l48).getPaint().isAlly() ? 1 : 2;
+            cost48 = exists48 && staticRC.senseMapInfo(l48).getPaint().isAlly() ? 1 : 2;
             mapKnowledge[l48.x][l48.y] = MapData.Passable;
          }
          else

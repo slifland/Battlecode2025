@@ -68,15 +68,15 @@ public class Communication
     static final int maxRuinsToSend = GameConstants.MAX_MESSAGES_SENT_TOWER; //20
 
     //Called only once, when a new robot/tower is born
-    public static void setup(RobotController rc) throws GameActionException
+    public static void setup() throws GameActionException
     {
-        Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];
+        Communication.allMemory = new Ruin[staticRC.getMapWidth()][staticRC.getMapHeight()];
 
-        if(rc.getType().isTowerType())
+        if(staticRC.getType().isTowerType())
         {
-            rc.broadcastMessage(0b11);
+            staticRC.broadcastMessage(0b11);
 
-            Ruin r = new Ruin(rc.getLocation(), 1, isPaintTower(rc.getType()));
+            Ruin r = new Ruin(staticRC.getLocation(), 1, isPaintTower(staticRC.getType()));
             updateRuinsMemory(r);
             broadcastRuinQueue.add(r);
         }
@@ -85,9 +85,9 @@ public class Communication
     /*
         Process all incoming messages for robots
     */
-    public static void processMessagesRobot(RobotController rc)
+    public static void processMessagesRobot()
     {
-        for(Message m : rc.readMessages(rc.getRoundNum() - 1))
+        for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
         {
             switch (m.getBytes() & 0b11)
             {
@@ -100,9 +100,9 @@ public class Communication
     /*
         Process all incoming messages for towers
     */
-    public static void processMessagesTower(RobotController rc)
+    public static void processMessagesTower()
     {
-        for(Message m : rc.readMessages(rc.getRoundNum() - 1))
+        for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
         {
             switch (m.getBytes() & 0b11)
             {
@@ -128,12 +128,12 @@ public class Communication
         }
     }
 
-    public static void sendMessagesTower(RobotController rc) throws GameActionException
+    public static void sendMessagesTower() throws GameActionException
     {
-        sendRuinLocationsToTroops(rc);
+        sendRuinLocationsToTroops();
     }
 
-    public static void sendMessagesRobot(RobotController rc) throws GameActionException
+    public static void sendMessagesRobot() throws GameActionException
     {
         //Find available towers to broadcast to, select one randomly
 
@@ -141,20 +141,20 @@ public class Communication
         MapLocation[] tower = new MapLocation[30];
         for(RobotInfo robot : allyRobots)
         {
-            if(robot.getType().isTowerType() && rc.canSendMessage(robot.location))
+            if(robot.getType().isTowerType() && staticRC.canSendMessage(robot.location))
             {
                 tower[i++] = robot.getLocation();
             }
         }
         if(i == 0) return;
 
-        sendRuinLocationsToTower(rc, tower[rng.nextInt(0, i)]);
+        sendRuinLocationsToTower(tower[rng.nextInt(0, i)]);
     }
 
     /*
         Scan for nearby ruin locations and update ruinsMemory as necessary
      */
-    public static void scanForRuins(RobotController rc) throws GameActionException
+    public static void scanForRuins() throws GameActionException
     {
         Mopper.nearbyRuin = null;
         Soldier.seenEnemyTower = null;
@@ -165,7 +165,7 @@ public class Communication
             int status = 0;
             boolean isPaintTower = false;
 
-            RobotInfo ruinInfo = rc.senseRobotAtLocation(ruinLoc);
+            RobotInfo ruinInfo = staticRC.senseRobotAtLocation(ruinLoc);
 
             /*
                 If the ruin is unclaimed, ruinInfo will be null
@@ -175,7 +175,7 @@ public class Communication
             if(ruinInfo != null)
             {
                 //get the team information
-                if(ruinInfo.team == rc.getTeam())
+                if(ruinInfo.team == staticRC.getTeam())
                     status = 1;
                 else {
                     status = 2;
@@ -201,11 +201,11 @@ public class Communication
             Sends one Ruin each time this method is called
         This method should be called by robots and not towers
     */
-    public static void sendRuinLocationsToTower(RobotController rc, MapLocation tower) throws GameActionException
+    public static void sendRuinLocationsToTower(MapLocation tower) throws GameActionException
     {
         if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) {
-            if(knownSymmetry != Symmetry.Unknown && rc.canSendMessage(tower)) {
-                rc.sendMessage(tower, symmetriesToMessage(symmetries));
+            if(knownSymmetry != Symmetry.Unknown && staticRC.canSendMessage(tower)) {
+                staticRC.sendMessage(tower, symmetriesToMessage(symmetries));
             }
             return;
         }
@@ -213,28 +213,28 @@ public class Communication
         if(sendQueue.isEmpty())
             fillSendQueue();
 
-        if(rc.canSendMessage(tower) && !sendQueue.isEmpty())
+        if(staticRC.canSendMessage(tower) && !sendQueue.isEmpty())
         {
-            rc.sendMessage(tower, ruinToMessage(sendQueue.pop()));
+            staticRC.sendMessage(tower, ruinToMessage(sendQueue.pop()));
         }
     }
 
     /*
     Broadcasts information the tower has to nearby towers
      */
-    public static void broadcastMessages(RobotController rc) throws GameActionException
+    public static void broadcastMessages() throws GameActionException
     {
-        if(rc.canBroadcastMessage() && knownSymmetry != Symmetry.Unknown)
+        if(staticRC.canBroadcastMessage() && knownSymmetry != Symmetry.Unknown)
         {
-            rc.broadcastMessage(symmetriesToMessage(symmetries));
+            staticRC.broadcastMessage(symmetriesToMessage(symmetries));
         }
 
         Ruin r;
-        while(rc.canBroadcastMessage() && !broadcastRuinQueue.isEmpty())
+        while(staticRC.canBroadcastMessage() && !broadcastRuinQueue.isEmpty())
         {
             r = broadcastRuinQueue.pop();
             if(validateRuin(r))
-                rc.broadcastMessage(ruinToMessage(r));
+                staticRC.broadcastMessage(ruinToMessage(r));
         }
     }
 
@@ -255,7 +255,7 @@ public class Communication
             Sends as many Ruins to as many robots as possible each time this method is called (up to 20 messages total)
         This method should be called by towers and not robots
     */
-    public static void sendRuinLocationsToTroops(RobotController rc) throws GameActionException
+    public static void sendRuinLocationsToTroops() throws GameActionException
     {
         if(allyRobots.length == 0 || (unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty())) return;
 
@@ -268,11 +268,11 @@ public class Communication
         int first = i;
         do
         {
-            if(rc.canSendMessage(allyRobots[i].getLocation()))
+            if(staticRC.canSendMessage(allyRobots[i].getLocation()))
             {
-                while(!sendQueue.isEmpty() && rc.canSendMessage(allyRobots[i].location))
+                while(!sendQueue.isEmpty() && staticRC.canSendMessage(allyRobots[i].location))
                 {
-                    rc.sendMessage(allyRobots[i].location, ruinToMessage(sendQueue.pop()));
+                    staticRC.sendMessage(allyRobots[i].location, ruinToMessage(sendQueue.pop()));
                     if(++messagesSent >= maxRuinsToSend) return;
                 }
             }

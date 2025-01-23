@@ -5,33 +5,34 @@ import battlecode.common.*;
 import static Version12.RobotPlayer.nearbyTiles;
 
 import static Version12.Splasher.nearestUnfilledRuin;
+import static Version12.RobotPlayer.staticRC;
 
 public class splasherUtil {
     //static final int 3 = 3;
-    public static MapLocation bestAttackBinary(RobotController rc) {
+    public static MapLocation bestAttackBinary() {
         return null;
 
     }
 
     //used to see if we can run cheapBestAttack
-    public static boolean farFromEdge(RobotController rc, MapLocation loc) {
-        //if(!loc.equals(rc.getLocation()) && !farFromEdge(rc, rc.getLocation())) return true;
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth()- 1;
+    public static boolean farFromEdge(MapLocation loc) {
+        //if(!loc.equals(staticRC.getLocation()) && !farFromEdge( staticRC.getLocation())) return true;
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth()- 1;
         return loc.x >= 3 && loc.y >= 3 && loc.x <= mapWidth - 3 && loc.y <= mapHeight - 3;
     }
     //used to see if we can run bestAttack
-    public static boolean farFromEdgeNonMovement(RobotController rc, MapLocation loc) {
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth()- 1;
+    public static boolean farFromEdgeNonMovement(MapLocation loc) {
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth()- 1;
         return loc.x >= 4 && loc.y >= 4 && loc.x <= mapWidth - 4 && loc.y <= mapHeight - 4;
     }
     //returns a basic location to attack - used when very close to edge
-    public static MapLocation basicBestAttack(RobotController rc) {
+    public static MapLocation basicBestAttack() {
         MapInfo bestTile = null;
         int bestDist = Integer.MAX_VALUE;
         boolean isEnemyTile = false;
-        MapLocation curLoc = rc.getLocation();
+        MapLocation curLoc = staticRC.getLocation();
         for(MapInfo tile : nearbyTiles) {
             PaintType paint = tile.getPaint();
             if(paint.isEnemy() && !isEnemyTile) {
@@ -53,8 +54,8 @@ public class splasherUtil {
 
     //returns the best location to attack based on how much impact the attack will have
     //returns null if the best attack has less than or equal impact to the minScore
-    public static MapLocation bestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdgeNonMovement(rc, rc.getLocation())) return cheapBestAttack(rc, fightingTower, minScore);
+    public static MapLocation bestAttack(boolean fightingTower, int minScore) throws GameActionException {
+        if(!farFromEdgeNonMovement( staticRC.getLocation())) return cheapBestAttack( fightingTower, minScore);
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;
         int[] localSquares = new int[81];
@@ -2450,26 +2451,26 @@ public class splasherUtil {
         else offSetX = 2;
         offSetY = (highestIndex % 9) - 4;
         //System.out.println("Price: " + (price - Clock.getBytecodesLeft()));
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
+        return new MapLocation(staticRC.getLocation().x + offSetX, staticRC.getLocation().y + offSetY);
     }
 
     //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
-    public static MapLocation cheapBestAttack(RobotController rc, boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdge(rc, rc.getLocation())) return basicBestAttack(rc);
+    public static MapLocation cheapBestAttack(boolean fightingTower, int minScore) throws GameActionException {
+        if(!farFromEdge( staticRC.getLocation())) return basicBestAttack();
         int price = Clock.getBytecodesLeft();
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;
         int[] localSquares = new int[45];
         int[] potentialAttackSquares = new int[45];
         int index = 0;
-        for(MapInfo tile : rc.senseNearbyMapInfos(13)) {
+        for(MapInfo tile : staticRC.senseNearbyMapInfos(13)) {
             if(index == 0 || index == 4 || index == 5 || index == 11 || index == 33 || index == 39 || index == 40 || index == 44) {
                 index++;
                 continue;
             }
             PaintType paint = tile.getPaint();
             if(tile.hasRuin()) {
-                if(fightingTower && rc.senseRobotAtLocation(tile.getMapLocation()) != null && rc.senseRobotAtLocation(tile.getMapLocation()) != null && rc.senseRobotAtLocation(tile.getMapLocation()).team == rc.getTeam().opponent()) {
+                if(fightingTower && staticRC.senseRobotAtLocation(tile.getMapLocation()) != null && staticRC.senseRobotAtLocation(tile.getMapLocation()) != null && staticRC.senseRobotAtLocation(tile.getMapLocation()).team == staticRC.getTeam().opponent()) {
                     paint = PaintType.ENEMY_PRIMARY;
                 }
                 else {
@@ -2675,6 +2676,6 @@ public class splasherUtil {
         else offSetX = 1;
         offSetY = (highestIndex % 7) - 1;
         //System.out.println("Cheap Price: " + (price - Clock.getBytecodesLeft()));
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
+        return new MapLocation(staticRC.getLocation().x + offSetX, staticRC.getLocation().y + offSetY);
     }
 }

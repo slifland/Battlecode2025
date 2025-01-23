@@ -30,6 +30,7 @@ public class RobotPlayer {
     static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     static int mapSize = 0;
     static UnitType toBuild = null;
+    public static RobotController staticRC;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -72,45 +73,38 @@ public class RobotPlayer {
         Direction.NORTHWEST,
     };
 
-    /**
-     * run() is the method that is called when a robot is instantiated in the Battlecode world.
-     * It is like the main function for your robot. If this method returns, the robot dies!
-     *
-     * @param rc  The RobotController object. You use it to perform actions from this robot, and to get
-     *            information on its current status. Essentially your portal to interacting with the world.
-     **/
     @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
-
-        mapSize = rc.getMapHeight() * rc.getMapWidth();
+        staticRC = rc;
+        mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
-        Pathfinding.mapKnowledge = new Pathfinding.MapData[rc.getMapWidth()][rc.getMapHeight()];
+        Pathfinding.mapKnowledge = new Pathfinding.MapData[staticRC.getMapWidth()][staticRC.getMapHeight()];
 
-        Communication.setup(rc);
+        Communication.setup();
 
-        //sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
-        //Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
+        //sectors = new Sector[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
+        //Sector.hasTraveled = new boolean[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
 
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
-
+            staticRC = rc;
             try {
-                if(rc.getRoundNum() == 1 || turnCount == 1) {
-                    map = new int[rc.getMapWidth()][rc.getMapHeight()];
+                if(staticRC.getRoundNum() == 1 || turnCount == 1) {
+                    map = new int[staticRC.getMapWidth()][staticRC.getMapHeight()];
                 }
                 /*
                     Complete all tasks which need to be completed in the beginning of the round
                 */
-                completeBeginningTasks(rc);
-                switch (rc.getType()){
-                    case SOLDIER: Soldier.runSoldier(rc); break;
-                    case MOPPER: Mopper.runMopper(rc); break;
-                    case SPLASHER: Splasher.runSplasher(rc); break;
-                    default: runTower(rc); break;
+                completeBeginningTasks();
+                switch (staticRC.getType()){
+                    case SOLDIER: Soldier.runSoldier(); break;
+                    case MOPPER: Mopper.runMopper(); break;
+                    case SPLASHER: Splasher.runSplasher(); break;
+                    default: runTower(); break;
                     }
-                bytecodeSensitiveOperations(rc);
-                //rc.setIndicatorString(String.valueOf(knownSymmetry));
+                bytecodeSensitiveOperations();
+                //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
@@ -125,15 +119,15 @@ public class RobotPlayer {
             }
         }
     }
-    public static void runTower(RobotController rc) throws GameActionException{
+    public static void runTower() throws GameActionException{
         //We're a tower so might as well try and complete patterns with our extra bytecode
-        Utilities.attemptCompletePatterns(rc);
-        if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
-            if(rc.getMoney() > 2000 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3)
-                rc.upgradeTower(rc.getLocation());
+        Utilities.attemptCompletePatterns();
+        if(staticRC.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(staticRC.getMoney() > 2000 && staticRC.canUpgradeTower(staticRC.getLocation()) && staticRC.getNumberTowers() > 3)
+                staticRC.upgradeTower(staticRC.getLocation());
         }
-        else if(rc.getMoney() > 2500 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3) {
-            rc.upgradeTower(rc.getLocation());
+        else if(staticRC.getMoney() > 2500 && staticRC.canUpgradeTower(staticRC.getLocation()) && staticRC.getNumberTowers() > 3) {
+            staticRC.upgradeTower(staticRC.getLocation());
         }
 //        if(turnCount % 75 == 0) {
 //            totalBuilt = 0;
@@ -141,12 +135,12 @@ public class RobotPlayer {
 //            moppers = 0;
 //            soldiers = 0;
 //        }
-        MapLocation nextLoc = SpawnMicro.bestSpawn(rc);
+        MapLocation nextLoc = SpawnMicro.bestSpawn();
         if(toBuild == null || turnCount % 10 == 0) {
-            toBuild = chooseBuild(rc);
+            toBuild = chooseBuild();
         }
-        if(nextLoc != null && toBuild != null && rc.canBuildRobot(toBuild, nextLoc) && (rc.getMoney() > 1200 || totalBuilt < (rc.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
-            rc.buildRobot(toBuild, nextLoc);
+        if(nextLoc != null && toBuild != null && staticRC.canBuildRobot(toBuild, nextLoc) && (staticRC.getMoney() > 1200 || totalBuilt < (staticRC.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
+            staticRC.buildRobot(toBuild, nextLoc);
             switch(toBuild) {
                 case SOLDIER: soldiers++; break;
                 case MOPPER: moppers++; break;
@@ -158,56 +152,56 @@ public class RobotPlayer {
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
         for(RobotInfo robot : enemyRobots) {
-            if(robot.health < minHealth && rc.canAttack(robot.getLocation())) {
+            if(robot.health < minHealth && staticRC.canAttack(robot.getLocation())) {
                 r = robot;
                 minHealth = robot.health;
             }
         }
-        if(r != null && rc.canAttack(r.getLocation())) {
-            rc.attack(r.getLocation());
+        if(r != null && staticRC.canAttack(r.getLocation())) {
+            staticRC.attack(r.getLocation());
         }
-        if(rc.canAttack(null)) rc.attack(null);
+        if(staticRC.canAttack(null)) staticRC.attack(null);
     }
 
-    static void bytecodeSensitiveOperations(RobotController rc) throws GameActionException
+    static void bytecodeSensitiveOperations() throws GameActionException
     {
         if(Clock.getBytecodesLeft() > 3000)
         {
-            for(MapInfo info : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
-                Utilities.attemptCompleteResourcePattern(rc, info.getMapLocation());
+            for(MapInfo info : staticRC.senseNearbyMapInfos(staticRC.getType().actionRadiusSquared)) {
+                Utilities.attemptCompleteResourcePattern( info.getMapLocation());
             }
         }
     }
 
-    static void completeBeginningTasks(RobotController rc) throws GameActionException
+    static void completeBeginningTasks() throws GameActionException
     {
 
-        nearbyTiles = rc.senseNearbyMapInfos();
-        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
-        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        nearbyRuins = rc.senseNearbyRuins(-1);
+        nearbyTiles = staticRC.senseNearbyMapInfos();
+        allyRobots = staticRC.senseNearbyRobots(-1, staticRC.getTeam());
+        enemyRobots = staticRC.senseNearbyRobots(-1, staticRC.getTeam().opponent());
+        nearbyRuins = staticRC.senseNearbyRuins(-1);
 
-        Utilities.attemptCompleteResourcePattern(rc, rc.getLocation());
+        Utilities.attemptCompleteResourcePattern( staticRC.getLocation());
 
-        if(rc.getType().isTowerType())
+        if(staticRC.getType().isTowerType())
         {
-            Communication.processMessagesTower(rc);
-            Communication.broadcastMessages(rc);
-            Communication.sendMessagesTower(rc);
-            //if(paintAverage1 != null) rc.setIndicatorDot(paintAverage1, 0,0,255);
-            //if(paintAverage2 != null) rc.setIndicatorDot(paintAverage2, 0,255,0);
+            Communication.processMessagesTower();
+            Communication.broadcastMessages();
+            Communication.sendMessagesTower();
+            //if(paintAverage1 != null) staticRC.setIndicatorDot(paintAverage1, 0,0,255);
+            //if(paintAverage2 != null) staticRC.setIndicatorDot(paintAverage2, 0,255,0);
         }
         else
         {
-            if(rc.getRoundNum() % 5 == 0 || turnCount == 1)
+            if(staticRC.getRoundNum() % 5 == 0 || turnCount == 1)
             {
                 //int price = Clock.getBytecodesLeft();
-                Communication.processMessagesRobot(rc);
+                Communication.processMessagesRobot();
                 //System.out.println(price - Clock.getBytecodesLeft());
             }
 
-            Communication.scanForRuins(rc);
-            Communication.sendMessagesRobot(rc);
+            Communication.scanForRuins();
+            Communication.sendMessagesRobot();
         }
     }
 
@@ -217,19 +211,19 @@ public class RobotPlayer {
     //round number
     //if it can see enemy robots
     //map size
-    public static UnitType chooseBuild(RobotController rc) {
-        if(rc.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
+    public static UnitType chooseBuild() {
+        if(staticRC.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
         else if(enemyRobots.length > 1) return UnitType.MOPPER;
 
         //we have a finite total amount of paint, so make sure we use it wisely
-        if(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
-            if(rc.getPaint() < 300) {
-                if(rc.getPaint() >= 200) return UnitType.SOLDIER;
-                if(rc.getPaint() >= 100) return UnitType.MOPPER;
+        if(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(staticRC.getPaint() < 300) {
+                if(staticRC.getPaint() >= 200) return UnitType.SOLDIER;
+                if(staticRC.getPaint() >= 100) return UnitType.MOPPER;
             }
         }
 
-        double[] idealWeights = calculateIdealWeights(rc);
+        double[] idealWeights = calculateIdealWeights();
         int selector = rng.nextInt(100);
         double oddsSoldier = idealWeights[0] * 100;
         double oddsMopper = idealWeights[1] * 100;
@@ -241,7 +235,7 @@ public class RobotPlayer {
     }
 
     //calculates the ideal weights for each robot, given the current situation
-    public static double[] calculateIdealWeights(RobotController rc) {
+    public static double[] calculateIdealWeights() {
         //constants specifically for this method
         int earlyRoundDef = 200;
         //double mapSizeScalar = 1.0 / 200.0;
@@ -253,7 +247,7 @@ public class RobotPlayer {
         int mopperScore;
         int splasherScore;
 
-        if(rc.getRoundNum() < earlyRoundDef) {
+        if(staticRC.getRoundNum() < earlyRoundDef) {
             soldierScore = earlySoldierBonus;
             mopperScore = 1;
             splasherScore = 1;
@@ -277,7 +271,7 @@ public class RobotPlayer {
                 mopperScore += adjustment / 2;
                 soldierScore += adjustment / 4;
             }
-            if(!(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
+            if(!(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
                 splasherScore += 2;
             }
         }

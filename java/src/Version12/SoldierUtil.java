@@ -9,8 +9,8 @@ public class SoldierUtil {
 
     //checks whether we should still "claim" this ruin
     //if there is an obstacle stopping us from completing it, then we should abandon t
-    public static void validateRuinClaim(RobotController rc) throws GameActionException {
-        if (rc.getLocation().distanceSquaredTo(claimedRuin) > 8) {
+    public static void validateRuinClaim() throws GameActionException {
+        if (staticRC.getLocation().distanceSquaredTo(claimedRuin) > 8) {
             return;
         }
 //        for(MapInfo tile : tilesNearRuin) {
@@ -1380,14 +1380,14 @@ public class SoldierUtil {
         }
         return false;
     }
-    public static boolean needsHelp(RobotController rc, MapLocation ruinInput) throws GameActionException
+    public static boolean needsHelp(MapLocation ruinInput) throws GameActionException
     {
         neededToFinish = 0;
         canFinishRuin = false;
         ruin = ruinInput;
-        tilesNearRuin = rc.senseNearbyMapInfos(ruin, 8);
+        tilesNearRuin = staticRC.senseNearbyMapInfos(ruin, 8);
         boolean hasEmpty = false;
-        pattern = Utilities.inferPatternFromExistingSpots(rc, ruin, tilesNearRuin);
+        pattern = Utilities.inferPatternFromExistingSpots(ruin, tilesNearRuin);
         switch(tilesNearRuin.length)
         {
             case 1->
@@ -5041,12 +5041,12 @@ public class SoldierUtil {
                 }
             }
         }
-        if(neededToFinish * 5 < rc.getPaint()) canFinishRuin = true;
+        if(neededToFinish * 5 < staticRC.getPaint()) canFinishRuin = true;
         if(hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))) return true;
-        if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
+        if(staticRC.senseNearbyRobots(ruin, 8, staticRC.getTeam()).length == 0) return true;
         return false;
     }
-    public static void scanNearbyTilesSoldier(RobotController rc) throws GameActionException {
+    public static void scanNearbyTilesSoldier() throws GameActionException {
         int enemyCount = 0;
         int x = 0;
         int y = 0;
@@ -5068,7 +5068,7 @@ public class SoldierUtil {
 //                enemyCount++;
 //            }
 //            PaintType mark = tile.getMark();
-//            int dist = rc.getLocation().distanceSquaredTo(tileLoc);
+//            int dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
 //            if(mark.isAlly()) {
 //                if (!tile.isResourcePatternCenter() && dist < resourcePatternDist) {
 //                    closestUnfilledPatternCenter = tileLoc;
@@ -5077,16 +5077,16 @@ public class SoldierUtil {
 //                if (dist < minDistanceToValidLocation) {
 //                    minDistanceToValidLocation = dist;
 //                }
-//                if (rc.canCompleteResourcePattern(tile.getMapLocation()))
-//                    rc.completeResourcePattern(tile.getMapLocation());
+//                if (staticRC.canCompleteResourcePattern(tile.getMapLocation()))
+//                    staticRC.completeResourcePattern(tile.getMapLocation());
 //            }
 //            else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-//                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc)) {
+//                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
 //                    if(dist < minDistanceToValidLocation) {
 //                        minDistanceToValidLocation = dist;
 //                    }
-//                    if(rc.canMark(tile.getMapLocation())) {
-//                        rc.mark(tile.getMapLocation(), false);
+//                    if(staticRC.canMark(tile.getMapLocation())) {
+//                        staticRC.mark(tile.getMapLocation(), false);
 //                        closestUnfilledPatternCenter = tile.getMapLocation();
 //                    }
 //                }
@@ -5113,7 +5113,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[0].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[0].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5125,22 +5125,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[0].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[0].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[0].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[0].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[0].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[0].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[0].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[0].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[0].getMapLocation();
                             }
                         }
@@ -5162,7 +5162,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[1].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[1].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5174,22 +5174,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[1].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[1].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[1].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[1].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[1].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[1].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[1].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[1].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[1].getMapLocation();
                             }
                         }
@@ -5211,7 +5211,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[2].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[2].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5223,22 +5223,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[2].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[2].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[2].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[2].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[2].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[2].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[2].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[2].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[2].getMapLocation();
                             }
                         }
@@ -5260,7 +5260,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[3].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[3].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5272,22 +5272,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[3].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[3].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[3].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[3].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[3].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[3].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[3].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[3].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[3].getMapLocation();
                             }
                         }
@@ -5309,7 +5309,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[4].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[4].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5321,22 +5321,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[4].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[4].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[4].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[4].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[4].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[4].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[4].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[4].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[4].getMapLocation();
                             }
                         }
@@ -5358,7 +5358,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[5].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[5].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5370,22 +5370,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[5].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[5].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[5].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[5].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[5].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[5].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[5].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[5].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[5].getMapLocation();
                             }
                         }
@@ -5407,7 +5407,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[6].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[6].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5419,22 +5419,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[6].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[6].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[6].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[6].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[6].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[6].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[6].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[6].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[6].getMapLocation();
                             }
                         }
@@ -5456,7 +5456,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[7].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[7].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5468,22 +5468,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[7].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[7].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[7].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[7].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[7].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[7].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[7].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[7].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[7].getMapLocation();
                             }
                         }
@@ -5505,7 +5505,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[8].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[8].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5517,22 +5517,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[8].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[8].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[8].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[8].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[8].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[8].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[8].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[8].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[8].getMapLocation();
                             }
                         }
@@ -5554,7 +5554,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[9].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[9].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5566,22 +5566,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[9].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[9].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[9].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[9].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[9].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[9].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[9].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[9].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[9].getMapLocation();
                             }
                         }
@@ -5603,7 +5603,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[10].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[10].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5615,22 +5615,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[10].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[10].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[10].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[10].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[10].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[10].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[10].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[10].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[10].getMapLocation();
                             }
                         }
@@ -5652,7 +5652,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[11].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[11].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5664,22 +5664,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[11].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[11].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[11].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[11].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[11].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[11].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[11].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[11].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[11].getMapLocation();
                             }
                         }
@@ -5701,7 +5701,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[12].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[12].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5713,22 +5713,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[12].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[12].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[12].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[12].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[12].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[12].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[12].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[12].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[12].getMapLocation();
                             }
                         }
@@ -5750,7 +5750,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[13].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[13].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5762,22 +5762,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[13].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[13].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[13].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[13].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[13].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[13].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[13].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[13].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[13].getMapLocation();
                             }
                         }
@@ -5799,7 +5799,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[14].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[14].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5811,22 +5811,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[14].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[14].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[14].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[14].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[14].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[14].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[14].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[14].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[14].getMapLocation();
                             }
                         }
@@ -5848,7 +5848,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[15].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[15].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5860,22 +5860,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[15].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[15].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[15].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[15].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[15].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[15].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[15].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[15].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[15].getMapLocation();
                             }
                         }
@@ -5897,7 +5897,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[16].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[16].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5909,22 +5909,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[16].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[16].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[16].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[16].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[16].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[16].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[16].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[16].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[16].getMapLocation();
                             }
                         }
@@ -5946,7 +5946,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[17].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[17].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -5958,22 +5958,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[17].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[17].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[17].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[17].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[17].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[17].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[17].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[17].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[17].getMapLocation();
                             }
                         }
@@ -5995,7 +5995,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[18].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[18].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6007,22 +6007,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[18].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[18].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[18].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[18].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[18].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[18].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[18].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[18].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[18].getMapLocation();
                             }
                         }
@@ -6044,7 +6044,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[19].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[19].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6056,22 +6056,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[19].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[19].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[19].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[19].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[19].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[19].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[19].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[19].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[19].getMapLocation();
                             }
                         }
@@ -6093,7 +6093,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[20].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[20].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6105,22 +6105,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[20].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[20].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[20].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[20].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[20].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[20].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[20].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[20].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[20].getMapLocation();
                             }
                         }
@@ -6142,7 +6142,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[21].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[21].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6154,22 +6154,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[21].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[21].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[21].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[21].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[21].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[21].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[21].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[21].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[21].getMapLocation();
                             }
                         }
@@ -6191,7 +6191,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[22].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[22].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6203,22 +6203,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[22].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[22].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[22].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[22].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[22].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[22].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[22].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[22].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[22].getMapLocation();
                             }
                         }
@@ -6240,7 +6240,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[23].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[23].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6252,22 +6252,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[23].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[23].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[23].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[23].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[23].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[23].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[23].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[23].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[23].getMapLocation();
                             }
                         }
@@ -6289,7 +6289,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[24].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[24].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6301,22 +6301,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[24].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[24].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[24].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[24].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[24].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[24].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[24].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[24].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[24].getMapLocation();
                             }
                         }
@@ -6338,7 +6338,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[25].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[25].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6350,22 +6350,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[25].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[25].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[25].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[25].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[25].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[25].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[25].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[25].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[25].getMapLocation();
                             }
                         }
@@ -6387,7 +6387,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[26].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[26].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6399,22 +6399,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[26].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[26].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[26].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[26].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[26].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[26].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[26].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[26].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[26].getMapLocation();
                             }
                         }
@@ -6436,7 +6436,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[27].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[27].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6448,22 +6448,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[27].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[27].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[27].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[27].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[27].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[27].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[27].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[27].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[27].getMapLocation();
                             }
                         }
@@ -6485,7 +6485,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[28].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[28].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6497,22 +6497,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[28].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[28].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[28].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[28].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[28].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[28].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[28].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[28].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[28].getMapLocation();
                             }
                         }
@@ -6534,7 +6534,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[29].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[29].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6546,22 +6546,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[29].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[29].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[29].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[29].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[29].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[29].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[29].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[29].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[29].getMapLocation();
                             }
                         }
@@ -6583,7 +6583,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[30].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[30].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6595,22 +6595,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[30].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[30].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[30].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[30].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[30].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[30].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[30].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[30].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[30].getMapLocation();
                             }
                         }
@@ -6632,7 +6632,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[31].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[31].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6644,22 +6644,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[31].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[31].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[31].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[31].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[31].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[31].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[31].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[31].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[31].getMapLocation();
                             }
                         }
@@ -6681,7 +6681,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[32].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[32].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6693,22 +6693,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[32].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[32].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[32].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[32].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[32].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[32].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[32].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[32].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[32].getMapLocation();
                             }
                         }
@@ -6730,7 +6730,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[33].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[33].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6742,22 +6742,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[33].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[33].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[33].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[33].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[33].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[33].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[33].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[33].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[33].getMapLocation();
                             }
                         }
@@ -6779,7 +6779,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[34].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[34].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6791,22 +6791,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[34].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[34].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[34].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[34].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[34].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[34].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[34].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[34].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[34].getMapLocation();
                             }
                         }
@@ -6828,7 +6828,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[35].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[35].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6840,22 +6840,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[35].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[35].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[35].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[35].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[35].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[35].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[35].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[35].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[35].getMapLocation();
                             }
                         }
@@ -6877,7 +6877,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[36].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[36].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6889,22 +6889,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[36].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[36].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[36].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[36].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[36].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[36].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[36].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[36].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[36].getMapLocation();
                             }
                         }
@@ -6926,7 +6926,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[37].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[37].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6938,22 +6938,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[37].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[37].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[37].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[37].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[37].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[37].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[37].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[37].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[37].getMapLocation();
                             }
                         }
@@ -6975,7 +6975,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[38].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[38].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -6987,22 +6987,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[38].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[38].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[38].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[38].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[38].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[38].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[38].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[38].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[38].getMapLocation();
                             }
                         }
@@ -7024,7 +7024,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[39].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[39].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7036,22 +7036,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[39].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[39].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[39].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[39].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[39].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[39].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[39].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[39].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[39].getMapLocation();
                             }
                         }
@@ -7073,7 +7073,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[40].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[40].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7085,22 +7085,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[40].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[40].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[40].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[40].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[40].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[40].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[40].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[40].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[40].getMapLocation();
                             }
                         }
@@ -7122,7 +7122,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[41].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[41].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7134,22 +7134,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[41].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[41].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[41].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[41].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[41].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[41].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[41].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[41].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[41].getMapLocation();
                             }
                         }
@@ -7171,7 +7171,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[42].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[42].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7183,22 +7183,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[42].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[42].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[42].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[42].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[42].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[42].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[42].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[42].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[42].getMapLocation();
                             }
                         }
@@ -7220,7 +7220,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[43].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[43].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7232,22 +7232,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[43].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[43].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[43].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[43].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[43].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[43].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[43].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[43].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[43].getMapLocation();
                             }
                         }
@@ -7269,7 +7269,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[44].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[44].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7281,22 +7281,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[44].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[44].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[44].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[44].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[44].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[44].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[44].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[44].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[44].getMapLocation();
                             }
                         }
@@ -7318,7 +7318,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[45].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[45].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7330,22 +7330,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[45].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[45].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[45].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[45].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[45].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[45].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[45].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[45].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[45].getMapLocation();
                             }
                         }
@@ -7367,7 +7367,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[46].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[46].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7379,22 +7379,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[46].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[46].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[46].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[46].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[46].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[46].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[46].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[46].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[46].getMapLocation();
                             }
                         }
@@ -7416,7 +7416,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[47].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[47].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7428,22 +7428,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[47].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[47].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[47].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[47].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[47].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[47].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[47].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[47].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[47].getMapLocation();
                             }
                         }
@@ -7465,7 +7465,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[48].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[48].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7477,22 +7477,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[48].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[48].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[48].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[48].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[48].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[48].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[48].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[48].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[48].getMapLocation();
                             }
                         }
@@ -7514,7 +7514,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[49].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[49].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7526,22 +7526,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[49].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[49].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[49].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[49].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[49].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[49].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[49].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[49].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[49].getMapLocation();
                             }
                         }
@@ -7563,7 +7563,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[50].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[50].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7575,22 +7575,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[50].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[50].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[50].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[50].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[50].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[50].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[50].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[50].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[50].getMapLocation();
                             }
                         }
@@ -7612,7 +7612,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[51].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[51].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7624,22 +7624,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[51].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[51].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[51].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[51].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[51].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[51].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[51].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[51].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[51].getMapLocation();
                             }
                         }
@@ -7661,7 +7661,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[52].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[52].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7673,22 +7673,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[52].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[52].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[52].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[52].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[52].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[52].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[52].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[52].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[52].getMapLocation();
                             }
                         }
@@ -7710,7 +7710,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[53].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[53].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7722,22 +7722,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[53].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[53].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[53].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[53].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[53].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[53].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[53].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[53].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[53].getMapLocation();
                             }
                         }
@@ -7759,7 +7759,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[54].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[54].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7771,22 +7771,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[54].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[54].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[54].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[54].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[54].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[54].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[54].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[54].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[54].getMapLocation();
                             }
                         }
@@ -7808,7 +7808,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[55].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[55].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7820,22 +7820,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[55].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[55].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[55].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[55].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[55].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[55].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[55].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[55].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[55].getMapLocation();
                             }
                         }
@@ -7857,7 +7857,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[56].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[56].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7869,22 +7869,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[56].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[56].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[56].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[56].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[56].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[56].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[56].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[56].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[56].getMapLocation();
                             }
                         }
@@ -7906,7 +7906,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[57].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[57].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7918,22 +7918,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[57].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[57].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[57].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[57].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[57].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[57].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[57].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[57].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[57].getMapLocation();
                             }
                         }
@@ -7955,7 +7955,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[58].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[58].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -7967,22 +7967,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[58].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[58].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[58].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[58].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[58].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[58].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[58].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[58].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[58].getMapLocation();
                             }
                         }
@@ -8004,7 +8004,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[59].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[59].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8016,22 +8016,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[59].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[59].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[59].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[59].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[59].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[59].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[59].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[59].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[59].getMapLocation();
                             }
                         }
@@ -8053,7 +8053,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[60].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[60].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8065,22 +8065,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[60].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[60].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[60].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[60].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[60].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[60].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[60].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[60].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[60].getMapLocation();
                             }
                         }
@@ -8102,7 +8102,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[61].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[61].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8114,22 +8114,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[61].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[61].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[61].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[61].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[61].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[61].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[61].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[61].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[61].getMapLocation();
                             }
                         }
@@ -8151,7 +8151,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[62].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[62].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8163,22 +8163,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[62].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[62].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[62].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[62].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[62].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[62].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[62].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[62].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[62].getMapLocation();
                             }
                         }
@@ -8200,7 +8200,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[63].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[63].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8212,22 +8212,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[63].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[63].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[63].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[63].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[63].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[63].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[63].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[63].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[63].getMapLocation();
                             }
                         }
@@ -8249,7 +8249,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[64].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[64].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8261,22 +8261,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[64].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[64].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[64].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[64].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[64].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[64].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[64].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[64].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[64].getMapLocation();
                             }
                         }
@@ -8298,7 +8298,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[65].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[65].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8310,22 +8310,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[65].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[65].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[65].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[65].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[65].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[65].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[65].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[65].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[65].getMapLocation();
                             }
                         }
@@ -8347,7 +8347,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[66].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[66].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8359,22 +8359,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[66].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[66].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[66].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[66].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[66].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[66].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[66].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[66].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[66].getMapLocation();
                             }
                         }
@@ -8396,7 +8396,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[67].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[67].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8408,22 +8408,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[67].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[67].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[67].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[67].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[67].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[67].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[67].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[67].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[67].getMapLocation();
                             }
                         }
@@ -8445,7 +8445,7 @@ public class SoldierUtil {
                         enemyCount++;
                     }
                     mark = nearbyTiles[68].getMark();
-                    dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                    dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                     if(mark.isAlly())
                     {
                         if (!nearbyTiles[68].isResourcePatternCenter() && dist < resourcePatternDist)
@@ -8457,22 +8457,22 @@ public class SoldierUtil {
                         {
                             minDistanceToValidLocation = dist;
                         }
-                        if(rc.canCompleteResourcePattern(nearbyTiles[68].getMapLocation()))
+                        if(staticRC.canCompleteResourcePattern(nearbyTiles[68].getMapLocation()))
                         {
-                            rc.completeResourcePattern(nearbyTiles[68].getMapLocation());
+                            staticRC.completeResourcePattern(nearbyTiles[68].getMapLocation());
                         }
                     }
                     else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0)
                     {
-                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc))
+                        if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc))
                         {
                             if(dist < minDistanceToValidLocation)
                             {
                                 minDistanceToValidLocation = dist;
                             }
-                            if(rc.canMark(nearbyTiles[68].getMapLocation()))
+                            if(staticRC.canMark(nearbyTiles[68].getMapLocation()))
                             {
-                                rc.mark(nearbyTiles[68].getMapLocation(), false);
+                                staticRC.mark(nearbyTiles[68].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[68].getMapLocation();
                             }
                         }
@@ -8497,7 +8497,7 @@ public class SoldierUtil {
                     enemyCount++;
                 }
                 mark = tile.getMark();
-                dist = rc.getLocation().distanceSquaredTo(tileLoc);
+                dist = staticRC.getLocation().distanceSquaredTo(tileLoc);
                 if (mark.isAlly()) {
                     if (!tile.isResourcePatternCenter() && dist < resourcePatternDist) {
                         closestUnfilledPatternCenter = tileLoc;
@@ -8506,35 +8506,35 @@ public class SoldierUtil {
                     if (dist < minDistanceToValidLocation) {
                         minDistanceToValidLocation = dist;
                     }
-                    if (rc.canCompleteResourcePattern(tile.getMapLocation()))
-                        rc.completeResourcePattern(tile.getMapLocation());
+                    if (staticRC.canCompleteResourcePattern(tile.getMapLocation()))
+                        staticRC.completeResourcePattern(tile.getMapLocation());
                 } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                    if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc)) {
+                    if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                         if (dist < minDistanceToValidLocation) {
                             minDistanceToValidLocation = dist;
                         }
-                        if (rc.canMark(tile.getMapLocation())) {
-                            rc.mark(tile.getMapLocation(), false);
+                        if (staticRC.canMark(tile.getMapLocation())) {
+                            staticRC.mark(tile.getMapLocation(), false);
                             closestUnfilledPatternCenter = tile.getMapLocation();
                         }
                     } else {
                         failedPlacementLocations++;
-                        //rc.setIndicatorDot(tileLoc, 255, 255, 255);
+                        //staticRC.setIndicatorDot(tileLoc, 255, 255, 255);
                     }
                 }
             }
         }
         if(failedPlacementLocations >= 4 && minDistanceToValidLocation >= 25) {
-            if(validatePlacement(rc, rc.getLocation())) {
-                if(rc.canMark(rc.getLocation())) {
-                    rc.mark(rc.getLocation(), true);
-                    closestUnfilledPatternCenter = rc.getLocation();
+            if(validatePlacement(staticRC.getLocation())) {
+                if(staticRC.canMark(staticRC.getLocation())) {
+                    staticRC.mark(staticRC.getLocation(), true);
+                    closestUnfilledPatternCenter = staticRC.getLocation();
                 }
             }
         }
         numEnemyTiles = enemyCount;
         averageEnemyPaint = (enemyCount != 0) ? new MapLocation(x/enemyCount, y/enemyCount) : null;
-        if(claimedRuin != null && rc.canSenseLocation(claimedRuin) && rc.canSenseRobotAtLocation(claimedRuin)) {
+        if(claimedRuin != null && staticRC.canSenseLocation(claimedRuin) && staticRC.canSenseRobotAtLocation(claimedRuin)) {
             claimedRuin = null;
         }
     }

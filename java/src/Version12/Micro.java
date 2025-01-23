@@ -94,48 +94,48 @@ public class Micro {
     private static microInfo[] microArray;
     private static boolean isRushing;
     //the method any robot will use to interact with micro - directs the robot to the correct micro method
-    public static Direction runMicro(RobotController rc, boolean isRushing) throws GameActionException {
-        if(!rc.isMovementReady()) return Direction.CENTER;
-        populateMicroArray(rc);
+    public static Direction runMicro( boolean isRushing) throws GameActionException {
+        if(!staticRC.isMovementReady()) return Direction.CENTER;
+        populateMicroArray();
         Micro.isRushing = isRushing;
-        return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+        return switch (staticRC.getType()) {
+            case UnitType.SOLDIER -> runSoldierMicro();
             default -> null;
         };
     }
 
     //the method any robot will use to interact with micro - directs the robot to the correct micro method
-    public static Direction runMicro(RobotController rc) throws GameActionException {
-        if(!rc.isMovementReady()) return Direction.CENTER;
-        populateMicroArray(rc);
+    public static Direction runMicro() throws GameActionException {
+        if(!staticRC.isMovementReady()) return Direction.CENTER;
+        populateMicroArray();
         Micro.isRushing = false;
-        return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+        return switch (staticRC.getType()) {
+            case UnitType.SOLDIER -> runSoldierMicro();
             default -> Direction.CENTER;
         };
     }
     
     //attempts to find the best place near the ruin to fill in, and also move to the best adjacent square
-    public static void ruinBuildingMicro(RobotController rc, MapLocation ruin, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
-        rc.setIndicatorString("Building a ruin!" + ruin.toString());
-        int curDist = rc.getLocation().distanceSquaredTo(ruin);
+    public static void ruinBuildingMicro( MapLocation ruin, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
+        staticRC.setIndicatorString("Building a ruin!" + ruin.toString());
+        int curDist = staticRC.getLocation().distanceSquaredTo(ruin);
         MapLocation bestAttack = null;
-        if(rc.isActionReady()) {
-            bestAttack = bestRuinAttack(rc, desiredPattern, tilesToFill, ruin);
-            if (bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
+        if(staticRC.isActionReady()) {
+            bestAttack = bestRuinAttack(desiredPattern, tilesToFill, ruin);
+            if (bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
-        if(bestAttack == null && rc.getChips() > 1000 && rc.isMovementReady()) {
-            Direction dir = Pathfinding.bugBFS(rc, ruin);
-            if(rc.canMove(dir)) rc.move(dir);
-            Soldier.attemptCompleteTowerPattern(rc, ruin);
+        if(bestAttack == null && staticRC.getChips() > 1000 && staticRC.isMovementReady()) {
+            Direction dir = Pathfinding.bugBFS(ruin);
+            if(staticRC.canMove(dir)) staticRC.move(dir);
+            Soldier.attemptCompleteTowerPattern(ruin);
             return;
         }
-        if(rc.isMovementReady()) {
+        if(staticRC.isMovementReady()) {
             if(curDist <= 8)
-                populateMicroArrayRuin(rc, ruin);
+                populateMicroArrayRuin(ruin);
             else
-                populateMicroArray(rc);
-            microInfo bestMicro = new microInfo(rc.senseMapInfo(rc.getLocation()));
+                populateMicroArray();
+            microInfo bestMicro = new microInfo(staticRC.senseMapInfo(staticRC.getLocation()));
             for(int i = 0; i < 9; i++) {
                 do {
                     if(bestMicro.equals(microArray[i])) continue;
@@ -199,12 +199,12 @@ public class Micro {
                     }
                 } while(false);
             }
-            if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
-                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            if(bestMicro.passable && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) {
+                staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
             }
         }
-        if(rc.isActionReady() && bestAttack != null) {
-            if(rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
+        if(staticRC.isActionReady() && bestAttack != null) {
+            if(staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
     }
 
@@ -214,18 +214,18 @@ public class Micro {
     //2. not able to refill this turn (not action ready, tower doesnt have paint)
     //in case 1, we should move to the best spot available next to the paint tower
     //in case 2, we move to the best spot within radius squared 8 of the paint tower
-    public static void refillingMicro(RobotController rc, MapLocation refillLoc) throws GameActionException {
-        if(!rc.canSenseRobotAtLocation(refillLoc)) {
+    public static void refillingMicro( MapLocation refillLoc) throws GameActionException {
+        if(!staticRC.canSenseRobotAtLocation(refillLoc)) {
             return;
         }
-        int towerPaint = rc.senseRobotAtLocation(refillLoc).paintAmount;
-        boolean canRefill = rc.isActionReady() && towerPaint > 10;
-        if (!rc.canSenseRobotAtLocation(refillLoc)) {
+        int towerPaint = staticRC.senseRobotAtLocation(refillLoc).paintAmount;
+        boolean canRefill = staticRC.isActionReady() && towerPaint > 10;
+        if (!staticRC.canSenseRobotAtLocation(refillLoc)) {
             System.out.println("Somethings wrong!");
             return;
         }
-        if(rc.isMovementReady()) {
-            populateMicroArrayRuin(rc, refillLoc);
+        if(staticRC.isMovementReady()) {
+            populateMicroArrayRuin(refillLoc);
             microInfo bestMicro = microArray[0];
 //            for (int i = 1; i < 9; i++) {
 //                do {
@@ -319,12 +319,12 @@ public class Micro {
                     }
                 } while (false);
             }
-            if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
-                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            if(bestMicro.passable && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) {
+                staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
             }
         }
-        if(canRefill && rc.canTransferPaint(refillLoc, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(refillLoc).paintAmount * -1))){
-            rc.transferPaint(refillLoc, Math.max(rc.getPaint() - rc.getType().paintCapacity, rc.senseRobotAtLocation(refillLoc).paintAmount * -1));
+        if(canRefill && staticRC.canTransferPaint(refillLoc, Math.max(staticRC.getPaint() - staticRC.getType().paintCapacity, staticRC.senseRobotAtLocation(refillLoc).paintAmount * -1))){
+            staticRC.transferPaint(refillLoc, Math.max(staticRC.getPaint() - staticRC.getType().paintCapacity, staticRC.senseRobotAtLocation(refillLoc).paintAmount * -1));
         }
     }
 
@@ -334,14 +334,14 @@ public class Micro {
     //3. attack an empty tile further away
     //4. attack an allied tile with the wrong pattern close to us
     //5. attack an allied tile further away with the wrong pattern
-    public static MapLocation bestRuinAttack(RobotController rc, boolean[][] desiredPattern, MapInfo[] tilesToFill, MapLocation ruin) throws GameActionException {
+    public static MapLocation bestRuinAttack( boolean[][] desiredPattern, MapInfo[] tilesToFill, MapLocation ruin) throws GameActionException {
         MapInfo bestTile = null;
         int minDist = Integer.MAX_VALUE;
         int minDistToEnemy = Integer.MAX_VALUE;
-        if(rc.senseMapInfo(rc.getLocation()).getPaint() == PaintType.EMPTY && rc.getLocation().isWithinDistanceSquared(ruin, 8)) return rc.getLocation();
+        if(staticRC.senseMapInfo(staticRC.getLocation()).getPaint() == PaintType.EMPTY && staticRC.getLocation().isWithinDistanceSquared(ruin, 8)) return staticRC.getLocation();
         for(MapInfo tile : tilesToFill) {
             int distToEnemy = (Soldier.averageEnemyPaint == null) ? Integer.MAX_VALUE : tile.getMapLocation().distanceSquaredTo(Soldier.averageEnemyPaint);
-            int dist = rc.getLocation().distanceSquaredTo(tile.getMapLocation());
+            int dist = staticRC.getLocation().distanceSquaredTo(tile.getMapLocation());
             if(!tile.isPassable()) continue;
             if(tile.getPaint() == PaintType.EMPTY && (bestTile == null || dist < minDist || bestTile.getPaint().isAlly() || (dist == minDist && distToEnemy < minDistToEnemy))) {
                 bestTile = tile;
@@ -358,26 +358,26 @@ public class Micro {
     }
 
     //attempts to find the best place near the ruin to pattern in, and also move to the best adjacent square
-    public static void patternFillingMicro(RobotController rc, MapLocation patternCenter, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
-        rc.setIndicatorString("Building a patternCenter!" + patternCenter.toString());
-        int curDist = rc.getLocation().distanceSquaredTo(patternCenter);
+    public static void patternFillingMicro( MapLocation patternCenter, boolean[][] desiredPattern, MapInfo[] tilesToFill) throws GameActionException {
+        staticRC.setIndicatorString("Building a patternCenter!" + patternCenter.toString());
+        int curDist = staticRC.getLocation().distanceSquaredTo(patternCenter);
         MapLocation bestAttack = null;
-        if (rc.isActionReady()) {
-            bestAttack = bestRuinAttack(rc, desiredPattern, tilesToFill, patternCenter);
-            if (bestAttack != null && rc.canAttack(bestAttack))
-                rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
+        if (staticRC.isActionReady()) {
+            bestAttack = bestRuinAttack(desiredPattern, tilesToFill, patternCenter);
+            if (bestAttack != null && staticRC.canAttack(bestAttack))
+                staticRC.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
         }
-//        if (bestAttack == null && rc.getChips() > 1000) {
-//            Direction dir = Pathfinding.bugBFS(rc, patternCenter);
-//            if (rc.canMove(dir)) rc.move(dir);
+//        if (bestAttack == null && staticRC.getChips() > 1000) {
+//            Direction dir = Pathfinding.bugBFS(patternCenter);
+//            if (staticRC.canMove(dir)) staticRC.move(dir);
 //            return;
 //        }
-        if (rc.isMovementReady()) {
+        if (staticRC.isMovementReady()) {
             if (curDist <= 8)
-                populateMicroArrayRuin(rc, patternCenter);
+                populateMicroArrayRuin(patternCenter);
             else
-                populateMicroArray(rc);
-            microInfo bestMicro = new microInfo(rc.senseMapInfo(rc.getLocation()));
+                populateMicroArray();
+            microInfo bestMicro = new microInfo(staticRC.senseMapInfo(staticRC.getLocation()));
             for (int i = 0; i < 9; i++) {
                 do {
                     if (bestMicro.equals(microArray[i])) continue;
@@ -443,20 +443,20 @@ public class Micro {
                     }
                 } while (false);
             }
-            if (bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
-                rc.move(rc.getLocation().directionTo(bestMicro.loc));
+            if (bestMicro.passable && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) {
+                staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
             }
         }
-        if (rc.isActionReady() && bestAttack != null) {
-            if (rc.canAttack(bestAttack))
-                rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
-            Utilities.attemptCompleteResourcePattern(rc, bestAttack);
+        if (staticRC.isActionReady() && bestAttack != null) {
+            if (staticRC.canAttack(bestAttack))
+                staticRC.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, patternCenter));
+            Utilities.attemptCompleteResourcePattern(bestAttack);
         }
     }
 
     //the micro method for soldiers
-    public static Direction runSoldierMicro(RobotController rc) throws GameActionException {
-        int health = rc.getHealth();
+    public static Direction runSoldierMicro() throws GameActionException {
+        int health = staticRC.getHealth();
         microInfo bestMicro = microArray[0];
 //        for(int i = 1; i < 9; i++) {
 //            do {
@@ -468,7 +468,7 @@ public class Micro {
 //                }
 //
 //                //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
-//                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+//                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
 //                    //we are fine being in tower range as long as we can attack, because we have enough health
 //                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) break;
 //                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) {
@@ -536,7 +536,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[1].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[1].inTowerRange) {
                         bestMicro = microArray[1];
@@ -593,7 +593,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[2].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[2].inTowerRange) {
                         bestMicro = microArray[2];
@@ -650,7 +650,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[3].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[3].inTowerRange) {
                         bestMicro = microArray[3];
@@ -707,7 +707,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[4].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[4].inTowerRange) {
                         bestMicro = microArray[4];
@@ -764,7 +764,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[5].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[5].inTowerRange) {
                         bestMicro = microArray[5];
@@ -821,7 +821,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[6].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[6].inTowerRange) {
                         bestMicro = microArray[6];
@@ -878,7 +878,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[7].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[7].inTowerRange) {
                         bestMicro = microArray[7];
@@ -935,7 +935,7 @@ public class Micro {
                     break;
                 }
 
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                if (staticRC.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
                     if (bestMicro.inTowerRange && !microArray[8].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[8].inTowerRange) {
                         bestMicro = microArray[8];
@@ -986,18 +986,18 @@ public class Micro {
         }
 
 
-        return (bestMicro.passable) ? rc.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
+        return (bestMicro.passable) ? staticRC.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
     }
 
 
     //UTILITY METHODS
 
     //populates the array of potential spaces we can move too for this turn
-    public static void populateMicroArray(RobotController rc) throws GameActionException {
+    public static void populateMicroArray() throws GameActionException {
         microArray = new microInfo[9];
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth() - 1;
-        MapLocation curLoc = rc.getLocation();
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth() - 1;
+        MapLocation curLoc = staticRC.getLocation();
         int curX = curLoc.x;
         int curY = curLoc.y;
         int totalFilled = 0;
@@ -1007,8 +1007,8 @@ public class Micro {
 //                for (int dy = -1; dy <= 1; dy++) {
 //                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
 //                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
-//                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-//                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc));
+//                        if(staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+//                        else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc));
 //                        totalFilled++;
 //                    }
 //                }
@@ -1017,60 +1017,60 @@ public class Micro {
         if (curX + -1 >= 0 && curX + -1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
         if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                //if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                /*else*/ microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
         if (curX + 1 >= 0 && curX + 1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
@@ -1080,11 +1080,11 @@ public class Micro {
         }
     }
     //populates the array of potential spaces we can move too for this turn
-    public static void populateMicroArrayRuin(RobotController rc, MapLocation ruin) throws GameActionException {
+    public static void populateMicroArrayRuin( MapLocation ruin) throws GameActionException {
         microArray = new microInfo[9];
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth() - 1;
-        MapLocation curLoc = rc.getLocation();
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth() - 1;
+        MapLocation curLoc = staticRC.getLocation();
         int curX = curLoc.x;
         int curY = curLoc.y;
         int totalFilled = 0;
@@ -1094,8 +1094,8 @@ public class Micro {
 //                for (int dy = -1; dy <= 1; dy++) {
 //                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
 //                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
-//                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
-//                        else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc));
+//                        if(staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
+//                        else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc));
 //                        totalFilled++;
 //                    }
 //                }
@@ -1104,60 +1104,60 @@ public class Micro {
         if (curX + -1 >= 0 && curX + -1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
         if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
-                //if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                /*else*/ microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                //if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                /*else*/ microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
         if (curX + 1 >= 0 && curX + 1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
-                else microArray[totalFilled] = new microInfo(rc.senseMapInfo((newLoc)));
+                if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
+                else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
         }
@@ -1170,7 +1170,7 @@ public class Micro {
 
 
     //checks whether a space is in firing range of any seen enemy towers
-    public static boolean isSafeFromTower(RobotController rc, MapLocation loc) {
+    public static boolean isSafeFromTower( MapLocation loc) {
         for(RobotInfo enemy : enemyRobots) {
             if(enemy.type.isTowerType()) {
                 if(loc.distanceSquaredTo(enemy.getLocation()) <= enemy.getType().actionRadiusSquared) {

@@ -1,6 +1,7 @@
 package Version12;
 
 import battlecode.common.*;
+import static Version12.RobotPlayer.staticRC;
 
 public class SpawnMicro {
     //spawn according to these priorities:
@@ -8,15 +9,15 @@ public class SpawnMicro {
     //2. spawn towards the center - 0b100
     //3. spawn on neutral paint - 0b10
     //4. spawn anywhere - 0b1
-    public static MapLocation bestSpawn(RobotController rc) throws GameActionException {
+    public static MapLocation bestSpawn() throws GameActionException {
         int bestScore = 0;
         MapLocation bestTile = null;
-        Direction dirToCenter = rc.getLocation().directionTo(new MapLocation(rc.getMapWidth(), rc.getMapHeight()));
-        MapInfo[] potentialTiles = rc.senseNearbyMapInfos(2);
+        Direction dirToCenter = staticRC.getLocation().directionTo(new MapLocation(staticRC.getMapWidth(), staticRC.getMapHeight()));
+        MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(2);
 //        for(int i = 0; i < 9; i++) {
 //            if(i == 4) continue;
 //            MapLocation tileLoc = potentialTiles[i].getMapLocation();
-//            Direction dirToSquare = rc.getLocation().directionTo(tileLoc);
+//            Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
 //            int score = 0;
 //            PaintType paint = potentialTiles[i].getPaint();
 //            score |= switch(paint) {
@@ -24,7 +25,7 @@ public class SpawnMicro {
 //                case ALLY_PRIMARY, ALLY_SECONDARY -> 0b1000;
 //                default -> 0;
 //            };
-//            if(!rc.canSenseRobotAtLocation(tileLoc)) {
+//            if(!staticRC.canSenseRobotAtLocation(tileLoc)) {
 //                score |= 0b1;
 //            }
 //            if(dirToSquare == dirToCenter || dirToSquare == dirToCenter.rotateLeft() || dirToSquare == dirToCenter.rotateRight()) {
@@ -38,7 +39,7 @@ public class SpawnMicro {
         for(int i = 0; i < 9; i++) {
             if(i == 4) continue;
             MapLocation tileLoc = potentialTiles[i].getMapLocation();
-            Direction dirToSquare = rc.getLocation().directionTo(tileLoc);
+            Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
             int score = 0;
             PaintType paint = potentialTiles[i].getPaint();
             score |= switch(paint) {
@@ -46,7 +47,7 @@ public class SpawnMicro {
                 case ALLY_PRIMARY, ALLY_SECONDARY -> 0b1000;
                 default -> 0;
             };
-            if(!rc.canSenseRobotAtLocation(tileLoc)) {
+            if(!staticRC.canSenseRobotAtLocation(tileLoc)) {
                 score |= 0b1;
             }
             if(dirToSquare == dirToCenter || dirToSquare == dirToCenter.rotateLeft() || dirToSquare == dirToCenter.rotateRight()) {
