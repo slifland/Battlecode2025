@@ -14,7 +14,7 @@ currentBot = 'Version12'
 
 bots = ['Version11', 'Version10']
 botsSet = set(bots)
-maps = ['gridworld', 'sayhi', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack', 'catface', 'giver', 'quack']
+maps = ['gridworld', 'sayhi', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack', 'catface', 'giver', 'quack', 'galaxy', 'leavemealone', 'windmill']
 mapsSet = set(maps)
 
 matches = set(product(bots, maps))
