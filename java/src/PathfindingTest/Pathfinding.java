@@ -208,6 +208,12 @@ public class Pathfinding
                     else
                         currentDirection =  currentDirection.rotateLeft();
                     virtualStack.push(currentDirection);
+                    if(virtualStack.isFull())
+                    {
+                        virtualStack.clear();
+                        virtualStack.push(Direction.CENTER);
+                        break;
+                    }
                 }
                 virtualBug = virtualBug.add(virtualStack.pop());
                 rc.setIndicatorDot(virtualBug, 255, 0, 0);
@@ -234,6 +240,12 @@ public class Pathfinding
                     else
                         currentDirection =  currentDirection.rotateLeft();
                     virtualStack.push(currentDirection);
+                    if(virtualStack.isFull())
+                    {
+                        virtualStack.clear();
+                        virtualStack.push(Direction.CENTER);
+                        break;
+                    }
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
@@ -383,6 +395,12 @@ class VirtualBug
                 else
                     currentDirection =  currentDirection.rotateLeft();
                 virtualStack.push(currentDirection);
+                if(virtualStack.isFull())
+                {
+                    virtualStack.clear();
+                    virtualStack.push(Direction.CENTER);
+                    break;
+                }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
             rc.setIndicatorDot(virtualBug, 255, 0, 0);
@@ -394,7 +412,7 @@ class VirtualBug
         {
             virtualBug = virtualBug.add(dirTo);
             rc.setIndicatorDot(virtualBug, 255, 0, 0);
-            return true;
+            return false;
         }
         else
         {
@@ -406,6 +424,12 @@ class VirtualBug
                 else
                     currentDirection =  currentDirection.rotateLeft();
                 virtualStack.push(currentDirection);
+                if(virtualStack.isFull())
+                {
+                    virtualStack.clear();
+                    virtualStack.push(Direction.CENTER);
+                    return false;
+                }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
             rc.setIndicatorDot(virtualBug, 255, 0, 0);

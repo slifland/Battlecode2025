@@ -4560,7 +4560,7 @@ public class BFS_7x7
       {
          return null;
       }
-      Pathfinding.closestDistanceOnPath = closestDistance;
+      Pathfinding.closestDistanceOnPath = Math.max(8, closestDistance);
       return closestIndex != -1 ? dirToMove(closestIndex) : Direction.CENTER;
    }
 }

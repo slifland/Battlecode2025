@@ -198,13 +198,13 @@ public class Pathfinding
                         currentDirection = currentDirection.rotateRight();
                     else
                         currentDirection =  currentDirection.rotateLeft();
+                    virtualStack.push(currentDirection);
                     if(virtualStack.isFull())
                     {
                         virtualStack.clear();
                         virtualStack.push(Direction.CENTER);
                         break;
                     }
-                    virtualStack.push(currentDirection);
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());

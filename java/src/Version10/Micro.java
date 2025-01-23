@@ -59,9 +59,9 @@ class microInfo {
             }
         }
         paintLoss = switch(paint) {
-            case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> 2 + adjacentAllies;
-            case PaintType.ALLY_PRIMARY, PaintType.ALLY_SECONDARY-> adjacentAllies;
-            case PaintType.EMPTY -> 1 + adjacentAllies;
+            case ENEMY_PRIMARY, ENEMY_SECONDARY -> 2 + adjacentAllies;
+            case ALLY_PRIMARY, ALLY_SECONDARY-> adjacentAllies;
+            case EMPTY -> 1 + adjacentAllies;
             default -> 0;
         };
         distanceToEnemyAverage = (Soldier.averageEnemyPaint != null) ? loc.distanceSquaredTo(Soldier.averageEnemyPaint) : Integer.MAX_VALUE;
@@ -99,7 +99,7 @@ public class Micro {
         populateMicroArray(rc);
         Micro.isRushing = isRushing;
         return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+            case SOLDIER -> runSoldierMicro(rc);
             default -> null;
         };
     }
@@ -110,7 +110,7 @@ public class Micro {
         populateMicroArray(rc);
         Micro.isRushing = false;
         return switch (rc.getType()) {
-            case UnitType.SOLDIER -> runSoldierMicro(rc);
+            case SOLDIER -> runSoldierMicro(rc);
             default -> Direction.CENTER;
         };
     }
