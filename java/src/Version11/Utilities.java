@@ -103,7 +103,7 @@ public class Utilities
         for (MapInfo nearbyTile : nearbyTiles)
         {
             if (nearbyTile.getPaint().isEnemy() &&
-                    nearbyTile.getMapLocation().isWithinDistanceSquared(paintAverage1, distanceThreshold))
+                    nearbyTile.getMapLocation().isWithinDistanceSquared(paintAverage1, DISTANCE_THRESHOLD))
             {
                 xTotal1 += nearbyTile.getMapLocation().x;
                 yTotal1 += nearbyTile.getMapLocation().y;
@@ -348,5 +348,10 @@ public class Utilities
         }
 
         return new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset);
+    }
+
+    public static MapLocation generateRandomLocation(RobotController rc)
+    {
+        return new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
     }
 }

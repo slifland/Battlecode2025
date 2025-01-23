@@ -346,6 +346,24 @@ public class Communication
         }
     }
 
+    //ong this will throw an error if not called by a tower
+    public static int createExploreMessageTower(RobotController rc)
+    {
+        MapLocation sendLocation = locationQueue.remove(rc);
+
+        int message = 0;
+        message |= 0b01;
+        message |= sendLocation.x << 2;
+        message |= sendLocation.y << 8;
+        return message;
+    }
+
+
+//    public static MapLocation readExploreMessageRobot(RobotController rc)
+//    {
+//        int x =
+//    }
+
     //prints out the bytecode usage of a single call to updateRuinsMemory
     private static boolean updateRuinsMemoryTest(Ruin ruin)
     {

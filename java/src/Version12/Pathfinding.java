@@ -9,11 +9,21 @@ public class Pathfinding
     static DirectionStack directionStack = new DirectionStack();
     static ObstacleMap obstacles;
     static int lastResetRound;
+    static int maxSimBytecode = 2000;
+
 
     //BFS variables
     static int closestDistanceOnPath = Integer.MAX_VALUE;
 
     static int RESET_THRESHOLD = 100;
+
+    //map knowledge stuff
+    static MapData[][] mapKnowledge;
+    enum MapData
+    {
+        Passable,
+        Impassable
+    }
 
 
     public static void initializeBugBFS(RobotController rc, MapLocation destination)
@@ -25,7 +35,46 @@ public class Pathfinding
         closestDistanceOnPath = Integer.MAX_VALUE;
     }
 
+    public static Direction bugBFS(RobotController rc, MapLocation destination) throws GameActionException
+    {
+        return bugBFSInternal(rc, destination, -1);
+    }
 
+    public static Direction bugBFS(RobotController rc, MapLocation destination, int bytecodeLimit) throws GameActionException
+    {
+        return bugBFSInternal(rc, destination, bytecodeLimit);
+    }
+
+    private static Direction bugBFSInternal(RobotController rc, MapLocation destination, int bytecodeLimit) throws GameActionException
+    {
+        if(!destination.equals(previousDestination) || rc.getRoundNum() - lastResetRound >= RESET_THRESHOLD)
+        {
+            initializeBugBFS(rc, destination);
+        }
+
+        if(rc.getLocation().equals(destination) || !rc.isMovementReady())
+        {
+            return Direction.CENTER;
+        }
+
+        Direction direction = BFS_7x7.pathfind(rc, destination);
+        if(direction != null)
+        {
+            rc.setIndicatorString("BFS");
+            return direction;
+        }
+        else
+        {
+            rc.setIndicatorString("bugNav");
+            if(bytecodeLimit == -1)
+            {
+                bytecodeLimit = 17500;
+            }
+            maxSimBytecode = Math.max(0, bytecodeLimit - Clock.getBytecodeNum());
+            System.out.println(maxSimBytecode);
+            return bugNav(rc, destination);
+        }
+    }
 
     public static Direction bugNav(RobotController rc, MapLocation destination) throws GameActionException
     {
@@ -94,29 +143,6 @@ public class Pathfinding
         }
     }
 
-    public static Direction bugBFS(RobotController rc, MapLocation destination) throws GameActionException
-    {
-        if(!destination.equals(previousDestination) || rc.getRoundNum() - lastResetRound >= RESET_THRESHOLD)
-        {
-            initializeBugBFS(rc, destination);
-        }
-
-        if(rc.getLocation().equals(destination))
-        {
-            return Direction.CENTER;
-        }
-
-        Direction direction = BFS_7x7.pathfind(rc, destination);
-        if(direction != null)
-        {
-            return direction;
-        }
-        else
-        {
-            return bugNav(rc, destination);
-        }
-    }
-
     public static boolean decideTurningDirection(RobotController rc, MapLocation destination) throws GameActionException
     {
         MapLocation currentLocation = rc.getLocation();
@@ -133,15 +159,28 @@ public class Pathfinding
             obstacles.setTurnDirection(currentLocation, !previousDirection);
             return !previousDirection;
         }
+//        return bestTurnDirection(rc, destination);
     }
 
 
     public static boolean bestTurnDirection(RobotController rc, MapLocation destination) throws GameActionException
     {
-        int finalDistanceRight = distanceAfterSimulation(rc, destination, true);
-        int finalDistanceLeft = distanceAfterSimulation(rc, destination, false);
+        VirtualBug rightBug = new VirtualBug(rc.getLocation(), true, destination);
+        VirtualBug leftBug = new VirtualBug(rc.getLocation(), false, destination);
 
-        return finalDistanceRight < finalDistanceLeft;
+        boolean continueRight = true;
+        boolean continueLeft = true;
+        int startBytecode = Clock.getBytecodesLeft();
+        int maxBytecodeUsage = maxSimBytecode - 500;
+        while(startBytecode - Clock.getBytecodesLeft() < maxBytecodeUsage && (continueRight || continueLeft))
+        {
+            if(continueRight)
+                continueRight = rightBug.step(rc);
+            if(continueLeft)
+                continueLeft = leftBug.step(rc);
+        }
+
+        return rightBug.distanceToDestination() < leftBug.distanceToDestination();
     }
 
     private static int distanceAfterSimulation(RobotController rc, MapLocation destination, boolean turningRight) throws GameActionException
@@ -149,11 +188,12 @@ public class Pathfinding
         MapLocation virtualBug = rc.getLocation();
         DirectionStack virtualStack = new DirectionStack();
 
-        int cutOff = 5;
+        int cutOff = 20;
         int i = 0;
-        while(i < cutOff)
+        while(i < cutOff && mapKnowledge[virtualBug.x][virtualBug.y] != null)
         {
-            if(virtualBug.equals(destination) || !rc.canSenseLocation(virtualBug))
+            int bytecodes = Clock.getBytecodesLeft();
+            if(virtualBug.equals(destination))
             {
                 break;
             }
@@ -167,24 +207,19 @@ public class Pathfinding
                         currentDirection = currentDirection.rotateRight();
                     else
                         currentDirection =  currentDirection.rotateLeft();
-                    if(virtualStack.isFull())
-                    {
-                        virtualStack.clear();
-                        virtualStack.push(Direction.CENTER);
-                        break;
-                    }
                     virtualStack.push(currentDirection);
                 }
                 virtualBug = virtualBug.add(virtualStack.pop());
+                rc.setIndicatorDot(virtualBug, 255, 0, 0);
                 i++;
                 continue;
-
             }
 
             Direction dirTo = virtualBug.directionTo(destination);
             if(virtualCanMove(rc, virtualBug, dirTo))
             {
                 virtualBug = virtualBug.add(dirTo);
+                rc.setIndicatorDot(virtualBug, 255, 0, 0);
                 i++;
                 continue;
 
@@ -198,36 +233,33 @@ public class Pathfinding
                         currentDirection = currentDirection.rotateRight();
                     else
                         currentDirection =  currentDirection.rotateLeft();
-                    if(virtualStack.isFull())
-                    {
-                        virtualStack.clear();
-                        virtualStack.push(Direction.CENTER);
-                        break;
-                    }
                     virtualStack.push(currentDirection);
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
+            rc.setIndicatorDot(virtualBug, 255, 0, 0);
             i++;
+
+            System.out.println(bytecodes - Clock.getBytecodesLeft());
         }
+
 
         return virtualBug.distanceSquaredTo(destination);
     }
 
 
-    static boolean virtualCanMove(RobotController rc, MapLocation start, Direction direction) throws GameActionException
+    static boolean virtualCanMove(RobotController rc, MapLocation start, Direction direction)
     {
         MapLocation location = start.add(direction);
-        if(!rc.onTheMap(location))
+        if(rc.onTheMap(location))
+        {
+            return mapKnowledge[location.x][location.y] == null || mapKnowledge[location.x][location.y] == MapData.Passable;
+        }
+        else
         {
             return false;
         }
-        else if(!rc.canSenseLocation(location))
-        {
-            return true;
-        }
 
-        return rc.sensePassability(location) && !rc.canSenseRobotAtLocation(location);
     }
 
 
@@ -277,6 +309,7 @@ class DirectionStack
 
     public void displayDirections(RobotController rc) throws GameActionException
     {
+        System.out.println(stackPointer);
         for(int i = 0; i < stackPointer; i++)
         {
             if(rc.onTheMap(rc.getLocation().add(directionStack[i])))
@@ -315,4 +348,74 @@ class ObstacleMap
     {
         obstacles[location.x][location.y] = turningRight ? TurnDirections.RIGHT : TurnDirections.LEFT;
     }
+}
+
+class VirtualBug
+{
+    public MapLocation virtualBug;
+    boolean turningRight;
+    MapLocation destination;
+    DirectionStack virtualStack;
+
+    public VirtualBug(MapLocation start, boolean turningRight, MapLocation destination)
+    {
+        this.virtualBug = start;
+        this.turningRight = turningRight;
+        this.destination = destination;
+        virtualStack = new DirectionStack();
+    }
+
+    //returns whether to continue
+    public boolean step(RobotController rc) throws GameActionException
+    {
+        if(virtualBug.equals(destination) || Pathfinding.mapKnowledge[virtualBug.x][virtualBug.y] == null)
+        {
+            return false;
+        }
+
+        if(!virtualStack.isEmpty())
+        {
+            Direction currentDirection = virtualStack.peek();
+            while(!Pathfinding.virtualCanMove(rc, virtualBug, currentDirection))
+            {
+                if(turningRight)
+                    currentDirection = currentDirection.rotateRight();
+                else
+                    currentDirection =  currentDirection.rotateLeft();
+                virtualStack.push(currentDirection);
+            }
+            virtualBug = virtualBug.add(virtualStack.pop());
+            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+            return true;
+        }
+
+        Direction dirTo = virtualBug.directionTo(destination);
+        if(Pathfinding.virtualCanMove(rc, virtualBug, dirTo))
+        {
+            virtualBug = virtualBug.add(dirTo);
+            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+            return true;
+        }
+        else
+        {
+            Direction currentDirection = dirTo;
+            while(!Pathfinding.virtualCanMove(rc, virtualBug, currentDirection))
+            {
+                if(turningRight)
+                    currentDirection = currentDirection.rotateRight();
+                else
+                    currentDirection =  currentDirection.rotateLeft();
+                virtualStack.push(currentDirection);
+            }
+            virtualBug = virtualBug.add(virtualStack.pop());
+            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+            return true;
+        }
+    }
+
+    public int distanceToDestination()
+    {
+        return virtualBug.distanceSquaredTo(destination);
+    }
+
 }

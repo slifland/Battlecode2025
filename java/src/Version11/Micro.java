@@ -1,7 +1,5 @@
 package Version11;
 
-
-import PathfindingTest.Pathfinding;
 import battlecode.common.*;
 
 import java.util.Arrays;

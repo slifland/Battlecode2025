@@ -59,6 +59,10 @@ public class RobotPlayer {
         // You can also use indicators to save debug notes in replays.
         rc.setIndicatorString("Hello world!");
 
+        Pathfinding.mapKnowledge = new Pathfinding.MapData[rc.getMapWidth()][rc.getMapHeight()];
+        MapLocation start = rc.getLocation();
+
+
         while (true) {
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
             // loop. If we ever leave this loop and return from run(), the robot dies! At the end of the
@@ -73,7 +77,7 @@ public class RobotPlayer {
                 // different types. Here, we separate the control depending on the UnitType, so we can
                 // use different strategies on different robots. If you wish, you are free to rewrite
                 // this into a different control structure!
-                if (rc.getType() == UnitType.LEVEL_ONE_MONEY_TOWER && turnCount == 1)
+                if (rc.getType() == UnitType.LEVEL_TWO_MONEY_TOWER && turnCount == 1)
                 {
                     rc.buildRobot(UnitType.SOLDIER, rc.getLocation().add(Direction.NORTH));
                 }
@@ -85,10 +89,19 @@ public class RobotPlayer {
                         rc.resign();
                     }
 
-                    if(rc.getType().isRobotType())
+                    if(rc.getType().isRobotType() && rc.getRoundNum() < 100)
                     {
                         Direction dir = Pathfinding.bugBFS(rc, new MapLocation(0,0));
-                       // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
+                        // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
+                        if(rc.canMove(dir))
+                        {
+                            rc.move(dir);
+                        }
+                    }
+                    else if(rc.getType().isRobotType())
+                    {
+                        Direction dir = Pathfinding.bugBFS(rc, start);
+                        // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
                         if(rc.canMove(dir))
                         {
                             rc.move(dir);

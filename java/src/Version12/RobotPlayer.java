@@ -84,6 +84,7 @@ public class RobotPlayer {
 
         mapSize = rc.getMapHeight() * rc.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
+        Pathfinding.mapKnowledge = new Pathfinding.MapData[rc.getMapWidth()][rc.getMapHeight()];
 
         Communication.setup(rc);
 

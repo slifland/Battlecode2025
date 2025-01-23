@@ -2,7 +2,7 @@ package Version11;
 
 import battlecode.common.*;
 
-import java.util.Random;
+import java.util.*;
 
 
 
@@ -26,21 +26,25 @@ public class RobotPlayer {
     static int soldiers = 0;
     static int moppers = 0;
     static int totalBuilt = 0;
-    static final int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
-    //static Sector[] sectors;
+
 
     /*
         Variables responsible for tracking average location of enemy paint
      */
-    static int distanceThreshold;   //For finding a good distance to start a new average
     static MapLocation paintAverage1 = new MapLocation(0,0);
     static MapLocation paintAverage2 = new MapLocation(0,0);
     static int paintCount1;
     static int paintCount2;
     static int greatestDelta;
     static boolean returnFirst = true;
+    static RandomQueue locationQueue;
 
+
+    static final int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     static final int STOP_BUILDING_SOLDIERS = 400;
+    static int DISPERSION_RADIUS;
+    static int DISTANCE_THRESHOLD;   //For finding a good distance to start a new average
+    static int RANDOM_QUEUE_LENGTH = 7;
 
     /*
     Store all methods initially to avoid redundant calls
@@ -84,12 +88,19 @@ public class RobotPlayer {
     public static void run(RobotController rc) throws GameActionException {
 
         int mapSize = rc.getMapHeight() * rc.getMapWidth();
-        distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
+        DISTANCE_THRESHOLD = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
+        DISPERSION_RADIUS = (int) (0.03875 * (rc.getMapWidth() * rc.getMapHeight()) - 2.5);
+
 
         Communication.setup(rc);
 
         //sectors = new Sector[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(rc.getMapWidth(), 7) * Sector.ceil(rc.getMapHeight(), 7)];
+
+        if(rc.getType().isTowerType())
+        {
+            locationQueue = new RandomQueue(rc, 7);
+        }
 
         while (true) {
 
@@ -222,6 +233,7 @@ public class RobotPlayer {
             Communication.processMessagesTower(rc);
             Communication.broadcastMessages(rc);
             Communication.sendMessagesTower(rc);
+            rc.setIndicatorDot(locationQueue.remove(rc), 255, 0, 0);
             //if(paintAverage1 != null) rc.setIndicatorDot(paintAverage1, 0,0,255);
             //if(paintAverage2 != null) rc.setIndicatorDot(paintAverage2, 0,255,0);
         }
@@ -238,6 +250,50 @@ public class RobotPlayer {
             Communication.sendMessagesRobot(rc);
         }
     }
+}
 
+class RandomQueue
+{
+    int size;
+    Queue<MapLocation> exploreLocations;
 
+    public RandomQueue(RobotController rc, int size)
+    {
+        exploreLocations = new LinkedList<>();
+        this.size = size;
+        for(int i = 0; i < size; i++)
+        {
+            addRandomLocation(rc);
+        }
+        exploreLocations = new LinkedList<>();
+    }
+
+    public void addRandomLocation(RobotController rc)
+    {
+        boolean locationFound = false;
+        int cutoff = 10;
+        int i = 0;
+        MapLocation tempLocation = null;
+        while(!locationFound && i < cutoff)
+        {
+            locationFound = true;
+            tempLocation = Utilities.generateRandomLocation(rc);
+            for(MapLocation location : exploreLocations)
+            {
+                if(location.isWithinDistanceSquared(tempLocation, RobotPlayer.DISPERSION_RADIUS))
+                {
+                    locationFound = false;
+                    break;
+                }
+            }
+            i++;
+        }
+        exploreLocations.add(tempLocation);
+    }
+
+    public MapLocation remove(RobotController rc)
+    {
+        addRandomLocation(rc);
+        return exploreLocations.remove();
+    }
 }
