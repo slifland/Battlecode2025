@@ -2,6 +2,9 @@ package Version12;
 
 import battlecode.common.*;
 import battlecode.common.UnitType;
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 
@@ -31,6 +34,10 @@ public class RobotPlayer {
     static int mapSize = 0;
     static UnitType toBuild = null;
     public static RobotController staticRC;
+
+    static MapLocation exploreTarget;
+    static int DISPERSION_RADIUS;
+    static RandomQueue locationQueue;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -78,8 +85,14 @@ public class RobotPlayer {
         staticRC = rc;
         mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
+        DISPERSION_RADIUS = (int) (0.03875 * (rc.getMapWidth() * rc.getMapHeight()) - 2.5);
 
         Communication.setup();
+
+        if(rc.getType().isTowerType())
+        {
+            locationQueue = new RandomQueue(rc, 7);
+        }
 
         //sectors = new Sector[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
@@ -103,6 +116,9 @@ public class RobotPlayer {
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
+
+                if(exploreTarget != null)
+                    staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
                 //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
@@ -147,6 +163,11 @@ public class RobotPlayer {
                 default: break;
             }
             totalBuilt++;
+
+            if(staticRC.canSendMessage(nextLoc))
+            {
+                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
+            }
         }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
@@ -302,6 +323,50 @@ public class RobotPlayer {
         int denominator = soldierScore + mopperScore + splasherScore;
         return new double[]{(double) soldierScore / denominator, (double) mopperScore / denominator, (double) splasherScore / denominator};
     }
+}
 
+class RandomQueue
+{
+    int size;
+    Queue<MapLocation> exploreLocations;
 
+    public RandomQueue(RobotController rc, int size)
+    {
+        exploreLocations = new LinkedList<>();
+        this.size = size;
+        for(int i = 0; i < size; i++)
+        {
+            addRandomLocation(rc);
+        }
+        exploreLocations = new LinkedList<>();
+    }
+
+    public void addRandomLocation(RobotController rc)
+    {
+        boolean locationFound = false;
+        int cutoff = 10;
+        int i = 0;
+        MapLocation tempLocation = null;
+        while(!locationFound && i < cutoff)
+        {
+            locationFound = true;
+            tempLocation = Utilities.generateRandomLocation(rc);
+            for(MapLocation location : exploreLocations)
+            {
+                if(location.isWithinDistanceSquared(tempLocation, RobotPlayer.DISPERSION_RADIUS))
+                {
+                    locationFound = false;
+                    break;
+                }
+            }
+            i++;
+        }
+        exploreLocations.add(tempLocation);
+    }
+
+    public MapLocation remove(RobotController rc)
+    {
+        addRandomLocation(rc);
+        return exploreLocations.remove();
+    }
 }

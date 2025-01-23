@@ -350,4 +350,9 @@ public class Utilities
 
         return new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset);
     }
+
+    public static MapLocation generateRandomLocation(RobotController rc)
+    {
+        return new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
+    }
 }
