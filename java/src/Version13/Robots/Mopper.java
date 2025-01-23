@@ -9,7 +9,7 @@ import battlecode.common.*;
 
 import static Version13.Misc.Communication.enemyTowers;
 import static Version13.Misc.Communication.unclaimedRuins;
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 enum mopStates {
     navigate, contest, refill, clear
@@ -98,7 +98,7 @@ public class Mopper {
             curObjective = null;
             navTarget = null;
         }
-        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry) {
+        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
                 case navState.horizontal -> {
                     if(knownSymmetry != Symmetry.Horizontal) {

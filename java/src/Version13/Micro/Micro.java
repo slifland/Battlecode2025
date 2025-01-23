@@ -4,7 +4,7 @@ import Version13.Robots.Soldier;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
 
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 class microInfo {
     boolean passable;
@@ -90,7 +90,7 @@ class microInfo {
 
 public class Micro {
 
-    private static final int soldierHealthAttackThreshold = 100;
+    private static final int soldierHealthAttackThreshold = 50;
     private static microInfo[] microArray;
     private static boolean isRushing;
     //the method any robot will use to interact with micro - directs the robot to the correct micro method

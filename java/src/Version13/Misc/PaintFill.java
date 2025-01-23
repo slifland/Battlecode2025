@@ -1,7 +1,7 @@
 package Version13.Misc;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
-import static Version13.Robots.RobotPlayer.staticRC;
+import static Version13.RobotPlayer.staticRC;
 
 public class PaintFill
 {

@@ -5,7 +5,7 @@ import Version13.Robots.Soldier;
 import Version13.Robots.Splasher;
 import battlecode.common.*;
 
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 import java.util.LinkedList;
 

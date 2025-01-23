@@ -4,7 +4,7 @@ import Version13.Robots.Splasher;
 import Version13.Utility.splasherUtil;
 import battlecode.common.*;
 
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 import static Version13.Robots.Splasher.averageEnemyPaint;
 
 class splasherMicroInfo {

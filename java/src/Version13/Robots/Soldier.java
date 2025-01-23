@@ -8,9 +8,9 @@ import Version13.Utility.SoldierUtil;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
 
-import static Version13.Robots.RobotPlayer.rng;
+import static Version13.RobotPlayer.rng;
 import static Version13.Misc.Communication.alliedPaintTowers;
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 import static Version13.Utility.SoldierUtil.needsHelp;
 import static Version13.Utility.SoldierUtil.validateRuinClaim;
 
@@ -126,7 +126,6 @@ public class Soldier {
         if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
             validateRuinClaim();
         }
-        staticRC.setIndicatorString(String.valueOf(canFinishRuin));
 //        if(Clock.getBytecodesLeft() > 3000) {
 //            Utilities.updatePaintAverages();
 //        }
@@ -373,55 +372,55 @@ public class Soldier {
 
     public static void fill() throws GameActionException{
         MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(closestUnfilledPatternCenter, 8);
-        //Micro.patternFillingMicro(closestUnfilledPatternCenter, staticRC.getResourcePattern(), potentialTiles);
-        MapInfo bestTile = null;
-        boolean isSecondary = false;
-        int neededToFinish = 0;
-        //use the origin if the mark is primary, custom if the mark is primary
-        boolean markIsSecondary = staticRC.senseMapInfo(closestUnfilledPatternCenter).getMark().isSecondary();
-        int dist = staticRC.getLocation().distanceSquaredTo(closestUnfilledPatternCenter);
-        if (dist > 8) {
-            Direction dir = Pathfinding.bugBFS(closestUnfilledPatternCenter);
-            if (staticRC.canMove(dir)) staticRC.move(dir);
-        } else {
-            if (staticRC.senseMapInfo(staticRC.getLocation()).getPaint() == PaintType.EMPTY) {
-                boolean useSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(staticRC.getLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern());
-                //staticRC.attack(staticRC.getLocation(), Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern()));
-                staticRC.attack(staticRC.getLocation(), useSecondary);
-                if(staticRC.getPaint() >= 100) return;
-                else neededToFinish++;
-            }
-        }
-        for (MapInfo tile : potentialTiles) {
-            //boolean shouldBeSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
-            boolean shouldBeSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(tile.getMapLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
-            if (tile.getPaint() == PaintType.EMPTY && tile.isPassable()) {
-                if (staticRC.canAttack(tile.getMapLocation()) && staticRC.getPaint() >= 100) {
-                    staticRC.attack(tile.getMapLocation(), shouldBeSecondary);
-                    return;
-                } else {
-                    bestTile = tile;
-                    isSecondary = shouldBeSecondary;
-                    neededToFinish++;
-                }
-            } else if (tile.getPaint().isAlly() && tile.isPassable() && tile.getPaint().isSecondary() != shouldBeSecondary) {
-                neededToFinish++;
-                if((bestTile == null || !bestTile.getPaint().isEnemy())) {
-                    bestTile = tile;
-                    isSecondary = shouldBeSecondary;
-                }
-            }
-        }
+        Micro.patternFillingMicro(closestUnfilledPatternCenter, staticRC.getResourcePattern(), potentialTiles);
+//        MapInfo bestTile = null;
+//        boolean isSecondary = false;
+//        int neededToFinish = 0;
+//        //use the origin if the mark is primary, custom if the mark is primary
+//        boolean markIsSecondary = staticRC.senseMapInfo(closestUnfilledPatternCenter).getMark().isSecondary();
+//        int dist = staticRC.getLocation().distanceSquaredTo(closestUnfilledPatternCenter);
+//        if (dist > 8) {
+//            Direction dir = Pathfinding.bugBFS(closestUnfilledPatternCenter);
+//            if (staticRC.canMove(dir)) staticRC.move(dir);
+//        } else {
+//            if (staticRC.senseMapInfo(staticRC.getLocation()).getPaint() == PaintType.EMPTY) {
+//                boolean useSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(staticRC.getLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern());
+//                //staticRC.attack(staticRC.getLocation(), Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern()));
+//                staticRC.attack(staticRC.getLocation(), useSecondary);
+//                if(staticRC.getPaint() >= 100) return;
+//                else neededToFinish++;
+//            }
+//        }
+//        for (MapInfo tile : potentialTiles) {
+//            //boolean shouldBeSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
+//            boolean shouldBeSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(tile.getMapLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
+//            if (tile.getPaint() == PaintType.EMPTY && tile.isPassable()) {
+//                if (staticRC.canAttack(tile.getMapLocation()) && staticRC.getPaint() >= 100) {
+//                    staticRC.attack(tile.getMapLocation(), shouldBeSecondary);
+//                    return;
+//                } else {
+//                    bestTile = tile;
+//                    isSecondary = shouldBeSecondary;
+//                    neededToFinish++;
+//                }
+//            } else if (tile.getPaint().isAlly() && tile.isPassable() && tile.getPaint().isSecondary() != shouldBeSecondary) {
+//                neededToFinish++;
+//                if((bestTile == null || !bestTile.getPaint().isEnemy())) {
+//                    bestTile = tile;
+//                    isSecondary = shouldBeSecondary;
+//                }
+//            }
+//        }
         canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
-        if (bestTile != null) {
-            if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
-            else if (staticRC.isMovementReady()) {
-                //Direction dir = Pathfinding.bugBFS(bestTile.getMapLocation());
-                Direction dir = staticRC.getLocation().directionTo(bestTile.getMapLocation());
-                if (staticRC.canMove(dir) && staticRC.getLocation().add(dir).isWithinDistanceSquared(closestUnfilledPatternCenter, 5)) staticRC.move(dir);
-                if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
-            }
-        }
+//        if (bestTile != null) {
+//            if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
+//            else if (staticRC.isMovementReady()) {
+//                //Direction dir = Pathfinding.bugBFS(bestTile.getMapLocation());
+//                Direction dir = staticRC.getLocation().directionTo(bestTile.getMapLocation());
+//                if (staticRC.canMove(dir) && staticRC.getLocation().add(dir).isWithinDistanceSquared(closestUnfilledPatternCenter, 4)) staticRC.move(dir);
+//                if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
+//            }
+//        }
     }
 
     //TODO: implement congestion control and prio q
@@ -570,9 +569,11 @@ public class Soldier {
 
     //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
     public static boolean validateLocation(MapLocation loc) throws GameActionException {
-       // int price = Clock.getBytecodesLeft();
+        // int price = Clock.getBytecodesLeft();
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
-        if(tiles.length < 25) return false;
+        if(tiles.length < 25) {
+            return false;
+        }
 //        for(int i = 0; i < 25; i++) {
 //            if(!tiles[i].isPassable() || tiles[i].getPaint().isEnemy()) return false;
 //        }

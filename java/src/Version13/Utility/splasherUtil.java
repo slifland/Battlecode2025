@@ -2,10 +2,10 @@ package Version13.Utility;
 
 import battlecode.common.*;
 
-import static Version13.Robots.RobotPlayer.nearbyTiles;
+import static Version13.RobotPlayer.nearbyTiles;
 
 import static Version13.Robots.Splasher.nearestUnfilledRuin;
-import static Version13.Robots.RobotPlayer.staticRC;
+import static Version13.RobotPlayer.staticRC;
 
 public class splasherUtil {
     //static final int 3 = 3;

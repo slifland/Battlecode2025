@@ -1,7 +1,7 @@
 package Version13.Pathfinding;
 
 import battlecode.common.*;
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 public class Pathfinding
 {
     //Bug nav variables

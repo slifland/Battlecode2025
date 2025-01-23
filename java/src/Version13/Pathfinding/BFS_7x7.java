@@ -4,7 +4,7 @@ import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 public class BFS_7x7
 {

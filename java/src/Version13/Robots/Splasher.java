@@ -10,7 +10,7 @@ import battlecode.common.*;
 
 import static Version13.Misc.Communication.*;
 
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 enum splasherStates {
     navigate, refill, contest
@@ -93,7 +93,7 @@ public class Splasher {
             curObjective = null;
             navTarget = null;
         }
-        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry) {
+        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
                 case navState.horizontal -> {
                     if(knownSymmetry != Symmetry.Horizontal) {

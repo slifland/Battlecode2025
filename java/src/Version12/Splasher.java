@@ -90,7 +90,7 @@ public class Splasher {
             curObjective = null;
             navTarget = null;
         }
-        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry) {
+        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
                 case navState.horizontal -> {
                     if(knownSymmetry != Symmetry.Horizontal) {

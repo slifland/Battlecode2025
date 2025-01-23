@@ -1,7 +1,10 @@
-package Version13.Robots;
+package Version13;
 
 import Version13.Misc.Communication;
 import Version13.Micro.SpawnMicro;
+import Version13.Robots.Mopper;
+import Version13.Robots.Soldier;
+import Version13.Robots.Splasher;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
 import battlecode.common.UnitType;
@@ -304,7 +307,7 @@ public class RobotPlayer {
         else {
             soldierScore = 2;
             mopperScore = 2;
-            splasherScore = 2;
+            splasherScore = 3;
             if(adjustedMapSize <= 8) {
                 int adjustment = (int) (8 - adjustedMapSize);
                 mopperScore += adjustment;

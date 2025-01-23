@@ -1,7 +1,7 @@
 package Version13.Micro;
 
 import battlecode.common.*;
-import static Version13.Robots.RobotPlayer.staticRC;
+import static Version13.RobotPlayer.staticRC;
 
 public class SpawnMicro {
     //spawn according to these priorities:

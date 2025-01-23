@@ -1,9 +1,9 @@
 package Version13.Utility;
-import Version13.Robots.RobotPlayer;
+import Version13.RobotPlayer;
 import battlecode.common.*;
 
 import static Version13.Robots.Mopper.*;
-import static Version13.Robots.RobotPlayer.*;
+import static Version13.RobotPlayer.*;
 
 public class MopperUtil {
 
