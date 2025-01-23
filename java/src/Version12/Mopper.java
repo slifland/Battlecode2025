@@ -271,35 +271,25 @@ public class Mopper {
         //updates turn by turn variables
         averageEnemyPaint = null;
         needsClearing = false;
-        int count = 0;
-        int x = 0;
-        int y = 0;
-        //boolean hasSeenNoWall = false;
-        for(MapInfo tile : nearbyTiles) {
-            Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
-//            if(tile.hasRuin() && !rc.canSenseRobotAtLocation(tile.getMapLocation())){
-//                nearbyRuin = tile.getMapLocation();
+
+        int price = Clock.getBytecodesLeft();
+//        for(MapInfo tile : nearbyTiles) {
+//            Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
+//            if(knownSymmetry == RobotPlayer.Symmetry.Unknown) {
+//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
 //            }
-            if(knownSymmetry == Symmetry.Unknown) {
-                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-            }
-            if(tile.getPaint().isEnemy() && /*(hasSeenNoWall || */!Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation()))/*)*/ {
-                if(!needsClearing && nearbyRuin != null && tile.getMapLocation().isWithinDistanceSquared(nearbyRuin, 8)) {
-                    needsClearing = true;
-                }
-                x += tile.getMapLocation().x;
-                y += tile.getMapLocation().y;
-                count++;
-                //hasSeenNoWall = true;
-                //rc.setIndicatorDot(tile.getMapLocation(), 255, 0, 0);
-            }
-//            else if (tile.getPaint().isEnemy()){
-//                rc.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
+//            if(tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(rc, tile.getMapLocation())) {
+//                if(!needsClearing && nearbyRuin != null && tile.getMapLocation().isWithinDistanceSquared(nearbyRuin, 8)) {
+//                    needsClearing = true;
+//                }
+//                x += tile.getMapLocation().x;
+//                y += tile.getMapLocation().y;
+//                count++;
 //            }
-        }
-        numEnemyTiles = count;
-        averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
+//        }
+        //if(nearbyTiles.length != 69)System.out.println(nearbyTiles.length);
+        MopperUtil.scanNearbyTiles(rc);
     }
 
 

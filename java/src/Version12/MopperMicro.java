@@ -582,6 +582,10 @@ public class MopperMicro {
                 bestMicro = m;
                 continue;
             }
+
+            if(rng.nextInt(2) == 0) {
+                bestMicro = m;
+            }
         }
         if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
     }
@@ -647,6 +651,10 @@ public class MopperMicro {
             if(bestMicro.minDistanceToEnemy <= 2 && m.minDistanceToEnemy > 2) {
                 bestMicro = m;
                 continue;
+            }
+
+            if(rng.nextInt(2) == 0) {
+                bestMicro = m;
             }
         }
         if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));

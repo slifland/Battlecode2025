@@ -50,6 +50,7 @@ public class Utilities
                 totalAlly++;
             }
         }
+        if(rc.getMoney() > 7000) paintScore += 2;
         if(totalAlly == 0) return null;
         if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
         else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;
@@ -342,10 +343,10 @@ public class Utilities
             yOffset *= -1;
         }
 
-        if(Sector.getSector(rc, new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset)) < 0)
-        {
-            System.out.println(currentLocation + " " +  new MapLocation(currentLocation.x + origX, currentLocation.y + origY));
-        }
+//        if(Sector.getSector(rc, new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset)) < 0)
+//        {
+//            System.out.println(currentLocation + " " +  new MapLocation(currentLocation.x + origX, currentLocation.y + origY));
+//        }
 
         return new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset);
     }

@@ -5,6 +5,8 @@ import battlecode.common.*;
 import static Version12.RobotPlayer.rng;
 import static Version12.Communication.alliedPaintTowers;
 import static Version12.RobotPlayer.*;
+import static Version12.SoldierUtil.needsHelp;
+import static Version12.SoldierUtil.validateRuinClaim;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -25,14 +27,11 @@ public class Soldier {
     static MapLocation closestUnclaimedRuin; //keeps track of the closest unclaimed ruin we know of
     static MapLocation closestUnfilledPatternCenter;
     static MapLocation closestEnemyTower;
-    static boolean canSeeEmpty;
+    //static boolean canSeeEmpty;
     static MapLocation fillingStation;
     static MapLocation claimedRuin = null;
     static int numEnemyTiles;
     static boolean visitingCorner = false;
-    static boolean[][] sectors;
-    static int sector_sizeX;
-    static int sector_sizeY;
     static boolean beenToCorner = false;
     static MapInfo[] tilesNearRuin;
     public static RobotInfo seenEnemyTower;
@@ -44,12 +43,14 @@ public class Soldier {
     static boolean[][] invalidResourceCenters;
     static boolean canFinishPattern =false;
 
+    //static int failedPlacementLocations = 0;
+    //static int minDistanceToValidLocation = Integer.MAX_VALUE;
+
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
-    //static MapLocation currentSector;
 
     public static MapLocation averageEnemyPaint;
 
-
+    static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
     final static int refillThreshold = 20;    //Paint level at which soldiers go to refill
     final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
@@ -147,38 +148,7 @@ public class Soldier {
         EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
 
     }
-    //initalizes the sector array to be the right size, and full of falses
-    private static void initializeSectors(RobotController rc) throws GameActionException{
-        int sizeX = 2 + rc.getMapWidth() / 10;
-        int sizeY = 2 + rc.getMapHeight() / 10;
-        sector_sizeX = sizeX;
-        sector_sizeY = sizeY;
-        int width = rc.getMapWidth() / sizeX;
-        if(rc.getMapWidth() % sizeX != 0) width++;
-        int height = rc.getMapHeight() / sizeY;
-        if(rc.getMapHeight() % sizeY != 0) height++;
-        sectors = new boolean[width][height];
-    }
 
-    //returns the coordinates of the sector in an array (width)(height)
-    private static int[] getSector(MapLocation m) {
-
-        return new int[] {m.x / sector_sizeX, m.y / sector_sizeY};
-    }
-
-
-    //gets a random location within a given sector
-    private static MapLocation getRandomLocationInSector(RobotController rc, int x, int y) {
-        MapLocation ran = new MapLocation(x * sector_sizeX + (rc.getMapWidth() / sector_sizeX), y * sector_sizeY + (rc.getMapHeight() / sector_sizeY));
-        int i = 0;
-        while(!rc.onTheMap(ran)) {
-            ran = new MapLocation(x * sector_sizeX + rng.nextInt(rc.getMapWidth() / sector_sizeX), y * sector_sizeY + rng.nextInt(rc.getMapHeight() / sector_sizeY));
-            if(i++ > 20) {
-                return new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
-            }
-        }
-        return ran;
-    }
 
     static void updateInfo(RobotController rc) throws GameActionException
     {
@@ -191,90 +161,74 @@ public class Soldier {
 //        if(claimedRuin != null && rc.getRoundNum() % VALIDATE_RUIN_CLAIM_FREQUENCY == 0) {
 //            validateRuinClaim(rc);
 //        }
+        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
+            closestEnemyTower = closestEnemyTower(rc);
+        }
         closestUnclaimedRuin = closestUnclaimedRuin(rc);
-        closestEnemyTower = closestEnemyTower(rc);
-        int enemyCount = 0;
-        int x = 0;
-        int y = 0;
-        int resourcePatternDist = Integer.MAX_VALUE;
-        int failedPlacementLocations = 0;
-        int minDistanceToValidLocation = Integer.MAX_VALUE;
+        SoldierUtil.scanNearbyTilesSoldier(rc);
+//        int enemyCount = 0;
+//        int x = 0;
+//        int y = 0;
+//        int resourcePatternDist = Integer.MAX_VALUE;
+//        int failedPlacementLocations = 0;
+//        int minDistanceToValidLocation = Integer.MAX_VALUE;
         //int minDistanceToCustomPatternCenter = Integer.MAX_VALUE;
         //do all the tasks which require looping through all nearbyTiles
-        for(MapInfo tile : nearbyTiles) {
-            if(knownSymmetry == Symmetry.Unknown) {
-                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-            }
-            MapLocation tileLoc = tile.getMapLocation();
-            if(tile.getPaint().isEnemy()) {
-                x += tileLoc.x;
-                y += tileLoc.y;
-                enemyCount++;
-            }
-            else if(!canSeeEmpty && !tile.getPaint().isAlly()) {
-                canSeeEmpty = true;
-            }
-            if(tile.getMark().isAlly() && !tile.isResourcePatternCenter() && rc.getLocation().distanceSquaredTo(tileLoc) < resourcePatternDist) {
-                closestUnfilledPatternCenter = tileLoc;
-                resourcePatternDist = rc.getLocation().distanceSquaredTo(tileLoc);
-            }
-            if(tile.getMark() == PaintType.ALLY_SECONDARY || tile.getMark() == PaintType.ALLY_PRIMARY){
-                int dist = rc.getLocation().distanceSquaredTo(tileLoc);
-                if(dist < minDistanceToValidLocation) {
-                    minDistanceToValidLocation = dist;
-                }
-                if(rc.canCompleteResourcePattern(tile.getMapLocation())) rc.completeResourcePattern(tile.getMapLocation());
-//                if(tile.getMark().isSecondary() && dist < minDistanceToCustomPatternCenter) {
-//                    minDistanceToCustomPatternCenter = dist;
-//                    closestCustomPattern = tileLoc;
+//        for(MapInfo tile : nearbyTiles) {
+//            if(knownSymmetry == Symmetry.Unknown) {
+//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+//                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+//            }
+//            MapLocation tileLoc = tile.getMapLocation();
+//            if(tile.getPaint().isEnemy()) {
+//                x += tileLoc.x;
+//                y += tileLoc.y;
+//                enemyCount++;
+//            }
+//            PaintType mark = tile.getMark();
+//            int dist = rc.getLocation().distanceSquaredTo(tileLoc);
+//            if(mark.isAlly()) {
+//                if (!tile.isResourcePatternCenter() && dist < resourcePatternDist) {
+//                    closestUnfilledPatternCenter = tileLoc;
+//                    resourcePatternDist = dist;
 //                }
-            }
-            if(tile.getMark() == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                //if(rc.canCompleteResourcePattern(tileLoc)) rc.completeResourcePattern(tileLoc);
-                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc)) {
-                    int dist = rc.getLocation().distanceSquaredTo(tileLoc);
-                    if(dist < minDistanceToValidLocation) {
-                        minDistanceToValidLocation = dist;
-                    }
-                    if(rc.canMark(tile.getMapLocation())) {
-                        rc.mark(tile.getMapLocation(), false);
-                        closestUnfilledPatternCenter = tile.getMapLocation();
-                    }
-                }
-                else {
-                    failedPlacementLocations++;
-                    //rc.setIndicatorDot(tileLoc, 255, 255, 255);
-                }
-            }
-        }
-        if(failedPlacementLocations >= 4 && minDistanceToValidLocation >= 25) {
-            if(validatePlacement(rc, rc.getLocation())) {
-                if(rc.canMark(rc.getLocation())) {
-                    rc.mark(rc.getLocation(), true);
-                    closestUnfilledPatternCenter = rc.getLocation();
-                }
-            }
-        }
-        numEnemyTiles = enemyCount;
-        averageEnemyPaint = (enemyCount != 0) ? new MapLocation(x/enemyCount, y/enemyCount) : null;
-        if(claimedRuin != null && rc.canSenseLocation(claimedRuin) && rc.canSenseRobotAtLocation(claimedRuin)) {
-            claimedRuin = null;
-        }
+//                if (dist < minDistanceToValidLocation) {
+//                    minDistanceToValidLocation = dist;
+//                }
+//                if (rc.canCompleteResourcePattern(tile.getMapLocation()))
+//                    rc.completeResourcePattern(tile.getMapLocation());
+//            }
+//            else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
+//                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(rc, tileLoc)) {
+//                    if(dist < minDistanceToValidLocation) {
+//                        minDistanceToValidLocation = dist;
+//                    }
+//                    if(rc.canMark(tile.getMapLocation())) {
+//                        rc.mark(tile.getMapLocation(), false);
+//                        closestUnfilledPatternCenter = tile.getMapLocation();
+//                    }
+//                }
+//                else {
+//                    failedPlacementLocations++;
+//                    //rc.setIndicatorDot(tileLoc, 255, 255, 255);
+//                }
+//            }
+//        }
+//        if(failedPlacementLocations >= 4 && minDistanceToValidLocation >= 25) {
+//            if(validatePlacement(rc, rc.getLocation())) {
+//                if(rc.canMark(rc.getLocation())) {
+//                    rc.mark(rc.getLocation(), true);
+//                    closestUnfilledPatternCenter = rc.getLocation();
+//                }
+//            }
+//        }
+//        numEnemyTiles = enemyCount;
+//        averageEnemyPaint = (enemyCount != 0) ? new MapLocation(x/enemyCount, y/enemyCount) : null;
+//        if(claimedRuin != null && rc.canSenseLocation(claimedRuin) && rc.canSenseRobotAtLocation(claimedRuin)) {
+//            claimedRuin = null;
+//        }
     }
 
-    //checks whether we should still "claim" this ruin
-    //if there is an obstacle stopping us from completing it, then we should abandon t
-    public static void validateRuinClaim(RobotController rc) throws GameActionException {
-        if(rc.getLocation().distanceSquaredTo(claimedRuin) <= 8) {
-            for(MapInfo tile : tilesNearRuin) {
-                if(tile.getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-        }
-    }
 
 
     //sets the state for the soldier for this round
@@ -295,9 +249,9 @@ public class Soldier {
         }
         canFinishPattern = false;
         canFinishRuin = false;
+        fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
-        fillingStation = null;
         //check if we see any nearby unclaimed ruins
         if(rc.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(rc, closestUnclaimedRuin)) {
             state = SoldierState.RuinBuilding;
@@ -316,7 +270,7 @@ public class Soldier {
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {
             if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25 || rc.getNumberTowers() == 25) && validateLocation(rc, closestUnfilledPatternCenter)) {
-                if(rc.getRoundNum() > TURN_TO_FILL)state = SoldierState.Fill;
+                if(rc.getRoundNum() > TURN_TO_FILL) state = SoldierState.Fill;
             }
         }
     }
@@ -371,7 +325,7 @@ public class Soldier {
             if(dir != null && rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
         }
-        else if (rc.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS && !Communication.enemyTowers.isEmpty()) {
+        else if (rc.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS /*!Communication.enemyTowers.isEmpty()*/ && closestEnemyTower != null) {
             Direction dir = Pathfinding.bugBFS(rc, closestEnemyTower);
             if(dir != null && rc.canMove(dir)) rc.move(dir);
             attemptFill(rc);
@@ -550,6 +504,7 @@ public class Soldier {
     public static boolean[][] chooseDesiredPattern(RobotController rc, MapLocation m) throws GameActionException {
         //if(enemyRobots.length >= 1) return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         int ranNum = (rc.getRoundNum() < FORCE_MONEY_ROUND) ? 0 : rng.nextInt(2);
+        if(rc.getRoundNum() > FORCE_MONEY_ROUND && rc.getMoney() > 5000) return rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
         if(ranNum == 0) {
             return (rc.getMapHeight() * rc.getMapWidth() <= 750 && rc.getRoundNum() > 100) ? rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         }
@@ -732,33 +687,6 @@ public class Soldier {
         return x >= 2 && x <= mapWidth - 2 && y >= 2 && y <= mapHeight - 2;
     }
 
-
-
-    //generates a random location of a nearby sector you haven't explored
-    static MapLocation generateExploreLocation(RobotController rc)
-    {
-        int xOffset = (rng.nextInt(2) == 0 ) ? rng.nextInt(3) : -rng.nextInt(3);
-        int yOffset = (rng.nextInt(2) == 0) ?  rng.nextInt(3) : -rng.nextInt(3);
-        int[] sector = getSector(rc.getLocation());
-        int x = sector[0];
-        int y = sector[1];
-        int i = 0;
-        while(x + xOffset < 0 || x + xOffset >= sectors.length || y + yOffset < 0 || y + yOffset >= sectors[0].length || sectors[x + xOffset][y + yOffset]) {
-            xOffset = rng.nextInt(3) - 1;
-            yOffset = rng.nextInt(3) - 1;
-            if(i++ > 20) {
-                return new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
-            }
-        }
-        return getRandomLocationInSector(rc, x + xOffset, y + yOffset);
-    }
-
-    //sets the relevant sector in hasTraveled to true if we are in a sector we haven't seen before
-//    public static void recordSector(RobotController rc) {
-//        int[] sector = getSector(rc.getLocation());
-//        sectors[sector[0]][sector[1]] = true;
-//    }
-
     static void paintMove(RobotController rc, MapLocation target, boolean isSecondary) throws GameActionException
     {
         Direction directionToMove = Pathfinding.bugBFS(rc, target);
@@ -841,37 +769,6 @@ public class Soldier {
         }
         if(temp == fillingStation) return null;
         return temp;
-    }
-
-    //checks whether a ruin is claimed, but also if it needs help
-    public static boolean needsHelp(RobotController rc, MapLocation ruin) throws GameActionException {
-        neededToFinish = 0;
-        canFinishRuin = false;
-        tilesNearRuin = rc.senseNearbyMapInfos(ruin, 8);
-        boolean hasEmpty = false;
-        boolean[][] pattern = Utilities.inferPatternFromExistingSpots(rc, ruin, tilesNearRuin);
-        for(MapInfo tile : tilesNearRuin) {
-            if(!tile.isPassable()) continue;
-            if(tile.getPaint().isEnemy()){
-                return false;
-            }
-            else if(!hasEmpty) {
-                if (tile.getPaint() == PaintType.EMPTY) {
-                    neededToFinish++;
-                    hasEmpty = true;
-                }
-                if (pattern != null && tile.getPaint().isAlly() && Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin) != tile.getPaint().isSecondary()) {
-                    neededToFinish++;
-                    hasEmpty = true;
-                }
-            }
-        }
-        if(neededToFinish * 5 < rc.getPaint()) canFinishRuin = true;
-        if(hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))) return true;
-        //int dist = rc.getLocation().distanceSquaredTo(ruin);
-        //if((dist <= 8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 1) || (dist >8 && rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0)) return true;
-        if(rc.senseNearbyRobots(ruin, 8, rc.getTeam()).length == 0) return true;
-        return false;
     }
 
     //returns whether a ruin is completely tiled in, and just waiting for completion
@@ -1024,7 +921,7 @@ public class Soldier {
             }
         }
     }
-    
+
 
 //    //tries to move to an adjacent ally or non enemy tile
 //    public static void moveToSafety(RobotController rc) throws GameActionException{

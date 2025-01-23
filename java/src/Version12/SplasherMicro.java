@@ -329,6 +329,12 @@ public class SplasherMicro {
                 continue;
             }
 
+            if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
+            if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
+                bestMicro = m;
+                continue;
+            }
+
             //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
             if(bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
             if(bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
@@ -343,17 +349,16 @@ public class SplasherMicro {
                 continue;
             }
 
-            if(bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
-            if(bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
-                bestMicro = m;
-                continue;
-            }
 
             //finally, lets try not to be directly next to an enemy
             if(bestMicro.minDistanceToEnemy > 2 && m.minDistanceToEnemy <= 2) continue;
             if(bestMicro.minDistanceToEnemy <= 2 && m.minDistanceToEnemy > 2) {
                 bestMicro = m;
                 continue;
+            }
+
+            if(rng.nextInt(2) == 0) {
+                bestMicro = m;
             }
         }
         if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));

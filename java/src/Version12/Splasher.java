@@ -36,7 +36,7 @@ public class Splasher {
 
     static boolean exploredSymmetry = false;
 
-    static int uselessTurnsCount = 0;
+    static int refreshedCount = 0;
 
 
 
@@ -61,6 +61,8 @@ public class Splasher {
         if(turnsSincePaintRefresh >= PAINT_AVERAGE_REFRESH || Clock.getBytecodesLeft() > 4000) {
             refreshPaintAverages(rc);
             turnsSincePaintRefresh = 0;
+            //refreshedCount++;
+            //System.out.println(turnCount + " : " + refreshedCount);
         }
         else {
             turnsSincePaintRefresh++;

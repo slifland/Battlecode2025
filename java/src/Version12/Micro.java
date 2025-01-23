@@ -126,9 +126,10 @@ public class Micro {
             bestAttack = bestRuinAttack(rc, desiredPattern, tilesToFill, ruin);
             if (bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
-        if(bestAttack == null && rc.getChips() > 1000) {
+        if(bestAttack == null && rc.getChips() > 1000 && rc.isMovementReady()) {
             Direction dir = Pathfinding.bugBFS(rc, ruin);
             if(rc.canMove(dir)) rc.move(dir);
+            Soldier.attemptCompleteTowerPattern(rc, ruin);
             return;
         }
         if(rc.isMovementReady()) {
@@ -194,6 +195,10 @@ public class Micro {
                         bestMicro = microArray[i];
                         break;
                     }
+
+                    if (rng.nextInt(2) == 0) {
+                        bestMicro = microArray[i];
+                    }
                 } while(false);
             }
             if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
@@ -224,6 +229,52 @@ public class Micro {
         if(rc.isMovementReady()) {
             populateMicroArrayRuin(rc, refillLoc);
             microInfo bestMicro = microArray[0];
+//            for (int i = 1; i < 9; i++) {
+//                do {
+//                    //if one space is passable and the other is not, then passable is better
+//                    if (!microArray[i].passable) break;
+//                    if (!bestMicro.passable) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if (canRefill) {
+//                        int distToRefill = bestMicro.loc.distanceSquaredTo(refillLoc);
+//                        int altDistToRefill = microArray[i].loc.distanceSquaredTo(refillLoc);
+//                        if (distToRefill < altDistToRefill && altDistToRefill > 2) break;
+//                        if (altDistToRefill < distToRefill && distToRefill > 2) {
+//                            bestMicro = microArray[i];
+//                        }
+//                    }
+//
+//                    //look at which place will lose us the least paint at the end of this turn
+//                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+//                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//                    //regardless of action readiness, the next considerations are unified:
+//                    //we prioritize allied paint over neutral paint over enemy paint
+//                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+//                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+//                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+//                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+//                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//                } while (false);
+//            }
             for (int i = 1; i < 9; i++) {
                 do {
                     //if one space is passable and the other is not, then passable is better
@@ -409,74 +460,534 @@ public class Micro {
     public static Direction runSoldierMicro(RobotController rc) throws GameActionException {
         int health = rc.getHealth();
         microInfo bestMicro = microArray[0];
-        for(int i = 1; i < 9; i++) {
+//        for(int i = 1; i < 9; i++) {
+//            do {
+//                //if one space is passable and the other is not, then passable is better
+//                if (!microArray[i].passable) break;
+//                if (!bestMicro.passable) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//
+//                //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
+//                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+//                    //we are fine being in tower range as long as we can attack, because we have enough health
+//                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) break;
+//                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//                }
+//                //definitely don't be in tower range!
+//                else {
+//                    //check if one space is in tower range and the other isn't
+//                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) break;
+//                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                }
+//                //look at which place will lose us the least paint at the end of this turn
+//                if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+//                if (microArray[i].paintLoss < bestMicro.paintLoss) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//                //regardless of action readiness, the next considerations are unified:
+//                //we prioritize allied paint over neutral paint over enemy paint
+//                if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+//                if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//
+//                if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+//                if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//
+//                //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+//                if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+//                if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//
+//                if(bestMicro.distanceToEnemyAverage < microArray[i].distanceToEnemyAverage) break;
+//                if(microArray[i].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+//                    bestMicro = microArray[i];
+//                    break;
+//                }
+//
+//                if(rng.nextInt(2) == 0) {
+//                    bestMicro = microArray[i];
+//                }
+//            } while(false);
+//
+//           // at this point, nothing more to consider - unclear how minDistance to enemy would affect soldier micro
+//        }
+        // Unrolling the loop for i = 1 to 8
+        {
+            // i = 1
             do {
-                //if one space is passable and the other is not, then passable is better
-                if (!microArray[i].passable) break;
+                if (!microArray[1].passable) break;
                 if (!bestMicro.passable) {
-                    bestMicro = microArray[i];
+                    bestMicro = microArray[1];
                     break;
                 }
 
-                //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
                 if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
-                    //we are fine being in tower range as long as we can attack, because we have enough health
-                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) break;
-                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) {
-                        bestMicro = microArray[i];
+                    if (bestMicro.inTowerRange && !microArray[1].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[1].inTowerRange) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[1].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[1].inTowerRange) {
+                        bestMicro = microArray[1];
                         break;
                     }
                 }
-                //definitely don't be in tower range!
-                else {
-                    //check if one space is in tower range and the other isn't
-                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) break;
-                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) {
-                        bestMicro = microArray[i];
-                        break;
-                    }
 
-                }
-                //look at which place will lose us the least paint at the end of this turn
-                if (bestMicro.paintLoss < microArray[i].paintLoss) break;
-                if (microArray[i].paintLoss < bestMicro.paintLoss) {
-                    bestMicro = microArray[i];
-                    break;
-                }
-                //regardless of action readiness, the next considerations are unified:
-                //we prioritize allied paint over neutral paint over enemy paint
-                if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
-                if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
-                    bestMicro = microArray[i];
+                if (bestMicro.paintLoss < microArray[1].paintLoss) break;
+                if (microArray[1].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[1];
                     break;
                 }
 
-                if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
-                if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
-                    bestMicro = microArray[i];
+                if (bestMicro.paint.isAlly() && !microArray[1].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[1].paint.isAlly()) {
+                    bestMicro = microArray[1];
                     break;
                 }
 
-                //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-                if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
-                if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
-                    bestMicro = microArray[i];
+                if (!bestMicro.paint.isEnemy() && microArray[1].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[1].paint.isEnemy()) {
+                    bestMicro = microArray[1];
                     break;
                 }
 
-                if(bestMicro.distanceToEnemyAverage < microArray[i].distanceToEnemyAverage) break;
-                if(microArray[i].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
-                    bestMicro = microArray[i];
+                if (bestMicro.adjacentAllies < microArray[1].adjacentAllies) break;
+                if (microArray[1].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[1];
                     break;
                 }
 
-                if(rng.nextInt(2) == 0) {
-                    bestMicro = microArray[i];
+                if (bestMicro.distanceToEnemyAverage < microArray[1].distanceToEnemyAverage) break;
+                if (microArray[1].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[1];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[1];
                 }
             } while(false);
 
-           // at this point, nothing more to consider - unclear how minDistance to enemy would affect soldier micro
+            // i = 2
+            do {
+                if (!microArray[2].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[2].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[2].inTowerRange) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[2].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[2].inTowerRange) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[2].paintLoss) break;
+                if (microArray[2].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[2].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[2].paint.isAlly()) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[2].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[2].paint.isEnemy()) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[2].adjacentAllies) break;
+                if (microArray[2].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[2].distanceToEnemyAverage) break;
+                if (microArray[2].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[2];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[2];
+                }
+            } while(false);
+
+            // i = 3
+            do {
+                if (!microArray[3].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[3].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[3].inTowerRange) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[3].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[3].inTowerRange) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[3].paintLoss) break;
+                if (microArray[3].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[3].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[3].paint.isAlly()) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[3].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[3].paint.isEnemy()) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[3].adjacentAllies) break;
+                if (microArray[3].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[3].distanceToEnemyAverage) break;
+                if (microArray[3].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[3];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[3];
+                }
+            } while(false);
+
+            // i = 4
+            do {
+                if (!microArray[4].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[4].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[4].inTowerRange) {
+                        bestMicro = microArray[4];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[4].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[4].inTowerRange) {
+                        bestMicro = microArray[4];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[4].paintLoss) break;
+                if (microArray[4].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[4].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[4].paint.isAlly()) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[4].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[4].paint.isEnemy()) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[4].adjacentAllies) break;
+                if (microArray[4].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[4].distanceToEnemyAverage) break;
+                if (microArray[4].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[4];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[4];
+                }
+            } while(false);
+
+            // i = 5
+            do {
+                if (!microArray[5].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[5].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[5].inTowerRange) {
+                        bestMicro = microArray[5];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[5].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[5].inTowerRange) {
+                        bestMicro = microArray[5];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[5].paintLoss) break;
+                if (microArray[5].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[5].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[5].paint.isAlly()) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[5].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[5].paint.isEnemy()) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[5].adjacentAllies) break;
+                if (microArray[5].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[5].distanceToEnemyAverage) break;
+                if (microArray[5].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[5];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[5];
+                }
+            } while(false);
+
+            // i = 6
+            do {
+                if (!microArray[6].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[6].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[6].inTowerRange) {
+                        bestMicro = microArray[6];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[6].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[6].inTowerRange) {
+                        bestMicro = microArray[6];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[6].paintLoss) break;
+                if (microArray[6].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[6].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[6].paint.isAlly()) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[6].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[6].paint.isEnemy()) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[6].adjacentAllies) break;
+                if (microArray[6].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[6].distanceToEnemyAverage) break;
+                if (microArray[6].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[6];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[6];
+                }
+            } while(false);
+
+            // i = 7
+            do {
+                if (!microArray[7].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[7].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[7].inTowerRange) {
+                        bestMicro = microArray[7];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[7].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[7].inTowerRange) {
+                        bestMicro = microArray[7];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[7].paintLoss) break;
+                if (microArray[7].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[7].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[7].paint.isAlly()) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[7].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[7].paint.isEnemy()) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[7].adjacentAllies) break;
+                if (microArray[7].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[7].distanceToEnemyAverage) break;
+                if (microArray[7].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[7];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[7];
+                }
+            } while(false);
+
+            // i = 8
+            do {
+                if (!microArray[8].passable) break;
+                if (!bestMicro.passable) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing)) {
+                    if (bestMicro.inTowerRange && !microArray[8].inTowerRange) break;
+                    if (!bestMicro.inTowerRange && microArray[8].inTowerRange) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+                } else {
+                    if (!bestMicro.inTowerRange && microArray[8].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[8].inTowerRange) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+                }
+
+                if (bestMicro.paintLoss < microArray[8].paintLoss) break;
+                if (microArray[8].paintLoss < bestMicro.paintLoss) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (bestMicro.paint.isAlly() && !microArray[8].paint.isAlly()) break;
+                if (!bestMicro.paint.isAlly() && microArray[8].paint.isAlly()) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (!bestMicro.paint.isEnemy() && microArray[8].paint.isEnemy()) break;
+                if (bestMicro.paint.isEnemy() && !microArray[8].paint.isEnemy()) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (bestMicro.adjacentAllies < microArray[8].adjacentAllies) break;
+                if (microArray[8].adjacentAllies < bestMicro.adjacentAllies) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (bestMicro.distanceToEnemyAverage < microArray[8].distanceToEnemyAverage) break;
+                if (microArray[8].distanceToEnemyAverage < bestMicro.distanceToEnemyAverage) {
+                    bestMicro = microArray[8];
+                    break;
+                }
+
+                if (rng.nextInt(2) == 0) {
+                    bestMicro = microArray[8];
+                }
+            } while(false);
         }
+
+
         return (bestMicro.passable) ? rc.getLocation().directionTo(bestMicro.loc) : Direction.CENTER;
     }
 
