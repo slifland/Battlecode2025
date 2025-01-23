@@ -125,7 +125,8 @@ public class Micro {
             if (bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack, Utilities.getColorFromCustomPattern(bestAttack, desiredPattern, ruin));
         }
         if(bestAttack == null && staticRC.getChips() > 1000 && staticRC.isMovementReady()) {
-            Direction dir = Pathfinding.bugBFS(ruin);
+            //Direction dir = Pathfinding.bugBFS(ruin);
+            Direction dir = staticRC.getLocation().directionTo(ruin);
             if(staticRC.canMove(dir)) staticRC.move(dir);
             Soldier.attemptCompleteTowerPattern(ruin);
             return;

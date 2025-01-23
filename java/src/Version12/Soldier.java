@@ -404,7 +404,8 @@ public class Soldier {
         if (bestTile != null) {
             if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
             else if (staticRC.isMovementReady()) {
-                Direction dir = Pathfinding.bugBFS(bestTile.getMapLocation());
+                //Direction dir = Pathfinding.bugBFS(bestTile.getMapLocation());
+                Direction dir = staticRC.getLocation().directionTo(bestTile.getMapLocation());
                 if (staticRC.canMove(dir) && staticRC.getLocation().add(dir).isWithinDistanceSquared(closestUnfilledPatternCenter, 5)) staticRC.move(dir);
                 if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
             }
