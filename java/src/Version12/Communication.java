@@ -85,14 +85,14 @@ public class Communication
     /*
         Process all incoming messages for robots
     */
-    public static void processMessagesRobot()
+    public static void processMessagesRobot() throws GameActionException
     {
         for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
         {
             switch (m.getBytes() & 0b11)
             {
                 case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                //case 0b01 ->
+                case 0b01 -> updateExploreLocation(m);
             }
         }
     }
@@ -150,6 +150,22 @@ public class Communication
 
         sendRuinLocationsToTower(tower[rng.nextInt(0, i)]);
     }
+
+    public static int createExploreLocationMessage(MapLocation location)
+    {
+        int message = 0b01;
+        message |= location.x << 2;
+        message |= location.y << 8;
+        return message;
+    }
+
+    public static void updateExploreLocation(Message m) throws GameActionException
+    {
+        int message = m.getBytes();
+        exploreTarget = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
+        System.out.println(exploreTarget);
+    }
+
 
     /*
         Scan for nearby ruin locations and update ruinsMemory as necessary

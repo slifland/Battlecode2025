@@ -134,6 +134,8 @@ public class Pathfinding
             obstacles.setTurnDirection(currentLocation, !previousDirection);
             return !previousDirection;
         }
+
+        //return bestTurnDirection(destination);
     }
 
 
