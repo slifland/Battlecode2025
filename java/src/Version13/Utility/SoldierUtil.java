@@ -1,8 +1,9 @@
-package Version13;
+package Version13.Utility;
+import Version13.Robots.RobotPlayer;
 import battlecode.common.*;
 
-import static Version13.RobotPlayer.*;
-import static Version13.Soldier.*;
+import static Version13.Robots.RobotPlayer.*;
+import static Version13.Robots.Soldier.*;
 public class SoldierUtil {
     static boolean[][] pattern;
     static MapLocation ruin;

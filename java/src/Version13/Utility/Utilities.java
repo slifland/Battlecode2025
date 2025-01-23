@@ -1,8 +1,10 @@
-package Version13;
+package Version13.Utility;
 
+import Version13.Micro.MopperMicro;
+import Version13.Robots.Soldier;
 import battlecode.common.*;
 
-import static Version13.RobotPlayer.*;
+import static Version13.Robots.RobotPlayer.*;
 
 public class Utilities
 {

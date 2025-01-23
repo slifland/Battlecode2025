@@ -1,8 +1,11 @@
-package Version13;
+package Version13.Misc;
 
+import Version13.Robots.Mopper;
+import Version13.Robots.Soldier;
+import Version13.Robots.Splasher;
 import battlecode.common.*;
 
-import static Version13.RobotPlayer.*;
+import static Version13.Robots.RobotPlayer.*;
 
 import java.util.LinkedList;
 
@@ -50,10 +53,10 @@ public class Communication
     static final Queue sendQueue = new Queue();      //between robots and towers
     static final Queue broadcastRuinQueue = new Queue(); //between towers
 
-    static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
+    public static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
 
-    static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
-    static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
+    public static final LinkedList<Ruin> enemyTowers = new LinkedList<>();
+    public static final LinkedList<Ruin> alliedPaintTowers = new LinkedList<>();
 
     /*
         Stores Ruins based on their location for instant access

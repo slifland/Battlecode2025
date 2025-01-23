@@ -1,4 +1,4 @@
-package Version13;
+package Version13.Misc;
 
 import battlecode.common.*;
 

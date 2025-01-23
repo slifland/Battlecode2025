@@ -1,14 +1,18 @@
-package Version13;
+package Version13.Robots;
 
+import Version13.Misc.Communication;
+import Version13.Micro.Micro;
+import Version13.Pathfinding.Pathfinding;
+import Version13.Misc.Ruin;
+import Version13.Utility.SoldierUtil;
+import Version13.Utility.Utilities;
 import battlecode.common.*;
 
-import static Version13.RobotPlayer.rng;
-import static Version13.Communication.alliedPaintTowers;
-import static Version13.RobotPlayer.*;
-import static Version13.SoldierUtil.needsHelp;
-import static Version13.SoldierUtil.validateRuinClaim;
-import java.util.HashSet;
-import java.util.Map;
+import static Version13.Robots.RobotPlayer.rng;
+import static Version13.Misc.Communication.alliedPaintTowers;
+import static Version13.Robots.RobotPlayer.*;
+import static Version13.Utility.SoldierUtil.needsHelp;
+import static Version13.Utility.SoldierUtil.validateRuinClaim;
 
 public class Soldier {
     enum SoldierState {
@@ -20,52 +24,50 @@ public class Soldier {
         Fill
     }
 
-    static SoldierState state = SoldierState.Explore;
-    static MapLocation target;
-    //static HashSet<MapLocation> completedRuins = new HashSet<>();
-    //static MapLocation averageUnfilledLocation;
-    static MapLocation closestUnclaimedRuin; //keeps track of the closest unclaimed ruin we know of
-    static MapLocation closestUnfilledPatternCenter;
-    static MapLocation closestEnemyTower;
+    public static SoldierState state = SoldierState.Explore;
+    public static MapLocation target;
+    public static MapLocation closestUnclaimedRuin; //keeps track of the closest unclaimed ruin we know of
+    public static MapLocation closestUnfilledPatternCenter;
+    public static MapLocation closestEnemyTower;
     //static boolean canSeeEmpty;
-    static MapLocation fillingStation;
-    static MapLocation claimedRuin = null;
-    static int numEnemyTiles;
-    static boolean visitingCorner = false;
-    static boolean beenToCorner = false;
-    static MapInfo[] tilesNearRuin;
+    public static MapLocation fillingStation;
+    public static MapLocation claimedRuin = null;
+    public static int numEnemyTiles;
+    public static boolean visitingCorner = false;
+    public static boolean beenToCorner = false;
+    public static MapInfo[] tilesNearRuin;
     public static RobotInfo seenEnemyTower;
-    static boolean wallHug;
-    static boolean clockwise;
-    static boolean canFinishRuin = false;
-    static int neededToFinish = Integer.MAX_VALUE;
-    static MapLocation spawnLocation;
-    static boolean[][] invalidResourceCenters;
-    static boolean canFinishPattern =false;
+    public static boolean wallHug;
+    public static boolean clockwise;
+    public static boolean canFinishRuin = false;
+    public static int neededToFinish = Integer.MAX_VALUE;
+    public static MapLocation spawnLocation;
+    public static boolean[][] invalidResourceCenters;
+    public static boolean canFinishPattern =false;
 
-    static boolean checkedSymmetry = false;
-    static MapLocation oppositeHome = null;
+    public static boolean checkedSymmetry = false;
+    public static MapLocation oppositeHome = null;
 
     //static int failedPlacementLocations = 0;
     //static int minDistanceToValidLocation = Integer.MAX_VALUE;
 
-    static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
+    public static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
 
     public static MapLocation averageEnemyPaint;
 
-    static final int ENEMY_TOWER_REFRESH = 3;
+    public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
-    final static int refillThreshold = 20;    //Paint level at which soldiers go to refill
-    final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
+    public final static int refillThreshold = 20;    //Paint level at which soldiers go to refill
+    public final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
     //final static int REFRESH_ENEMY_PAINT_AVERAGES = 5;
-     static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
-    static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers
-    static int STOP_EXPLORING; //indicates when soldiers will began defaulting to navigate instead of explore
-    final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 20; //records how often we will checked if our ruin claim has been thwarted by enemies
-    static int TURN_TO_FILL; //turn at which filling becomes allowed
-    static int INCENTIVIZE_MONEY_ROUND; //turn at which any time before that soldiers will give a slight weight to building money towers
-    static int FORCE_MONEY_ROUND; //turn at which any time before that soldiers will always build money towers
-    static int START_RUSHING_TOWER_NUMBER; //indicate at which point we should start rushing because we just have too many towers and therefore prob too many robots
+    public static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
+    public static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers
+    public static int STOP_EXPLORING; //indicates when soldiers will began defaulting to navigate instead of explore
+    public final static int VALIDATE_RUIN_CLAIM_FREQUENCY = 20; //records how often we will checked if our ruin claim has been thwarted by enemies
+    public static int TURN_TO_FILL; //turn at which filling becomes allowed
+    public static int INCENTIVIZE_MONEY_ROUND; //turn at which any time before that soldiers will give a slight weight to building money towers
+    public static int FORCE_MONEY_ROUND; //turn at which any time before that soldiers will always build money towers
+    public static int START_RUSHING_TOWER_NUMBER; //indicate at which point we should start rushing because we just have too many towers and therefore prob too many robots
 
     public static void runSoldier() throws GameActionException
     {

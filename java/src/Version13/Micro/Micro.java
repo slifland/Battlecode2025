@@ -1,10 +1,10 @@
-package Version13;
+package Version13.Micro;
 
+import Version13.Robots.Soldier;
+import Version13.Utility.Utilities;
 import battlecode.common.*;
 
-import java.util.Arrays;
-
-import static Version13.RobotPlayer.*;
+import static Version13.Robots.RobotPlayer.*;
 
 class microInfo {
     boolean passable;

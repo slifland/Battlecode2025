@@ -1,13 +1,16 @@
-package Version13;
+package Version13.Robots;
 
+import Version13.Misc.Communication;
+import Version13.Micro.Micro;
+import Version13.Micro.SplasherMicro;
+import Version13.Pathfinding.Pathfinding;
+import Version13.Misc.Ruin;
+import Version13.Utility.Utilities;
 import battlecode.common.*;
 
-import static Version13.splasherUtil.*;
-import static Version13.Communication.*;
+import static Version13.Misc.Communication.*;
 
-import static Version13.RobotPlayer.*;
-
-import Version13.navState;
+import static Version13.Robots.RobotPlayer.*;
 
 enum splasherStates {
     navigate, refill, contest
@@ -18,7 +21,7 @@ public class Splasher {
 
     private static final int PAINT_TOWER_REFRESH = 25;
     private static final int PAINT_AVERAGE_REFRESH = 15;
-    static int turnsSincePaintRefresh = 0;
+    public static int turnsSincePaintRefresh = 0;
     private static final int CLOSEST_EMPTY_RUIN_REFRESH = 3;
 
     private static MapLocation curObjective;

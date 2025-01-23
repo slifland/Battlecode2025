@@ -1,8 +1,9 @@
-package Version13;
+package Version13.Micro;
 
+import Version13.Utility.Utilities;
 import battlecode.common.*;
-import static Version13.Mopper.*;
-import static Version13.RobotPlayer.*;
+import static Version13.Robots.Mopper.*;
+import static Version13.Robots.RobotPlayer.*;
 
 
 class mopperMicroInfo {

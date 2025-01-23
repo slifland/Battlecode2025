@@ -1,5 +1,8 @@
-package Version13;
+package Version13.Robots;
 
+import Version13.Misc.Communication;
+import Version13.Micro.SpawnMicro;
+import Version13.Utility.Utilities;
 import battlecode.common.*;
 import battlecode.common.UnitType;
 
@@ -25,28 +28,28 @@ public class RobotPlayer {
      * You can use static variables like this to save any information you want. Keep in mind that even though
      * these variables are static, in Battlecode they aren't actually shared between your robots.
      */
-    static int turnCount = 0;
-    static int soldiers = 0;
-    static int moppers = 0;
-    static int splashers = 0;
-    static int totalBuilt = 0;
-    static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
-    static int mapSize = 0;
-    static UnitType toBuild = null;
+    public static int turnCount = 0;
+    public static int soldiers = 0;
+    public static int moppers = 0;
+    public static int splashers = 0;
+    public static int totalBuilt = 0;
+    public static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
+    public static int mapSize = 0;
+    public static UnitType toBuild = null;
     public static RobotController staticRC;
 
-    static MapLocation exploreTarget;
-    static int DISPERSION_RADIUS;
-    static RandomQueue locationQueue;
+    public static MapLocation exploreTarget;
+    public static int DISPERSION_RADIUS;
+    public static RandomQueue locationQueue;
 
     /*
         Variables responsible for tracking average location of enemy paint
      */
-    static int distanceThreshold;   //For finding a good distance to start a new average
-    static MapLocation paintAverage1 = new MapLocation(0,0);
-    static MapLocation paintAverage2 = new MapLocation(0,0);
-    static int paintCount1;
-    static int paintCount2;
+    public static int distanceThreshold;   //For finding a good distance to start a new average
+    public static MapLocation paintAverage1 = new MapLocation(0,0);
+    public static MapLocation paintAverage2 = new MapLocation(0,0);
+    public static int paintCount1;
+    public static int paintCount2;
     
 
     /*
@@ -66,7 +69,7 @@ public class RobotPlayer {
      * import at the top of this file. Here, we *seed* the RNG with a constant number (6147); this makes sure
      * we get the same sequence of numbers every time this code is run. This is very useful for debugging!
      */
-    static final Random rng = new Random();
+    public static final Random rng = new Random();
 
     /** Array containing all the possible movement directions. */
     static final Direction[] directions = {
@@ -80,7 +83,6 @@ public class RobotPlayer {
         Direction.NORTHWEST,
     };
 
-    @SuppressWarnings("unused")
     public static void run(RobotController rc) throws GameActionException {
         staticRC = rc;
         mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();

@@ -1,14 +1,15 @@
-package Version13;
+package Version13.Robots;
 
+import Version13.Micro.MopperMicro;
+import Version13.Pathfinding.Pathfinding;
+import Version13.Misc.Ruin;
+import Version13.Utility.MopperUtil;
+import Version13.Utility.Utilities;
 import battlecode.common.*;
-import battlecode.instrumenter.inject.RobotMonitor;
-import battlecode.schema.RobotType;
 
-import java.util.ArrayList;
-
-import static Version13.Communication.enemyTowers;
-import static Version13.Communication.unclaimedRuins;
-import static Version13.RobotPlayer.*;
+import static Version13.Misc.Communication.enemyTowers;
+import static Version13.Misc.Communication.unclaimedRuins;
+import static Version13.Robots.RobotPlayer.*;
 
 enum mopStates {
     navigate, contest, refill, clear
@@ -35,19 +36,19 @@ public class Mopper {
 
     public static RobotInfo seenEnemyTower;
 
-    static MapLocation averageEnemyPaint;
+    public static MapLocation averageEnemyPaint;
 
-    static boolean correctSymmetry = false;
+    public static boolean correctSymmetry = false;
 
-    static int numEnemyTiles;
+    public static int numEnemyTiles;
 
-    static boolean needsClearing = false;
+    public static boolean needsClearing = false;
 
-    static boolean exploredSymmetry = false;
+    public static boolean exploredSymmetry = false;
 
-    static boolean[][] checkedRuin;
+    public static boolean[][] checkedRuin;
 
-    static navState navTarget;
+    public static navState navTarget;
 
 
     //static int uselessTurnsCount = 0;

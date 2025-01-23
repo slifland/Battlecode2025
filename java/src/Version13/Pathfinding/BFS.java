@@ -1,10 +1,10 @@
-package Version13;
+package Version13.Pathfinding;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
-import battlecode.common.RobotController;
-import static Version13.RobotPlayer.staticRC;
+
+import static Version13.Robots.RobotPlayer.staticRC;
 
 public class BFS
 {

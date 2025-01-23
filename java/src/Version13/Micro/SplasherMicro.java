@@ -1,10 +1,11 @@
-package Version13;
+package Version13.Micro;
 
+import Version13.Robots.Splasher;
+import Version13.Utility.splasherUtil;
 import battlecode.common.*;
 
-import static Version13.RobotPlayer.*;
-import static Version13.Splasher.averageEnemyPaint;
-import static Version13.Splasher.numEnemyTiles;
+import static Version13.Robots.RobotPlayer.*;
+import static Version13.Robots.Splasher.averageEnemyPaint;
 
 class splasherMicroInfo {
     private static final int ALLY_PAINT = 1;
