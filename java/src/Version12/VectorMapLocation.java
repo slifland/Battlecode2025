@@ -53,4 +53,14 @@ public class VectorMapLocation {
         array = Arrays.copyOf(array, capacity);
     }
 
+    public void clear() {
+        array = new MapLocation[default_capacity];
+        size = 0;
+        capacity = default_capacity;
+    }
+
+    public MapLocation get(int i) {
+        return array[i];
+    }
+
 }

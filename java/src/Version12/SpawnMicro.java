@@ -13,7 +13,7 @@ public class SpawnMicro {
         int bestScore = 0;
         MapLocation bestTile = null;
         Direction dirToCenter = staticRC.getLocation().directionTo(new MapLocation(staticRC.getMapWidth(), staticRC.getMapHeight()));
-        MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(2);
+        MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(4);
 //        for(int i = 0; i < 9; i++) {
 //            if(i == 4) continue;
 //            MapLocation tileLoc = potentialTiles[i].getMapLocation();
