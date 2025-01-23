@@ -272,7 +272,6 @@ public class Mopper {
         averageEnemyPaint = null;
         needsClearing = false;
 
-        int price = Clock.getBytecodesLeft();
 //        for(MapInfo tile : nearbyTiles) {
 //            Utilities.attemptCompleteResourcePattern(rc, tile.getMapLocation());
 //            if(knownSymmetry == RobotPlayer.Symmetry.Unknown) {
@@ -288,7 +287,6 @@ public class Mopper {
 //                count++;
 //            }
 //        }
-        //if(nearbyTiles.length != 69)System.out.println(nearbyTiles.length);
         MopperUtil.scanNearbyTiles(rc);
     }
 

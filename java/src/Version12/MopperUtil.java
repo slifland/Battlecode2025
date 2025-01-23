@@ -3090,7 +3090,6 @@ public class MopperUtil {
                 }
             }
         }
-
         numEnemyTiles = count;
         averageEnemyPaint = (count == 0) ? null : new MapLocation(x / count, y / count);
     }

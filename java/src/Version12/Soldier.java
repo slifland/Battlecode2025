@@ -161,9 +161,10 @@ public class Soldier {
 //        if(claimedRuin != null && rc.getRoundNum() % VALIDATE_RUIN_CLAIM_FREQUENCY == 0) {
 //            validateRuinClaim(rc);
 //        }
-        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
-            closestEnemyTower = closestEnemyTower(rc);
-        }
+//        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
+//            closestEnemyTower = closestEnemyTower(rc);
+//        }
+        closestEnemyTower = closestEnemyTower(rc);
         closestUnclaimedRuin = closestUnclaimedRuin(rc);
         SoldierUtil.scanNearbyTilesSoldier(rc);
 //        int enemyCount = 0;
