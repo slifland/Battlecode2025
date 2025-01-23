@@ -7,9 +7,12 @@ import static Version12.Communication.*;
 
 import static Version12.RobotPlayer.*;
 
+import Version12.navState;
+
 enum splasherStates {
     navigate, refill, contest
 }
+
 
 public class Splasher {
 
@@ -32,11 +35,14 @@ public class Splasher {
     public static MapLocation nearestUnfilledRuin;
     public static MapLocation averageEnemyPaint;
 
+    static boolean correctSymmetry = false;
+
     private static MapLocation home;
 
     static boolean exploredSymmetry = false;
+    
+    static navState navTarget;
 
-    static int refreshedCount = 0;
 
 
 
@@ -77,23 +83,82 @@ public class Splasher {
             exploredSymmetry = false;
         }
         MapLocation curLoc = staticRC.getLocation();
-        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) curObjective = null;
-        //DETERMINE OBJECTIVE
-        //if we have enemy paint averages, go there
-//        MapLocation[] enemyAverages = Utilities.getEnemyPaintAverages();
-//        if(enemyAverages.length != 0) {
-//            curObjective = enemyAverages[0];
-//        }
-        if(curObjective == null && !enemyTowers.isEmpty()) {
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
+            switch(navTarget) {
+                case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
+            }
+            curObjective = null;
+            navTarget = null;
+        }
+        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry) {
+            switch(navTarget) {
+                case navState.horizontal -> {
+                    if(knownSymmetry != Symmetry.Horizontal) {
+                        switch(knownSymmetry) {
+                            case Rotational:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                                navTarget = navState.rotational;
+                                break;
+                            case Vertical:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                                navTarget = navState.vertical;
+                                break;
+                        }
+                    }
+                }
+                case navState.rotational -> {
+                    if(knownSymmetry != Symmetry.Rotational) {
+                        switch(knownSymmetry) {
+                            case Vertical:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                                navTarget = navState.vertical;
+                                break;
+                            case Horizontal:
+                                curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                                navTarget = navState.horizontal;
+                                break;
+                        }
+                    }
+                }
+                case navState.vertical -> {
+                    if(knownSymmetry != Symmetry.Vertical) {
+                        switch(knownSymmetry) {
+                            case Rotational:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                                navTarget = navState.rotational;
+                                break;
+                            case Horizontal:
+                                curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                                navTarget = navState.horizontal;
+                                break;
+                        }
+                    }
+                }
+            }
+            correctSymmetry = true;
+        }
+        if((curObjective == null || navTarget == navState.ruin) && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
+                    navTarget = navState.tower;
                 }
             }
         }
-        //lets try and see if there are any unclaimed ruins that need our help
+        //if we know of any unclaimed ruins, lets try to help out there
+        if(curObjective == null && !unclaimedRuins.isEmpty()) {
+            int minDist = Integer.MAX_VALUE;
+            for(Ruin r : unclaimedRuins) {
+                if(r.location.distanceSquaredTo(curLoc) < minDist) {
+                    minDist = r.location.distanceSquaredTo(curLoc);
+                    curObjective = r.location;
+                    navTarget = navState.ruin;
+                }
+            }
+        }
+        //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null && !exploredSymmetry) {
             Symmetry[] possible = Utilities.possibleSymmetry();
@@ -101,31 +166,27 @@ public class Splasher {
             switch(possible[sym]) {
                 case Horizontal:
                     curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                    navTarget = navState.horizontal;
                     break;
                 case Rotational:
                     curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                    navTarget = navState.rotational;
                     break;
                 case Vertical:
                     curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                    navTarget = navState.vertical;
                     break;
             }
         }
-        if(knownSymmetry != Symmetry.Unknown && curObjective != null && staticRC.getLocation().isWithinDistanceSquared(curObjective, 5) && !exploredSymmetry) {
-            exploredSymmetry = true;
-            curObjective = null;
-        }
-        //next, if we have enemy towers, go there
         //last resort - just go to the center
         if(curObjective == null) {
-            //curObjective = new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2);
             curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
-        //int price = Clock.getBytecodesLeft();
-        if(staticRC.isMovementReady()) {
-            Direction dir = Pathfinding.bugBFS(curObjective);
-            if (staticRC.canMove(dir)) staticRC.move(dir);
-        }
+        Direction dir = Pathfinding.bugBFS(curObjective);
+        if(staticRC.canMove(dir)) staticRC.move(dir);
+        staticRC.setIndicatorString("navigate! " + curObjective + " : " + navTarget);
     }
 
     //attempts to return to a known allied paint tower and refill

@@ -160,6 +160,30 @@ public class RobotPlayer {
             staticRC.attack(r.getLocation());
         }
         if(staticRC.canAttack(null)) staticRC.attack(null);
+
+//        if(enemyRobots.length == 0 && (staticRC.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_MONEY_TOWER)) {
+//            checkDisintegrate();
+//        }
+    }
+
+    private static void checkDisintegrate() throws GameActionException {
+        MapInfo[] nearbyTiles = staticRC.senseNearbyMapInfos(8);
+        boolean hasRebuilder = false;
+        for(int i = 0; i < 9; i++) {
+            if(i == 4) continue;
+            if(nearbyTiles[i].getPaint().isEnemy()) return;
+            if(staticRC.canSenseRobotAtLocation(nearbyTiles[i].getMapLocation())) {
+                RobotInfo r = staticRC.senseRobotAtLocation(nearbyTiles[i].getMapLocation());
+                if(r.getTeam() != staticRC.getTeam()) return;
+                if(r.type == UnitType.SOLDIER && r.getPaintAmount() > 100) {
+                    hasRebuilder = true;
+                }
+            }
+        }
+        if(hasRebuilder && staticRC.getMoney() > 7000 && staticRC.getPaint() <= 100) {
+            staticRC.disintegrate();
+            staticRC.resign();
+        }
     }
 
     static void bytecodeSensitiveOperations() throws GameActionException

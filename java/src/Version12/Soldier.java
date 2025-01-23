@@ -43,6 +43,9 @@ public class Soldier {
     static boolean[][] invalidResourceCenters;
     static boolean canFinishPattern =false;
 
+    static boolean checkedSymmetry = false;
+    static MapLocation oppositeHome = null;
+
     //static int failedPlacementLocations = 0;
     //static int minDistanceToValidLocation = Integer.MAX_VALUE;
 
@@ -320,35 +323,42 @@ public class Soldier {
     //if we have nothing to do, just explore
     public static void navigate() throws GameActionException
     {
+        if(oppositeHome != null && staticRC.getLocation().isWithinDistanceSquared(oppositeHome, 8)) checkedSymmetry = true;
         if(claimedRuin != null) validateRuinClaim();
         if(claimedRuin != null && staticRC.getNumberTowers() < 25) {
             Direction dir = Pathfinding.bugBFS(claimedRuin);
             if(dir != null && staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
         }
-        else if (staticRC.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS /*!Communication.enemyTowers.isEmpty()*/ && closestEnemyTower != null) {
+        else if (staticRC.getRoundNum() >= TURN_TO_NAVIGATE_TO_TOWERS && closestEnemyTower != null) {
             Direction dir = Pathfinding.bugBFS(closestEnemyTower);
             if(dir != null && staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
         }
-//        else {
-//            Symmetry[] possible = Utilities.possibleSymmetry();
-//            int sym = rng.nextInt(possible.length);
-//            switch(possible[sym]) {
-//                case Horizontal:
-//                    target = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
-//                    break;
-//                case Rotational:
-//                    target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
-//                    break;
-//                case Vertical:
-//                    target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
-//                    break;
-//            }
-//            Direction dir = BFS_7x7.pathfind(target);
-//            if(staticRC.canMove(dir)) staticRC.move(dir);
-//            attemptFill();
-//        }
+        else if (knownSymmetry != Symmetry.Unknown && !checkedSymmetry){
+            if(oppositeHome == null) {
+                Symmetry[] possible = Utilities.possibleSymmetry();
+                int sym = rng.nextInt(possible.length);
+                switch (possible[sym]) {
+                    case Horizontal:
+                        target = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                        oppositeHome = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                        break;
+                    case Rotational:
+                        target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                        oppositeHome = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                        break;
+                    case Vertical:
+                        target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                        oppositeHome = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                        break;
+                }
+            }
+            target = oppositeHome;
+            Direction dir = Pathfinding.bugBFS(oppositeHome);
+            if(staticRC.canMove(dir)) staticRC.move(dir);
+            attemptFill();
+        }
 //        else if(!Communication.unclaimedRuins.isEmpty()) {
 //            Direction dir = BFS_7x7.pathfind(closestUnclaimedRuin);
 //            if(staticRC.canMove(dir)) staticRC.move(dir);

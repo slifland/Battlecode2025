@@ -50,7 +50,7 @@ public class Utilities
                 totalAlly++;
             }
         }
-        if(staticRC.getMoney() > 7000) paintScore += 2;
+        if(staticRC.getMoney() > 3500) paintScore += (staticRC.getMoney() / 3500);
         if(totalAlly == 0) return null;
         if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
         else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;

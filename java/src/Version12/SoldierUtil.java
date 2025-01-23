@@ -5142,7 +5142,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[0].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[0].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5191,7 +5191,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[1].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[1].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5240,7 +5240,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[2].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[2].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5289,7 +5289,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[3].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[3].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5338,7 +5338,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[4].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[4].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5387,7 +5387,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[5].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[5].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5436,7 +5436,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[6].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[6].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5485,7 +5485,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[7].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[7].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5534,7 +5534,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[8].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[8].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5583,7 +5583,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[9].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[9].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5632,7 +5632,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[10].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[10].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5681,7 +5681,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[11].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[11].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5730,7 +5730,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[12].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[12].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5779,7 +5779,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[13].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[13].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5828,7 +5828,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[14].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[14].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5877,7 +5877,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[15].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[15].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5926,7 +5926,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[16].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[16].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -5975,7 +5975,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[17].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[17].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6024,7 +6024,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[18].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[18].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6073,7 +6073,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[19].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[19].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6122,7 +6122,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[20].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[20].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6171,7 +6171,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[21].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[21].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6220,7 +6220,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[22].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[22].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6269,7 +6269,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[23].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[23].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6318,7 +6318,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[24].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[24].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6367,7 +6367,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[25].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[25].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6416,7 +6416,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[26].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[26].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6465,7 +6465,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[27].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[27].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6514,7 +6514,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[28].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[28].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6563,7 +6563,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[29].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[29].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6612,7 +6612,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[30].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[30].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6661,7 +6661,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[31].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[31].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6710,7 +6710,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[32].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[32].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6759,7 +6759,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[33].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[33].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6808,7 +6808,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[34].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[34].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6857,7 +6857,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[35].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[35].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6906,7 +6906,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[36].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[36].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -6955,7 +6955,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[37].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[37].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7004,7 +7004,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[38].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[38].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7053,7 +7053,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[39].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[39].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7102,7 +7102,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[40].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[40].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7151,7 +7151,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[41].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[41].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7200,7 +7200,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[42].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[42].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7249,7 +7249,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[43].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[43].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7298,7 +7298,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[44].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[44].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7347,7 +7347,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[45].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[45].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7396,7 +7396,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[46].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[46].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7445,7 +7445,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[47].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[47].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7494,7 +7494,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[48].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[48].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7543,7 +7543,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[49].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[49].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7592,7 +7592,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[50].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[50].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7641,7 +7641,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[51].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[51].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7690,7 +7690,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[52].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[52].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7739,7 +7739,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[53].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[53].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7788,7 +7788,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[54].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[54].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7837,7 +7837,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[55].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[55].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7886,7 +7886,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[56].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[56].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7935,7 +7935,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[57].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[57].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -7984,7 +7984,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[58].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[58].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8033,7 +8033,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[59].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[59].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8082,7 +8082,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[60].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[60].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8131,7 +8131,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[61].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[61].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8180,7 +8180,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[62].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[62].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8229,7 +8229,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[63].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[63].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8278,7 +8278,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[64].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[64].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8327,7 +8327,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[65].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[65].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8376,7 +8376,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[66].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[66].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8425,7 +8425,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[67].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[67].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8474,7 +8474,7 @@ public class SoldierUtil {
                             {
                                 staticRC.mark(nearbyTiles[68].getMapLocation(), false);
                                 closestUnfilledPatternCenter = nearbyTiles[68].getMapLocation();
-                            }
+                            } closestUnfilledPatternCenter = tileLoc;
                         }
                         else
                         {
@@ -8516,10 +8516,9 @@ public class SoldierUtil {
                         if (staticRC.canMark(tile.getMapLocation())) {
                             staticRC.mark(tile.getMapLocation(), false);
                             closestUnfilledPatternCenter = tile.getMapLocation();
-                        }
+                        } closestUnfilledPatternCenter = tileLoc;
                     } else {
                         failedPlacementLocations++;
-                        //staticRC.setIndicatorDot(tileLoc, 255, 255, 255);
                     }
                 }
             }

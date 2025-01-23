@@ -16,7 +16,7 @@ enum mopStates {
 
 //used to track what we are currently navigating towards
 enum navState {
-    random, tower, ruin, symmetry
+    random, tower, ruin, horizontal, vertical, rotational
 }
 
 public class Mopper {
@@ -36,6 +36,8 @@ public class Mopper {
     public static RobotInfo seenEnemyTower;
 
     static MapLocation averageEnemyPaint;
+
+    static boolean correctSymmetry = false;
 
     static int numEnemyTiles;
 
@@ -87,13 +89,60 @@ public class Mopper {
             exploredSymmetry = false;
         }
         MapLocation curLoc = staticRC.getLocation();
-        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 6) {
+        if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             switch(navTarget) {
-                case navState.symmetry -> exploredSymmetry = true;
+                case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
                 case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
             }
             curObjective = null;
             navTarget = null;
+        }
+        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry) {
+            switch(navTarget) {
+                case navState.horizontal -> {
+                    if(knownSymmetry != Symmetry.Horizontal) {
+                        switch(knownSymmetry) {
+                            case Rotational:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                                navTarget = navState.rotational;
+                                break;
+                            case Vertical:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                                navTarget = navState.vertical;
+                                break;
+                        }
+                    }
+                }
+                case navState.rotational -> {
+                    if(knownSymmetry != Symmetry.Rotational) {
+                        switch(knownSymmetry) {
+                            case Vertical:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                                navTarget = navState.vertical;
+                                break;
+                            case Horizontal:
+                                curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                                navTarget = navState.horizontal;
+                                break;
+                        }
+                    }
+                }
+                case navState.vertical -> {
+                    if(knownSymmetry != Symmetry.Vertical) {
+                        switch(knownSymmetry) {
+                            case Rotational:
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                                navTarget = navState.rotational;
+                                break;
+                            case Horizontal:
+                                curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                                navTarget = navState.horizontal;
+                                break;
+                        }
+                    }
+                }
+            }
+            correctSymmetry = true;
         }
         //if we know of any unclaimed ruins, lets try to help out there
         if(curObjective == null && !unclaimedRuins.isEmpty()) {
@@ -125,15 +174,17 @@ public class Mopper {
             switch(possible[sym]) {
                 case Horizontal:
                     curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                    navTarget = navState.horizontal;
                     break;
                 case Rotational:
                     curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
+                    navTarget = navState.rotational;
                     break;
                 case Vertical:
                     curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                    navTarget = navState.vertical;
                     break;
             }
-            navTarget = navState.symmetry;
         }
         //last resort - just go to the center
         if(curObjective == null) {
