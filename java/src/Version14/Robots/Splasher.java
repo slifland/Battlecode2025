@@ -5,6 +5,7 @@ import Version14.Micro.Micro;
 import Version14.Micro.SplasherMicro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
+import Version14.Utility.BitBoard;
 import Version14.Utility.Utilities;
 import Version14.Utility.splasherUtil;
 import battlecode.common.*;
@@ -44,8 +45,10 @@ public class Splasher {
     private static MapLocation home;
 
     static boolean exploredSymmetry = false;
-    
+
     static navState navTarget;
+
+    public static BitBoard checkedRuin;
 
 
 
@@ -54,7 +57,10 @@ public class Splasher {
         if(staticRC.getRoundNum() > 1000) {
             endRefillThreshold = 250;
         }
-        if(turnCount == 1) home = staticRC.getLocation();
+        if(turnCount == 1) {
+            home = staticRC.getLocation();
+            checkedRuin = new BitBoard();
+        }
         updateInfo();
         updateState();
         switch(state) {
@@ -85,6 +91,7 @@ public class Splasher {
             if(navTarget != null) {
                 switch (navTarget) {
                     case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
+                    case navState.ruin -> {checkedRuin.setBit(curObjective, true);}
                 }
             }
             curObjective = null;
@@ -151,6 +158,7 @@ public class Splasher {
         if(curObjective == null && !unclaimedRuins.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
+                if(checkedRuin.getBit(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
