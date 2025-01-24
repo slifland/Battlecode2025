@@ -262,8 +262,15 @@ public class Mopper {
         if(dir != null && staticRC.canMopSwing(dir)) {
             staticRC.mopSwing(dir);
         }
+
         if(bestLoc != null && staticRC.isActionReady()) {
-            MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestLoc), bestLoc);
+            if(staticRC.canAttack(bestLoc)) {
+                staticRC.attack(bestLoc);
+                MopperMicro.integratedMopperMicro();
+            }
+            else {
+                MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestLoc), bestLoc);
+            }
         }
         else {
             MopperMicro.integratedMopperMicro();
@@ -290,15 +297,24 @@ public class Mopper {
         if(averageEnemyPaint != null) state = mopStates.contest;
     }
 
+    //priorities
+    //1. within action radius
+    //2. has enemy
+    //3. has enemy and within action radius
+    //4. close and has enemy
     public static MapLocation bestClear(MapLocation ruin) throws GameActionException {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
+        int bestScore = Integer.MIN_VALUE;
+        //boolean hasRobot = false;
+        int actionRadius = UnitType.MOPPER.actionRadiusSquared;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
-            int dist = staticRC.getLocation().distanceSquaredTo(tile.getMapLocation());
-            if(tile.getPaint().isEnemy() && dist < minDist) {
-                bestLoc = tile.getMapLocation();
+            int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());
+            int score = MopperMicro.determineScore(tile.getMapLocation().x, tile.getMapLocation().y);
+            if(score > bestScore || (score == bestScore && dist < minDist)) {
+                bestScore = score;
                 minDist = dist;
-                if(minDist <= 2) return bestLoc;
+                bestLoc = tile.getMapLocation();
             }
         }
         return bestLoc;

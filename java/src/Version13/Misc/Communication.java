@@ -372,13 +372,13 @@ public class Communication
         int price;
         boolean ret;
 
-        System.out.println("Received: " + ruin);
+        //System.out.println("Received: " + ruin);
 
         price = Clock.getBytecodesLeft();
         ret = updateRuinsMemory(ruin);
         price -= Clock.getBytecodesLeft();
 
-        System.out.println("\tPrice of processing:" + price);
+        //System.out.println("\tPrice of processing:" + price);
 
         return ret;
     }
@@ -452,7 +452,7 @@ public class Communication
      */
     public static void printRuinsMemory()
     {
-        System.out.println("Unclaimed ruins:");
+        //System.out.println("Unclaimed ruins:");
         for(Ruin r : unclaimedRuins)
         {
             System.out.println(r);

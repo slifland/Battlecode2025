@@ -18,6 +18,7 @@ class mopperMicroInfo {
     boolean inTowerRange;
     int distanceToEnemyAverage;
     int paintLoss;
+    int potentialPaintLoss;
 
     public mopperMicroInfo(MapInfo tile) {
         if(!tile.isPassable()) {
@@ -43,6 +44,7 @@ class mopperMicroInfo {
     //populates the info you can't get from only knowing the tile
     void populateMopperMicroInfo() {
         distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
+        potentialPaintLoss = 0;
 //        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
 //        distanceToEnemyAverage = switch(enemyPaintAverages.length) {
 //            case 0 -> Integer.MAX_VALUE;
@@ -50,6 +52,12 @@ class mopperMicroInfo {
 //            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
 //            default -> Integer.MAX_VALUE;
 //        };
+        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
+        for(RobotInfo robot : allyRobots) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
+                adjacentAllies++;
+            }
+        }
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -60,12 +68,28 @@ class mopperMicroInfo {
                 inTowerRange = true;
                 if(minDistanceToEnemy == 1) break;
             }
-            if(minDistanceToEnemy == 1 && inTowerRange) break;
-        }
-        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
-        for(RobotInfo robot : allyRobots) {
-            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
-                adjacentAllies++;
+            if(robot.getPaintAmount() > 0) {
+                switch (robot.type) {
+                    case SPLASHER -> {
+                        if(robot.getPaintAmount() >= 50) {
+                            //potentialPaintLoss += (paintType != ENEMY_PAINT && dist <= GameConstants.SPLASHER_ATTACK_AOE_RADIUS_SQUARED) ? 2 : 0;
+                            potentialPaintLoss += switch (paintType) {
+                                case ALLY_PAINT ->
+                                        (dist <= GameConstants.SPLASHER_ATTACK_ENEMY_PAINT_RADIUS_SQUARED) ? 1 : 0;
+                                case NEUTRAL_PAINT ->
+                                        (dist <= GameConstants.SPLASHER_ATTACK_AOE_RADIUS_SQUARED) ? 1 : 0;
+                                default -> 0;
+                            };
+                        }
+                    }
+                    case MOPPER -> {
+                        if (dist <= 2) potentialPaintLoss += 5;
+                        else if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
+                    }
+                    case SOLDIER -> {
+                        potentialPaintLoss += (paintType == NEUTRAL_PAINT && dist <= UnitType.SOLDIER.actionRadiusSquared) ? 1 : 0;
+                    }
+                }
             }
         }
         paintLoss = switch(paintType) {
@@ -561,6 +585,12 @@ public class MopperMicro {
                 continue;
             }
 
+            if(bestMicro.potentialPaintLoss < microArray[i].potentialPaintLoss) continue;
+            if(microArray[i].potentialPaintLoss < bestMicro.potentialPaintLoss) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
 
             //if one space is on allied paint and the other isnt, go to allied paint
             if(bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
@@ -616,6 +646,12 @@ public class MopperMicro {
             //look at which place will lose us the least paint at the end of this turn
             if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
+            if(bestMicro.potentialPaintLoss < microArray[i].potentialPaintLoss) continue;
+            if(microArray[i].potentialPaintLoss < bestMicro.potentialPaintLoss) {
                 bestMicro = microArray[i];
                 continue;
             }
@@ -791,6 +827,12 @@ public class MopperMicro {
             //look at which place will lose us the least paint at the end of this turn
             if(bestMicro.paintLoss < microArray[i].paintLoss) continue;
             if(microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
+            if(bestMicro.potentialPaintLoss < microArray[i].potentialPaintLoss) continue;
+            if(microArray[i].potentialPaintLoss < bestMicro.potentialPaintLoss) {
                 bestMicro = microArray[i];
                 continue;
             }

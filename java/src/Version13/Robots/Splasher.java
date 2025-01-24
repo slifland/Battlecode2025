@@ -87,8 +87,10 @@ public class Splasher {
         }
         MapLocation curLoc = staticRC.getLocation();
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
-            switch(navTarget) {
-                case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
+            if(navTarget != null) {
+                switch (navTarget) {
+                    case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
+                }
             }
             curObjective = null;
             navTarget = null;
@@ -269,7 +271,7 @@ public class Splasher {
 //            Direction dir = Micro.runMicro();
 //            if(staticRC.canMove(dir)) staticRC.move(dir);
 //        }
-        System.out.println(Clock.getBytecodesLeft());
+        //System.out.println(Clock.getBytecodesLeft());
     }
 
     //determines the current state for the splashers
