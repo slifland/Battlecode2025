@@ -43,8 +43,8 @@ public class Soldier {
     public static boolean canFinishRuin = false;
     public static int neededToFinish = Integer.MAX_VALUE;
     public static MapLocation spawnLocation;
-    //public static boolean[][] invalidResourceCenters;
-    public static BitBoard invalidResourceCenters;
+    public static boolean[][] invalidResourceCenters;
+    //public static BitBoard invalidResourceCenters;
     public static boolean canFinishPattern =false;
 
     public static boolean checkedSymmetry = false;
@@ -78,8 +78,8 @@ public class Soldier {
             initializeMapDependentVariables();
             spawnLocation = staticRC.getLocation();
             //invalidResourceCenters = new HashSet<MapLocation>();
-            //invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
-            invalidResourceCenters = new BitBoard();
+            invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
+            //invalidResourceCenters = new BitBoard();
         }
 //        int price = Clock.getBytecodesLeft();
 //        invalidResourceCenters.add(new MapLocation(-1, -1));
@@ -611,16 +611,16 @@ public class Soldier {
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(!farFromEdge(loc)) {
             //invalidResourceCenters.add(loc);
-            //invalidResourceCenters[loc.x][loc.y] = true;
-            invalidResourceCenters.setBit(loc, true);
+            invalidResourceCenters[loc.x][loc.y] = true;
+            //invalidResourceCenters.setBit(loc, true);
             return false;
         }
         //if(tiles.length < 25) return false;
         for (MapInfo tile : tiles) {
             if (!tile.isPassable() || tile.getMark().isAlly()){
                 //invalidResourceCenters.add(loc);
-                //invalidResourceCenters[loc.x][loc.y] = true;
-                invalidResourceCenters.setBit(loc, true);
+                invalidResourceCenters[loc.x][loc.y] = true;
+                //invalidResourceCenters.setBit(loc, true);
                 return false;
             }
         }

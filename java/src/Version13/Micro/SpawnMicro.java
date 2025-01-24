@@ -21,7 +21,7 @@ public class SpawnMicro {
             int score = 0;
             score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
             score += switch(staticRC.senseMapInfo(tileLoc).getPaint()) {
-                case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 1;
+                case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
                 case PaintType.EMPTY -> 0;
                 case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
             };

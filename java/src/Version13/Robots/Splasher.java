@@ -67,15 +67,15 @@ public class Splasher {
                 contest();
                 break;
         }
-        if(turnsSincePaintRefresh >= PAINT_AVERAGE_REFRESH || Clock.getBytecodesLeft() > 4000) {
+        if(Clock.getBytecodesLeft() > 4000) {
             refreshPaintAverages();
-            turnsSincePaintRefresh = 0;
+            //turnsSincePaintRefresh = 0;
             //refreshedCount++;
             //System.out.println(turnCount + " : " + refreshedCount);
         }
-        else {
-            turnsSincePaintRefresh++;
-        }
+        //else {
+            //turnsSincePaintRefresh++;
+        //}
         if(curObjective== null)staticRC.setIndicatorString(state.toString());
         else staticRC.setIndicatorString(state + " : " + curObjective);
     }
@@ -269,6 +269,7 @@ public class Splasher {
 //            Direction dir = Micro.runMicro();
 //            if(staticRC.canMove(dir)) staticRC.move(dir);
 //        }
+        System.out.println(Clock.getBytecodesLeft());
     }
 
     //determines the current state for the splashers

@@ -7,7 +7,7 @@ public class FourStateBitBoard {
     int[] bitArray;
 
     public FourStateBitBoard() {
-        int length = (mapSize % 64 == 0) ? (mapSize / 64) : ((mapSize / 64) + 1);
+        int length = (mapSize % 16 == 0) ? (mapSize / 16) : ((mapSize / 16) + 1);
         bitArray = new int[length];
     }
 
