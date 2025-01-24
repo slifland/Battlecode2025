@@ -7,12 +7,13 @@ import battlecode.common.*;
 
 import static Version13.RobotPlayer.*;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Communication
 {
 
-    private static class Queue
+    private static class QueueRuin
     {
         //the number of items stored at any given time must not reach this number
         private static final int len = 200;
@@ -21,7 +22,7 @@ public class Communication
         private int head = 0; //the next item to pop
         private int tail = 0; //the next place to add an item
 
-        public Queue()
+        public QueueRuin()
         {
             ruins = new Ruin[len];
         }
@@ -50,8 +51,62 @@ public class Communication
         }
     }
 
-    static final Queue sendQueue = new Queue();      //between robots and towers
-    static final Queue broadcastRuinQueue = new Queue(); //between towers
+    private static class QueueMessage
+    {
+        //the number of items stored at any given time must not reach this number
+        private static final int len = 200;
+
+        private final Message[] messages;
+        private int head = 0; //the next item to pop
+        private int tail = 0; //the next place to add an item
+
+        //int size; ////////////////////////////////////////////////////////////////////////////////////////////
+
+        public QueueMessage()
+        {
+            messages = new Message[len];
+            //size = 0;
+        }
+
+        public void add(Message m)
+        {
+            //size++;
+
+            messages[tail] = m;
+            tail = (tail + 1) % len;
+        }
+
+        //pre: !isEmpty()
+        public Message pop()
+        {
+            //size--;
+
+            Message ret = messages[head];
+            head = (head + 1) % len;
+            return ret;
+        }
+
+        public boolean isEmpty()
+        {
+            return head == tail;
+                /*
+                    Queue is either empty or full,
+                        we assume we never get to len number of items
+                 */
+        }
+
+        /*
+        public int size()
+        {
+            return size;
+        }
+        */
+    }
+
+    static final QueueRuin sendQueue = new QueueRuin();      //between robots and towers
+    static final QueueRuin broadcastRuinQueue = new QueueRuin(); //between towers
+
+    static final QueueMessage processRuinQueue = new QueueMessage();
 
     public static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
 
@@ -68,7 +123,9 @@ public class Communication
         The maximum number of Ruins messages a tower will send in any given turn
             We might want to limit this to limit bytecode usage
      */
-    static final int maxRuinsToSend = GameConstants.MAX_MESSAGES_SENT_TOWER; //20
+    static final int numRuinsToSendToEachRobot = 2;
+
+    static final int numMessagesToProcessPerRoundRobot = 3;
 
     //Called only once, when a new robot/tower is born
     public static void setup() throws GameActionException
@@ -90,8 +147,27 @@ public class Communication
     */
     public static void processMessagesRobot() throws GameActionException
     {
+        /*
+            Robot can only be in range of 4 towers at once (absolute max)
+            Max num ruins messages per round: 4 * numRuinsToSendToEachRobot = 8
+
+            usually we will only be in range of 1-3 towers tho
+         */
+
+        /*
         for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
         {
+            processRuinQueue.add(m);
+        }
+
+        System.out.println("Num messages in queue: " + processRuinQueue.size());
+
+        Message m;
+        for(int i = 0; i < numMessagesToProcessPerRoundRobot && !processRuinQueue.isEmpty(); i++)
+        */
+        for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
+        {
+            //m = processRuinQueue.pop();
             switch (m.getBytes() & 0b11)
             {
                 case 0b00 -> updateRuinsMemory(messageToRuin(m));
@@ -153,22 +229,6 @@ public class Communication
 
         sendRuinLocationsToTower(tower[rng.nextInt(0, i)]);
     }
-
-    public static int createExploreLocationMessage(MapLocation location)
-    {
-        int message = 0b01;
-        message |= location.x << 2;
-        message |= location.y << 8;
-        return message;
-    }
-
-    public static void updateExploreLocation(Message m) throws GameActionException
-    {
-        int message = m.getBytes();
-        exploreTarget = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
-        System.out.println(exploreTarget);
-    }
-
 
     /*
         Scan for nearby ruin locations and update ruinsMemory as necessary
@@ -232,9 +292,17 @@ public class Communication
         if(sendQueue.isEmpty())
             fillSendQueue();
 
-        if(staticRC.canSendMessage(tower) && !sendQueue.isEmpty())
+        Ruin r;
+        if(staticRC.canSendMessage(tower))
         {
-            staticRC.sendMessage(tower, ruinToMessage(sendQueue.pop()));
+            while(!sendQueue.isEmpty())
+            {
+                r = sendQueue.pop();
+                if(!validateRuin(r)) continue;
+
+                staticRC.sendMessage(tower, ruinToMessage(r));
+                break;
+            }
         }
     }
 
@@ -259,9 +327,6 @@ public class Communication
 
     private static void fillBroadcastQueue()
     {
-//        for(Ruin r : unclaimedRuins)
-//            sendQueue.add(r);
-
         for(Ruin r : enemyTowers)
             broadcastRuinQueue.add(r);
 
@@ -278,22 +343,24 @@ public class Communication
     {
         if(allyRobots.length == 0 || (unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty())) return;
 
-        if(sendQueue.isEmpty())
-            fillSendQueue();
-
-        int messagesSent = 0;
+        Ruin r;
+        int ct;
 
         int i = rng.nextInt(0, allyRobots.length);
         int first = i;
         do
         {
-            if(staticRC.canSendMessage(allyRobots[i].getLocation()))
+            ct = 0;
+            while(ct < numRuinsToSendToEachRobot && staticRC.canSendMessage(allyRobots[i].location))
             {
-                while(!sendQueue.isEmpty() && staticRC.canSendMessage(allyRobots[i].location))
-                {
-                    staticRC.sendMessage(allyRobots[i].location, ruinToMessage(sendQueue.pop()));
-                    if(++messagesSent >= maxRuinsToSend) return;
-                }
+                if(sendQueue.isEmpty())
+                    fillSendQueue();
+
+                r = sendQueue.pop();
+                if(!validateRuin(r)) continue;
+
+                staticRC.sendMessage(allyRobots[i].location, ruinToMessage(r));
+                ct++;
             }
 
             i = (i + 1) % allyRobots.length;
@@ -301,17 +368,31 @@ public class Communication
         while(i != first);
     }
 
+    /*
+        Fill the send Queue with Ruins from enemyTowers and
+        alliedPaintTowers, alternating between each list
+
+        If one list is longer than the other, adds remaining elements to the end
+     */
     private static void fillSendQueue()
     {
-//        for(Ruin r : unclaimedRuins)
-//            sendQueue.add(r);
+        Iterator<Ruin> enemyIt = enemyTowers.iterator();
+        Iterator<Ruin> alliedPaintIt = alliedPaintTowers.iterator();
 
-        for(Ruin r : enemyTowers)
-            sendQueue.add(r);
+        boolean ei = true, ai = true;
+        while(ei || ai)
+        {
+            ei = enemyIt.hasNext();
+            ai = alliedPaintIt.hasNext();
 
-        for(Ruin r : alliedPaintTowers)
-            sendQueue.add(r);
+            if(ei) sendQueue.add(enemyIt.next());
+            if(ai) sendQueue.add(alliedPaintIt.next());
+        }
     }
+
+
+
+        //CONVERSIONS:
 
     public static int ruinToMessage(Ruin ruin)
     {
@@ -326,7 +407,6 @@ public class Communication
         //System.out.println(symmetries);
         return message;
     }
-
 
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
@@ -365,6 +445,27 @@ public class Communication
             default -> knownSymmetry = Symmetry.Unknown;
         }
     }
+
+
+
+    public static int createExploreLocationMessage(MapLocation location)
+    {
+        int message = 0b01;
+        message |= location.x << 2;
+        message |= location.y << 8;
+        return message;
+    }
+
+    public static void updateExploreLocation(Message m) throws GameActionException
+    {
+        int message = m.getBytes();
+        exploreTarget = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
+        //System.out.println(exploreTarget);
+    }
+
+
+
+        //MEMORY MANAGEMENT:
 
     //prints out the bytecode usage of a single call to updateRuinsMemory
     private static boolean updateRuinsMemoryTest(Ruin ruin)
@@ -446,6 +547,10 @@ public class Communication
     {
         return r.equals(allMemory[r.location.x][r.location.y]);
     }
+
+
+
+        //UTILITIES:
 
     /*
         Used for testing and debugging
