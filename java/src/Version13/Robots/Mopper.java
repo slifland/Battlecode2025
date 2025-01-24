@@ -266,14 +266,15 @@ public class Mopper {
         if(bestLoc != null && staticRC.isActionReady()) {
             if(staticRC.canAttack(bestLoc)) {
                 staticRC.attack(bestLoc);
-                MopperMicro.integratedMopperMicro();
+                //MopperMicro.integratedMopperMicro();
+                MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
             }
             else {
                 MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestLoc), bestLoc);
             }
         }
         else {
-            MopperMicro.integratedMopperMicro();
+            MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
         }
         if(staticRC.canAttack(bestLoc)) staticRC.attack(bestLoc);
         if(staticRC.isActionReady()) {
@@ -307,10 +308,9 @@ public class Mopper {
         MapLocation bestLoc = null;
         int bestScore = Integer.MIN_VALUE;
         //boolean hasRobot = false;
-        int actionRadius = UnitType.MOPPER.actionRadiusSquared;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
             int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());
-            int score = MopperMicro.determineScore(tile.getMapLocation().x, tile.getMapLocation().y);
+            int score = MopperMicro.determineScoreClear(tile.getMapLocation(), tile);
             if(score > bestScore || (score == bestScore && dist < minDist)) {
                 bestScore = score;
                 minDist = dist;

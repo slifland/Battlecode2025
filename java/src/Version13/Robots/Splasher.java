@@ -6,6 +6,7 @@ import Version13.Micro.SplasherMicro;
 import Version13.Pathfinding.Pathfinding;
 import Version13.Misc.Ruin;
 import Version13.Utility.Utilities;
+import Version13.Utility.splasherUtil;
 import battlecode.common.*;
 
 import static Version13.Misc.Communication.*;
@@ -67,15 +68,9 @@ public class Splasher {
                 contest();
                 break;
         }
-        if(Clock.getBytecodesLeft() > 4000) {
-            refreshPaintAverages();
-            //turnsSincePaintRefresh = 0;
-            //refreshedCount++;
-            //System.out.println(turnCount + " : " + refreshedCount);
+        if((knownSymmetry != Symmetry.Unknown && Clock.getBytecodesLeft() > 2400) || Clock.getBytecodesLeft() > 4300) {
+            splasherUtil.refreshPaintAverages();
         }
-        //else {
-            //turnsSincePaintRefresh++;
-        //}
         if(curObjective== null)staticRC.setIndicatorString(state.toString());
         else staticRC.setIndicatorString(state + " : " + curObjective);
     }
@@ -310,29 +305,12 @@ public class Splasher {
         }
         //if(turnCount % PAINT_AVERAGE_REFRESH == 0) {
         if(turnCount == 1) {
-            numEnemyTiles = 0;
-            averageEnemyPaint = null;
-            //boolean hasSeenNoWall = false;
-            int x = 0;
-            int y = 0;
-            //now, check if we can see any enemy tiles
-            for (MapInfo tile : nearbyTiles) {
-                Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
-                if (knownSymmetry == Symmetry.Unknown) {
-                    map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-                    if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-                }
-                if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(tile.getMapLocation())) {
-                    x += tile.getMapLocation().x;
-                    y += tile.getMapLocation().y;
-                    numEnemyTiles++;
-                }
-            }
-            averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
+            splasherUtil.refreshPaintAverages();
         }
         //System.out.println(price - Clock.getBytecodesLeft());
     }
 
+    //unrolled version is in splasherUtil
     public static void refreshPaintAverages() throws GameActionException {
         numEnemyTiles = 0;
         averageEnemyPaint = null;
