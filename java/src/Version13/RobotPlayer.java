@@ -221,6 +221,8 @@ public class RobotPlayer {
         }
     }
 
+    private static int totalPrice = 0, numMessages = 0;
+
     static void completeBeginningTasks() throws GameActionException
     {
 
@@ -241,15 +243,47 @@ public class RobotPlayer {
         }
         else
         {
-            if(staticRC.getRoundNum() % 5 == 0 || turnCount == 1)
+            if(staticRC.getRoundNum() % 20 == 0 || turnCount == 1) //defaultHuge V13(B) vs V11(A) before: l339; %10: L476; %7 l467; %20 w450
             {
-                //int price = Clock.getBytecodesLeft();
-                Communication.processMessagesRobot();
-                //System.out.println(price - Clock.getBytecodesLeft());
+                    /*/
+                    numMessages += staticRC.readMessages(staticRC.getRoundNum() - 1).length;
+                    int price = Clock.getBytecodesLeft();
+                    /**/
+
+                Communication.processMessagesRobot(); ////////////////////////////////////////////////////////////////
+
+                    /*/
+                    price -= Clock.getBytecodesLeft();
+                    totalPrice += price;
+                    /**/
             }
 
             Communication.scanForRuins();
             Communication.sendMessagesRobot();
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            //boolean p = false;
+            /*/
+            if(Communication.enemyTowers.isEmpty())
+            {
+                System.out.println("We know no enemy towers");
+                p = true;
+            }
+            if(Communication.alliedPaintTowers.size() < 2)
+            {
+                System.out.println("We know of only " + Communication.alliedPaintTowers.size() + " allied paint towers");
+                p = true;
+            }
+            /**/
+
+            /*/
+            if(turnCount % 150 == 0)
+            {
+                System.out.println("Average price/msg over 150 turns: " + ((double)(totalPrice)) / numMessages);
+            }
+            /**/
+
+            //if(p) System.out.println();
         }
     }
 
