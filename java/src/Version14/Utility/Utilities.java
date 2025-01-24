@@ -26,6 +26,13 @@ public class Utilities
         return pattern[location.x - (center.x - 2)][location.y - (center.y - 2)];
     }
 
+    //geneerates a random location within a circle around a point
+    public static MapLocation generateRandomLocationWithinRadius(MapLocation center, int radiusSquared) {
+        double theta = rng.nextDouble( 2 * Math.PI);
+        double radius = rng.nextDouble(Math.sqrt(radiusSquared));
+        return new MapLocation(center.x + (int)(radius * Math.cos(theta)), center.y + (int)(radius * Math.sin(theta)));
+    }
+
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {

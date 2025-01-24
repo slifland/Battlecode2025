@@ -1378,7 +1378,7 @@ public class SoldierUtil {
     }
 
     public static boolean check(int index) {
-        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[0].getPaint().isSecondary())) {
+        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[index].getPaint().isSecondary())) {
             neededToFinish++;
             return true;
         }
@@ -3720,8 +3720,12 @@ public class SoldierUtil {
             }
         }
         if (neededToFinish * 5 < staticRC.getPaint()) canFinishRuin = true;
-        if (hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))) return true;
-        if (staticRC.senseNearbyRobots(ruin, 8, staticRC.getTeam()).length == 0) return true;
+        if (hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))){
+            return true;
+        }
+        if (staticRC.senseNearbyRobots(ruin, 8, staticRC.getTeam()).length == 0){
+            return true;
+        }
         return false;
     }
 

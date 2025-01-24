@@ -4,11 +4,13 @@ import Version14.Misc.Communication;
 import Version14.Micro.Micro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
+import Version14.RobotPlayer;
 import Version14.Utility.BitBoard;
 import Version14.Utility.SoldierUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
 
+import static Version14.RobotPlayer.staticRC;
 import static Version14.RobotPlayer.rng;
 import static Version14.Misc.Communication.alliedPaintTowers;
 import static Version14.RobotPlayer.*;
@@ -25,11 +27,21 @@ public class Soldier {
         Fill
     }
 
+    enum ExploreState {
+        wallHug,
+        centralExploration,
+        oppositeCorner,
+        random
+    }
+
     public static SoldierState state = SoldierState.Explore;
-    public static MapLocation target;
+    
+    public static MapLocation curObjective = null;
     public static MapLocation closestUnclaimedRuin; //keeps track of the closest unclaimed ruin we know of
     public static MapLocation closestUnfilledPatternCenter;
     public static MapLocation closestEnemyTower;
+
+    public static SoldierState prevState = null;
     //static boolean canSeeEmpty;
     public static MapLocation fillingStation;
     public static MapLocation claimedRuin = null;
@@ -38,7 +50,8 @@ public class Soldier {
     public static boolean beenToCorner = false;
     public static MapInfo[] tilesNearRuin;
     public static RobotInfo seenEnemyTower;
-    public static boolean wallHug;
+    //public static boolean wallHug;
+    public static ExploreState exploration;
     public static boolean clockwise;
     public static boolean canFinishRuin = false;
     public static int neededToFinish = Integer.MAX_VALUE;
@@ -77,18 +90,9 @@ public class Soldier {
             clockwise = rng.nextInt(2) == 0;
             initializeMapDependentVariables();
             spawnLocation = staticRC.getLocation();
-            //invalidResourceCenters = new HashSet<MapLocation>();
             invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
-            //invalidResourceCenters = new BitBoard();
         }
-//        int price = Clock.getBytecodesLeft();
-//        invalidResourceCenters.add(new MapLocation(-1, -1));
-//        if(invalidResourceCenters.contains(staticRC.getLocation())) {
-//            System.out.println("LOL!");
-//        }
-//        System.out.println(price - Clock.getBytecodesLeft());
 
-        //attemptCompleteTowerPattern();
         updateInfo();
         //update the state
         updateState();
@@ -128,6 +132,10 @@ public class Soldier {
         if(closestUnclaimedRuin != null) attemptCompleteTowerPattern(closestUnclaimedRuin);
         if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
             validateRuinClaim();
+        }
+        if(state == SoldierState.Explore){
+            staticRC.setIndicatorString("Exploring: " + exploration.toString() + " : " + curObjective.toString());
+            staticRC.setIndicatorLine(staticRC.getLocation(), curObjective, 255, 255, 255);
         }
 //        if(Clock.getBytecodesLeft() > 3000) {
 //            Utilities.updatePaintAverages();
@@ -261,9 +269,14 @@ public class Soldier {
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
-        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(closestUnclaimedRuin)) {
-            state = SoldierState.RuinBuilding;
-            return;
+        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
+            if(needsHelp(closestUnclaimedRuin)) {
+                state = SoldierState.RuinBuilding;
+                return;
+            }
+            else if (claimedRuin != null) {
+                claimedRuin = null;
+            }
         }
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
@@ -285,39 +298,95 @@ public class Soldier {
 
     public static void explore() throws GameActionException // use symmetry for this method
     {
-        if(claimedRuin != null && state != SoldierState.Refill) {
+        if(claimedRuin != null && state != SoldierState.Refill && staticRC.getNumberTowers() <= 25) {
             validateRuinClaim();
             navigate();
         }
-        else if((turnCount == 1 && rng.nextInt(5) == 0) || wallHug) {
-            wallHug = true;
-            //find the closest wall to you, and set that as your current objective
-            if(target == null) {
-                target = findClosestWall();
+        if(exploration == null) {
+            chooseExplorationState();
+        }
+        if(exploration == ExploreState.wallHug) {
+            if(curObjective == null) {
+                curObjective = findClosestWall();
             }
-            if(staticRC.getLocation().distanceSquaredTo(target) <= 4) {
-                target = rotateCorner(clockwise);
+            if(staticRC.getLocation().distanceSquaredTo(curObjective) <= 4) {
+                curObjective = rotateCorner(clockwise);
                 if(clockwise) staticRC.setIndicatorString("clockwise");
                 else staticRC.setIndicatorString("reverse");
             }
-            else {
-                Direction dir = Pathfinding.bugBFS(target);
-                if(dir != null && staticRC.canMove(dir)) {
-                    staticRC.move(dir);
-                }
-            }
-
         }
         else {
-            if (staticRC.getRoundNum() % 25 == 0 || target == null || staticRC.getLocation().distanceSquaredTo(target) < 8) {
-                //target = generateExploreLocation();
-                target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+            if(curObjective != null && staticRC.getLocation().isWithinDistanceSquared(curObjective, 8)) {
+                curObjective = null;
+                switch(exploration) {
+                    case ExploreState.centralExploration, ExploreState.oppositeCorner -> {
+                        exploration = ExploreState.random;
+                        break;
+                    }
+                }
             }
-            Direction dir = Pathfinding.bugBFS(target);
-            if (dir != null && staticRC.canMove(dir)) staticRC.move(dir);
+            if (curObjective == null) {
+                switch (exploration) {
+                    case ExploreState.centralExploration -> {
+                        curObjective = Utilities.generateRandomLocationWithinRadius(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight() / 2), 25 + EXPLORE_FILL_TOWER_THRESHOLD * 2);
+                        break;
+                    }
+                    //try to explore to the opposite corner
+                    case ExploreState.oppositeCorner -> {
+                        MapLocation closestCorner = closestCorner();
+                        //MapLocation oppositeCorner = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+                        curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+                        break;
+                    }
+                    case ExploreState.random -> {
+                        curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+                        break;
+                    }
+                }
+            }
         }
+        Direction dir = Pathfinding.bugBFS(curObjective);
+        if(staticRC.canMove(dir)) staticRC.move(dir);
         if(staticRC.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
+        }
+    }
+    
+    //selects an exploration state probabilistically
+    public static void chooseExplorationState() {
+        //if(staticRC.getRoundNum() <= 2) exploration = ExploreState.oppositeCorner;
+        //else {
+            double r = rng.nextDouble();
+            //exploration = ExploreState.values()[rng.nextInt(ExploreState.values().length)];
+            //after round 40, we will allow wallHugging
+            if (staticRC.getRoundNum() > 50) {
+                if (r <= 0.06) exploration = ExploreState.wallHug;
+                else if (r <= 0.45) exploration = ExploreState.centralExploration;
+                else if (r <= 0.8) exploration = ExploreState.oppositeCorner;
+                else exploration = ExploreState.random;
+            } else {
+                if (r <= 0.3) exploration = ExploreState.centralExploration;
+                else if (r <= 0.8) exploration = ExploreState.oppositeCorner;
+                else exploration = ExploreState.random;
+            }
+      //  }
+    }
+
+    //returns the closest corner to the robot
+    public static MapLocation closestCorner() {
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth() - 1;
+        int x = staticRC.getLocation().x;
+        int y = staticRC.getLocation().y;
+        int halfHeight = mapHeight / 2;
+        int halfWidth = mapWidth / 2;
+        if(x < halfWidth) {
+            if(y < halfHeight) return new MapLocation(0, 0);
+            else return new MapLocation(0, mapHeight);
+        }
+        else {
+            if(y < halfHeight) return new MapLocation(mapWidth, 0);
+            else return new MapLocation(mapWidth, mapHeight);
         }
     }
 
@@ -327,7 +396,7 @@ public class Soldier {
     {
         if(oppositeHome != null && staticRC.getLocation().isWithinDistanceSquared(oppositeHome, 8)) checkedSymmetry = true;
         if(claimedRuin != null) validateRuinClaim();
-        if(claimedRuin != null && staticRC.getNumberTowers() < 25) {
+        if(claimedRuin != null && staticRC.getNumberTowers() <= 25) {
             Direction dir = Pathfinding.bugBFS(claimedRuin);
             if(dir != null && staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
@@ -343,20 +412,16 @@ public class Soldier {
                 int sym = rng.nextInt(possible.length);
                 switch (possible[sym]) {
                     case Horizontal:
-                        target = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                         oppositeHome = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                         break;
                     case Rotational:
-                        target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                         oppositeHome = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                         break;
                     case Vertical:
-                        target = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                         oppositeHome = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                         break;
                 }
             }
-            target = oppositeHome;
             Direction dir = Pathfinding.bugBFS(oppositeHome);
             if(staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
@@ -374,54 +439,7 @@ public class Soldier {
     public static void fill() throws GameActionException{
         MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(closestUnfilledPatternCenter, 8);
         Micro.patternFillingMicro(closestUnfilledPatternCenter, staticRC.getResourcePattern(), potentialTiles);
-//        MapInfo bestTile = null;
-//        boolean isSecondary = false;
-//        int neededToFinish = 0;
-//        //use the origin if the mark is primary, custom if the mark is primary
-//        boolean markIsSecondary = staticRC.senseMapInfo(closestUnfilledPatternCenter).getMark().isSecondary();
-//        int dist = staticRC.getLocation().distanceSquaredTo(closestUnfilledPatternCenter);
-//        if (dist > 8) {
-//            Direction dir = Pathfinding.bugBFS(closestUnfilledPatternCenter);
-//            if (staticRC.canMove(dir)) staticRC.move(dir);
-//        } else {
-//            if (staticRC.senseMapInfo(staticRC.getLocation()).getPaint() == PaintType.EMPTY) {
-//                boolean useSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(staticRC.getLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern());
-//                //staticRC.attack(staticRC.getLocation(), Utilities.getColorFromOriginPattern(staticRC.getLocation(), staticRC.getResourcePattern()));
-//                staticRC.attack(staticRC.getLocation(), useSecondary);
-//                if(staticRC.getPaint() >= 100) return;
-//                else neededToFinish++;
-//            }
-//        }
-//        for (MapInfo tile : potentialTiles) {
-//            //boolean shouldBeSecondary = Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
-//            boolean shouldBeSecondary = (markIsSecondary) ? Utilities.getColorFromCustomPattern(tile.getMapLocation(), staticRC.getResourcePattern(), closestUnfilledPatternCenter) : Utilities.getColorFromOriginPattern(tile.getMapLocation(), staticRC.getResourcePattern());
-//            if (tile.getPaint() == PaintType.EMPTY && tile.isPassable()) {
-//                if (staticRC.canAttack(tile.getMapLocation()) && staticRC.getPaint() >= 100) {
-//                    staticRC.attack(tile.getMapLocation(), shouldBeSecondary);
-//                    return;
-//                } else {
-//                    bestTile = tile;
-//                    isSecondary = shouldBeSecondary;
-//                    neededToFinish++;
-//                }
-//            } else if (tile.getPaint().isAlly() && tile.isPassable() && tile.getPaint().isSecondary() != shouldBeSecondary) {
-//                neededToFinish++;
-//                if((bestTile == null || !bestTile.getPaint().isEnemy())) {
-//                    bestTile = tile;
-//                    isSecondary = shouldBeSecondary;
-//                }
-//            }
-//        }
         canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
-//        if (bestTile != null) {
-//            if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
-//            else if (staticRC.isMovementReady()) {
-//                //Direction dir = Pathfinding.bugBFS(bestTile.getMapLocation());
-//                Direction dir = staticRC.getLocation().directionTo(bestTile.getMapLocation());
-//                if (staticRC.canMove(dir) && staticRC.getLocation().add(dir).isWithinDistanceSquared(closestUnfilledPatternCenter, 4)) staticRC.move(dir);
-//                if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
-//            }
-//        }
     }
 
     //TODO: implement congestion control and prio q
@@ -479,27 +497,14 @@ public class Soldier {
         }
         int dist = staticRC.getLocation().distanceSquaredTo(closestUnclaimedRuin);
         if(claimedRuin == null) {
-            if (dist > 8) {
                 if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 8, staticRC.getTeam()).length == 0) {
                     claimedRuin = closestUnclaimedRuin;
                 }
-            } else {
-                if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 8, staticRC.getTeam()).length == 1) {
-                    claimedRuin = closestUnclaimedRuin;
-                }
-            }
         }
         else {
-                if(dist > 2) {
-                    if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 0) {
-                        claimedRuin = null;
-                    }
-                }
-                else {
-                    if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 1) {
-                        claimedRuin = null;
-                    }
-                }
+            if(staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 0) {
+                claimedRuin = null;
+            }
         }
         boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(closestUnclaimedRuin, tilesNearRuin);
         if (desiredPattern == null) {
@@ -571,6 +576,7 @@ public class Soldier {
     //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
     public static boolean validateLocation(MapLocation loc) throws GameActionException {
         // int price = Clock.getBytecodesLeft();
+        if(!staticRC.getLocation().isWithinDistanceSquared(loc, 4)) return false;
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(tiles.length < 25) {
             return false;
@@ -691,7 +697,6 @@ public class Soldier {
                     staticRC.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin);
                     return true;
                 }
-            //
         }
         return false;
     }
@@ -857,7 +862,7 @@ public class Soldier {
         int curY = staticRC.getLocation().y;
         int mapHeight = staticRC.getMapHeight() - 1;
         //we aren't even chasing a corner yet - need to return the closest one in the direction we are going
-        if(!(target.x == 1 || target.x == mapWidth - 1 && target.y == 1 || target.y == mapHeight - 1)) {
+        if(!(curObjective.x == 1 || curObjective.x == mapWidth - 1 && curObjective.y == 1 || curObjective.y == mapHeight - 1)) {
             int newX;
             int newY;
             //top edge

@@ -43,7 +43,7 @@ public class RobotPlayer {
 
     public static MapLocation exploreTarget;
     public static int DISPERSION_RADIUS;
-    public static RandomQueue locationQueue;
+    //public static RandomQueue locationQueue;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -94,10 +94,10 @@ public class RobotPlayer {
 
         Communication.setup();
 
-        if(rc.getType().isTowerType())
-        {
-            locationQueue = new RandomQueue(rc, 7);
-        }
+//        if(rc.getType().isTowerType())
+//        {
+//            locationQueue = new RandomQueue(rc, 7);
+//        }
 
         //sectors = new Sector[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
@@ -168,10 +168,10 @@ public class RobotPlayer {
             }
             totalBuilt++;
 
-            if(staticRC.canSendMessage(nextLoc))
-            {
-                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
-            }
+//            if(staticRC.canSendMessage(nextLoc))
+//            {
+//                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
+//            }
         }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
