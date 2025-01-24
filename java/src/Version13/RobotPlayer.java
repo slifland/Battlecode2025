@@ -243,7 +243,7 @@ public class RobotPlayer {
         }
         else
         {
-            if(staticRC.getRoundNum() % 20 == 0 || turnCount == 1) //defaultHuge V13(B) vs V11(A) before: l339; %10: L476; %7 l467; %20 w450
+            if(turnCount % 20 == 0 || turnCount == 1) //defaultHuge V13(B) vs V11(A) before: l339; %10: L476; %7 l467; %20 w450
             {
                     /*/
                     numMessages += staticRC.readMessages(staticRC.getRoundNum() - 1).length;

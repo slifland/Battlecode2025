@@ -169,7 +169,7 @@ public class MopperMicro {
             }
             {
                 basDist = 2;
-                int score = determineScore(x + -2, y + 0);
+                int score = determineScore(x + -2, y );
                 if (score >= bestScore) {
                     bestX = x + -2;
                     bestY = y;
@@ -401,8 +401,7 @@ public class MopperMicro {
             if (bestScore == -1) {
                 staticRC.setIndicatorString("aggroMopperMicro");
                 aggroMopperMicro();
-                if (Clock.getBytecodesLeft() > 3000)
-                    attackAnything();
+                attackAnything();
                 return;
             } else {
                 MapLocation target = new MapLocation(bestX, bestY);
@@ -417,8 +416,7 @@ public class MopperMicro {
                     if (staticRC.canAttack(target)) {
                         staticRC.attack(target);
                     } else {
-                        if (Clock.getBytecodesLeft() > 3000)
-                            attackAnything();
+                        attackAnything();
                     }
                 }
             }
@@ -437,12 +435,126 @@ public class MopperMicro {
 
     //if we are at the end of a turn and haven't been able to attack what we wanted, just attack the first thing we can
     public static void attackAnything() throws GameActionException {
-        for (MapInfo tile : nearbyTiles) {
-            if (staticRC.canAttack(tile.getMapLocation()) && (tile.getPaint().isEnemy() || staticRC.canSenseRobotAtLocation(tile.getMapLocation()) && staticRC.senseRobotAtLocation(tile.getMapLocation()).getTeam() == staticRC.getTeam().opponent())) {
-                staticRC.attack(tile.getMapLocation());
-                return;
+        if(Clock.getBytecodesLeft() > 600) {
+            MapLocation bestLoc = determineBestStationaryAttack();
+            if(staticRC.canAttack(bestLoc)) {
+                staticRC.attack(bestLoc);
             }
         }
+        else {
+            if (staticRC.senseMapInfo(staticRC.getLocation()).getPaint().isEnemy()) {
+                if (staticRC.canAttack(staticRC.getLocation())) {
+                    staticRC.attack(staticRC.getLocation());
+                }
+            }
+            for (MapInfo tile : nearbyTiles) {
+                if (staticRC.canAttack(tile.getMapLocation()) && (tile.getPaint().isEnemy() || staticRC.canSenseRobotAtLocation(tile.getMapLocation()) && staticRC.senseRobotAtLocation(tile.getMapLocation()).getTeam() == staticRC.getTeam().opponent())) {
+                    staticRC.attack(tile.getMapLocation());
+                    return;
+                }
+            }
+        }
+    }
+
+    public static MapLocation determineBestStationaryAttack() throws GameActionException {
+        int x = staticRC.getLocation().x;
+        int y = staticRC.getLocation().y;
+        int bestX = -1;
+        int bestY = -1;
+        int bestScore = -1;
+        int basDist = 0;
+        int bestDist = Integer.MAX_VALUE;
+        {
+            basDist = 2;
+            int score = determineScore(x + -1, y + -1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + -1;
+                bestY = y + -1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 1;
+            int score = determineScore(x + -1, y );
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + -1;
+                bestY = y ;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 2;
+            int score = determineScore(x + -1, y + 1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + -1;
+                bestY = y + 1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 1;
+            int score = determineScore(x , y + -1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x ;
+                bestY = y + -1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 0;
+            int score = determineScore(x , y );
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x ;
+                bestY = y ;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 1;
+            int score = determineScore(x , y + 1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x ;
+                bestY = y + 1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 2;
+            int score = determineScore(x + 1, y + -1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + 1;
+                bestY = y + -1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 1;
+            int score = determineScore(x + 1, y );
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + 1;
+                bestY = y ;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        {
+            basDist = 2;
+            int score = determineScore(x + 1, y + 1);
+            if (score > bestScore || (score == bestScore && basDist < bestDist)) {
+                bestX = x + 1;
+                bestY = y + 1;
+                bestScore = score;
+                bestDist = basDist;
+            }
+        }
+        return new MapLocation(bestX, bestY);
     }
 
     //determines the score of a space mopping wise
@@ -511,7 +623,7 @@ public class MopperMicro {
         if (temp.equals(staticRC.getLocation())) {
             score |= 0b1000;
         }
-        if (temp.isWithinDistanceSquared(staticRC.getLocation(), UnitType.MOPPER.actionRadiusSquared)) {
+        else if (temp.isWithinDistanceSquared(staticRC.getLocation(), UnitType.MOPPER.actionRadiusSquared)) {
             score |= 0b10;
         }
         return score;
@@ -740,7 +852,7 @@ public class MopperMicro {
                     microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 0, staticRC.getLocation().y + 1);
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y + 1);
                     microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
@@ -760,7 +872,7 @@ public class MopperMicro {
                     microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 0);
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y );
                     microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
@@ -780,7 +892,7 @@ public class MopperMicro {
                     microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 0, staticRC.getLocation().y - 1);
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y - 1);
                     microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
@@ -800,7 +912,7 @@ public class MopperMicro {
                     microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + 0);
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y );
                     microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
@@ -932,8 +1044,8 @@ public class MopperMicro {
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
@@ -945,22 +1057,22 @@ public class MopperMicro {
                 totalFilled++;
             }
         }
-        if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
+        if (curX  >= 0 && curX  <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
+                MapLocation newLoc = new MapLocation(curX , curY + -1);
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX , curY );
                 //if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
                 /*else*/
                 microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
+                MapLocation newLoc = new MapLocation(curX , curY + 1);
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
@@ -973,8 +1085,8 @@ public class MopperMicro {
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new mopperMicroInfo();
                 else microArray[totalFilled] = new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;

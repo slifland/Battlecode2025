@@ -14,20 +14,40 @@ public class SpawnMicro {
         MapLocation bestTile = null;
         MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(GameConstants.BUILD_ROBOT_RADIUS_SQUARED);
         MapLocation center = new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2);
-        for(int i = 0; i < 13; i++) {
-            if(i == 7) continue;
-            MapLocation tileLoc = potentialTiles[i].getMapLocation();
-            Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
-            int score = 0;
-            score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
-            score += switch(staticRC.senseMapInfo(tileLoc).getPaint()) {
-                case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
-                case PaintType.EMPTY -> 0;
-                case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
-            };
-            if(score > bestScore) {
-                bestScore = score;
-                bestTile = tileLoc;
+        if(potentialTiles.length == 13) {
+            for (int i = 0; i < 13; i++) {
+                if (i == 7) continue;
+                MapLocation tileLoc = potentialTiles[i].getMapLocation();
+                //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
+                int score = 0;
+                score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
+                score += switch (staticRC.senseMapInfo(tileLoc).getPaint()) {
+                    case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
+                    case PaintType.EMPTY -> 0;
+                    case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
+                };
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestTile = tileLoc;
+                }
+            }
+        }
+        else {
+            for(MapInfo tile : potentialTiles) {
+                if(tile.getMapLocation().equals(staticRC.getLocation())) continue;
+                MapLocation tileLoc = tile.getMapLocation();
+                //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
+                int score = 0;
+                score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
+                score += switch (staticRC.senseMapInfo(tileLoc).getPaint()) {
+                    case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
+                    case PaintType.EMPTY -> 0;
+                    case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
+                };
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestTile = tileLoc;
+                }
             }
         }
         return bestTile;
