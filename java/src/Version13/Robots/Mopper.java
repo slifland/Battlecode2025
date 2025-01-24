@@ -3,6 +3,7 @@ package Version13.Robots;
 import Version13.Micro.MopperMicro;
 import Version13.Pathfinding.Pathfinding;
 import Version13.Misc.Ruin;
+import Version13.Utility.BitBoard;
 import Version13.Utility.MopperUtil;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
@@ -10,6 +11,7 @@ import battlecode.common.*;
 import static Version13.Misc.Communication.enemyTowers;
 import static Version13.Misc.Communication.unclaimedRuins;
 import static Version13.RobotPlayer.*;
+import static Version13.Utility.BitBoard.*;
 
 enum mopStates {
     navigate, contest, refill, clear
@@ -46,7 +48,9 @@ public class Mopper {
 
     public static boolean exploredSymmetry = false;
 
-    public static boolean[][] checkedRuin;
+    //public static boolean[][] checkedRuin;
+
+    public static BitBoard checkedRuin;
 
     public static navState navTarget;
 
@@ -56,7 +60,8 @@ public class Mopper {
     public static void runMopper() throws GameActionException {
         if(turnCount == 1){
             spawnLocation = staticRC.getLocation();
-            checkedRuin = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
+            //checkedRuin = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
+            checkedRuin = new BitBoard();
             navTarget = null;
         }
         updateInfo();
@@ -93,7 +98,8 @@ public class Mopper {
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             switch(navTarget) {
                 case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
-                case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
+                //case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
+                case navState.ruin -> checkedRuin.setBit(curObjective, true);
             }
             curObjective = null;
             navTarget = null;
@@ -149,7 +155,8 @@ public class Mopper {
         if(curObjective == null && !unclaimedRuins.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
-                if(checkedRuin[r.location.x][r.location.y]) continue;
+                //if(checkedRuin[r.location.x][r.location.y]) continue;
+                if(checkedRuin.getBit(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;

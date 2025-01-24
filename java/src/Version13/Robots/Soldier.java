@@ -4,6 +4,7 @@ import Version13.Misc.Communication;
 import Version13.Micro.Micro;
 import Version13.Pathfinding.Pathfinding;
 import Version13.Misc.Ruin;
+import Version13.Utility.BitBoard;
 import Version13.Utility.SoldierUtil;
 import Version13.Utility.Utilities;
 import battlecode.common.*;
@@ -42,7 +43,8 @@ public class Soldier {
     public static boolean canFinishRuin = false;
     public static int neededToFinish = Integer.MAX_VALUE;
     public static MapLocation spawnLocation;
-    public static boolean[][] invalidResourceCenters;
+    //public static boolean[][] invalidResourceCenters;
+    public static BitBoard invalidResourceCenters;
     public static boolean canFinishPattern =false;
 
     public static boolean checkedSymmetry = false;
@@ -76,7 +78,8 @@ public class Soldier {
             initializeMapDependentVariables();
             spawnLocation = staticRC.getLocation();
             //invalidResourceCenters = new HashSet<MapLocation>();
-            invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
+            //invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
+            invalidResourceCenters = new BitBoard();
         }
 //        int price = Clock.getBytecodesLeft();
 //        invalidResourceCenters.add(new MapLocation(-1, -1));
@@ -311,9 +314,7 @@ public class Soldier {
                 target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
             }
             Direction dir = Pathfinding.bugBFS(target);
-            //staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255, 255);
             if (dir != null && staticRC.canMove(dir)) staticRC.move(dir);
-            //attemptFill();
         }
         if(staticRC.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
@@ -610,14 +611,16 @@ public class Soldier {
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(!farFromEdge(loc)) {
             //invalidResourceCenters.add(loc);
-            invalidResourceCenters[loc.x][loc.y] = true;
+            //invalidResourceCenters[loc.x][loc.y] = true;
+            invalidResourceCenters.setBit(loc, true);
             return false;
         }
         //if(tiles.length < 25) return false;
         for (MapInfo tile : tiles) {
             if (!tile.isPassable() || tile.getMark().isAlly()){
                 //invalidResourceCenters.add(loc);
-                invalidResourceCenters[loc.x][loc.y] = true;
+                //invalidResourceCenters[loc.x][loc.y] = true;
+                invalidResourceCenters.setBit(loc, true);
                 return false;
             }
         }
