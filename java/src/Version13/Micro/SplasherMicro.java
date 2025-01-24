@@ -111,7 +111,9 @@ public class SplasherMicro {
                     if(staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
                     else if(Clock.getBytecodesLeft() > 4000) {
                         bestAttack = splasherUtil.cheapBestAttack(fightingTower, minScore);
-                        if(bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
+                        if(bestAttack != null && staticRC.canAttack(bestAttack)){
+                            staticRC.attack(bestAttack);
+                        }
                     }
                 }
             } else {
@@ -126,6 +128,7 @@ public class SplasherMicro {
             staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
             runSafeSplasherMicro();
         }
+        //System.out.println(Clock.getBytecodesLeft());
     }
 
     //runs the splasher micro trying to get within range of a target attack location

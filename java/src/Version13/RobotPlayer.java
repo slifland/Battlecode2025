@@ -121,7 +121,6 @@ public class RobotPlayer {
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
-
                 if(exploreTarget != null)
                     staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
                 //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
@@ -214,7 +213,7 @@ public class RobotPlayer {
 
     static void bytecodeSensitiveOperations() throws GameActionException
     {
-        if(Clock.getBytecodesLeft() > 3000)
+        if(Clock.getBytecodesLeft() > 5000)
         {
             for(MapInfo info : staticRC.senseNearbyMapInfos(staticRC.getType().actionRadiusSquared)) {
                 Utilities.attemptCompleteResourcePattern( info.getMapLocation());
