@@ -10,6 +10,8 @@ import Version14.Utility.SoldierUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
 
+import java.util.Objects;
+
 import static Version14.RobotPlayer.staticRC;
 import static Version14.RobotPlayer.rng;
 import static Version14.Misc.Communication.alliedPaintTowers;
@@ -29,7 +31,6 @@ public class Soldier {
 
     enum ExploreState {
         wallHug,
-        centralExploration,
         oppositeCorner,
         random
     }
@@ -155,8 +156,8 @@ public class Soldier {
         STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
         TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
-        //y = 0.019x + 32.4 -> calibrates it to 40 at min size and 100 at max size
-        FORCE_MONEY_ROUND = (int)(0.019 * mapSize + 32.4);//turn at which any time before that soldiers will always build money towers
+        //y = y = 0.013x + 34.8 -> calibrates it to 40 at min size and 80 at max size
+        FORCE_MONEY_ROUND = (int)(0.013 * mapSize + 34.8);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
@@ -269,7 +270,9 @@ public class Soldier {
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
-        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
+//        if(closestUnclaimedRuin != null)System.out.println(closestUnclaimedRuin);
+//        else System.out.println(Communication.unclaimedRuins.size());
+        if(staticRC.getNumberTowers() <= 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
             if(needsHelp(closestUnclaimedRuin)) {
                 state = SoldierState.RuinBuilding;
                 return;
@@ -318,32 +321,28 @@ public class Soldier {
         else {
             if(curObjective != null && staticRC.getLocation().isWithinDistanceSquared(curObjective, 8)) {
                 curObjective = null;
-                switch(exploration) {
-                    case ExploreState.centralExploration, ExploreState.oppositeCorner -> {
-                        exploration = ExploreState.random;
-                        break;
-                    }
+                if (exploration == ExploreState.oppositeCorner) {
+                    exploration = ExploreState.random;
                 }
             }
             if (curObjective == null) {
                 switch (exploration) {
-                    case ExploreState.centralExploration -> {
-                        curObjective = Utilities.generateRandomLocationWithinRadius(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight() / 2), 25 + EXPLORE_FILL_TOWER_THRESHOLD * 2);
-                        break;
-                    }
-                    //try to explore to the opposite corner
                     case ExploreState.oppositeCorner -> {
                         MapLocation closestCorner = closestCorner();
-                        //MapLocation oppositeCorner = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
                         curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
                         break;
                     }
                     case ExploreState.random -> {
+                        //curObjective = generateRandomExploration();
                         curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
                         break;
                     }
                 }
             }
+        }
+        if(turnCount % 25 == 0 && exploration == ExploreState.random) {
+            curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+            //curObjective = generateRandomExploration();
         }
         Direction dir = Pathfinding.bugBFS(curObjective);
         if(staticRC.canMove(dir)) staticRC.move(dir);
@@ -355,22 +354,30 @@ public class Soldier {
     //selects an exploration state probabilistically
     public static void chooseExplorationState() {
         //if(staticRC.getRoundNum() <= 2) exploration = ExploreState.oppositeCorner;
-        //else {
+        //if(staticRC.getRoundNum() <= 3) exploration = ExploreState.centralExploration;
+        //else if(staticRC.getRoundNum() <= 7) exploration = ExploreState.wallHug;
             double r = rng.nextDouble();
             //exploration = ExploreState.values()[rng.nextInt(ExploreState.values().length)];
             //after round 40, we will allow wallHugging
             if (staticRC.getRoundNum() > 50) {
-                if (r <= 0.06) exploration = ExploreState.wallHug;
-                else if (r <= 0.45) exploration = ExploreState.centralExploration;
-                else if (r <= 0.8) exploration = ExploreState.oppositeCorner;
+                if (r <= 0.2) exploration = ExploreState.wallHug;
+                //else if (r <= 0.3) exploration = ExploreState.oppositeCorner;
                 else exploration = ExploreState.random;
             } else {
-                if (r <= 0.3) exploration = ExploreState.centralExploration;
-                else if (r <= 0.8) exploration = ExploreState.oppositeCorner;
+                if(r <= 0.03) exploration = ExploreState.wallHug;
+                //else if (r <= 0.20) exploration = ExploreState.oppositeCorner;
                 else exploration = ExploreState.random;
             }
-      //  }
     }
+
+//    //generates a random location far away from the robot
+//    public static MapLocation generateRandomExploration() {
+//        MapLocation newLoc = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+//        while(newLoc.isWithinDistanceSquared(staticRC.getLocation(), (int) (adjustedMapSize * 4)) || newLoc.isWithinDistanceSquared(spawnLocation, (int) (adjustedMapSize * 4))) {
+//            newLoc = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+//        }
+//        return newLoc;
+//    }
 
     //returns the closest corner to the robot
     public static MapLocation closestCorner() {
@@ -439,7 +446,7 @@ public class Soldier {
     public static void fill() throws GameActionException{
         MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(closestUnfilledPatternCenter, 8);
         Micro.patternFillingMicro(closestUnfilledPatternCenter, staticRC.getResourcePattern(), potentialTiles);
-        canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
+        //canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
     }
 
     //TODO: implement congestion control and prio q
@@ -457,6 +464,7 @@ public class Soldier {
                     if(staticRC.canAttack(seenEnemyTower.getLocation())) staticRC.attack(seenEnemyTower.getLocation());
                 }
                 else{
+                    //curObjective = spawnLocation;
                     explore();
                 }
                 return;
@@ -522,8 +530,11 @@ public class Soldier {
     //logic currently copied from version 8
     public static boolean[][] chooseDesiredPattern(MapLocation m) throws GameActionException {
         //if(enemyRobots.length >= 1) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        int distFromCenter = m.distanceSquaredTo(new MapLocation((staticRC.getMapWidth() - 1)/ 2, (staticRC.getMapHeight() - 1) / 2));
+        if(distFromCenter <= 9) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         int ranNum = (staticRC.getRoundNum() < FORCE_MONEY_ROUND) ? 0 : rng.nextInt(2);
         if(staticRC.getRoundNum() > FORCE_MONEY_ROUND && staticRC.getMoney() > 5000) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+        if(distFromCenter <= Utilities.RADIUS_FROM_CENTER && numEnemyTiles > 1) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         if(ranNum == 0) {
             return (staticRC.getMapHeight() * staticRC.getMapWidth() <= 750 && staticRC.getRoundNum() > 100) ? staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER) : staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         }
@@ -766,12 +777,12 @@ public class Soldier {
     private static MapLocation closestUnclaimedRuin() {
         int minDist = Integer.MAX_VALUE;
         Ruin r = null;
-        boolean isOccupied = false;
+        //boolean isOccupied = false;
         for(Ruin ruin : Communication.unclaimedRuins) {
             if(ruin.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(staticRC.getLocation());
                 r = ruin;
-                if (minDist <= 25) return r.location;
+                //if (minDist <= 25) return r.location;
             }
         }
         return (minDist == Integer.MAX_VALUE) ? null : r.location;

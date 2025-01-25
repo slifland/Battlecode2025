@@ -8,7 +8,7 @@ import static Version14.RobotPlayer.*;
 
 public class Utilities
 {
-    final static int RADIUS_FROM_CENTER = 40;
+    final public static int RADIUS_FROM_CENTER = 40;
     /*
         Uses the origin as the beginning of a tiling pattern and returns what color a tile on a specific MapLocation
         should be.
@@ -36,11 +36,11 @@ public class Utilities
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
-        if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
-        else if(staticRC.getNumberTowers() > 6 && center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles >= 1) {
+        if(center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2)) <= 9) {
             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         }
-        else if(center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2)) <= 10) {
+        if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+        else if(staticRC.getNumberTowers() > 6 && center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles >= 1) {
             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         }
         int moneyScore = 0;

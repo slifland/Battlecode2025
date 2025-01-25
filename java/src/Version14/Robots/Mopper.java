@@ -196,7 +196,7 @@ public class Mopper {
         }
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
             navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
@@ -306,7 +306,7 @@ public class Mopper {
     public static MapLocation bestClear(MapLocation ruin) throws GameActionException {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
-        int bestScore = Integer.MIN_VALUE;
+        int bestScore = -1;
         //boolean hasRobot = false;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
             int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());

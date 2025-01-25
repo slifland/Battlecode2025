@@ -1397,7 +1397,7 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
@@ -1406,14 +1406,14 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
@@ -1422,21 +1422,21 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
@@ -1445,28 +1445,28 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
@@ -1475,35 +1475,35 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
@@ -1512,42 +1512,42 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
@@ -1556,49 +1556,49 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
@@ -1607,56 +1607,56 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
@@ -1665,63 +1665,63 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
@@ -1730,70 +1730,70 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
@@ -1802,77 +1802,77 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
@@ -1881,84 +1881,84 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
@@ -1967,91 +1967,91 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
@@ -2060,98 +2060,98 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
@@ -2160,105 +2160,105 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
@@ -2267,112 +2267,112 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
@@ -2381,119 +2381,119 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
@@ -2502,126 +2502,126 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
@@ -2630,133 +2630,133 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
@@ -2765,140 +2765,140 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
@@ -2907,147 +2907,147 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
                 if (tilesNearRuin[20].isPassable()) {
                     if (tilesNearRuin[20].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(20);
                     }
                 }
@@ -3056,154 +3056,154 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
                 if (tilesNearRuin[20].isPassable()) {
                     if (tilesNearRuin[20].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(20);
                     }
                 }
                 if (tilesNearRuin[21].isPassable()) {
                     if (tilesNearRuin[21].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(21);
                     }
                 }
@@ -3212,161 +3212,161 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
                 if (tilesNearRuin[20].isPassable()) {
                     if (tilesNearRuin[20].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(20);
                     }
                 }
                 if (tilesNearRuin[21].isPassable()) {
                     if (tilesNearRuin[21].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(21);
                     }
                 }
                 if (tilesNearRuin[22].isPassable()) {
                     if (tilesNearRuin[22].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(22);
                     }
                 }
@@ -3375,168 +3375,168 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
                 if (tilesNearRuin[20].isPassable()) {
                     if (tilesNearRuin[20].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(20);
                     }
                 }
                 if (tilesNearRuin[21].isPassable()) {
                     if (tilesNearRuin[21].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(21);
                     }
                 }
                 if (tilesNearRuin[22].isPassable()) {
                     if (tilesNearRuin[22].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(22);
                     }
                 }
                 if (tilesNearRuin[23].isPassable()) {
                     if (tilesNearRuin[23].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(23);
                     }
                 }
@@ -3545,175 +3545,175 @@ public class SoldierUtil {
                 if (tilesNearRuin[0].isPassable()) {
                     if (tilesNearRuin[0].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(0);
                     }
                 }
                 if (tilesNearRuin[1].isPassable()) {
                     if (tilesNearRuin[1].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(1);
                     }
                 }
                 if (tilesNearRuin[2].isPassable()) {
                     if (tilesNearRuin[2].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(2);
                     }
                 }
                 if (tilesNearRuin[3].isPassable()) {
                     if (tilesNearRuin[3].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(3);
                     }
                 }
                 if (tilesNearRuin[4].isPassable()) {
                     if (tilesNearRuin[4].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(4);
                     }
                 }
                 if (tilesNearRuin[5].isPassable()) {
                     if (tilesNearRuin[5].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(5);
                     }
                 }
                 if (tilesNearRuin[6].isPassable()) {
                     if (tilesNearRuin[6].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(6);
                     }
                 }
                 if (tilesNearRuin[7].isPassable()) {
                     if (tilesNearRuin[7].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(7);
                     }
                 }
                 if (tilesNearRuin[8].isPassable()) {
                     if (tilesNearRuin[8].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(8);
                     }
                 }
                 if (tilesNearRuin[9].isPassable()) {
                     if (tilesNearRuin[9].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(9);
                     }
                 }
                 if (tilesNearRuin[10].isPassable()) {
                     if (tilesNearRuin[10].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(10);
                     }
                 }
                 if (tilesNearRuin[11].isPassable()) {
                     if (tilesNearRuin[11].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(11);
                     }
                 }
                 if (tilesNearRuin[12].isPassable()) {
                     if (tilesNearRuin[12].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(12);
                     }
                 }
                 if (tilesNearRuin[13].isPassable()) {
                     if (tilesNearRuin[13].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(13);
                     }
                 }
                 if (tilesNearRuin[14].isPassable()) {
                     if (tilesNearRuin[14].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(14);
                     }
                 }
                 if (tilesNearRuin[15].isPassable()) {
                     if (tilesNearRuin[15].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(15);
                     }
                 }
                 if (tilesNearRuin[16].isPassable()) {
                     if (tilesNearRuin[16].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(16);
                     }
                 }
                 if (tilesNearRuin[17].isPassable()) {
                     if (tilesNearRuin[17].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(17);
                     }
                 }
                 if (tilesNearRuin[18].isPassable()) {
                     if (tilesNearRuin[18].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(18);
                     }
                 }
                 if (tilesNearRuin[19].isPassable()) {
                     if (tilesNearRuin[19].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(19);
                     }
                 }
                 if (tilesNearRuin[20].isPassable()) {
                     if (tilesNearRuin[20].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(20);
                     }
                 }
                 if (tilesNearRuin[21].isPassable()) {
                     if (tilesNearRuin[21].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(21);
                     }
                 }
                 if (tilesNearRuin[22].isPassable()) {
                     if (tilesNearRuin[22].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(22);
                     }
                 }
                 if (tilesNearRuin[23].isPassable()) {
                     if (tilesNearRuin[23].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(23);
                     }
                 }
                 if (tilesNearRuin[24].isPassable()) {
                     if (tilesNearRuin[24].getPaint().isEnemy()) {
                         return false;
-                    } else if (!hasEmpty) {
+                    } else  {
                         hasEmpty = check(24);
                     }
                 }

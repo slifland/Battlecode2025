@@ -40,6 +40,9 @@ public class RobotPlayer {
     public static int mapSize = 0;
     public static UnitType toBuild = null;
     public static RobotController staticRC;
+    //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
+    public static double adjustedMapSize = mapSize *  0.003 + 2.8;
+
 
     public static MapLocation exploreTarget;
     public static int DISPERSION_RADIUS;
@@ -322,8 +325,6 @@ public class RobotPlayer {
         int earlyRoundDef = 200;
         //double mapSizeScalar = 1.0 / 200.0;
         //double adjustedMapSize = mapSize * mapSizeScalar;
-        //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
-        double adjustedMapSize = mapSize *  0.003 + 2.8;
         int earlySoldierBonus = 5 + (int)adjustedMapSize;
         int soldierScore;
         int mopperScore;
