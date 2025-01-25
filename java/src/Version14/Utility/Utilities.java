@@ -8,7 +8,7 @@ import static Version14.RobotPlayer.*;
 
 public class Utilities
 {
-    final public static int RADIUS_FROM_CENTER = 40;
+    final static int RADIUS_FROM_CENTER = 40;
     /*
         Uses the origin as the beginning of a tiling pattern and returns what color a tile on a specific MapLocation
         should be.
@@ -26,21 +26,14 @@ public class Utilities
         return pattern[location.x - (center.x - 2)][location.y - (center.y - 2)];
     }
 
-    //geneerates a random location within a circle around a point
-    public static MapLocation generateRandomLocationWithinRadius(MapLocation center, int radiusSquared) {
-        double theta = rng.nextDouble( 2 * Math.PI);
-        double radius = rng.nextDouble(Math.sqrt(radiusSquared));
-        return new MapLocation(center.x + (int)(radius * Math.cos(theta)), center.y + (int)(radius * Math.sin(theta)));
-    }
-
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
     public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
-        if(center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2)) <= 9) {
-            return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
-        }
         if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         else if(staticRC.getNumberTowers() > 6 && center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles >= 1) {
+            return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        }
+        else if(center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2)) <= 10) {
             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         }
         int moneyScore = 0;

@@ -188,7 +188,7 @@ public class Splasher {
         }
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
             navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
