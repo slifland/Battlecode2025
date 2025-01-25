@@ -306,7 +306,7 @@ public class Mopper {
     public static MapLocation bestClear(MapLocation ruin) throws GameActionException {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
-        int bestScore = -1;
+        int bestScore = -2;
         //boolean hasRobot = false;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
             int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());
