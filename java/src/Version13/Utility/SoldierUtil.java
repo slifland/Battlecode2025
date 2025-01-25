@@ -3762,7 +3762,7 @@ public class SoldierUtil {
 //                    staticRC.completeResourcePattern(tile.getMapLocation());
 //            }
 //            else if(mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-//                if(!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+//                if(!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
 //                    if(dist < minDistanceToValidLocation) {
 //                        minDistanceToValidLocation = dist;
 //
@@ -3807,7 +3807,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[0].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -3850,7 +3850,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[1].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -3893,7 +3893,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[2].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -3936,7 +3936,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[3].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -3979,7 +3979,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[4].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4022,7 +4022,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[5].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4065,7 +4065,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[6].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4108,7 +4108,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[7].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4151,7 +4151,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[8].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4194,7 +4194,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[9].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4237,7 +4237,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[10].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4280,7 +4280,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[11].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4323,7 +4323,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[12].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4366,7 +4366,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[13].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4409,7 +4409,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[14].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4452,7 +4452,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[15].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4495,7 +4495,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[16].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4538,7 +4538,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[17].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4581,7 +4581,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[18].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4624,7 +4624,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[19].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4667,7 +4667,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[20].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4710,7 +4710,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[21].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4753,7 +4753,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[22].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4796,7 +4796,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[23].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4839,7 +4839,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[24].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4882,7 +4882,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[25].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4925,7 +4925,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[26].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -4968,7 +4968,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[27].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5011,7 +5011,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[28].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5054,7 +5054,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[29].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5097,7 +5097,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[30].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5140,7 +5140,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[31].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5183,7 +5183,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[32].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5226,7 +5226,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[33].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5269,7 +5269,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[34].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5312,7 +5312,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[35].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5355,7 +5355,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[36].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5398,7 +5398,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[37].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5441,7 +5441,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[38].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5484,7 +5484,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[39].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5527,7 +5527,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[40].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5570,7 +5570,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[41].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5613,7 +5613,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[42].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5656,7 +5656,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[43].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5699,7 +5699,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[44].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5742,7 +5742,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[45].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5785,7 +5785,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[46].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5828,7 +5828,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[47].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5871,7 +5871,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[48].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5914,7 +5914,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[49].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -5957,7 +5957,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[50].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6000,7 +6000,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[51].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6043,7 +6043,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[52].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6086,7 +6086,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[53].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6129,7 +6129,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[54].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6172,7 +6172,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[55].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6215,7 +6215,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[56].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6258,7 +6258,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[57].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6301,7 +6301,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[58].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6344,7 +6344,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[59].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6387,7 +6387,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[60].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6430,7 +6430,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[61].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6473,7 +6473,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[62].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6516,7 +6516,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[63].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6559,7 +6559,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[64].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6602,7 +6602,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[65].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6645,7 +6645,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[66].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6688,7 +6688,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[67].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6731,7 +6731,7 @@ public class SoldierUtil {
                             staticRC.completeResourcePattern(nearbyTiles[68].getMapLocation());
                         }
                     } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                        if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                        if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                             if (dist < minDistanceToValidLocation) {
                                 minDistanceToValidLocation = dist;
 
@@ -6776,7 +6776,7 @@ public class SoldierUtil {
                     if (staticRC.canCompleteResourcePattern(tile.getMapLocation()))
                         staticRC.completeResourcePattern(tile.getMapLocation());
                 } else if (mark == PaintType.EMPTY && (tileLoc.x - 2) % 4 == 0 && (tileLoc.y - 2) % 4 == 0) {
-                    if (!!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
+                    if (!invalidResourceCenters[tileLoc.x][tileLoc.y] && validatePlacement(tileLoc)) {
                         if (dist < minDistanceToValidLocation) {
                             minDistanceToValidLocation = dist;
 
