@@ -12,7 +12,7 @@ emojiMap = {
 errors = []
 currentBot = 'Version13'
 
-bots = ['Version14', 'Version12']
+bots = ['Version14']
 botsSet = set(bots)
 maps = ['gridworld', 'sayhi', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack', 'catface', 'giver', 'quack', 'galaxy', 'leavemealone', 'windmill', 'Piglets2']
 mapsSet = set(maps)
