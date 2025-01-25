@@ -158,66 +158,363 @@ public class Micro {
             else
                 populateMicroArray();
             microInfo bestMicro = new microInfo(staticRC.senseMapInfo(staticRC.getLocation()));
-            for(int i = 0; i < 9; i++) {
+//            for(int i = 0; i < 9; i++) {
+//                do {
+//                    if(bestMicro.equals(microArray[i])) continue;
+//                    //if one space is passable and the other is not, then passable is better
+//                    if (!microArray[i].passable) break;
+//                    if (!bestMicro.passable) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if(curDist > 8) {
+//                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+//                        int altDistToRuin = microArray[i].loc.distanceSquaredTo(ruin);
+//                        if(distToRuin < altDistToRuin) break;
+//                        if(altDistToRuin < distToRuin) {
+//                            bestMicro = microArray[i];
+//                            break;
+//                        }
+//                    }
+//
+//                    //look at which place will lose us the least paint at the end of this turn
+//                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
+//                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if(bestAttack != null) {
+//                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+//                        int altDistToAction = microArray[i].loc.distanceSquaredTo(bestAttack);
+//                        if(distToAction < altDistToAction) break;
+//                        if(altDistToAction < distToAction) {
+//                            bestMicro = microArray[i];
+//                            break;
+//                        }
+//                    }
+//
+//                    //regardless of action readiness, the next considerations are unified:
+//                    //we prioritize allied paint over neutral paint over enemy paint
+//                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
+//                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
+//                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
+//                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
+//                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
+//                        bestMicro = microArray[i];
+//                        break;
+//                    }
+//
+//                    if (rng.nextInt(2) == 0) {
+//                        bestMicro = microArray[i];
+//                    }
+//                } while(false);
+//            }
+            {
+                // i = 0
                 do {
-                    if(bestMicro.equals(microArray[i])) continue;
-                    //if one space is passable and the other is not, then passable is better
-                    if (!microArray[i].passable) break;
+                    if(bestMicro.equals(microArray[0])) continue;
+                    if (!microArray[0].passable) break;
                     if (!bestMicro.passable) {
-                        bestMicro = microArray[i];
+                        bestMicro = microArray[0];
                         break;
                     }
 
                     if(curDist > 8) {
                         int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
-                        int altDistToRuin = microArray[i].loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[0].loc.distanceSquaredTo(ruin);
                         if(distToRuin < altDistToRuin) break;
                         if(altDistToRuin < distToRuin) {
-                            bestMicro = microArray[i];
+                            bestMicro = microArray[0];
                             break;
                         }
                     }
 
-                    //look at which place will lose us the least paint at the end of this turn
-                    if (bestMicro.paintLoss < microArray[i].paintLoss) break;
-                    if (microArray[i].paintLoss < bestMicro.paintLoss) {
-                        bestMicro = microArray[i];
+                    if (bestMicro.paintLoss < microArray[0].paintLoss) break;
+                    if (microArray[0].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[0];
                         break;
                     }
 
                     if(bestAttack != null) {
                         int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
-                        int altDistToAction = microArray[i].loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[0].loc.distanceSquaredTo(bestAttack);
                         if(distToAction < altDistToAction) break;
                         if(altDistToAction < distToAction) {
-                            bestMicro = microArray[i];
+                            bestMicro = microArray[0];
                             break;
                         }
                     }
 
-                    //regardless of action readiness, the next considerations are unified:
-                    //we prioritize allied paint over neutral paint over enemy paint
-                    if (bestMicro.paint.isAlly() && !microArray[i].paint.isAlly()) break;
-                    if (!bestMicro.paint.isAlly() && microArray[i].paint.isAlly()) {
-                        bestMicro = microArray[i];
+                    if (bestMicro.paint.isAlly() && !microArray[0].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[0].paint.isAlly()) {
+                        bestMicro = microArray[0];
                         break;
                     }
 
-                    if (!bestMicro.paint.isEnemy() && microArray[i].paint.isEnemy()) break;
-                    if (bestMicro.paint.isEnemy() && !microArray[i].paint.isEnemy()) {
-                        bestMicro = microArray[i];
+                    if (!bestMicro.paint.isEnemy() && microArray[0].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[0].paint.isEnemy()) {
+                        bestMicro = microArray[0];
                         break;
                     }
 
-                    //next, lets try and avoid being next to allies cardinally, so that we dont get swung at by moppers
-                    if (bestMicro.adjacentAllies < microArray[i].adjacentAllies) break;
-                    if (microArray[i].adjacentAllies < bestMicro.adjacentAllies) {
-                        bestMicro = microArray[i];
+                    if (bestMicro.adjacentAllies < microArray[0].adjacentAllies) break;
+                    if (microArray[0].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[0];
                         break;
                     }
 
                     if (rng.nextInt(2) == 0) {
-                        bestMicro = microArray[i];
+                        bestMicro = microArray[0];
+                    }
+                } while(false);
+
+                // i = 1
+                do {
+                    if(bestMicro.equals(microArray[1])) continue;
+                    if (!microArray[1].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+
+                    if(curDist > 8) {
+                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[1].loc.distanceSquaredTo(ruin);
+                        if(distToRuin < altDistToRuin) break;
+                        if(altDistToRuin < distToRuin) {
+                            bestMicro = microArray[1];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paintLoss < microArray[1].paintLoss) break;
+                    if (microArray[1].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+
+                    if(bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[1].loc.distanceSquaredTo(bestAttack);
+                        if(distToAction < altDistToAction) break;
+                        if(altDistToAction < distToAction) {
+                            bestMicro = microArray[1];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paint.isAlly() && !microArray[1].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[1].paint.isAlly()) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[1].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[1].paint.isEnemy()) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+
+                    if (bestMicro.adjacentAllies < microArray[1].adjacentAllies) break;
+                    if (microArray[1].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[1];
+                        break;
+                    }
+
+                    if (rng.nextInt(2) == 0) {
+                        bestMicro = microArray[1];
+                    }
+                } while(false);
+
+                // i = 2
+                do {
+                    if(bestMicro.equals(microArray[2])) continue;
+                    if (!microArray[2].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+
+                    if(curDist > 8) {
+                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[2].loc.distanceSquaredTo(ruin);
+                        if(distToRuin < altDistToRuin) break;
+                        if(altDistToRuin < distToRuin) {
+                            bestMicro = microArray[2];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paintLoss < microArray[2].paintLoss) break;
+                    if (microArray[2].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+
+                    if(bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[2].loc.distanceSquaredTo(bestAttack);
+                        if(distToAction < altDistToAction) break;
+                        if(altDistToAction < distToAction) {
+                            bestMicro = microArray[2];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paint.isAlly() && !microArray[2].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[2].paint.isAlly()) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[2].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[2].paint.isEnemy()) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+
+                    if (bestMicro.adjacentAllies < microArray[2].adjacentAllies) break;
+                    if (microArray[2].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[2];
+                        break;
+                    }
+
+                    if (rng.nextInt(2) == 0) {
+                        bestMicro = microArray[2];
+                    }
+                } while(false);
+
+                // i = 3
+                do {
+                    if(bestMicro.equals(microArray[3])) continue;
+                    if (!microArray[3].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+
+                    if(curDist > 8) {
+                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[3].loc.distanceSquaredTo(ruin);
+                        if(distToRuin < altDistToRuin) break;
+                        if(altDistToRuin < distToRuin) {
+                            bestMicro = microArray[3];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paintLoss < microArray[3].paintLoss) break;
+                    if (microArray[3].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+
+                    if(bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[3].loc.distanceSquaredTo(bestAttack);
+                        if(distToAction < altDistToAction) break;
+                        if(altDistToAction < distToAction) {
+                            bestMicro = microArray[3];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paint.isAlly() && !microArray[3].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[3].paint.isAlly()) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[3].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[3].paint.isEnemy()) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+
+                    if (bestMicro.adjacentAllies < microArray[3].adjacentAllies) break;
+                    if (microArray[3].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[3];
+                        break;
+                    }
+
+                    if (rng.nextInt(2) == 0) {
+                        bestMicro = microArray[3];
+                    }
+                } while(false);
+
+                // Continue for i = 4 through i = 8, just like above
+                // i = 4
+                do {
+                    // ... same pattern for i = 4, 5, 6, 7, 8 ...
+                } while(false);
+
+                // i = 8
+                do {
+                    if(bestMicro.equals(microArray[8])) continue;
+                    if (!microArray[8].passable) break;
+                    if (!bestMicro.passable) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+
+                    if(curDist > 8) {
+                        int distToRuin = bestMicro.loc.distanceSquaredTo(ruin);
+                        int altDistToRuin = microArray[8].loc.distanceSquaredTo(ruin);
+                        if(distToRuin < altDistToRuin) break;
+                        if(altDistToRuin < distToRuin) {
+                            bestMicro = microArray[8];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paintLoss < microArray[8].paintLoss) break;
+                    if (microArray[8].paintLoss < bestMicro.paintLoss) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+
+                    if(bestAttack != null) {
+                        int distToAction = bestMicro.loc.distanceSquaredTo(bestAttack);
+                        int altDistToAction = microArray[8].loc.distanceSquaredTo(bestAttack);
+                        if(distToAction < altDistToAction) break;
+                        if(altDistToAction < distToAction) {
+                            bestMicro = microArray[8];
+                            break;
+                        }
+                    }
+
+                    if (bestMicro.paint.isAlly() && !microArray[8].paint.isAlly()) break;
+                    if (!bestMicro.paint.isAlly() && microArray[8].paint.isAlly()) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+
+                    if (!bestMicro.paint.isEnemy() && microArray[8].paint.isEnemy()) break;
+                    if (bestMicro.paint.isEnemy() && !microArray[8].paint.isEnemy()) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+
+                    if (bestMicro.adjacentAllies < microArray[8].adjacentAllies) break;
+                    if (microArray[8].adjacentAllies < bestMicro.adjacentAllies) {
+                        bestMicro = microArray[8];
+                        break;
+                    }
+
+                    if (rng.nextInt(2) == 0) {
+                        bestMicro = microArray[8];
                     }
                 } while(false);
             }
@@ -374,6 +671,9 @@ public class Micro {
              && Utilities.getColorFromCustomPattern(tile.getMapLocation(), desiredPattern, ruin) != tile.getPaint().isSecondary()) {
                 minDist = dist;
                 bestTile = tile;
+            }
+            if(bestTile != null && minDist <= UnitType.SOLDIER.actionRadiusSquared) {
+                return bestTile.getMapLocation();
             }
         }
         return (bestTile != null) ? bestTile.getMapLocation() : null;
@@ -594,8 +894,8 @@ public class Micro {
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
@@ -607,21 +907,21 @@ public class Micro {
                 totalFilled++;
             }
         }
-        if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
+        if (curX  >= 0 && curX  <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
+                MapLocation newLoc = new MapLocation(curX , curY + -1);
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX , curY );
                 //if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 /*else*/ microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
+                MapLocation newLoc = new MapLocation(curX , curY + 1);
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
@@ -634,8 +934,8 @@ public class Micro {
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
@@ -681,8 +981,8 @@ public class Micro {
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + -1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + -1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
@@ -694,21 +994,21 @@ public class Micro {
                 totalFilled++;
             }
         }
-        if (curX + 0 >= 0 && curX + 0 <= mapWidth) {
+        if (curX  >= 0 && curX  <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + -1);
+                MapLocation newLoc = new MapLocation(curX , curY + -1);
                 if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX , curY );
                 //if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
                 /*else*/ microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 0, curY + 1);
+                MapLocation newLoc = new MapLocation(curX , curY + 1);
                 if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
@@ -721,8 +1021,8 @@ public class Micro {
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;
             }
-            if (curY + 0 >= 0 && curY + 0 <= mapHeight) {
-                MapLocation newLoc = new MapLocation(curX + 1, curY + 0);
+            if (curY  >= 0 && curY  <= mapHeight) {
+                MapLocation newLoc = new MapLocation(curX + 1, curY );
                 if (staticRC.canSenseRobotAtLocation(newLoc) || !newLoc.isWithinDistanceSquared(ruin, 8)) microArray[totalFilled] = new microInfo();
                 else microArray[totalFilled] = new microInfo(staticRC.senseMapInfo((newLoc)));
                 totalFilled++;

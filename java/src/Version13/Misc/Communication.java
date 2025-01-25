@@ -217,7 +217,7 @@ public class Communication
         //Find available towers to broadcast to, select one randomly
 
         int i = 0;
-        MapLocation[] tower = new MapLocation[30];
+        MapLocation[] tower = new MapLocation[10];
         for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType() && staticRC.canSendMessage(robot.location))

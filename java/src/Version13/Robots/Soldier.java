@@ -15,6 +15,7 @@ import static Version13.RobotPlayer.*;
 import static Version13.Utility.SoldierUtil.needsHelp;
 import static Version13.Utility.SoldierUtil.validateRuinClaim;
 
+
 public class Soldier {
     enum SoldierState {
         Explore,        //We have nowhere to go to, let's explore
@@ -44,6 +45,7 @@ public class Soldier {
     public static int neededToFinish = Integer.MAX_VALUE;
     public static MapLocation spawnLocation;
     public static boolean[][] invalidResourceCenters;
+    public static boolean[][] curPattern;
     //public static BitBoard invalidResourceCenters;
     public static boolean canFinishPattern =false;
 
@@ -171,9 +173,13 @@ public class Soldier {
 //        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
 //            closestEnemyTower = closestEnemyTower();
 //        }
-        closestEnemyTower = closestEnemyTower();
+        if(turnCount == 1 || turnCount % 3 == 0) {
+            closestEnemyTower = closestEnemyTower();
+        }
         closestUnclaimedRuin = closestUnclaimedRuin();
         SoldierUtil.scanNearbyTilesSoldier();
+
+        if(turnCount % 10 == 0) curPattern = null;
 //        int enemyCount = 0;
 //        int x = 0;
 //        int y = 0;
@@ -265,6 +271,7 @@ public class Soldier {
             state = SoldierState.RuinBuilding;
             return;
         }
+        curPattern = null;
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
             state = SoldierState.Tower;
