@@ -437,7 +437,7 @@ public class MopperMicro {
     public static void attackAnything() throws GameActionException {
         if(Clock.getBytecodesLeft() > 600) {
             MapLocation bestLoc = determineBestStationaryAttack();
-            if(staticRC.canAttack(bestLoc)) {
+            if(staticRC.onTheMap(bestLoc) && staticRC.canAttack(bestLoc)) {
                 staticRC.attack(bestLoc);
             }
         }

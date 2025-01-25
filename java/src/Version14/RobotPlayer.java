@@ -40,10 +40,13 @@ public class RobotPlayer {
     public static int mapSize = 0;
     public static UnitType toBuild = null;
     public static RobotController staticRC;
+    //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
+    public static double adjustedMapSize = mapSize *  0.003 + 2.8;
+
 
     public static MapLocation exploreTarget;
     public static int DISPERSION_RADIUS;
-    public static RandomQueue locationQueue;
+    //public static RandomQueue locationQueue;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -94,10 +97,10 @@ public class RobotPlayer {
 
         Communication.setup();
 
-        if(rc.getType().isTowerType())
-        {
-            locationQueue = new RandomQueue(rc, 7);
-        }
+//        if(rc.getType().isTowerType())
+//        {
+//            locationQueue = new RandomQueue(rc, 7);
+//        }
 
         //sectors = new Sector[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
@@ -168,10 +171,10 @@ public class RobotPlayer {
             }
             totalBuilt++;
 
-            if(staticRC.canSendMessage(nextLoc))
-            {
-                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
-            }
+//            if(staticRC.canSendMessage(nextLoc))
+//            {
+//                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
+//            }
         }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
@@ -322,8 +325,6 @@ public class RobotPlayer {
         int earlyRoundDef = 200;
         //double mapSizeScalar = 1.0 / 200.0;
         //double adjustedMapSize = mapSize * mapSizeScalar;
-        //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
-        double adjustedMapSize = mapSize *  0.003 + 2.8;
         int earlySoldierBonus = 5 + (int)adjustedMapSize;
         int soldierScore;
         int mopperScore;
