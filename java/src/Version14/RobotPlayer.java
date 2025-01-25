@@ -123,7 +123,7 @@ public class RobotPlayer {
                 bytecodeSensitiveOperations();
                 if(exploreTarget != null)
                     staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
-                //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
+                //staticRC.setIndicatorString("" + Communication.processRuinQueue.size());
             }
              catch (GameActionException e) {
                 System.out.println("GameActionException");
@@ -243,20 +243,21 @@ public class RobotPlayer {
         }
         else
         {
-            if(turnCount % 20 == 0 || turnCount == 1) //defaultHuge V13(B) vs V11(A) before: l339; %10: L476; %7 l467; %20 w450
-            {
-                    /*/
-                    numMessages += staticRC.readMessages(staticRC.getRoundNum() - 1).length;
-                    int price = Clock.getBytecodesLeft();
-                    /**/
+                /*/
+                int len = staticRC.readMessages(staticRC.getRoundNum() - 1).length;
+                System.out.println("Processing " + len + " messages");
+                int price = Clock.getBytecodesLeft();
+                /**/
 
-                Communication.processMessagesRobot(); ////////////////////////////////////////////////////////////////
+            Communication.processMessagesRobot(); ////////////////////////////////////////////////////////////////
 
-                    /*/
-                    price -= Clock.getBytecodesLeft();
-                    totalPrice += price;
-                    /**/
-            }
+                /*/
+                price -= Clock.getBytecodesLeft();
+                System.out.println("\tTotal price of processing messages: " + price);
+                System.out.println();
+                numMessages += len;
+                totalPrice += price;
+                /**/
 
             Communication.scanForRuins();
             Communication.sendMessagesRobot();

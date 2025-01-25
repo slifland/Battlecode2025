@@ -51,7 +51,7 @@ public class Communication
         }
     }
 
-    private static class QueueMessage
+    public static class QueueMessage///////////////////////////////////////////////////////////////////////
     {
         //the number of items stored at any given time must not reach this number
         private static final int len = 200;
@@ -60,18 +60,13 @@ public class Communication
         private int head = 0; //the next item to pop
         private int tail = 0; //the next place to add an item
 
-        //int size; ////////////////////////////////////////////////////////////////////////////////////////////
-
         public QueueMessage()
         {
             messages = new Message[len];
-            //size = 0;
         }
 
         public void add(Message m)
         {
-            //size++;
-
             messages[tail] = m;
             tail = (tail + 1) % len;
         }
@@ -79,8 +74,6 @@ public class Communication
         //pre: !isEmpty()
         public Message pop()
         {
-            //size--;
-
             Message ret = messages[head];
             head = (head + 1) % len;
             return ret;
@@ -95,18 +88,16 @@ public class Communication
                  */
         }
 
-        /*
         public int size()
         {
-            return size;
+            return (tail >= head ? tail - head : len - (head - tail));
         }
-        */
     }
 
     static final QueueRuin sendQueue = new QueueRuin();      //between robots and towers
     static final QueueRuin broadcastRuinQueue = new QueueRuin(); //between towers
 
-    static final QueueMessage processRuinQueue = new QueueMessage();
+    public static final QueueMessage processRuinQueue = new QueueMessage(); ///////////////////////////////////////////////////////////////////
 
     public static final LinkedList<Ruin> unclaimedRuins = new LinkedList<>(); //remembered, but not sent in comms
 
@@ -119,13 +110,8 @@ public class Communication
      */
     static Ruin[][] allMemory;
 
-    /*
-        The maximum number of Ruins messages a tower will send in any given turn
-            We might want to limit this to limit bytecode usage
-     */
-    static final int numRuinsToSendToEachRobot = 2;
-
-    static final int numMessagesToProcessPerRoundRobot = 3;
+    static final int numRuinsToSendToEachRobot = 2; //The maximum number of Ruins messages a tower will send in any given turn
+    static final double numMessagesToProcessPerRoundFactorRobot = 0.01286; //max number to process = (int)(1 + factor * num in queue)
 
     //Called only once, when a new robot/tower is born
     public static void setup() throws GameActionException
@@ -154,26 +140,42 @@ public class Communication
             usually we will only be in range of 1-3 towers tho
          */
 
-        /*
+            /*/
+            int price = Clock.getBytecodesLeft(); ////////////////////////////////////////////////////////////////////////////////////////////////////
+            /**/
+
         for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
         {
             processRuinQueue.add(m);
         }
 
-        System.out.println("Num messages in queue: " + processRuinQueue.size());
+            /*/
+            price -= Clock.getBytecodesLeft();
+            System.out.println("\tPrice of adding to queue: " + price);
 
+            System.out.println("\t\tNum messages in queue: " + processRuinQueue.size());
+
+            price = Clock.getBytecodesLeft();
+            /**/
+
+        int size = processRuinQueue.size();
+        int max = (int)(1 + numMessagesToProcessPerRoundFactorRobot * (size * size));
         Message m;
-        for(int i = 0; i < numMessagesToProcessPerRoundRobot && !processRuinQueue.isEmpty(); i++)
-        */
-        for(Message m : staticRC.readMessages(staticRC.getRoundNum() - 1))
+        for(int i = 0; i < max && !processRuinQueue.isEmpty(); i++)
         {
-            //m = processRuinQueue.pop();
+            //System.out.println("*");
+            m = processRuinQueue.pop();
             switch (m.getBytes() & 0b11)
             {
                 case 0b00 -> updateRuinsMemory(messageToRuin(m));
-                case 0b01 -> updateExploreLocation(m);
+                //case 0b01 -> updateExploreLocation(m);
             }
         }
+
+            /*/
+            price -= Clock.getBytecodesLeft();
+            System.out.println("\tPrice of processing " + max + " messages: " + price);
+            /**/
     }
 
     /*
@@ -379,14 +381,14 @@ public class Communication
         Iterator<Ruin> enemyIt = enemyTowers.iterator();
         Iterator<Ruin> alliedPaintIt = alliedPaintTowers.iterator();
 
-        boolean ei = true, ai = true;
-        while(ei || ai)
+        boolean en = true, al = true;
+        while(en || al)
         {
-            ei = enemyIt.hasNext();
-            ai = alliedPaintIt.hasNext();
+            en = enemyIt.hasNext();
+            al = alliedPaintIt.hasNext();
 
-            if(ei) sendQueue.add(enemyIt.next());
-            if(ai) sendQueue.add(alliedPaintIt.next());
+            if(en) sendQueue.add(enemyIt.next());
+            if(al) sendQueue.add(alliedPaintIt.next());
         }
     }
 
