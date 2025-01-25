@@ -1378,7 +1378,7 @@ public class SoldierUtil {
     }
 
     public static boolean check(int index) {
-        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[0].getPaint().isSecondary())) {
+        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[index].getPaint().isSecondary())) {
             neededToFinish++;
             return true;
         }

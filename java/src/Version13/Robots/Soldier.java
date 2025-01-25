@@ -261,7 +261,7 @@ public class Soldier {
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
-        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(closestUnclaimedRuin)) {
+        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(closestUnclaimedRuin) && !Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
             state = SoldierState.RuinBuilding;
             return;
         }
