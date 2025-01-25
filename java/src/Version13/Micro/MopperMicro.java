@@ -131,7 +131,7 @@ public class MopperMicro {
             int y = staticRC.getLocation().y;
             int bestX = -1;
             int bestY = -1;
-            int bestScore = -2;
+            int bestScore = -1;
             int basDist = 0;
             int bestDist = Integer.MAX_VALUE;
             //int[][] scores = new int[5][5];
@@ -398,7 +398,7 @@ public class MopperMicro {
                 }
             }
             //nowhere to attack
-            if (bestScore == -2) {
+            if (bestScore == -1) {
                 staticRC.setIndicatorString("aggroMopperMicro");
                 aggroMopperMicro();
                 if (Clock.getBytecodesLeft() > 3000)
