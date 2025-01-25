@@ -52,6 +52,8 @@ public class Mopper {
 
     public static BitBoard checkedRuin;
 
+    public static BitBoard checkedTower;
+
     public static navState navTarget;
 
 
@@ -63,6 +65,7 @@ public class Mopper {
             //checkedRuin = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
             checkedRuin = new BitBoard();
             navTarget = null;
+            checkedTower = new BitBoard();
         }
         updateInfo();
         updateState();
@@ -100,6 +103,7 @@ public class Mopper {
                 case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
                 //case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
                 case navState.ruin -> checkedRuin.setBit(curObjective, true);
+                case navState.tower -> checkedTower.setBit(curObjective, true);
             }
             curObjective = null;
             navTarget = null;
@@ -167,6 +171,7 @@ public class Mopper {
         if(curObjective == null && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
+                if(checkedTower.getBit(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;

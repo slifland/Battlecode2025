@@ -563,7 +563,7 @@ public class MopperMicro {
         MapLocation temp = new MapLocation(x, y);
         if (staticRC.onTheMap(temp)) {
             MapInfo m = staticRC.senseMapInfo(temp);
-            if (!m.getPaint().isEnemy() || !m.isPassable()) return -1;
+            if (!m.getPaint().isEnemy() || !m.isPassable()) return -2;
             RobotInfo r = staticRC.senseRobotAtLocation(temp);
             //roughly determines whether we would have to move into tower range to attack this square
             if (seenEnemyTower != null) {
@@ -572,10 +572,10 @@ public class MopperMicro {
                             temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 8);
                     default -> temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 3);
                 };
-                if (withinFunctionalTowerRange) return -1;
+                if (withinFunctionalTowerRange) return -2;
             }
             if (Utilities.basicLocationIsBehindWall(m.getMapLocation())) {
-                return -1;
+                return -2;
             }
             if (r != null) {
                 if (staticRC.getTeam() == r.getTeam()) {
@@ -594,7 +594,7 @@ public class MopperMicro {
                 score |= 0b10;
             }
         } else {
-            return -1;
+            return -2;
         }
         return score;
     }
@@ -602,7 +602,7 @@ public class MopperMicro {
     //scores a maplocation for the clear() method specifically
     public static int determineScoreClear(MapLocation temp, MapInfo m) throws GameActionException {
         int score = 0;
-        if (!m.getPaint().isEnemy() || !m.isPassable()) return -1;
+        if (!m.getPaint().isEnemy() || !m.isPassable()) return -2;
         RobotInfo r = staticRC.senseRobotAtLocation(temp);
         //roughly determines whether we would have to move into tower range to attack this square
         if (seenEnemyTower != null) {
@@ -611,7 +611,7 @@ public class MopperMicro {
                         temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 8);
                 default -> temp.isWithinDistanceSquared(seenEnemyTower.getLocation(), 3);
             };
-            if (withinFunctionalTowerRange) return -1;
+            if (withinFunctionalTowerRange) return -2;
         }
         if (r != null) {
             if (staticRC.getTeam() == r.getTeam()) {

@@ -9,6 +9,7 @@ import Version14.Utility.SoldierUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
 
+import static Version14.Misc.Communication.unclaimedRuins;
 import static Version14.RobotPlayer.rng;
 import static Version14.Misc.Communication.alliedPaintTowers;
 import static Version14.RobotPlayer.*;
@@ -45,7 +46,7 @@ public class Soldier {
     public static MapLocation spawnLocation;
     public static boolean[][] invalidResourceCenters;
     //public static BitBoard invalidResourceCenters;
-    public static boolean canFinishPattern =false;
+    //public static boolean canFinishPattern =false;
 
     public static boolean checkedSymmetry = false;
     public static MapLocation oppositeHome = null;
@@ -250,20 +251,23 @@ public class Soldier {
     public static void updateState() throws GameActionException
     {
         //check if we need to refill on paint
-        if((staticRC.getPaint() <= refillThreshold || (staticRC.getPaint() <= doneRefillingThreshold && state == SoldierState.Refill)) && !canFinishRuin && !canFinishPattern){
+        if((staticRC.getPaint() <= refillThreshold || (staticRC.getPaint() <= doneRefillingThreshold && state == SoldierState.Refill)) && !canFinishRuin/* && !canFinishPattern*/){
             state = SoldierState.Refill;
             if(fillingStation == null) fillingStation = nextNearestPaintTower();
             return;
         }
-        canFinishPattern = false;
+        //canFinishPattern = false;
         canFinishRuin = false;
         fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
         state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
-        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)  && needsHelp(closestUnclaimedRuin)) {
-            state = SoldierState.RuinBuilding;
-            return;
+        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)/*  && needsHelp(closestUnclaimedRuin)*/) {
+            if(needsHelp(closestUnclaimedRuin)) {
+                state = SoldierState.RuinBuilding;
+                return;
+            }
+            //if(claimedRuin != null) claimedRuin = null;
         }
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
@@ -412,7 +416,7 @@ public class Soldier {
 //                }
 //            }
 //        }
-        canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
+        //canFinishPattern = neededToFinish * 5 < staticRC.getPaint();
 //        if (bestTile != null) {
 //            if (staticRC.canAttack(bestTile.getMapLocation())) staticRC.attack(bestTile.getMapLocation(), isSecondary);
 //            else if (staticRC.isMovementReady()) {
@@ -571,6 +575,7 @@ public class Soldier {
     //checks whether the 5x5 area around a location is empty of obstacles - currently also includes enemy paint as an obstacle
     public static boolean validateLocation(MapLocation loc) throws GameActionException {
         // int price = Clock.getBytecodesLeft();
+        if(!staticRC.getLocation().isWithinDistanceSquared(loc, 4)) return false;
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(tiles.length < 25) {
             return false;
