@@ -1,0 +1,29 @@
+|  | Version13 | Version12 |
+| :---: | :---: | :---: |
+| gridworld | Won (1056, 2000) | Won (357, 410) |
+| sayhi | Won (756, 437) | Tied (625, 392) |
+| Money | Tied (314, 429) | Tied (613, 359) |
+| Mirage | Lost (315, 372) | Lost (347, 409) |
+| Justice | Tied (1783, 2000) | Lost (711, 1396) |
+| gardenworld | Tied (626, 934) | Won (669, 632) |
+| memstore | Won (446, 439) | Won (348, 359) |
+| Thirds | Won (844, 348) | Tied (596, 410) |
+| TargetPractice | Tied (329, 571) | Tied (495, 488) |
+| Racetrack | Tied (1356, 289) | Lost (281, 301) |
+| catface | Lost (396, 296) | Won (829, 519) |
+| giver | Tied (371, 413) | Tied (407, 371) |
+| quack | Won (468, 1076) | Lost (715, 294) |
+| galaxy | Tied (386, 679) | Tied (389, 2000) |
+| leavemealone | Tied (765, 470) | Tied (392, 365) |
+| windmill | Tied (442, 365) | Lost (406, 885) |
+| Piglets2 | Won (473, 702) | Tied (473, 550) |
+| Flower | Tied (716, 840) | Won (1153, 957) |
+| Filter | Lost (2000, 1702) | Tied (2000, 551) |
+| yearofthesnake | Tied (337, 629) | Won (511, 454) |
+| walalilongla | Lost (507, 443) | Lost (447, 509) |
+| starburst | Lost (559, 554) | Tied (443, 948) |
+| sierpinski | Tied (427, 404) | Tied (480, 380) |
+| sunrise | Tied (399, 544) | Won (536, 741) |
+| roads | Tied (813, 382) | Tied (622, 658) |
+| rain | Won (1319, 374) | Tied (399, 410) |
+
