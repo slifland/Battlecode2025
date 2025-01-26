@@ -208,7 +208,7 @@ public class Mopper {
             if(d <= 0.5) {
                 MapLocation closestCorner = Soldier.closestCorner();
                 curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
-                System.out.println("hello!");
+                //System.out.println("hello!");
             }
             else {
                 curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);

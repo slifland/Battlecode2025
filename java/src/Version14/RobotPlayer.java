@@ -38,6 +38,7 @@ public class RobotPlayer {
     public static int totalBuilt = 0;
     public static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     public static int mapSize = 0;
+    public static int turnsSinceSeenEnemy = 0;
     public static UnitType toBuild = null;
     public static RobotController staticRC;
 
@@ -141,6 +142,8 @@ public class RobotPlayer {
     public static void runTower() throws GameActionException{
         //We're a tower so might as well try and complete patterns with our extra bytecode
         Utilities.attemptCompletePatterns();
+        if(enemyRobots.length == 0) turnsSinceSeenEnemy++;
+        else turnsSinceSeenEnemy = 0;
         if(staticRC.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
             if(staticRC.getMoney() > 2000 && staticRC.canUpgradeTower(staticRC.getLocation()) && staticRC.getNumberTowers() > 3)
                 staticRC.upgradeTower(staticRC.getLocation());
@@ -339,6 +342,10 @@ public class RobotPlayer {
             soldierScore = 2;
             mopperScore = 2;
             splasherScore = 4;
+//            if(turnsSinceSeenEnemy <= 20) {
+//                splasherScore++;
+//                mopperScore++;
+//            }
             if(adjustedMapSize <= 8) {
                 int adjustment = (int) (8 - adjustedMapSize);
                 mopperScore += adjustment;
@@ -355,7 +362,6 @@ public class RobotPlayer {
                 splasherScore += 2;
             }
         }
-
         int denominator = soldierScore + mopperScore + splasherScore;
         return new double[]{(double) soldierScore / denominator, (double) mopperScore / denominator, (double) splasherScore / denominator};
     }

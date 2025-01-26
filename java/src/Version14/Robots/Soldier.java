@@ -268,7 +268,7 @@ public class Soldier {
         }
         fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18) == 0) ? SoldierState.Explore : SoldierState.Navigate;
+        state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(16) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
 
         if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && !checkedRuin.getBit(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
@@ -295,10 +295,10 @@ public class Soldier {
             state = SoldierState.Tower;
             return;
         }
-        if((numEnemyTiles > 7 && enemyRobots.length >= 2)) {
-            state = SoldierState.Tower;
-            return;
-        }
+//        if((numEnemyTiles > 7 && enemyRobots.length >= 2)) {
+//            state = SoldierState.Tower;
+//            return;
+//        }
 
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {

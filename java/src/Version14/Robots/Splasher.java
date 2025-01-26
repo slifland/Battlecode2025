@@ -205,7 +205,7 @@ public class Splasher {
             if(d <= 0.6) {
                 MapLocation closestCorner = Soldier.closestCorner();
                 curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
-                System.out.println("hello!");
+                //System.out.println("hello!");
             }
             else {
                 curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
@@ -280,7 +280,11 @@ public class Splasher {
             }
         }
         else {
-            if(averageEnemyPaint != null) SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), averageEnemyPaint), averageEnemyPaint);
+            if(seenEnemyTower != null && staticRC.getLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), seenEnemyTower.getType().actionRadiusSquared)) {
+                MapLocation target = staticRC.getLocation().add(staticRC.getLocation().directionTo(seenEnemyTower.getLocation()).opposite());
+                SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), target), target);
+            }
+            else if(averageEnemyPaint != null) SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), averageEnemyPaint), averageEnemyPaint);
             else if(seenEnemyTower != null) SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), seenEnemyTower.getLocation()), seenEnemyTower.getLocation());
         }
     }
@@ -316,6 +320,12 @@ public class Splasher {
                 }
             }
         }
+//        for(MapInfo tile : nearbyTiles) {
+//            if(tile.getPaint().isEnemy()) {
+//                if (!Utilities.basicLocationIsBehindWall(tile.getMapLocation()))
+//                    staticRC.setIndicatorDot(tile.getMapLocation(), 0, 255, 0);
+//            }
+//        }
         if(turnCount % CLOSEST_EMPTY_RUIN_REFRESH == 0 || turnCount == 1) {
             nearestUnfilledRuin = closestUnclaimedRuin();
         }
@@ -330,27 +340,27 @@ public class Splasher {
     }
 
     //unrolled version is in splasherUtil
-    public static void refreshPaintAverages() throws GameActionException {
-        numEnemyTiles = 0;
-        averageEnemyPaint = null;
-        //boolean hasSeenNoWall = false;
-        int x = 0;
-        int y = 0;
-        //now, check if we can see any enemy tiles
-        for (MapInfo tile : nearbyTiles) {
-            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
-            if (knownSymmetry == Symmetry.Unknown) {
-                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
-                if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
-            }
-            if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(tile.getMapLocation())) {
-                x += tile.getMapLocation().x;
-                y += tile.getMapLocation().y;
-                numEnemyTiles++;
-            }
-        }
-        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
-    }
+//    public static void refreshPaintAverages() throws GameActionException {
+//        numEnemyTiles = 0;
+//        averageEnemyPaint = null;
+//        //boolean hasSeenNoWall = false;
+//        int x = 0;
+//        int y = 0;
+//        //now, check if we can see any enemy tiles
+//        for (MapInfo tile : nearbyTiles) {
+//            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
+//            if (knownSymmetry == Symmetry.Unknown) {
+//                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
+//                if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
+//            }
+//            if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(tile.getMapLocation())) {
+//                x += tile.getMapLocation().x;
+//                y += tile.getMapLocation().y;
+//                numEnemyTiles++;
+//            }
+//        }
+//        averageEnemyPaint = (numEnemyTiles == 0) ? null : new MapLocation(x / numEnemyTiles, y / numEnemyTiles);
+//    }
 
     //UTILITY METHODS
     private static MapLocation closestUnclaimedRuin() {
