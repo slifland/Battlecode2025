@@ -8,6 +8,7 @@ import Version14.Misc.Ruin;
 import Version14.Utility.BitBoard;
 import Version14.Utility.Utilities;
 import Version14.Utility.splasherUtil;
+import Version7.MopperMicro;
 import battlecode.common.*;
 
 import static Version14.Misc.Communication.*;
@@ -69,18 +70,20 @@ public class Splasher {
         }
         updateInfo();
         updateState();
-        switch(state) {
-            case navigate:
-                navigate();
-                break;
-            case refill:
-                refill();
-                break;
-            case contest:
-                contest();
-                break;
+        if(staticRC.isMovementReady() || staticRC.isActionReady()) {
+            switch (state) {
+                case navigate:
+                    navigate();
+                    break;
+                case refill:
+                    refill();
+                    break;
+                case contest:
+                    contest();
+                    break;
+            }
         }
-        if((knownSymmetry != Symmetry.Unknown && Clock.getBytecodesLeft() > 2400) || Clock.getBytecodesLeft() > 4300) {
+        if(Clock.getBytecodesLeft() > 7000) {
             splasherUtil.refreshPaintAverages();
         }
         if(curObjective== null)staticRC.setIndicatorString(state.toString());
@@ -198,7 +201,9 @@ public class Splasher {
             navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
+        //int price = Clock.getBytecodesLeft();
         Direction dir = Pathfinding.bugBFS(curObjective);
+        //System.out.println(price - Clock.getBytecodesLeft());
         if(staticRC.canMove(dir)) staticRC.move(dir);
         staticRC.setIndicatorString("navigate! " + curObjective + " : " + navTarget);
     }
@@ -254,33 +259,18 @@ public class Splasher {
 
     //attempts to steal enemy territory and potentially attack towers
     public static void contest() throws GameActionException {
-        SplasherMicro.integratedSplasherMicro(seenEnemyTower  != null);
-//        MapLocation toAttack = cheapBestAttack(seenEnemyTower != null, Math.min(4, numEnemyTiles));
-//        //no attacks that good
-//        if(toAttack == null) {
-//            if(staticRC.canAttack(seenEnemyTower.getLocation())) {
-//                staticRC.attack(seenEnemyTower.getLocation());
-//            }
-//            else {
-//                Direction dir = Micro.runMicro(allyRobots.length - enemyRobots.length > 5);
-//                if (staticRC.canMove(dir)) staticRC.move(dir);
-//                toAttack = cheapBestAttack(seenEnemyTower != null, Math.min(4, numEnemyTiles));
-//                if (toAttack != null && staticRC.canAttack(toAttack)) {
-//                    staticRC.attack(toAttack);
-//                }
-//                if (toAttack == null && staticRC.canAttack(seenEnemyTower.getLocation())) {
-//                    staticRC.attack(seenEnemyTower.getLocation());
-//                }
-//            }
-//        }
-//        else if (staticRC.canAttack(toAttack)) {
-//            staticRC.attack(toAttack);
-//        }
-//        if(staticRC.isMovementReady()) {
-//            Direction dir = Micro.runMicro();
-//            if(staticRC.canMove(dir)) staticRC.move(dir);
-//        }
-        //System.out.println(Clock.getBytecodesLeft());
+        int minScore = 3;
+        if(staticRC.isActionReady()) {
+            MapLocation bestAttack = splasherUtil.bestAttack(seenEnemyTower != null, minScore);
+            if (bestAttack != null) SplasherMicro.integratedSplasherMicro(seenEnemyTower != null, bestAttack);
+            else {
+                navigate();
+            }
+        }
+        else {
+            if(averageEnemyPaint != null) SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), averageEnemyPaint), averageEnemyPaint);
+            else if(seenEnemyTower != null) SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), seenEnemyTower.getLocation()), seenEnemyTower.getLocation());
+        }
     }
 
     //determines the current state for the splashers
@@ -297,7 +287,7 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if(averageEnemyPaint != null && numEnemyTiles > 1) {
+        if((averageEnemyPaint != null && numEnemyTiles > 1) || (seenEnemyTower != null && staticRC.getHealth() > 100)) {
             state = splasherStates.contest;
         }
     }

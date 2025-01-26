@@ -28,7 +28,7 @@ public class Utilities
 
     //looks at the area around a map location, and infers which tower pattern is matched
     //for now only considers the two patterns we build, money and paint
-    public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
+        public static boolean[][] inferPatternFromExistingSpots(MapLocation center, MapInfo[] ruinTiles) throws GameActionException {
         if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
         else if(staticRC.getNumberTowers() > 6 && center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && Soldier.numEnemyTiles >= 1) {
             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
@@ -60,6 +60,24 @@ public class Utilities
         if(moneyScore >= paintScore && moneyScore >= defenseScore) return moneyPattern;
         else if (paintScore >= moneyScore && paintScore >= defenseScore) return paintPattern;
         else return defensePattern;
+    }
+
+    //gets the pattern to build from a hash of the location, as well as a series of other considerations
+    public static boolean[][] getPatternFromWeightedHash(MapLocation center) throws GameActionException {
+         if(center.distanceSquaredTo(new MapLocation(staticRC.getMapWidth()/ 2, staticRC.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER) {
+            return staticRC.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
+        }
+         else if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) {
+             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+         }
+         else if(staticRC.getMoney() > 10000) {
+             return staticRC.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+         }
+         int hash = center.x * 3 + ((center.y + 11)* 13);
+         int decider = hash % 10;
+         if(decider <= 6) return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+         else return staticRC.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
+
     }
 
     public static void attemptCompleteResourcePattern(MapLocation location) throws GameActionException

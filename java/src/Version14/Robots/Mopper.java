@@ -281,7 +281,7 @@ public class Mopper {
         else {
             MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
         }
-        if(staticRC.canAttack(bestLoc)) staticRC.attack(bestLoc);
+        if(bestLoc != null && staticRC.canAttack(bestLoc)) staticRC.attack(bestLoc);
         if(staticRC.isActionReady()) {
             MopperMicro.attackAnything();
         }
@@ -311,7 +311,7 @@ public class Mopper {
     public static MapLocation bestClear(MapLocation ruin) throws GameActionException {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
-        int bestScore = Integer.MIN_VALUE;
+        int bestScore = -1;
         //boolean hasRobot = false;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
             int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());

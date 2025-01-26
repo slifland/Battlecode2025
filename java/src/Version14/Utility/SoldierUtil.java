@@ -10,3722 +10,1401 @@ public class SoldierUtil {
     static boolean[][] pattern;
     static MapLocation ruin;
 
-    //checks whether we should still "claim" this ruin
-    //if there is an obstacle stopping us from completing it, then we should abandon t
-    public static void validateRuinClaim() throws GameActionException {
-        if (staticRC.getLocation().distanceSquaredTo(claimedRuin) > 8) {
-            return;
-        }
-//        for(MapInfo tile : tilesNearRuin) {
-//            if(tile.getPaint().isEnemy()) {
-//                claimedRuin = null;
-//                return;
-//            }
+//    //checks whether we should still "claim" this ruin
+//    //if there is an obstacle stopping us from completing it, then we should abandon t
+//    public static void validateRuinClaim() throws GameActionException {
+//        if(staticRC.canSenseRobotAtLocation(claimedRuin)) {
+//            claimedRuin = null;
+//            return;
 //        }
-        switch (tilesNearRuin.length) {
-            case 1 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 2 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 3 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 4 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 5 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 6 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 7 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 8 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 9 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 10 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 11 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 12 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 13 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 14 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 15 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 16 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 17 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 18 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 19 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 20 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 21 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[20].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 22 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[20].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[21].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 23 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[20].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[21].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[22].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 24 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[20].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[21].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[22].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[23].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-            case 25 -> {
-                if (tilesNearRuin[0].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[1].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[2].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[3].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[4].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[5].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[6].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[7].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[8].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[9].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[10].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[11].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[12].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[13].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[14].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[15].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[16].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[17].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[18].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[19].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[20].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[21].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[22].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[23].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-                if (tilesNearRuin[24].getPaint().isEnemy()) {
-                    claimedRuin = null;
-                    return;
-                }
-            }
-
-        }
-    }
+//        if (staticRC.getLocation().distanceSquaredTo(claimedRuin) > 8) {
+//            return;
+//        }
+////        for(MapInfo tile : tilesNearRuin) {
+////            if(tile.getPaint().isEnemy()) {
+////                claimedRuin = null;
+////                return;
+////            }
+////        }
+//        switch (tilesNearRuin.length) {
+//            case 1 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 2 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 3 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 4 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 5 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 6 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 7 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 8 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 9 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 10 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 11 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 12 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 13 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 14 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 15 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 16 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 17 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 18 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 19 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 20 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 21 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[20].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 22 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[20].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[21].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 23 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[20].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[21].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[22].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 24 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[20].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[21].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[22].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[23].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//            case 25 -> {
+//                if (tilesNearRuin[0].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[1].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[2].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[3].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[4].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[5].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[6].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[7].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[8].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[9].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[10].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[11].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[12].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[13].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[14].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[15].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[16].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[17].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[18].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[19].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[20].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[21].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[22].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[23].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//                if (tilesNearRuin[24].getPaint().isEnemy()) {
+//                    claimedRuin = null;
+//                    return;
+//                }
+//            }
+//
+//        }
+//    }
 
     public static boolean check(int index) {
         if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[index].getPaint().isSecondary())) {
-            neededToFinish++;
             return true;
         }
         return false;
     }
 
     public static boolean needsHelp(MapLocation ruinInput) throws GameActionException {
-        neededToFinish = 0;
-        canFinishRuin = false;
         ruin = ruinInput;
-        tilesNearRuin = staticRC.senseNearbyMapInfos(ruin, 8);
+        pattern = (curPattern != null) ? curPattern : Utilities.getPatternFromWeightedHash(ruinInput);
         boolean hasEmpty = false;
-        pattern = Utilities.inferPatternFromExistingSpots(ruin, tilesNearRuin);
-        switch (tilesNearRuin.length) {
-            case 1 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-            }
-            case 2 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-            }
-            case 3 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-            }
-            case 4 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-            }
-            case 5 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-            }
-            case 6 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-            }
-            case 7 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-            }
-            case 8 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-            }
-            case 9 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-            }
-            case 10 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-            }
-            case 11 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-            }
-            case 12 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-            }
-            case 13 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-            }
-            case 14 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-            }
-            case 15 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-            }
-            case 16 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-            }
-            case 17 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-            }
-            case 18 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-            }
-            case 19 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-            }
-            case 20 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-            }
-            case 21 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-                if (tilesNearRuin[20].isPassable()) {
-                    if (tilesNearRuin[20].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(20);
-                    }
-                }
-            }
-            case 22 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-                if (tilesNearRuin[20].isPassable()) {
-                    if (tilesNearRuin[20].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(20);
-                    }
-                }
-                if (tilesNearRuin[21].isPassable()) {
-                    if (tilesNearRuin[21].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(21);
-                    }
-                }
-            }
-            case 23 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-                if (tilesNearRuin[20].isPassable()) {
-                    if (tilesNearRuin[20].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(20);
-                    }
-                }
-                if (tilesNearRuin[21].isPassable()) {
-                    if (tilesNearRuin[21].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(21);
-                    }
-                }
-                if (tilesNearRuin[22].isPassable()) {
-                    if (tilesNearRuin[22].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(22);
-                    }
-                }
-            }
-            case 24 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-                if (tilesNearRuin[20].isPassable()) {
-                    if (tilesNearRuin[20].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(20);
-                    }
-                }
-                if (tilesNearRuin[21].isPassable()) {
-                    if (tilesNearRuin[21].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(21);
-                    }
-                }
-                if (tilesNearRuin[22].isPassable()) {
-                    if (tilesNearRuin[22].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(22);
-                    }
-                }
-                if (tilesNearRuin[23].isPassable()) {
-                    if (tilesNearRuin[23].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(23);
-                    }
-                }
-            }
-            case 25 -> {
-                if (tilesNearRuin[0].isPassable()) {
-                    if (tilesNearRuin[0].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(0);
-                    }
-                }
-                if (tilesNearRuin[1].isPassable()) {
-                    if (tilesNearRuin[1].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(1);
-                    }
-                }
-                if (tilesNearRuin[2].isPassable()) {
-                    if (tilesNearRuin[2].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(2);
-                    }
-                }
-                if (tilesNearRuin[3].isPassable()) {
-                    if (tilesNearRuin[3].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(3);
-                    }
-                }
-                if (tilesNearRuin[4].isPassable()) {
-                    if (tilesNearRuin[4].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(4);
-                    }
-                }
-                if (tilesNearRuin[5].isPassable()) {
-                    if (tilesNearRuin[5].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(5);
-                    }
-                }
-                if (tilesNearRuin[6].isPassable()) {
-                    if (tilesNearRuin[6].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(6);
-                    }
-                }
-                if (tilesNearRuin[7].isPassable()) {
-                    if (tilesNearRuin[7].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(7);
-                    }
-                }
-                if (tilesNearRuin[8].isPassable()) {
-                    if (tilesNearRuin[8].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(8);
-                    }
-                }
-                if (tilesNearRuin[9].isPassable()) {
-                    if (tilesNearRuin[9].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(9);
-                    }
-                }
-                if (tilesNearRuin[10].isPassable()) {
-                    if (tilesNearRuin[10].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(10);
-                    }
-                }
-                if (tilesNearRuin[11].isPassable()) {
-                    if (tilesNearRuin[11].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(11);
-                    }
-                }
-                if (tilesNearRuin[12].isPassable()) {
-                    if (tilesNearRuin[12].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(12);
-                    }
-                }
-                if (tilesNearRuin[13].isPassable()) {
-                    if (tilesNearRuin[13].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(13);
-                    }
-                }
-                if (tilesNearRuin[14].isPassable()) {
-                    if (tilesNearRuin[14].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(14);
-                    }
-                }
-                if (tilesNearRuin[15].isPassable()) {
-                    if (tilesNearRuin[15].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(15);
-                    }
-                }
-                if (tilesNearRuin[16].isPassable()) {
-                    if (tilesNearRuin[16].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(16);
-                    }
-                }
-                if (tilesNearRuin[17].isPassable()) {
-                    if (tilesNearRuin[17].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(17);
-                    }
-                }
-                if (tilesNearRuin[18].isPassable()) {
-                    if (tilesNearRuin[18].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(18);
-                    }
-                }
-                if (tilesNearRuin[19].isPassable()) {
-                    if (tilesNearRuin[19].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(19);
-                    }
-                }
-                if (tilesNearRuin[20].isPassable()) {
-                    if (tilesNearRuin[20].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(20);
-                    }
-                }
-                if (tilesNearRuin[21].isPassable()) {
-                    if (tilesNearRuin[21].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(21);
-                    }
-                }
-                if (tilesNearRuin[22].isPassable()) {
-                    if (tilesNearRuin[22].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(22);
-                    }
-                }
-                if (tilesNearRuin[23].isPassable()) {
-                    if (tilesNearRuin[23].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(23);
-                    }
-                }
-                if (tilesNearRuin[24].isPassable()) {
-                    if (tilesNearRuin[24].getPaint().isEnemy()) {
-                        return false;
-                    } else if (!hasEmpty) {
-                        hasEmpty = check(24);
-                    }
-                }
-            }
+        for(MapInfo tile : tilesNearRuin) {
+            PaintType paint = tile.getPaint();
+            if(paint.isEnemy()) return false;
+            if(!hasEmpty) if(paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin)) hasEmpty = true;
         }
-        if (neededToFinish * 5 < staticRC.getPaint()) canFinishRuin = true;
-        if (hasEmpty || (claimedRuin != null && claimedRuin.equals(ruin))) return true;
+        if(hasEmpty) return true;
         if (staticRC.senseNearbyRobots(ruin, 8, staticRC.getTeam()).length == 0) return true;
         return false;
     }
 
     public static void scanNearbyTilesSoldier() throws GameActionException {
+        closestUnfilledPatternCenter = null;
+        averageEnemyPaint = null;
         int enemyCount = 0;
         int x = 0;
         int y = 0;
@@ -6804,8 +4483,8 @@ public class SoldierUtil {
         }
         numEnemyTiles = enemyCount;
         averageEnemyPaint = (enemyCount != 0) ? new MapLocation(x / enemyCount, y / enemyCount) : null;
-        if (claimedRuin != null && staticRC.canSenseLocation(claimedRuin) && staticRC.canSenseRobotAtLocation(claimedRuin)) {
-            claimedRuin = null;
-        }
+//        if (claimedRuin != null && staticRC.canSenseLocation(claimedRuin) && staticRC.canSenseRobotAtLocation(claimedRuin)) {
+//            claimedRuin = null;
+//        }
     }
 }

@@ -88,6 +88,10 @@ public class Communication
                  */
         }
 
+        public void clear (){
+            head = tail;
+        }
+
         public int size()
         {
             return (tail >= head ? tail - head : len - (head - tail));
@@ -133,6 +137,7 @@ public class Communication
     */
     public static void processMessagesRobot() throws GameActionException
     {
+
         /*
             Robot can only be in range of 4 towers at once (absolute max)
             Max num ruins messages per round: 4 * numRuinsToSendToEachRobot = 8
