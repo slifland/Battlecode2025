@@ -1015,6 +1015,185 @@ public class MopperMicro {
             staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
         }
     }
+    public static void targetedClearMicro(Direction dir, MapLocation target) throws GameActionException {
+        //mopperMicroInfo currentSquare = new mopperMicroInfo(staticRC.senseMapInfo(staticRC.getLocation()));
+        //populating the array
+        switch (dir) {
+            case NORTH -> {
+                microArray = new mopperMicroInfo[3];
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + -1, staticRC.getLocation().y + 1);
+                    microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y + 1);
+                    microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                    microArray[1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+            }
+            case NORTHEAST -> {
+                microArray = new mopperMicroInfo[1];
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+            }
+            case EAST -> {
+                microArray = new mopperMicroInfo[3];
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + -1);
+                    microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y );
+                    microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                    microArray[1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+            }
+            case SOUTHEAST -> {
+                microArray = new mopperMicroInfo[1];
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y - 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+            }
+            case SOUTH -> {
+                microArray = new mopperMicroInfo[3];
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + -1, staticRC.getLocation().y - 1);
+                    microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y - 1);
+                    microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y - 1);
+                    microArray[1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+            }
+            case SOUTHWEST -> {
+                microArray = new mopperMicroInfo[1];
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y - 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+            }
+            case WEST -> {
+                microArray = new mopperMicroInfo[3];
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + -1);
+                    microArray[-1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y );
+                    microArray[0 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+                {
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + 1);
+                    microArray[1 + 1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+                }
+            }
+            case NORTHWEST -> {
+                microArray = new mopperMicroInfo[1];
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new mopperMicroInfo() : new mopperMicroInfo(staticRC.senseMapInfo(newLoc));
+            }
+            case CENTER -> {
+                microArray = null;
+                return;
+            }
+        }
+        ;
+        int actionRadius = UnitType.MOPPER.actionRadiusSquared;
+        //determining the best space
+        //mopperMicroInfo bestMicro = microArray[0];
+        //TURN 176 DEFAULT MEDIUM VERSION 9 GRAY VERSION 8 GOLD
+        mopperMicroInfo bestMicro = new mopperMicroInfo(staticRC.senseMapInfo(staticRC.getLocation()));
+        for (int i = 0; i < microArray.length; i++) {
+            mopperMicroInfo m = microArray[i];
+            if (!m.passable) continue;
+            if (!bestMicro.passable) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
+            //if one is in tower range and the other isnt, get out of tower range
+            if (!bestMicro.inTowerRange && m.inTowerRange) continue;
+            if (bestMicro.inTowerRange && !m.inTowerRange) {
+                bestMicro = m;
+                continue;
+            }
+
+            int dist = bestMicro.loc.distanceSquaredTo(target);
+            int altDist = m.loc.distanceSquaredTo(target);
+            if(dist > 8 || altDist > 8) {
+                if (dist < altDist) continue;
+                if (dist > altDist) {
+                    bestMicro = m;
+                    continue;
+                }
+            }
+            //System.out.println(dist + " " + altDist + " : " + bestMicro.loc + " " + m.loc);
+//            if(dist <= actionRadius && altDist > actionRadius) continue;
+//            if(dist > actionRadius && altDist <= actionRadius) {
+//                bestMicro = m;
+//                continue;
+//            }
+//            if (dist > actionRadius || altDist > actionRadius) {
+//                if (dist < altDist) continue;
+//                if (dist > altDist) {
+//                    bestMicro = m;
+//                    continue;
+//                }
+//            }
+
+            //look at which place will lose us the least paint at the end of this turn
+            if (bestMicro.paintLoss < microArray[i].paintLoss) continue;
+            if (microArray[i].paintLoss < bestMicro.paintLoss) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
+            if (bestMicro.potentialPaintLoss < microArray[i].potentialPaintLoss) continue;
+            if (microArray[i].potentialPaintLoss < bestMicro.potentialPaintLoss) {
+                bestMicro = microArray[i];
+                continue;
+            }
+
+            //if one space avoids enemy paint and the other doesnt, go to the one avoiding enemy paint
+            if (bestMicro.paintType != ENEMY_PAINT && m.paintType == ENEMY_PAINT) continue;
+            if (bestMicro.paintType == ENEMY_PAINT && m.paintType != ENEMY_PAINT) {
+                bestMicro = m;
+                continue;
+            }
+
+            //if one space is on allied paint and the other isnt, go to allied paint
+            if (bestMicro.paintType == ALLY_PAINT && m.paintType != ALLY_PAINT) continue;
+            if (bestMicro.paintType != ALLY_PAINT && m.paintType == ALLY_PAINT) {
+                bestMicro = m;
+                continue;
+            }
+
+
+            if (bestMicro.distanceToEnemyAverage < m.distanceToEnemyAverage) continue;
+            if (bestMicro.distanceToEnemyAverage > m.distanceToEnemyAverage) {
+                bestMicro = m;
+                continue;
+            }
+
+            //finally, lets avoid being adjacent to allies
+            if (bestMicro.adjacentAllies < m.adjacentAllies) continue;
+            if (bestMicro.adjacentAllies > m.adjacentAllies) {
+                bestMicro = m;
+                continue;
+            }
+        }
+        //Systemout.println(bestMicro.loc);
+        if (bestMicro.passable && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) {
+            staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
+        }
+    }
 
     public static void populateMopperMicroArray() throws GameActionException {
         microArray = new mopperMicroInfo[9];

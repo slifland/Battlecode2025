@@ -307,7 +307,7 @@ public class SplasherMicro {
                 continue;
             }
 
-            if(health <= 100) {
+            if(health <= 100 || !staticRC.isActionReady()) {
                 //if one is in tower range and the other isnt, get out of tower range
                 if(!bestMicro.inTowerRange && m.inTowerRange) continue;
                 if(bestMicro.inTowerRange && !m.inTowerRange) {

@@ -204,7 +204,15 @@ public class Mopper {
         }
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            double d = rng.nextDouble();
+            if(d <= 0.5) {
+                MapLocation closestCorner = Soldier.closestCorner();
+                curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+                System.out.println("hello!");
+            }
+            else {
+                curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            }
             navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
@@ -274,15 +282,15 @@ public class Mopper {
         if(bestLoc != null && staticRC.isActionReady()) {
             if(staticRC.canAttack(bestLoc)) {
                 staticRC.attack(bestLoc);
-                //MopperMicro.integratedMopperMicro();
-                MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
+                MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
             }
             else {
                 MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestLoc), bestLoc);
             }
         }
         else {
-            MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
+            //MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
+            MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
         }
         if(bestLoc != null && staticRC.canAttack(bestLoc)) staticRC.attack(bestLoc);
         if(staticRC.isActionReady()) {

@@ -426,7 +426,7 @@ public class Soldier {
             attemptFill();
         }
 //        else if(!Communication.unclaimedRuins.isEmpty()) {
-//            Direction dir = BFS_7x7.pathfind(closestUnclaimedRuin);
+//            Direction dir = Pathfinding.bugBFS(closestUnclaimedRuin);
 //            if(staticRC.canMove(dir)) staticRC.move(dir);
 //            attemptFill();
 //        }
@@ -793,7 +793,6 @@ public class Soldier {
     private static MapLocation closestUnclaimedRuin() {
         int minDist = Integer.MAX_VALUE;
         Ruin r = null;
-        boolean isOccupied = false;
         for(Ruin ruin : Communication.unclaimedRuins) {
             if(ruin.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(staticRC.getLocation());

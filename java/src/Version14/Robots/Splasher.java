@@ -201,7 +201,15 @@ public class Splasher {
         }
         //last resort - just go to the center
         if(curObjective == null) {
-            curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            double d = rng.nextDouble();
+            if(d <= 0.6) {
+                MapLocation closestCorner = Soldier.closestCorner();
+                curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+                System.out.println("hello!");
+            }
+            else {
+                curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
+            }
             navTarget = navState.random;
         }
         //MOVE TO OBJECTIVE
