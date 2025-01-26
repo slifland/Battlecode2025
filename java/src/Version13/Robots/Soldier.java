@@ -15,7 +15,6 @@ import static Version13.RobotPlayer.*;
 import static Version13.Utility.SoldierUtil.needsHelp;
 import static Version13.Utility.SoldierUtil.validateRuinClaim;
 
-
 public class Soldier {
     enum SoldierState {
         Explore,        //We have nowhere to go to, let's explore
@@ -45,7 +44,6 @@ public class Soldier {
     public static int neededToFinish = Integer.MAX_VALUE;
     public static MapLocation spawnLocation;
     public static boolean[][] invalidResourceCenters;
-    public static boolean[][] curPattern;
     //public static BitBoard invalidResourceCenters;
     public static boolean canFinishPattern =false;
 
@@ -173,13 +171,9 @@ public class Soldier {
 //        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
 //            closestEnemyTower = closestEnemyTower();
 //        }
-        if(turnCount == 1 || turnCount % 3 == 0) {
-            closestEnemyTower = closestEnemyTower();
-        }
+        closestEnemyTower = closestEnemyTower();
         closestUnclaimedRuin = closestUnclaimedRuin();
         SoldierUtil.scanNearbyTilesSoldier();
-
-        if(turnCount % 10 == 0) curPattern = null;
 //        int enemyCount = 0;
 //        int x = 0;
 //        int y = 0;
@@ -271,7 +265,6 @@ public class Soldier {
             state = SoldierState.RuinBuilding;
             return;
         }
-        curPattern = null;
         //if we can see an enemy tower, maybe lets worry about that
         if(closestEnemyTower != null && closestEnemyTower.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
             state = SoldierState.Tower;
@@ -497,16 +490,16 @@ public class Soldier {
             }
         }
         else {
-                if(dist > 2) {
-                    if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 0) {
-                        claimedRuin = null;
-                    }
+            if(dist > 2) {
+                if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 0) {
+                    claimedRuin = null;
                 }
-                else {
-                    if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 1) {
-                        claimedRuin = null;
-                    }
+            }
+            else {
+                if (staticRC.senseNearbyRobots(closestUnclaimedRuin, 2, staticRC.getTeam()).length > 1) {
+                    claimedRuin = null;
                 }
+            }
         }
         boolean[][] desiredPattern = Utilities.inferPatternFromExistingSpots(closestUnclaimedRuin, tilesNearRuin);
         if (desiredPattern == null) {
@@ -610,7 +603,7 @@ public class Soldier {
         if (!tiles[22].isPassable() || tiles[22].getPaint().isEnemy()) return false;
         if (!tiles[23].isPassable() || tiles[23].getPaint().isEnemy()) return false;
         if (!tiles[24].isPassable() || tiles[24].getPaint().isEnemy()) return false;
-       // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
+        // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
         return true;
     }
     //checks whether the 5x5 area around a location is empty of obstacles
@@ -678,26 +671,26 @@ public class Soldier {
     {
 //        for(MapLocation ruin : nearbyRuins)
 //        {
-            if(!staticRC.canSenseRobotAtLocation(ruin) &&
-                    staticRC.getLocation().isWithinDistanceSquared(ruin, UnitType.SOLDIER.actionRadiusSquared))
+        if(!staticRC.canSenseRobotAtLocation(ruin) &&
+                staticRC.getLocation().isWithinDistanceSquared(ruin, UnitType.SOLDIER.actionRadiusSquared))
+        {
+            if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin))
             {
-                if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin))
-                {
-                    staticRC.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin);
-                    return true;
-                }
+                staticRC.completeTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER, ruin);
+                return true;
+            }
 
-                if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin))
-                {
-                    staticRC.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin);
-                    return true;
-                }
+            if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin))
+            {
+                staticRC.completeTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER, ruin);
+                return true;
+            }
 
-                if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin))
-                {
-                    staticRC.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin);
-                    return true;
-                }
+            if(staticRC.canCompleteTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin))
+            {
+                staticRC.completeTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER, ruin);
+                return true;
+            }
             //
         }
         return false;

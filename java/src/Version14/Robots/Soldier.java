@@ -475,6 +475,9 @@ public class Soldier {
         attemptFill();
     }
 
+
+    //TODO: IMPLEMENT A HASHING FUNCTION SO THAT ROBOTS WILL BE BETTER ABLE TO DISCERN WHAT TOWER TO BUILD FOR A MUCH CHEAPER COST
+    //TODO: IMPLEMENT A WORKING ON RUIN BIT BOARD SO THAT ROBOTS DONT NEED TO DO EXPENSIVE CHECKS FREQUENTLY - RESET OFTEN
     public static void ruinBuilding() throws GameActionException {
 
         if (attemptCompleteTowerPattern(closestUnclaimedRuin)) {

@@ -19,6 +19,12 @@ enum splasherStates {
 }
 
 
+//TODO: ALTER SPLASHER MCIRO so that ally squares are negative, neutral scores 0,
+// and enemy squares positive so that we won't randomly attack neutral
+// also - call best attack first, and if null, dont go into micro mode
+// if not null, go into micro mode, targeting the best attack location - this way avoid the issue of getting stuck on
+// rogue enemy tiles
+
 public class Splasher {
 
     private static final int PAINT_TOWER_REFRESH = 25;

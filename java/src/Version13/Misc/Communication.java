@@ -217,7 +217,7 @@ public class Communication
         //Find available towers to broadcast to, select one randomly
 
         int i = 0;
-        MapLocation[] tower = new MapLocation[10];
+        MapLocation[] tower = new MapLocation[30];
         for(RobotInfo robot : allyRobots)
         {
             if(robot.getType().isTowerType() && staticRC.canSendMessage(robot.location))
@@ -392,7 +392,7 @@ public class Communication
 
 
 
-        //CONVERSIONS:
+    //CONVERSIONS:
 
     public static int ruinToMessage(Ruin ruin)
     {
@@ -465,7 +465,7 @@ public class Communication
 
 
 
-        //MEMORY MANAGEMENT:
+    //MEMORY MANAGEMENT:
 
     //prints out the bytecode usage of a single call to updateRuinsMemory
     private static boolean updateRuinsMemoryTest(Ruin ruin)
@@ -550,7 +550,7 @@ public class Communication
 
 
 
-        //UTILITIES:
+    //UTILITIES:
 
     /*
         Used for testing and debugging

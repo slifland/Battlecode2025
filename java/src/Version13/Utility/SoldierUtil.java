@@ -1386,13 +1386,12 @@ public class SoldierUtil {
     }
 
     public static boolean needsHelp(MapLocation ruinInput) throws GameActionException {
-        ruin = ruinInput;
-        tilesNearRuin = staticRC.senseNearbyMapInfos(ruin, 8);
         neededToFinish = 0;
         canFinishRuin = false;
+        ruin = ruinInput;
+        tilesNearRuin = staticRC.senseNearbyMapInfos(ruin, 8);
         boolean hasEmpty = false;
-        pattern = (curPattern == null) ? Utilities.inferPatternFromExistingSpots(ruin, tilesNearRuin) : curPattern;
-        curPattern = pattern;
+        pattern = Utilities.inferPatternFromExistingSpots(ruin, tilesNearRuin);
         switch (tilesNearRuin.length) {
             case 1 -> {
                 if (tilesNearRuin[0].isPassable()) {
