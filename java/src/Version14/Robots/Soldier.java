@@ -8,6 +8,7 @@ import Version14.Utility.BitBoard;
 import Version14.Utility.SoldierUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
+import battlecode.schema.RobotType;
 
 import static Version14.Misc.Communication.unclaimedRuins;
 import static Version14.RobotPlayer.rng;
@@ -48,6 +49,8 @@ public class Soldier {
     public static boolean checkedSymmetry = false;
     public static MapLocation oppositeHome = null;
 
+    public static BitBoard enemyDefenseTowers;
+
     public static boolean waitingToFinishRuin;
 
     public static MapLocation workingOnRuin;
@@ -77,6 +80,7 @@ public class Soldier {
             spawnLocation = staticRC.getLocation();
             invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
             checkedRuin = new BitBoard();
+            enemyDefenseTowers = new BitBoard();
         }
         //attemptCompleteTowerPattern();
         updateInfo();
@@ -162,6 +166,9 @@ public class Soldier {
 //        if(turnCount == 1 || turnCount % ENEMY_TOWER_REFRESH == 0) {
 //            closestEnemyTower = closestEnemyTower();
 //        }
+        if(seenEnemyTower != null && isDefenseTower(seenEnemyTower)) {
+            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+        }
         closestEnemyTower = closestEnemyTower();
         closestUnclaimedRuin = closestUnclaimedRuin();
         if(turnCount == 1)  SoldierUtil.scanNearbyTilesSoldier();
@@ -234,6 +241,11 @@ public class Soldier {
 //        if(claimedRuin != null && staticRC.canSenseLocation(claimedRuin) && staticRC.canSenseRobotAtLocation(claimedRuin)) {
 //            claimedRuin = null;
 //        }
+    }
+
+    public static boolean isDefenseTower(RobotInfo r) {
+        UnitType type = r.getType();
+        return type == UnitType.LEVEL_ONE_DEFENSE_TOWER || type == UnitType.LEVEL_TWO_DEFENSE_TOWER || type == UnitType.LEVEL_THREE_DEFENSE_TOWER;
     }
 
 
@@ -331,14 +343,45 @@ public class Soldier {
         }
         else {
             if (staticRC.getRoundNum() % 25 == 0 || target == null || staticRC.getLocation().distanceSquaredTo(target) < 8) {
-                //target = generateExploreLocation();
-                target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+                generateExploreLocation();
+                //target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
             }
             Direction dir = Pathfinding.bugBFS(target);
             if (dir != null && staticRC.canMove(dir)) staticRC.move(dir);
         }
         if(staticRC.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
+        }
+    }
+
+    //returns a location to explore
+    public static void generateExploreLocation() throws GameActionException {
+        double ran = rng.nextDouble();
+        if(ran <= 0.25) {
+            MapLocation closestCorner = closestCorner();
+            target = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+            staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
+        }
+        else {
+            target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+        }
+    }
+
+    //returns the closest corner to the robot
+    public static MapLocation closestCorner() {
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth() - 1;
+        int x = staticRC.getLocation().x;
+        int y = staticRC.getLocation().y;
+        int halfHeight = mapHeight / 2;
+        int halfWidth = mapWidth / 2;
+        if(x < halfWidth) {
+            if(y < halfHeight) return new MapLocation(0, 0);
+            else return new MapLocation(0, mapHeight);
+        }
+        else {
+            if(y < halfHeight) return new MapLocation(mapWidth, 0);
+            else return new MapLocation(mapWidth, mapHeight);
         }
     }
 
@@ -737,6 +780,7 @@ public class Soldier {
         int minDist = Integer.MAX_VALUE;
         Ruin r = null;
         for(Ruin ruin : Communication.enemyTowers) {
+            if(enemyDefenseTowers.getBit(ruin.location)) continue;
             if(ruin.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(staticRC.getLocation());
                 r = ruin;

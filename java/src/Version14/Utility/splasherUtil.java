@@ -2406,7 +2406,7 @@ public class splasherUtil {
             }
             //favor the enemy most, but also like empty squares
             else if(paint.isAlly()) {
-                if(seenEnemyTower == null || !nearbyTiles[index].getMapLocation().isAdjacentTo(seenEnemyTower.getLocation())) {
+                if(seenEnemyTower == null || !nearbyTiles[index].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4)) {
                     localSquares[totalTracker]--;
                 }
             }
@@ -3031,7 +3031,7 @@ public class splasherUtil {
                 }
             }
             else if(paint.isAlly()) {
-                if(seenEnemyTower == null || !tile.getMapLocation().isAdjacentTo(seenEnemyTower.getLocation())) {
+                if(seenEnemyTower == null || !tile.getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4)) {
                     localSquares[index]--;
                 }
             }

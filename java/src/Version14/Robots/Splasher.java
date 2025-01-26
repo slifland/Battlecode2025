@@ -53,6 +53,8 @@ public class Splasher {
 
     static boolean exploredSymmetry = false;
 
+    public static BitBoard enemyDefenseTowers;
+
     static navState navTarget;
 
     public static BitBoard checkedRuin;
@@ -67,6 +69,7 @@ public class Splasher {
         if(turnCount == 1) {
             home = staticRC.getLocation();
             checkedRuin = new BitBoard();
+            enemyDefenseTowers = new BitBoard();
         }
         updateInfo();
         updateState();
@@ -156,6 +159,7 @@ public class Splasher {
         if((curObjective == null || navTarget == navState.ruin) && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
+                if(enemyDefenseTowers.getBit(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -310,6 +314,9 @@ public class Splasher {
         //if(turnCount % PAINT_AVERAGE_REFRESH == 0) {
         if(turnCount == 1) {
             splasherUtil.refreshPaintAverages();
+        }
+        if(seenEnemyTower != null && Soldier.isDefenseTower(seenEnemyTower)) {
+            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
         }
         //System.out.println(price - Clock.getBytecodesLeft());
     }

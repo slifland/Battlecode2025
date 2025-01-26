@@ -34,6 +34,8 @@ public class Mopper {
 
     public static MapLocation nearbyRuin;
 
+    public static BitBoard enemyDefenseTowers;
+
     private static MapLocation spawnLocation;
 
     public static RobotInfo seenEnemyTower;
@@ -66,6 +68,7 @@ public class Mopper {
             checkedRuin = new BitBoard();
             navTarget = null;
             checkedTower = new BitBoard();
+            enemyDefenseTowers = new BitBoard();
         }
         updateInfo();
         updateState();
@@ -171,7 +174,7 @@ public class Mopper {
         if(curObjective == null && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
-                if(checkedTower.getBit(r.location)) continue;
+                if(checkedTower.getBit(r.location) || enemyDefenseTowers.getBit(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -351,6 +354,10 @@ public class Mopper {
         //updates turn by turn variables
         averageEnemyPaint = null;
         needsClearing = false;
+
+        if(seenEnemyTower != null && Soldier.isDefenseTower(seenEnemyTower)) {
+            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+        }
 
 //        for(MapInfo tile : nearbyTiles) {
 //            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
