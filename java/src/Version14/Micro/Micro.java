@@ -59,10 +59,10 @@ class microInfo {
                     case SPLASHER -> {
                         if(robot.getPaintAmount() >= 50 ) {
                             switch (paint) {
-                                case PaintType.EMPTY -> {
+                                case EMPTY -> {
                                     potentialPaintLoss += (dist <= GameConstants.SPLASHER_ATTACK_AOE_RADIUS_SQUARED) ? 1 : 0;
                                 }
-                                case PaintType.ALLY_SECONDARY, PaintType.ALLY_PRIMARY -> {
+                                case ALLY_SECONDARY, ALLY_PRIMARY -> {
                                     potentialPaintLoss += (dist <= GameConstants.SPLASHER_ATTACK_ENEMY_PAINT_RADIUS_SQUARED) ? 1 : 0;
                                 }
                             }

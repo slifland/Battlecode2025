@@ -101,8 +101,8 @@ public class Splasher {
             if(curObjective != null && staticRC.getLocation().isWithinDistanceSquared(curObjective, 8)) {
                 if (navTarget != null) {
                     switch (navTarget) {
-                        case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
-                        case navState.ruin -> checkedRuin.setBit(curObjective, true);
+                        case horizontal, rotational, vertical -> exploredSymmetry = true;
+                        case ruin -> checkedRuin.setBit(curObjective, true);
                     }
                 }
                 curObjective = null;
@@ -203,8 +203,8 @@ public class Splasher {
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             if(navTarget != null) {
                 switch (navTarget) {
-                    case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
-                    case navState.ruin -> {checkedRuin.setBit(curObjective, true);}
+                    case horizontal, rotational, vertical -> exploredSymmetry = true;
+                    case ruin -> {checkedRuin.setBit(curObjective, true);}
                 }
             }
             curObjective = null;
@@ -212,7 +212,7 @@ public class Splasher {
         }
         else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
-                case navState.horizontal -> {
+                case horizontal -> {
                     if(knownSymmetry != Symmetry.Horizontal) {
                         switch(knownSymmetry) {
                             case Rotational:
@@ -226,7 +226,7 @@ public class Splasher {
                         }
                     }
                 }
-                case navState.rotational -> {
+                case rotational -> {
                     if(knownSymmetry != Symmetry.Rotational) {
                         switch(knownSymmetry) {
                             case Vertical:
@@ -240,7 +240,7 @@ public class Splasher {
                         }
                     }
                 }
-                case navState.vertical -> {
+                case vertical -> {
                     if(knownSymmetry != Symmetry.Vertical) {
                         switch(knownSymmetry) {
                             case Rotational:

@@ -116,9 +116,6 @@ public class RobotPlayer {
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
-
-                if(exploreTarget != null)
-                    staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
                 //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {

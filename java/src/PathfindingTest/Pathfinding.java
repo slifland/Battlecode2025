@@ -71,7 +71,6 @@ public class Pathfinding
                 bytecodeLimit = 17500;
             }
             maxSimBytecode = Math.max(0, bytecodeLimit - Clock.getBytecodeNum());
-            System.out.println(maxSimBytecode);
             return bugNav(rc, destination);
         }
     }
@@ -216,7 +215,7 @@ public class Pathfinding
                     }
                 }
                 virtualBug = virtualBug.add(virtualStack.pop());
-                rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//                rc.setIndicatorDot(virtualBug, 255, 0, 0);
                 i++;
                 continue;
             }
@@ -225,7 +224,7 @@ public class Pathfinding
             if(virtualCanMove(rc, virtualBug, dirTo))
             {
                 virtualBug = virtualBug.add(dirTo);
-                rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//                rc.setIndicatorDot(virtualBug, 255, 0, 0);
                 i++;
                 continue;
 
@@ -249,7 +248,7 @@ public class Pathfinding
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
-            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//            rc.setIndicatorDot(virtualBug, 255, 0, 0);
             i++;
 
             System.out.println(bytecodes - Clock.getBytecodesLeft());
@@ -403,7 +402,7 @@ class VirtualBug
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
-            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//            rc.setIndicatorDot(virtualBug, 255, 0, 0);
             return true;
         }
 
@@ -411,7 +410,7 @@ class VirtualBug
         if(Pathfinding.virtualCanMove(rc, virtualBug, dirTo))
         {
             virtualBug = virtualBug.add(dirTo);
-            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//            rc.setIndicatorDot(virtualBug, 255, 0, 0);
             return false;
         }
         else
@@ -432,7 +431,7 @@ class VirtualBug
                 }
             }
             virtualBug = virtualBug.add(virtualStack.pop());
-            rc.setIndicatorDot(virtualBug, 255, 0, 0);
+//            rc.setIndicatorDot(virtualBug, 255, 0, 0);
             return true;
         }
     }

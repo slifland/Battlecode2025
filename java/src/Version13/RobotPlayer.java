@@ -43,7 +43,7 @@ public class RobotPlayer {
 
     public static MapLocation exploreTarget;
     public static int DISPERSION_RADIUS;
-    public static RandomQueue locationQueue;
+    static RandomQueue locationQueue;
 
     /*
         Variables responsible for tracking average location of enemy paint
@@ -121,8 +121,6 @@ public class RobotPlayer {
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
-                if(exploreTarget != null)
-                    staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
                 //staticRC.setIndicatorString(String.valueOf(knownSymmetry));
             }
              catch (GameActionException e) {
