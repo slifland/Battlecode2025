@@ -324,7 +324,7 @@ public class RobotPlayer {
     //calculates the ideal weights for each robot, given the current situation
     public static double[] calculateIdealWeights() {
         //constants specifically for this method
-        int earlyRoundDef = 80 + (int)(adjustedMapSize * 3);
+        int earlyRoundDef = 70 + (int)(adjustedMapSize * 8);
         //double mapSizeScalar = 1.0 / 200.0;
         //double adjustedMapSize = mapSize * mapSizeScalar;
         int earlySoldierBonus = 5 + (int)adjustedMapSize;
