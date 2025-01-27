@@ -189,7 +189,7 @@ public class RobotPlayer {
         }
         if(staticRC.canAttack(null)) staticRC.attack(null);
         //TODO: implement disintegration for real
-        if(enemyRobots.length == 0 && (staticRC.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_MONEY_TOWER)) {
+        if(enemyRobots.length == 0 && (staticRC.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_MONEY_TOWER) && staticRC.getMoney() > 8500 && staticRC.getPaint() <= 100) {
             checkDisintegrate();
         }
     }
@@ -208,7 +208,7 @@ public class RobotPlayer {
                 }
             }
         }
-        if(hasRebuilder && staticRC.getMoney() > 8500 && staticRC.getPaint() <= 100) {
+        if(hasRebuilder) {
             staticRC.disintegrate();
         }
     }
