@@ -341,37 +341,9 @@ public class Utilities
 
     public static MapLocation generateRandomLocation(MapLocation currentLocation, int radiusSquared)
     {
-        int max = (int) Math.sqrt(radiusSquared);
-        int xOffset = rng.nextInt(-1 * max, max + 1);
-        int yOffset = (int) Math.sqrt(radiusSquared - (xOffset * xOffset));
-        yOffset = rng.nextBoolean() ? -1 * yOffset : yOffset;
-
-        int origX = xOffset;
-        int origY = yOffset;
-
-        if(currentLocation.x + xOffset < 0)
-        {
-            xOffset *= -1;
-        }
-        if(currentLocation.x + xOffset >= staticRC.getMapWidth())
-        {
-            xOffset *= -1;
-        }
-        if(currentLocation.y + yOffset < 0)
-        {
-            yOffset *= -1;
-        }
-        if(currentLocation.y + yOffset >= staticRC.getMapHeight())
-        {
-            yOffset *= -1;
-        }
-
-//        if(Sector.getSector(rc, new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset)) < 0)
-//        {
-//            System.out.println(currentLocation + " " +  new MapLocation(currentLocation.x + origX, currentLocation.y + origY));
-//        }
-
-        return new MapLocation(currentLocation.x + xOffset, currentLocation.y + yOffset);
+        double theta = rng.nextDouble(2 * Math.PI);
+        double radius = rng.nextDouble(Math.sqrt(radiusSquared));
+        return new MapLocation(currentLocation.x + (int) (radius * Math.cos(theta)), currentLocation.y + (int) (radius * Math.sin(theta)));
     }
 
     public static MapLocation generateRandomLocation(RobotController rc)

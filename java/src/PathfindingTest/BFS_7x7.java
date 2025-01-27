@@ -4555,7 +4555,6 @@ public class BFS_7x7
             }
          }
       }
-
       if(closestDistance >= Pathfinding.closestDistanceOnPath)
       {
          return null;

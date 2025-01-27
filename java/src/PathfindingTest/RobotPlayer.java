@@ -92,14 +92,18 @@ public class RobotPlayer {
                     if(rc.getType().isRobotType() && rc.getRoundNum() < 100)
                     {
                         Direction dir = Pathfinding.bugBFS(rc, new MapLocation(0,0));
-                        // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
+                        //Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
                         if(rc.canMove(dir))
                         {
                             rc.move(dir);
                         }
+                        int bytecodesLeft = Clock.getBytecodesLeft();
+                        WallChecker.findOverWallTiles(rc);
+                        System.out.println(bytecodesLeft - Clock.getBytecodesLeft());
                     }
                     else if(rc.getType().isRobotType())
                     {
+                        WallChecker.findOverWallTiles(rc);
                         Direction dir = Pathfinding.bugBFS(rc, start);
                         // Direction dir = Pathfinding.bugNav(rc, new MapLocation(11, 13));
                         if(rc.canMove(dir))
