@@ -39,7 +39,7 @@ public class splasherUtil {
         {
             case 57->
             {
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[0].getMapLocation().x][nearbyTiles[0].getMapLocation().y] = (nearbyTiles[0].isPassable()) ? 1 : (nearbyTiles[0].isWall()) ? 2 : 3;
@@ -51,7 +51,7 @@ public class splasherUtil {
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[1].getMapLocation().x][nearbyTiles[1].getMapLocation().y] = (nearbyTiles[1].isPassable()) ? 1 : (nearbyTiles[1].isWall()) ? 2 : 3;
@@ -63,7 +63,7 @@ public class splasherUtil {
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[2].getMapLocation().x][nearbyTiles[2].getMapLocation().y] = (nearbyTiles[2].isPassable()) ? 1 : (nearbyTiles[2].isWall()) ? 2 : 3;
@@ -75,7 +75,7 @@ public class splasherUtil {
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[3].getMapLocation().x][nearbyTiles[3].getMapLocation().y] = (nearbyTiles[3].isPassable()) ? 1 : (nearbyTiles[3].isWall()) ? 2 : 3;
@@ -87,7 +87,7 @@ public class splasherUtil {
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[4].getMapLocation().x][nearbyTiles[4].getMapLocation().y] = (nearbyTiles[4].isPassable()) ? 1 : (nearbyTiles[4].isWall()) ? 2 : 3;
@@ -99,7 +99,7 @@ public class splasherUtil {
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[5].getMapLocation().x][nearbyTiles[5].getMapLocation().y] = (nearbyTiles[5].isPassable()) ? 1 : (nearbyTiles[5].isWall()) ? 2 : 3;
@@ -111,7 +111,7 @@ public class splasherUtil {
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[6].getMapLocation().x][nearbyTiles[6].getMapLocation().y] = (nearbyTiles[6].isPassable()) ? 1 : (nearbyTiles[6].isWall()) ? 2 : 3;
@@ -123,7 +123,7 @@ public class splasherUtil {
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[7].getMapLocation().x][nearbyTiles[7].getMapLocation().y] = (nearbyTiles[7].isPassable()) ? 1 : (nearbyTiles[7].isWall()) ? 2 : 3;
@@ -135,7 +135,7 @@ public class splasherUtil {
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[8].getMapLocation().x][nearbyTiles[8].getMapLocation().y] = (nearbyTiles[8].isPassable()) ? 1 : (nearbyTiles[8].isWall()) ? 2 : 3;
@@ -147,7 +147,7 @@ public class splasherUtil {
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[9].getMapLocation().x][nearbyTiles[9].getMapLocation().y] = (nearbyTiles[9].isPassable()) ? 1 : (nearbyTiles[9].isWall()) ? 2 : 3;
@@ -159,7 +159,7 @@ public class splasherUtil {
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[10].getMapLocation().x][nearbyTiles[10].getMapLocation().y] = (nearbyTiles[10].isPassable()) ? 1 : (nearbyTiles[10].isWall()) ? 2 : 3;
@@ -171,7 +171,7 @@ public class splasherUtil {
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[11].getMapLocation().x][nearbyTiles[11].getMapLocation().y] = (nearbyTiles[11].isPassable()) ? 1 : (nearbyTiles[11].isWall()) ? 2 : 3;
@@ -183,7 +183,7 @@ public class splasherUtil {
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[12].getMapLocation().x][nearbyTiles[12].getMapLocation().y] = (nearbyTiles[12].isPassable()) ? 1 : (nearbyTiles[12].isWall()) ? 2 : 3;
@@ -195,7 +195,7 @@ public class splasherUtil {
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[13].getMapLocation().x][nearbyTiles[13].getMapLocation().y] = (nearbyTiles[13].isPassable()) ? 1 : (nearbyTiles[13].isWall()) ? 2 : 3;
@@ -207,7 +207,7 @@ public class splasherUtil {
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[14].getMapLocation().x][nearbyTiles[14].getMapLocation().y] = (nearbyTiles[14].isPassable()) ? 1 : (nearbyTiles[14].isWall()) ? 2 : 3;
@@ -219,7 +219,7 @@ public class splasherUtil {
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[15].getMapLocation().x][nearbyTiles[15].getMapLocation().y] = (nearbyTiles[15].isPassable()) ? 1 : (nearbyTiles[15].isWall()) ? 2 : 3;
@@ -231,7 +231,7 @@ public class splasherUtil {
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[16].getMapLocation().x][nearbyTiles[16].getMapLocation().y] = (nearbyTiles[16].isPassable()) ? 1 : (nearbyTiles[16].isWall()) ? 2 : 3;
@@ -243,7 +243,7 @@ public class splasherUtil {
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[17].getMapLocation().x][nearbyTiles[17].getMapLocation().y] = (nearbyTiles[17].isPassable()) ? 1 : (nearbyTiles[17].isWall()) ? 2 : 3;
@@ -255,7 +255,7 @@ public class splasherUtil {
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[18].getMapLocation().x][nearbyTiles[18].getMapLocation().y] = (nearbyTiles[18].isPassable()) ? 1 : (nearbyTiles[18].isWall()) ? 2 : 3;
@@ -267,7 +267,7 @@ public class splasherUtil {
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[19].getMapLocation().x][nearbyTiles[19].getMapLocation().y] = (nearbyTiles[19].isPassable()) ? 1 : (nearbyTiles[19].isWall()) ? 2 : 3;
@@ -279,7 +279,7 @@ public class splasherUtil {
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[20].getMapLocation().x][nearbyTiles[20].getMapLocation().y] = (nearbyTiles[20].isPassable()) ? 1 : (nearbyTiles[20].isWall()) ? 2 : 3;
@@ -291,7 +291,7 @@ public class splasherUtil {
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[21].getMapLocation().x][nearbyTiles[21].getMapLocation().y] = (nearbyTiles[21].isPassable()) ? 1 : (nearbyTiles[21].isWall()) ? 2 : 3;
@@ -303,7 +303,7 @@ public class splasherUtil {
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[22].getMapLocation().x][nearbyTiles[22].getMapLocation().y] = (nearbyTiles[22].isPassable()) ? 1 : (nearbyTiles[22].isWall()) ? 2 : 3;
@@ -315,7 +315,7 @@ public class splasherUtil {
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[23].getMapLocation().x][nearbyTiles[23].getMapLocation().y] = (nearbyTiles[23].isPassable()) ? 1 : (nearbyTiles[23].isWall()) ? 2 : 3;
@@ -327,7 +327,7 @@ public class splasherUtil {
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[24].getMapLocation().x][nearbyTiles[24].getMapLocation().y] = (nearbyTiles[24].isPassable()) ? 1 : (nearbyTiles[24].isWall()) ? 2 : 3;
@@ -339,7 +339,7 @@ public class splasherUtil {
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[25].getMapLocation().x][nearbyTiles[25].getMapLocation().y] = (nearbyTiles[25].isPassable()) ? 1 : (nearbyTiles[25].isWall()) ? 2 : 3;
@@ -351,7 +351,7 @@ public class splasherUtil {
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[26].getMapLocation().x][nearbyTiles[26].getMapLocation().y] = (nearbyTiles[26].isPassable()) ? 1 : (nearbyTiles[26].isWall()) ? 2 : 3;
@@ -363,7 +363,7 @@ public class splasherUtil {
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[27].getMapLocation().x][nearbyTiles[27].getMapLocation().y] = (nearbyTiles[27].isPassable()) ? 1 : (nearbyTiles[27].isWall()) ? 2 : 3;
@@ -375,7 +375,7 @@ public class splasherUtil {
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[28].getMapLocation().x][nearbyTiles[28].getMapLocation().y] = (nearbyTiles[28].isPassable()) ? 1 : (nearbyTiles[28].isWall()) ? 2 : 3;
@@ -387,7 +387,7 @@ public class splasherUtil {
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[29].getMapLocation().x][nearbyTiles[29].getMapLocation().y] = (nearbyTiles[29].isPassable()) ? 1 : (nearbyTiles[29].isWall()) ? 2 : 3;
@@ -399,7 +399,7 @@ public class splasherUtil {
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[30].getMapLocation().x][nearbyTiles[30].getMapLocation().y] = (nearbyTiles[30].isPassable()) ? 1 : (nearbyTiles[30].isWall()) ? 2 : 3;
@@ -411,7 +411,7 @@ public class splasherUtil {
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[31].getMapLocation().x][nearbyTiles[31].getMapLocation().y] = (nearbyTiles[31].isPassable()) ? 1 : (nearbyTiles[31].isWall()) ? 2 : 3;
@@ -423,7 +423,7 @@ public class splasherUtil {
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[32].getMapLocation().x][nearbyTiles[32].getMapLocation().y] = (nearbyTiles[32].isPassable()) ? 1 : (nearbyTiles[32].isWall()) ? 2 : 3;
@@ -435,7 +435,7 @@ public class splasherUtil {
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[33].getMapLocation().x][nearbyTiles[33].getMapLocation().y] = (nearbyTiles[33].isPassable()) ? 1 : (nearbyTiles[33].isWall()) ? 2 : 3;
@@ -447,7 +447,7 @@ public class splasherUtil {
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[34].getMapLocation().x][nearbyTiles[34].getMapLocation().y] = (nearbyTiles[34].isPassable()) ? 1 : (nearbyTiles[34].isWall()) ? 2 : 3;
@@ -459,7 +459,7 @@ public class splasherUtil {
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[35].getMapLocation().x][nearbyTiles[35].getMapLocation().y] = (nearbyTiles[35].isPassable()) ? 1 : (nearbyTiles[35].isWall()) ? 2 : 3;
@@ -471,7 +471,7 @@ public class splasherUtil {
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[36].getMapLocation().x][nearbyTiles[36].getMapLocation().y] = (nearbyTiles[36].isPassable()) ? 1 : (nearbyTiles[36].isWall()) ? 2 : 3;
@@ -483,7 +483,7 @@ public class splasherUtil {
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[37].getMapLocation().x][nearbyTiles[37].getMapLocation().y] = (nearbyTiles[37].isPassable()) ? 1 : (nearbyTiles[37].isWall()) ? 2 : 3;
@@ -495,7 +495,7 @@ public class splasherUtil {
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[38].getMapLocation().x][nearbyTiles[38].getMapLocation().y] = (nearbyTiles[38].isPassable()) ? 1 : (nearbyTiles[38].isWall()) ? 2 : 3;
@@ -507,7 +507,7 @@ public class splasherUtil {
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[39].getMapLocation().x][nearbyTiles[39].getMapLocation().y] = (nearbyTiles[39].isPassable()) ? 1 : (nearbyTiles[39].isWall()) ? 2 : 3;
@@ -519,7 +519,7 @@ public class splasherUtil {
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[40].getMapLocation().x][nearbyTiles[40].getMapLocation().y] = (nearbyTiles[40].isPassable()) ? 1 : (nearbyTiles[40].isWall()) ? 2 : 3;
@@ -531,7 +531,7 @@ public class splasherUtil {
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[41].getMapLocation().x][nearbyTiles[41].getMapLocation().y] = (nearbyTiles[41].isPassable()) ? 1 : (nearbyTiles[41].isWall()) ? 2 : 3;
@@ -543,7 +543,7 @@ public class splasherUtil {
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[42].getMapLocation().x][nearbyTiles[42].getMapLocation().y] = (nearbyTiles[42].isPassable()) ? 1 : (nearbyTiles[42].isWall()) ? 2 : 3;
@@ -555,7 +555,7 @@ public class splasherUtil {
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[43].getMapLocation().x][nearbyTiles[43].getMapLocation().y] = (nearbyTiles[43].isPassable()) ? 1 : (nearbyTiles[43].isWall()) ? 2 : 3;
@@ -567,7 +567,7 @@ public class splasherUtil {
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[44].getMapLocation().x][nearbyTiles[44].getMapLocation().y] = (nearbyTiles[44].isPassable()) ? 1 : (nearbyTiles[44].isWall()) ? 2 : 3;
@@ -579,7 +579,7 @@ public class splasherUtil {
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[45].getMapLocation().x][nearbyTiles[45].getMapLocation().y] = (nearbyTiles[45].isPassable()) ? 1 : (nearbyTiles[45].isWall()) ? 2 : 3;
@@ -591,7 +591,7 @@ public class splasherUtil {
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[46].getMapLocation().x][nearbyTiles[46].getMapLocation().y] = (nearbyTiles[46].isPassable()) ? 1 : (nearbyTiles[46].isWall()) ? 2 : 3;
@@ -603,7 +603,7 @@ public class splasherUtil {
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[47].getMapLocation().x][nearbyTiles[47].getMapLocation().y] = (nearbyTiles[47].isPassable()) ? 1 : (nearbyTiles[47].isWall()) ? 2 : 3;
@@ -615,7 +615,7 @@ public class splasherUtil {
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[48].getMapLocation().x][nearbyTiles[48].getMapLocation().y] = (nearbyTiles[48].isPassable()) ? 1 : (nearbyTiles[48].isWall()) ? 2 : 3;
@@ -627,7 +627,7 @@ public class splasherUtil {
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[49].getMapLocation().x][nearbyTiles[49].getMapLocation().y] = (nearbyTiles[49].isPassable()) ? 1 : (nearbyTiles[49].isWall()) ? 2 : 3;
@@ -639,7 +639,7 @@ public class splasherUtil {
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[50].getMapLocation().x][nearbyTiles[50].getMapLocation().y] = (nearbyTiles[50].isPassable()) ? 1 : (nearbyTiles[50].isWall()) ? 2 : 3;
@@ -651,7 +651,7 @@ public class splasherUtil {
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[51].getMapLocation().x][nearbyTiles[51].getMapLocation().y] = (nearbyTiles[51].isPassable()) ? 1 : (nearbyTiles[51].isWall()) ? 2 : 3;
@@ -663,7 +663,7 @@ public class splasherUtil {
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[52].getMapLocation().x][nearbyTiles[52].getMapLocation().y] = (nearbyTiles[52].isPassable()) ? 1 : (nearbyTiles[52].isWall()) ? 2 : 3;
@@ -675,7 +675,7 @@ public class splasherUtil {
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[53].getMapLocation().x][nearbyTiles[53].getMapLocation().y] = (nearbyTiles[53].isPassable()) ? 1 : (nearbyTiles[53].isWall()) ? 2 : 3;
@@ -687,7 +687,7 @@ public class splasherUtil {
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[54].getMapLocation().x][nearbyTiles[54].getMapLocation().y] = (nearbyTiles[54].isPassable()) ? 1 : (nearbyTiles[54].isWall()) ? 2 : 3;
@@ -699,7 +699,7 @@ public class splasherUtil {
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[55].getMapLocation().x][nearbyTiles[55].getMapLocation().y] = (nearbyTiles[55].isPassable()) ? 1 : (nearbyTiles[55].isWall()) ? 2 : 3;
@@ -711,7 +711,7 @@ public class splasherUtil {
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[56].getMapLocation().x][nearbyTiles[56].getMapLocation().y] = (nearbyTiles[56].isPassable()) ? 1 : (nearbyTiles[56].isWall()) ? 2 : 3;
@@ -726,7 +726,7 @@ public class splasherUtil {
             }
             case 64->
             {
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[0].getMapLocation().x][nearbyTiles[0].getMapLocation().y] = (nearbyTiles[0].isPassable()) ? 1 : (nearbyTiles[0].isWall()) ? 2 : 3;
@@ -738,7 +738,7 @@ public class splasherUtil {
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[1].getMapLocation().x][nearbyTiles[1].getMapLocation().y] = (nearbyTiles[1].isPassable()) ? 1 : (nearbyTiles[1].isWall()) ? 2 : 3;
@@ -750,7 +750,7 @@ public class splasherUtil {
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[2].getMapLocation().x][nearbyTiles[2].getMapLocation().y] = (nearbyTiles[2].isPassable()) ? 1 : (nearbyTiles[2].isWall()) ? 2 : 3;
@@ -762,7 +762,7 @@ public class splasherUtil {
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[3].getMapLocation().x][nearbyTiles[3].getMapLocation().y] = (nearbyTiles[3].isPassable()) ? 1 : (nearbyTiles[3].isWall()) ? 2 : 3;
@@ -774,7 +774,7 @@ public class splasherUtil {
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[4].getMapLocation().x][nearbyTiles[4].getMapLocation().y] = (nearbyTiles[4].isPassable()) ? 1 : (nearbyTiles[4].isWall()) ? 2 : 3;
@@ -786,7 +786,7 @@ public class splasherUtil {
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[5].getMapLocation().x][nearbyTiles[5].getMapLocation().y] = (nearbyTiles[5].isPassable()) ? 1 : (nearbyTiles[5].isWall()) ? 2 : 3;
@@ -798,7 +798,7 @@ public class splasherUtil {
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[6].getMapLocation().x][nearbyTiles[6].getMapLocation().y] = (nearbyTiles[6].isPassable()) ? 1 : (nearbyTiles[6].isWall()) ? 2 : 3;
@@ -810,7 +810,7 @@ public class splasherUtil {
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[7].getMapLocation().x][nearbyTiles[7].getMapLocation().y] = (nearbyTiles[7].isPassable()) ? 1 : (nearbyTiles[7].isWall()) ? 2 : 3;
@@ -822,7 +822,7 @@ public class splasherUtil {
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[8].getMapLocation().x][nearbyTiles[8].getMapLocation().y] = (nearbyTiles[8].isPassable()) ? 1 : (nearbyTiles[8].isWall()) ? 2 : 3;
@@ -834,7 +834,7 @@ public class splasherUtil {
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[9].getMapLocation().x][nearbyTiles[9].getMapLocation().y] = (nearbyTiles[9].isPassable()) ? 1 : (nearbyTiles[9].isWall()) ? 2 : 3;
@@ -846,7 +846,7 @@ public class splasherUtil {
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[10].getMapLocation().x][nearbyTiles[10].getMapLocation().y] = (nearbyTiles[10].isPassable()) ? 1 : (nearbyTiles[10].isWall()) ? 2 : 3;
@@ -858,7 +858,7 @@ public class splasherUtil {
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[11].getMapLocation().x][nearbyTiles[11].getMapLocation().y] = (nearbyTiles[11].isPassable()) ? 1 : (nearbyTiles[11].isWall()) ? 2 : 3;
@@ -870,7 +870,7 @@ public class splasherUtil {
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[12].getMapLocation().x][nearbyTiles[12].getMapLocation().y] = (nearbyTiles[12].isPassable()) ? 1 : (nearbyTiles[12].isWall()) ? 2 : 3;
@@ -882,7 +882,7 @@ public class splasherUtil {
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[13].getMapLocation().x][nearbyTiles[13].getMapLocation().y] = (nearbyTiles[13].isPassable()) ? 1 : (nearbyTiles[13].isWall()) ? 2 : 3;
@@ -894,7 +894,7 @@ public class splasherUtil {
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[14].getMapLocation().x][nearbyTiles[14].getMapLocation().y] = (nearbyTiles[14].isPassable()) ? 1 : (nearbyTiles[14].isWall()) ? 2 : 3;
@@ -906,7 +906,7 @@ public class splasherUtil {
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[15].getMapLocation().x][nearbyTiles[15].getMapLocation().y] = (nearbyTiles[15].isPassable()) ? 1 : (nearbyTiles[15].isWall()) ? 2 : 3;
@@ -918,7 +918,7 @@ public class splasherUtil {
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[16].getMapLocation().x][nearbyTiles[16].getMapLocation().y] = (nearbyTiles[16].isPassable()) ? 1 : (nearbyTiles[16].isWall()) ? 2 : 3;
@@ -930,7 +930,7 @@ public class splasherUtil {
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[17].getMapLocation().x][nearbyTiles[17].getMapLocation().y] = (nearbyTiles[17].isPassable()) ? 1 : (nearbyTiles[17].isWall()) ? 2 : 3;
@@ -942,7 +942,7 @@ public class splasherUtil {
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[18].getMapLocation().x][nearbyTiles[18].getMapLocation().y] = (nearbyTiles[18].isPassable()) ? 1 : (nearbyTiles[18].isWall()) ? 2 : 3;
@@ -954,7 +954,7 @@ public class splasherUtil {
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[19].getMapLocation().x][nearbyTiles[19].getMapLocation().y] = (nearbyTiles[19].isPassable()) ? 1 : (nearbyTiles[19].isWall()) ? 2 : 3;
@@ -966,7 +966,7 @@ public class splasherUtil {
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[20].getMapLocation().x][nearbyTiles[20].getMapLocation().y] = (nearbyTiles[20].isPassable()) ? 1 : (nearbyTiles[20].isWall()) ? 2 : 3;
@@ -978,7 +978,7 @@ public class splasherUtil {
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[21].getMapLocation().x][nearbyTiles[21].getMapLocation().y] = (nearbyTiles[21].isPassable()) ? 1 : (nearbyTiles[21].isWall()) ? 2 : 3;
@@ -990,7 +990,7 @@ public class splasherUtil {
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[22].getMapLocation().x][nearbyTiles[22].getMapLocation().y] = (nearbyTiles[22].isPassable()) ? 1 : (nearbyTiles[22].isWall()) ? 2 : 3;
@@ -1002,7 +1002,7 @@ public class splasherUtil {
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[23].getMapLocation().x][nearbyTiles[23].getMapLocation().y] = (nearbyTiles[23].isPassable()) ? 1 : (nearbyTiles[23].isWall()) ? 2 : 3;
@@ -1014,7 +1014,7 @@ public class splasherUtil {
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[24].getMapLocation().x][nearbyTiles[24].getMapLocation().y] = (nearbyTiles[24].isPassable()) ? 1 : (nearbyTiles[24].isWall()) ? 2 : 3;
@@ -1026,7 +1026,7 @@ public class splasherUtil {
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[25].getMapLocation().x][nearbyTiles[25].getMapLocation().y] = (nearbyTiles[25].isPassable()) ? 1 : (nearbyTiles[25].isWall()) ? 2 : 3;
@@ -1038,7 +1038,7 @@ public class splasherUtil {
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[26].getMapLocation().x][nearbyTiles[26].getMapLocation().y] = (nearbyTiles[26].isPassable()) ? 1 : (nearbyTiles[26].isWall()) ? 2 : 3;
@@ -1050,7 +1050,7 @@ public class splasherUtil {
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[27].getMapLocation().x][nearbyTiles[27].getMapLocation().y] = (nearbyTiles[27].isPassable()) ? 1 : (nearbyTiles[27].isWall()) ? 2 : 3;
@@ -1062,7 +1062,7 @@ public class splasherUtil {
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[28].getMapLocation().x][nearbyTiles[28].getMapLocation().y] = (nearbyTiles[28].isPassable()) ? 1 : (nearbyTiles[28].isWall()) ? 2 : 3;
@@ -1074,7 +1074,7 @@ public class splasherUtil {
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[29].getMapLocation().x][nearbyTiles[29].getMapLocation().y] = (nearbyTiles[29].isPassable()) ? 1 : (nearbyTiles[29].isWall()) ? 2 : 3;
@@ -1086,7 +1086,7 @@ public class splasherUtil {
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[30].getMapLocation().x][nearbyTiles[30].getMapLocation().y] = (nearbyTiles[30].isPassable()) ? 1 : (nearbyTiles[30].isWall()) ? 2 : 3;
@@ -1098,7 +1098,7 @@ public class splasherUtil {
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[31].getMapLocation().x][nearbyTiles[31].getMapLocation().y] = (nearbyTiles[31].isPassable()) ? 1 : (nearbyTiles[31].isWall()) ? 2 : 3;
@@ -1110,7 +1110,7 @@ public class splasherUtil {
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[32].getMapLocation().x][nearbyTiles[32].getMapLocation().y] = (nearbyTiles[32].isPassable()) ? 1 : (nearbyTiles[32].isWall()) ? 2 : 3;
@@ -1122,7 +1122,7 @@ public class splasherUtil {
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[33].getMapLocation().x][nearbyTiles[33].getMapLocation().y] = (nearbyTiles[33].isPassable()) ? 1 : (nearbyTiles[33].isWall()) ? 2 : 3;
@@ -1134,7 +1134,7 @@ public class splasherUtil {
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[34].getMapLocation().x][nearbyTiles[34].getMapLocation().y] = (nearbyTiles[34].isPassable()) ? 1 : (nearbyTiles[34].isWall()) ? 2 : 3;
@@ -1146,7 +1146,7 @@ public class splasherUtil {
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[35].getMapLocation().x][nearbyTiles[35].getMapLocation().y] = (nearbyTiles[35].isPassable()) ? 1 : (nearbyTiles[35].isWall()) ? 2 : 3;
@@ -1158,7 +1158,7 @@ public class splasherUtil {
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[36].getMapLocation().x][nearbyTiles[36].getMapLocation().y] = (nearbyTiles[36].isPassable()) ? 1 : (nearbyTiles[36].isWall()) ? 2 : 3;
@@ -1170,7 +1170,7 @@ public class splasherUtil {
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[37].getMapLocation().x][nearbyTiles[37].getMapLocation().y] = (nearbyTiles[37].isPassable()) ? 1 : (nearbyTiles[37].isWall()) ? 2 : 3;
@@ -1182,7 +1182,7 @@ public class splasherUtil {
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[38].getMapLocation().x][nearbyTiles[38].getMapLocation().y] = (nearbyTiles[38].isPassable()) ? 1 : (nearbyTiles[38].isWall()) ? 2 : 3;
@@ -1194,7 +1194,7 @@ public class splasherUtil {
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[39].getMapLocation().x][nearbyTiles[39].getMapLocation().y] = (nearbyTiles[39].isPassable()) ? 1 : (nearbyTiles[39].isWall()) ? 2 : 3;
@@ -1206,7 +1206,7 @@ public class splasherUtil {
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[40].getMapLocation().x][nearbyTiles[40].getMapLocation().y] = (nearbyTiles[40].isPassable()) ? 1 : (nearbyTiles[40].isWall()) ? 2 : 3;
@@ -1218,7 +1218,7 @@ public class splasherUtil {
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[41].getMapLocation().x][nearbyTiles[41].getMapLocation().y] = (nearbyTiles[41].isPassable()) ? 1 : (nearbyTiles[41].isWall()) ? 2 : 3;
@@ -1230,7 +1230,7 @@ public class splasherUtil {
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[42].getMapLocation().x][nearbyTiles[42].getMapLocation().y] = (nearbyTiles[42].isPassable()) ? 1 : (nearbyTiles[42].isWall()) ? 2 : 3;
@@ -1242,7 +1242,7 @@ public class splasherUtil {
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[43].getMapLocation().x][nearbyTiles[43].getMapLocation().y] = (nearbyTiles[43].isPassable()) ? 1 : (nearbyTiles[43].isWall()) ? 2 : 3;
@@ -1254,7 +1254,7 @@ public class splasherUtil {
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[44].getMapLocation().x][nearbyTiles[44].getMapLocation().y] = (nearbyTiles[44].isPassable()) ? 1 : (nearbyTiles[44].isWall()) ? 2 : 3;
@@ -1266,7 +1266,7 @@ public class splasherUtil {
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[45].getMapLocation().x][nearbyTiles[45].getMapLocation().y] = (nearbyTiles[45].isPassable()) ? 1 : (nearbyTiles[45].isWall()) ? 2 : 3;
@@ -1278,7 +1278,7 @@ public class splasherUtil {
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[46].getMapLocation().x][nearbyTiles[46].getMapLocation().y] = (nearbyTiles[46].isPassable()) ? 1 : (nearbyTiles[46].isWall()) ? 2 : 3;
@@ -1290,7 +1290,7 @@ public class splasherUtil {
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[47].getMapLocation().x][nearbyTiles[47].getMapLocation().y] = (nearbyTiles[47].isPassable()) ? 1 : (nearbyTiles[47].isWall()) ? 2 : 3;
@@ -1302,7 +1302,7 @@ public class splasherUtil {
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[48].getMapLocation().x][nearbyTiles[48].getMapLocation().y] = (nearbyTiles[48].isPassable()) ? 1 : (nearbyTiles[48].isWall()) ? 2 : 3;
@@ -1314,7 +1314,7 @@ public class splasherUtil {
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[49].getMapLocation().x][nearbyTiles[49].getMapLocation().y] = (nearbyTiles[49].isPassable()) ? 1 : (nearbyTiles[49].isWall()) ? 2 : 3;
@@ -1326,7 +1326,7 @@ public class splasherUtil {
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[50].getMapLocation().x][nearbyTiles[50].getMapLocation().y] = (nearbyTiles[50].isPassable()) ? 1 : (nearbyTiles[50].isWall()) ? 2 : 3;
@@ -1338,7 +1338,7 @@ public class splasherUtil {
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[51].getMapLocation().x][nearbyTiles[51].getMapLocation().y] = (nearbyTiles[51].isPassable()) ? 1 : (nearbyTiles[51].isWall()) ? 2 : 3;
@@ -1350,7 +1350,7 @@ public class splasherUtil {
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[52].getMapLocation().x][nearbyTiles[52].getMapLocation().y] = (nearbyTiles[52].isPassable()) ? 1 : (nearbyTiles[52].isWall()) ? 2 : 3;
@@ -1362,7 +1362,7 @@ public class splasherUtil {
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[53].getMapLocation().x][nearbyTiles[53].getMapLocation().y] = (nearbyTiles[53].isPassable()) ? 1 : (nearbyTiles[53].isWall()) ? 2 : 3;
@@ -1374,7 +1374,7 @@ public class splasherUtil {
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[54].getMapLocation().x][nearbyTiles[54].getMapLocation().y] = (nearbyTiles[54].isPassable()) ? 1 : (nearbyTiles[54].isWall()) ? 2 : 3;
@@ -1386,7 +1386,7 @@ public class splasherUtil {
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[55].getMapLocation().x][nearbyTiles[55].getMapLocation().y] = (nearbyTiles[55].isPassable()) ? 1 : (nearbyTiles[55].isWall()) ? 2 : 3;
@@ -1398,7 +1398,7 @@ public class splasherUtil {
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[56].getMapLocation().x][nearbyTiles[56].getMapLocation().y] = (nearbyTiles[56].isPassable()) ? 1 : (nearbyTiles[56].isWall()) ? 2 : 3;
@@ -1410,7 +1410,7 @@ public class splasherUtil {
                     y += nearbyTiles[56].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[57].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[57].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[57].getMapLocation().x][nearbyTiles[57].getMapLocation().y] = (nearbyTiles[57].isPassable()) ? 1 : (nearbyTiles[57].isWall()) ? 2 : 3;
@@ -1422,7 +1422,7 @@ public class splasherUtil {
                     y += nearbyTiles[57].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[58].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[58].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[58].getMapLocation().x][nearbyTiles[58].getMapLocation().y] = (nearbyTiles[58].isPassable()) ? 1 : (nearbyTiles[58].isWall()) ? 2 : 3;
@@ -1434,7 +1434,7 @@ public class splasherUtil {
                     y += nearbyTiles[58].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[59].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[59].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[59].getMapLocation().x][nearbyTiles[59].getMapLocation().y] = (nearbyTiles[59].isPassable()) ? 1 : (nearbyTiles[59].isWall()) ? 2 : 3;
@@ -1446,7 +1446,7 @@ public class splasherUtil {
                     y += nearbyTiles[59].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[60].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[60].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[60].getMapLocation().x][nearbyTiles[60].getMapLocation().y] = (nearbyTiles[60].isPassable()) ? 1 : (nearbyTiles[60].isWall()) ? 2 : 3;
@@ -1458,7 +1458,7 @@ public class splasherUtil {
                     y += nearbyTiles[60].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[61].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[61].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[61].getMapLocation().x][nearbyTiles[61].getMapLocation().y] = (nearbyTiles[61].isPassable()) ? 1 : (nearbyTiles[61].isWall()) ? 2 : 3;
@@ -1470,7 +1470,7 @@ public class splasherUtil {
                     y += nearbyTiles[61].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[62].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[62].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[62].getMapLocation().x][nearbyTiles[62].getMapLocation().y] = (nearbyTiles[62].isPassable()) ? 1 : (nearbyTiles[62].isWall()) ? 2 : 3;
@@ -1482,7 +1482,7 @@ public class splasherUtil {
                     y += nearbyTiles[62].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[63].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[63].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[63].getMapLocation().x][nearbyTiles[63].getMapLocation().y] = (nearbyTiles[63].isPassable()) ? 1 : (nearbyTiles[63].isWall()) ? 2 : 3;
@@ -1497,7 +1497,7 @@ public class splasherUtil {
             }
             case 69->
             {
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[0].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[0].getMapLocation().x][nearbyTiles[0].getMapLocation().y] = (nearbyTiles[0].isPassable()) ? 1 : (nearbyTiles[0].isWall()) ? 2 : 3;
@@ -1509,7 +1509,7 @@ public class splasherUtil {
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[1].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[1].getMapLocation().x][nearbyTiles[1].getMapLocation().y] = (nearbyTiles[1].isPassable()) ? 1 : (nearbyTiles[1].isWall()) ? 2 : 3;
@@ -1521,7 +1521,7 @@ public class splasherUtil {
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[2].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[2].getMapLocation().x][nearbyTiles[2].getMapLocation().y] = (nearbyTiles[2].isPassable()) ? 1 : (nearbyTiles[2].isWall()) ? 2 : 3;
@@ -1533,7 +1533,7 @@ public class splasherUtil {
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[3].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[3].getMapLocation().x][nearbyTiles[3].getMapLocation().y] = (nearbyTiles[3].isPassable()) ? 1 : (nearbyTiles[3].isWall()) ? 2 : 3;
@@ -1545,7 +1545,7 @@ public class splasherUtil {
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[4].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[4].getMapLocation().x][nearbyTiles[4].getMapLocation().y] = (nearbyTiles[4].isPassable()) ? 1 : (nearbyTiles[4].isWall()) ? 2 : 3;
@@ -1557,7 +1557,7 @@ public class splasherUtil {
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[5].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[5].getMapLocation().x][nearbyTiles[5].getMapLocation().y] = (nearbyTiles[5].isPassable()) ? 1 : (nearbyTiles[5].isWall()) ? 2 : 3;
@@ -1569,7 +1569,7 @@ public class splasherUtil {
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[6].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[6].getMapLocation().x][nearbyTiles[6].getMapLocation().y] = (nearbyTiles[6].isPassable()) ? 1 : (nearbyTiles[6].isWall()) ? 2 : 3;
@@ -1581,7 +1581,7 @@ public class splasherUtil {
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[7].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[7].getMapLocation().x][nearbyTiles[7].getMapLocation().y] = (nearbyTiles[7].isPassable()) ? 1 : (nearbyTiles[7].isWall()) ? 2 : 3;
@@ -1593,7 +1593,7 @@ public class splasherUtil {
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[8].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[8].getMapLocation().x][nearbyTiles[8].getMapLocation().y] = (nearbyTiles[8].isPassable()) ? 1 : (nearbyTiles[8].isWall()) ? 2 : 3;
@@ -1605,7 +1605,7 @@ public class splasherUtil {
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[9].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[9].getMapLocation().x][nearbyTiles[9].getMapLocation().y] = (nearbyTiles[9].isPassable()) ? 1 : (nearbyTiles[9].isWall()) ? 2 : 3;
@@ -1617,7 +1617,7 @@ public class splasherUtil {
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[10].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[10].getMapLocation().x][nearbyTiles[10].getMapLocation().y] = (nearbyTiles[10].isPassable()) ? 1 : (nearbyTiles[10].isWall()) ? 2 : 3;
@@ -1629,7 +1629,7 @@ public class splasherUtil {
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[11].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[11].getMapLocation().x][nearbyTiles[11].getMapLocation().y] = (nearbyTiles[11].isPassable()) ? 1 : (nearbyTiles[11].isWall()) ? 2 : 3;
@@ -1641,7 +1641,7 @@ public class splasherUtil {
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[12].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[12].getMapLocation().x][nearbyTiles[12].getMapLocation().y] = (nearbyTiles[12].isPassable()) ? 1 : (nearbyTiles[12].isWall()) ? 2 : 3;
@@ -1653,7 +1653,7 @@ public class splasherUtil {
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[13].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[13].getMapLocation().x][nearbyTiles[13].getMapLocation().y] = (nearbyTiles[13].isPassable()) ? 1 : (nearbyTiles[13].isWall()) ? 2 : 3;
@@ -1665,7 +1665,7 @@ public class splasherUtil {
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[14].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[14].getMapLocation().x][nearbyTiles[14].getMapLocation().y] = (nearbyTiles[14].isPassable()) ? 1 : (nearbyTiles[14].isWall()) ? 2 : 3;
@@ -1677,7 +1677,7 @@ public class splasherUtil {
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[15].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[15].getMapLocation().x][nearbyTiles[15].getMapLocation().y] = (nearbyTiles[15].isPassable()) ? 1 : (nearbyTiles[15].isWall()) ? 2 : 3;
@@ -1689,7 +1689,7 @@ public class splasherUtil {
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[16].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[16].getMapLocation().x][nearbyTiles[16].getMapLocation().y] = (nearbyTiles[16].isPassable()) ? 1 : (nearbyTiles[16].isWall()) ? 2 : 3;
@@ -1701,7 +1701,7 @@ public class splasherUtil {
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[17].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[17].getMapLocation().x][nearbyTiles[17].getMapLocation().y] = (nearbyTiles[17].isPassable()) ? 1 : (nearbyTiles[17].isWall()) ? 2 : 3;
@@ -1713,7 +1713,7 @@ public class splasherUtil {
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[18].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[18].getMapLocation().x][nearbyTiles[18].getMapLocation().y] = (nearbyTiles[18].isPassable()) ? 1 : (nearbyTiles[18].isWall()) ? 2 : 3;
@@ -1725,7 +1725,7 @@ public class splasherUtil {
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[19].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[19].getMapLocation().x][nearbyTiles[19].getMapLocation().y] = (nearbyTiles[19].isPassable()) ? 1 : (nearbyTiles[19].isWall()) ? 2 : 3;
@@ -1737,7 +1737,7 @@ public class splasherUtil {
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[20].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[20].getMapLocation().x][nearbyTiles[20].getMapLocation().y] = (nearbyTiles[20].isPassable()) ? 1 : (nearbyTiles[20].isWall()) ? 2 : 3;
@@ -1749,7 +1749,7 @@ public class splasherUtil {
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[21].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[21].getMapLocation().x][nearbyTiles[21].getMapLocation().y] = (nearbyTiles[21].isPassable()) ? 1 : (nearbyTiles[21].isWall()) ? 2 : 3;
@@ -1761,7 +1761,7 @@ public class splasherUtil {
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[22].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[22].getMapLocation().x][nearbyTiles[22].getMapLocation().y] = (nearbyTiles[22].isPassable()) ? 1 : (nearbyTiles[22].isWall()) ? 2 : 3;
@@ -1773,7 +1773,7 @@ public class splasherUtil {
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[23].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[23].getMapLocation().x][nearbyTiles[23].getMapLocation().y] = (nearbyTiles[23].isPassable()) ? 1 : (nearbyTiles[23].isWall()) ? 2 : 3;
@@ -1785,7 +1785,7 @@ public class splasherUtil {
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[24].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[24].getMapLocation().x][nearbyTiles[24].getMapLocation().y] = (nearbyTiles[24].isPassable()) ? 1 : (nearbyTiles[24].isWall()) ? 2 : 3;
@@ -1797,7 +1797,7 @@ public class splasherUtil {
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[25].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[25].getMapLocation().x][nearbyTiles[25].getMapLocation().y] = (nearbyTiles[25].isPassable()) ? 1 : (nearbyTiles[25].isWall()) ? 2 : 3;
@@ -1809,7 +1809,7 @@ public class splasherUtil {
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[26].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[26].getMapLocation().x][nearbyTiles[26].getMapLocation().y] = (nearbyTiles[26].isPassable()) ? 1 : (nearbyTiles[26].isWall()) ? 2 : 3;
@@ -1821,7 +1821,7 @@ public class splasherUtil {
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[27].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[27].getMapLocation().x][nearbyTiles[27].getMapLocation().y] = (nearbyTiles[27].isPassable()) ? 1 : (nearbyTiles[27].isWall()) ? 2 : 3;
@@ -1833,7 +1833,7 @@ public class splasherUtil {
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[28].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[28].getMapLocation().x][nearbyTiles[28].getMapLocation().y] = (nearbyTiles[28].isPassable()) ? 1 : (nearbyTiles[28].isWall()) ? 2 : 3;
@@ -1845,7 +1845,7 @@ public class splasherUtil {
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[29].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[29].getMapLocation().x][nearbyTiles[29].getMapLocation().y] = (nearbyTiles[29].isPassable()) ? 1 : (nearbyTiles[29].isWall()) ? 2 : 3;
@@ -1857,7 +1857,7 @@ public class splasherUtil {
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[30].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[30].getMapLocation().x][nearbyTiles[30].getMapLocation().y] = (nearbyTiles[30].isPassable()) ? 1 : (nearbyTiles[30].isWall()) ? 2 : 3;
@@ -1869,7 +1869,7 @@ public class splasherUtil {
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[31].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[31].getMapLocation().x][nearbyTiles[31].getMapLocation().y] = (nearbyTiles[31].isPassable()) ? 1 : (nearbyTiles[31].isWall()) ? 2 : 3;
@@ -1881,7 +1881,7 @@ public class splasherUtil {
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[32].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[32].getMapLocation().x][nearbyTiles[32].getMapLocation().y] = (nearbyTiles[32].isPassable()) ? 1 : (nearbyTiles[32].isWall()) ? 2 : 3;
@@ -1893,7 +1893,7 @@ public class splasherUtil {
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[33].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[33].getMapLocation().x][nearbyTiles[33].getMapLocation().y] = (nearbyTiles[33].isPassable()) ? 1 : (nearbyTiles[33].isWall()) ? 2 : 3;
@@ -1905,7 +1905,7 @@ public class splasherUtil {
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[34].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[34].getMapLocation().x][nearbyTiles[34].getMapLocation().y] = (nearbyTiles[34].isPassable()) ? 1 : (nearbyTiles[34].isWall()) ? 2 : 3;
@@ -1917,7 +1917,7 @@ public class splasherUtil {
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[35].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[35].getMapLocation().x][nearbyTiles[35].getMapLocation().y] = (nearbyTiles[35].isPassable()) ? 1 : (nearbyTiles[35].isWall()) ? 2 : 3;
@@ -1929,7 +1929,7 @@ public class splasherUtil {
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[36].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[36].getMapLocation().x][nearbyTiles[36].getMapLocation().y] = (nearbyTiles[36].isPassable()) ? 1 : (nearbyTiles[36].isWall()) ? 2 : 3;
@@ -1941,7 +1941,7 @@ public class splasherUtil {
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[37].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[37].getMapLocation().x][nearbyTiles[37].getMapLocation().y] = (nearbyTiles[37].isPassable()) ? 1 : (nearbyTiles[37].isWall()) ? 2 : 3;
@@ -1953,7 +1953,7 @@ public class splasherUtil {
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[38].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[38].getMapLocation().x][nearbyTiles[38].getMapLocation().y] = (nearbyTiles[38].isPassable()) ? 1 : (nearbyTiles[38].isWall()) ? 2 : 3;
@@ -1965,7 +1965,7 @@ public class splasherUtil {
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[39].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[39].getMapLocation().x][nearbyTiles[39].getMapLocation().y] = (nearbyTiles[39].isPassable()) ? 1 : (nearbyTiles[39].isWall()) ? 2 : 3;
@@ -1977,7 +1977,7 @@ public class splasherUtil {
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[40].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[40].getMapLocation().x][nearbyTiles[40].getMapLocation().y] = (nearbyTiles[40].isPassable()) ? 1 : (nearbyTiles[40].isWall()) ? 2 : 3;
@@ -1989,7 +1989,7 @@ public class splasherUtil {
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[41].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[41].getMapLocation().x][nearbyTiles[41].getMapLocation().y] = (nearbyTiles[41].isPassable()) ? 1 : (nearbyTiles[41].isWall()) ? 2 : 3;
@@ -2001,7 +2001,7 @@ public class splasherUtil {
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[42].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[42].getMapLocation().x][nearbyTiles[42].getMapLocation().y] = (nearbyTiles[42].isPassable()) ? 1 : (nearbyTiles[42].isWall()) ? 2 : 3;
@@ -2013,7 +2013,7 @@ public class splasherUtil {
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[43].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[43].getMapLocation().x][nearbyTiles[43].getMapLocation().y] = (nearbyTiles[43].isPassable()) ? 1 : (nearbyTiles[43].isWall()) ? 2 : 3;
@@ -2025,7 +2025,7 @@ public class splasherUtil {
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[44].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[44].getMapLocation().x][nearbyTiles[44].getMapLocation().y] = (nearbyTiles[44].isPassable()) ? 1 : (nearbyTiles[44].isWall()) ? 2 : 3;
@@ -2037,7 +2037,7 @@ public class splasherUtil {
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[45].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[45].getMapLocation().x][nearbyTiles[45].getMapLocation().y] = (nearbyTiles[45].isPassable()) ? 1 : (nearbyTiles[45].isWall()) ? 2 : 3;
@@ -2049,7 +2049,7 @@ public class splasherUtil {
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[46].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[46].getMapLocation().x][nearbyTiles[46].getMapLocation().y] = (nearbyTiles[46].isPassable()) ? 1 : (nearbyTiles[46].isWall()) ? 2 : 3;
@@ -2061,7 +2061,7 @@ public class splasherUtil {
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[47].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[47].getMapLocation().x][nearbyTiles[47].getMapLocation().y] = (nearbyTiles[47].isPassable()) ? 1 : (nearbyTiles[47].isWall()) ? 2 : 3;
@@ -2073,7 +2073,7 @@ public class splasherUtil {
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[48].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[48].getMapLocation().x][nearbyTiles[48].getMapLocation().y] = (nearbyTiles[48].isPassable()) ? 1 : (nearbyTiles[48].isWall()) ? 2 : 3;
@@ -2085,7 +2085,7 @@ public class splasherUtil {
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[49].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[49].getMapLocation().x][nearbyTiles[49].getMapLocation().y] = (nearbyTiles[49].isPassable()) ? 1 : (nearbyTiles[49].isWall()) ? 2 : 3;
@@ -2097,7 +2097,7 @@ public class splasherUtil {
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[50].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[50].getMapLocation().x][nearbyTiles[50].getMapLocation().y] = (nearbyTiles[50].isPassable()) ? 1 : (nearbyTiles[50].isWall()) ? 2 : 3;
@@ -2109,7 +2109,7 @@ public class splasherUtil {
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[51].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[51].getMapLocation().x][nearbyTiles[51].getMapLocation().y] = (nearbyTiles[51].isPassable()) ? 1 : (nearbyTiles[51].isWall()) ? 2 : 3;
@@ -2121,7 +2121,7 @@ public class splasherUtil {
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[52].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[52].getMapLocation().x][nearbyTiles[52].getMapLocation().y] = (nearbyTiles[52].isPassable()) ? 1 : (nearbyTiles[52].isWall()) ? 2 : 3;
@@ -2133,7 +2133,7 @@ public class splasherUtil {
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[53].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[53].getMapLocation().x][nearbyTiles[53].getMapLocation().y] = (nearbyTiles[53].isPassable()) ? 1 : (nearbyTiles[53].isWall()) ? 2 : 3;
@@ -2145,7 +2145,7 @@ public class splasherUtil {
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[54].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[54].getMapLocation().x][nearbyTiles[54].getMapLocation().y] = (nearbyTiles[54].isPassable()) ? 1 : (nearbyTiles[54].isWall()) ? 2 : 3;
@@ -2157,7 +2157,7 @@ public class splasherUtil {
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[55].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[55].getMapLocation().x][nearbyTiles[55].getMapLocation().y] = (nearbyTiles[55].isPassable()) ? 1 : (nearbyTiles[55].isWall()) ? 2 : 3;
@@ -2169,7 +2169,7 @@ public class splasherUtil {
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[56].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[56].getMapLocation().x][nearbyTiles[56].getMapLocation().y] = (nearbyTiles[56].isPassable()) ? 1 : (nearbyTiles[56].isWall()) ? 2 : 3;
@@ -2181,7 +2181,7 @@ public class splasherUtil {
                     y += nearbyTiles[56].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[57].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[57].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[57].getMapLocation().x][nearbyTiles[57].getMapLocation().y] = (nearbyTiles[57].isPassable()) ? 1 : (nearbyTiles[57].isWall()) ? 2 : 3;
@@ -2193,7 +2193,7 @@ public class splasherUtil {
                     y += nearbyTiles[57].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[58].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[58].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[58].getMapLocation().x][nearbyTiles[58].getMapLocation().y] = (nearbyTiles[58].isPassable()) ? 1 : (nearbyTiles[58].isWall()) ? 2 : 3;
@@ -2205,7 +2205,7 @@ public class splasherUtil {
                     y += nearbyTiles[58].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[59].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[59].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[59].getMapLocation().x][nearbyTiles[59].getMapLocation().y] = (nearbyTiles[59].isPassable()) ? 1 : (nearbyTiles[59].isWall()) ? 2 : 3;
@@ -2217,7 +2217,7 @@ public class splasherUtil {
                     y += nearbyTiles[59].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[60].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[60].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[60].getMapLocation().x][nearbyTiles[60].getMapLocation().y] = (nearbyTiles[60].isPassable()) ? 1 : (nearbyTiles[60].isWall()) ? 2 : 3;
@@ -2229,7 +2229,7 @@ public class splasherUtil {
                     y += nearbyTiles[60].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[61].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[61].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[61].getMapLocation().x][nearbyTiles[61].getMapLocation().y] = (nearbyTiles[61].isPassable()) ? 1 : (nearbyTiles[61].isWall()) ? 2 : 3;
@@ -2241,7 +2241,7 @@ public class splasherUtil {
                     y += nearbyTiles[61].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[62].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[62].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[62].getMapLocation().x][nearbyTiles[62].getMapLocation().y] = (nearbyTiles[62].isPassable()) ? 1 : (nearbyTiles[62].isWall()) ? 2 : 3;
@@ -2253,7 +2253,7 @@ public class splasherUtil {
                     y += nearbyTiles[62].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[63].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[63].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[63].getMapLocation().x][nearbyTiles[63].getMapLocation().y] = (nearbyTiles[63].isPassable()) ? 1 : (nearbyTiles[63].isWall()) ? 2 : 3;
@@ -2265,7 +2265,7 @@ public class splasherUtil {
                     y += nearbyTiles[63].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[64].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[64].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[64].getMapLocation().x][nearbyTiles[64].getMapLocation().y] = (nearbyTiles[64].isPassable()) ? 1 : (nearbyTiles[64].isWall()) ? 2 : 3;
@@ -2277,7 +2277,7 @@ public class splasherUtil {
                     y += nearbyTiles[64].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[65].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[65].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[65].getMapLocation().x][nearbyTiles[65].getMapLocation().y] = (nearbyTiles[65].isPassable()) ? 1 : (nearbyTiles[65].isWall()) ? 2 : 3;
@@ -2289,7 +2289,7 @@ public class splasherUtil {
                     y += nearbyTiles[65].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[66].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[66].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[66].getMapLocation().x][nearbyTiles[66].getMapLocation().y] = (nearbyTiles[66].isPassable()) ? 1 : (nearbyTiles[66].isWall()) ? 2 : 3;
@@ -2301,7 +2301,7 @@ public class splasherUtil {
                     y += nearbyTiles[66].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[67].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[67].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[67].getMapLocation().x][nearbyTiles[67].getMapLocation().y] = (nearbyTiles[67].isPassable()) ? 1 : (nearbyTiles[67].isWall()) ? 2 : 3;
@@ -2313,7 +2313,7 @@ public class splasherUtil {
                     y += nearbyTiles[67].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Utilities.attemptCompleteResourcePattern(nearbyTiles[68].getMapLocation());
+                //Utilities.attemptCompleteResourcePattern(nearbyTiles[68].getMapLocation());
                 if(knownSymmetry == RobotPlayer.Symmetry.Unknown)
                 {
                     map[nearbyTiles[68].getMapLocation().x][nearbyTiles[68].getMapLocation().y] = (nearbyTiles[68].isPassable()) ? 1 : (nearbyTiles[68].isWall()) ? 2 : 3;
