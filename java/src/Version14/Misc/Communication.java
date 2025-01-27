@@ -243,6 +243,7 @@ public class Communication
     public static void scanForRuins() throws GameActionException
     {
         Mopper.nearbyRuin = null;
+        Mopper.seenEnemyTower = null;
         Soldier.seenEnemyTower = null;
         Splasher.seenEnemyTower = null;
 

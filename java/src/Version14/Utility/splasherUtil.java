@@ -5348,7 +5348,7 @@ public class splasherUtil {
     //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
     public static MapLocation cheapBestAttack(boolean fightingTower, int minScore) throws GameActionException {
         if(!farFromEdge( staticRC.getLocation())) return basicBestAttack();
-        int price = Clock.getBytecodesLeft();
+        //int price = Clock.getBytecodesLeft();
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;
         int[] localSquares = new int[45];
@@ -5579,7 +5579,7 @@ public class splasherUtil {
         if(staticRC.canSenseRobotAtLocation(nearestUnfilledRuin)) {
             return false;
         }
-        if (staticRC.getLocation().distanceSquaredTo(nearestUnfilledRuin) > 8 && !checkedRuin.getBit(nearestUnfilledRuin)) {
+        if (staticRC.getLocation().distanceSquaredTo(nearestUnfilledRuin) > 8 && !checkedRuin.contains(nearestUnfilledRuin)) {
             return true;
         }
         switch (tilesNearRuin.length) {

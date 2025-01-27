@@ -1,6 +1,5 @@
 package Version14.Utility;
 
-import PathfindingTest.FastIterableLocSet;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
@@ -283,9 +282,9 @@ public class WallChecker_FullVision
     static boolean exists78;
     static boolean reachable78;
 
-    public static PathfindingTest.FastIterableLocSet findOverWallTiles(RobotController rc) throws GameActionException
+    public static FastIterableLocSet findOverWallTiles(RobotController rc) throws GameActionException
     {
-        PathfindingTest.FastIterableLocSet overWall = new FastIterableLocSet();
+        FastIterableLocSet overWall = new FastIterableLocSet();
         MapLocation start = rc.getLocation();
 
         l2 = new MapLocation(start.x - 2, start.y + 4);

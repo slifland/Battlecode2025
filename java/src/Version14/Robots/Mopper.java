@@ -4,6 +4,7 @@ import Version14.Micro.MopperMicro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
 import Version14.Utility.BitBoard;
+import Version14.Utility.FastIterableLocSet;
 import Version14.Utility.MopperUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
@@ -34,7 +35,8 @@ public class Mopper {
 
     public static MapLocation nearbyRuin;
 
-    public static BitBoard enemyDefenseTowers;
+    //public static BitBoard enemyDefenseTowers;
+    public static FastIterableLocSet enemyDefenseTowers;
 
     private static MapLocation spawnLocation;
 
@@ -52,9 +54,11 @@ public class Mopper {
 
     //public static boolean[][] checkedRuin;
 
-    public static BitBoard checkedRuin;
+    //public static BitBoard checkedRuin;
+    public static FastIterableLocSet checkedRuin;
 
-    public static BitBoard checkedTower;
+    //public static BitBoard checkedTower;
+    public static FastIterableLocSet checkedTower;
 
     public static navState navTarget;
 
@@ -65,10 +69,13 @@ public class Mopper {
         if(turnCount == 1){
             spawnLocation = staticRC.getLocation();
             //checkedRuin = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
-            checkedRuin = new BitBoard();
+            //checkedRuin = new BitBoard();
+            checkedRuin = new FastIterableLocSet();
             navTarget = null;
-            checkedTower = new BitBoard();
-            enemyDefenseTowers = new BitBoard();
+            //checkedTower = new BitBoard();
+            checkedTower = new FastIterableLocSet();
+            //enemyDefenseTowers = new BitBoard();
+            enemyDefenseTowers = new FastIterableLocSet();
         }
         updateInfo();
         updateState();
@@ -111,8 +118,10 @@ public class Mopper {
             switch(navTarget) {
                 case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
                 //case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
-                case navState.ruin -> checkedRuin.setBit(curObjective, true);
-                case navState.tower -> checkedTower.setBit(curObjective, true);
+                //case navState.ruin -> checkedRuin.setBit(curObjective, true);
+                case navState.ruin -> checkedRuin.add(curObjective);
+                //case navState.tower -> checkedTower.setBit(curObjective, true);
+                case navState.tower -> checkedTower.add(curObjective);
             }
             curObjective = null;
             navTarget = null;
@@ -169,7 +178,8 @@ public class Mopper {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
                 //if(checkedRuin[r.location.x][r.location.y]) continue;
-                if(checkedRuin.getBit(r.location)) continue;
+                //if(checkedRuin.getBit(r.location)) continue;
+                if(checkedRuin.contains(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -180,7 +190,8 @@ public class Mopper {
         if(curObjective == null && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
-                if(checkedTower.getBit(r.location) || enemyDefenseTowers.getBit(r.location)) continue;
+                //if(checkedTower.getBit(r.location) || enemyDefenseTowers.getBit(r.location)) continue;
+                if(checkedTower.contains(r.location) || enemyDefenseTowers.contains(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -328,7 +339,6 @@ public class Mopper {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
         int bestScore = -1;
-        //boolean hasRobot = false;
         for(MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
             int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());
             int score = MopperMicro.determineScoreClear(tile.getMapLocation(), tile);
@@ -369,7 +379,8 @@ public class Mopper {
         needsClearing = false;
 
         if(seenEnemyTower != null && Soldier.isDefenseTower(seenEnemyTower)) {
-            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            //enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            enemyDefenseTowers.add(seenEnemyTower.getLocation());
         }
 
 //        for(MapInfo tile : nearbyTiles) {

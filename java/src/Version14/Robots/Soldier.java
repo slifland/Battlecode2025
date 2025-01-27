@@ -5,6 +5,7 @@ import Version14.Micro.Micro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
 import Version14.Utility.BitBoard;
+import Version14.Utility.FastIterableLocSet;
 import Version14.Utility.SoldierUtil;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
@@ -42,14 +43,16 @@ public class Soldier {
     public static MapLocation spawnLocation;
     public static boolean[][] invalidResourceCenters;
 
-    public static BitBoard checkedRuin;
+    //public static BitBoard checkedRuin;
+    public static FastIterableLocSet checkedRuin;
 
     public static boolean[][] curPattern = null;
 
     public static boolean checkedSymmetry = false;
     public static MapLocation oppositeHome = null;
 
-    public static BitBoard enemyDefenseTowers;
+    //public static BitBoard enemyDefenseTowers;
+    public static FastIterableLocSet enemyDefenseTowers;
 
     public static boolean waitingToFinishRuin;
 
@@ -79,8 +82,10 @@ public class Soldier {
             initializeMapDependentVariables();
             spawnLocation = staticRC.getLocation();
             invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
-            checkedRuin = new BitBoard();
-            enemyDefenseTowers = new BitBoard();
+            //checkedRuin = new BitBoard();
+            //enemyDefenseTowers = new BitBoard();
+            checkedRuin = new FastIterableLocSet();
+            enemyDefenseTowers = new FastIterableLocSet();
         }
         //attemptCompleteTowerPattern();
         updateInfo();
@@ -163,7 +168,8 @@ public class Soldier {
 //            closestEnemyTower = closestEnemyTower();
 //        }
         if(seenEnemyTower != null && isDefenseTower(seenEnemyTower)) {
-            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            //enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            enemyDefenseTowers.add(seenEnemyTower.getLocation());
         }
         closestEnemyTower = closestEnemyTower();
         closestUnclaimedRuin = closestUnclaimedRuin();
@@ -174,7 +180,8 @@ public class Soldier {
         }
 
         if(turnCount % 20 == 0) {
-            checkedRuin = new BitBoard();
+            //checkedRuin = new BitBoard();
+            checkedRuin.clear();
         }
 //        int enemyCount = 0;
 //        int x = 0;
@@ -267,7 +274,7 @@ public class Soldier {
         state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(20 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
 
-        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && !checkedRuin.getBit(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
+        if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && /*!checkedRuin.getBit(closestUnclaimedRuin)*/!checkedRuin.contains(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
             tilesNearRuin = staticRC.senseNearbyMapInfos(closestUnclaimedRuin, 8);
             if(workingOnRuin == null) {
                 if(needsHelp(closestUnclaimedRuin)) {
@@ -276,7 +283,8 @@ public class Soldier {
                     return;
                 }
                 else {
-                    checkedRuin.setBit(closestUnclaimedRuin, true);
+                    //checkedRuin.setBit(closestUnclaimedRuin, true);
+                    checkedRuin.contains(closestUnclaimedRuin);
                 }
             }
             else if(workingOnRuin.equals(closestUnclaimedRuin)) {
@@ -783,7 +791,8 @@ public class Soldier {
         int minDist = Integer.MAX_VALUE;
         Ruin r = null;
         for(Ruin ruin : Communication.enemyTowers) {
-            if(enemyDefenseTowers.getBit(ruin.location)) continue;
+            //if(enemyDefenseTowers.getBit(ruin.location)) continue;
+            if(enemyDefenseTowers.contains(ruin.location)) continue;
             if(ruin.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(staticRC.getLocation());
                 r = ruin;

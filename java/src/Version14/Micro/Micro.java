@@ -148,7 +148,8 @@ public class Micro {
         //indication that there are enemy tiles - abort!
         if(bestAttack != null && bestAttack.x == -1 && bestAttack.y == -1) {
             Soldier.workingOnRuin = null;
-            Soldier.checkedRuin.setBit(ruin, true);
+            //Soldier.checkedRuin.setBit(ruin, true);
+            Soldier.checkedRuin.add(ruin);
             Soldier.explore();
             return;
         }
@@ -166,7 +167,8 @@ public class Micro {
                 return;
             }
             Soldier.workingOnRuin = null;
-            Soldier.checkedRuin.setBit(ruin, true);
+            //Soldier.checkedRuin.setBit(ruin, true);
+            Soldier.checkedRuin.add(ruin);
             Soldier.explore();
             return;
         }

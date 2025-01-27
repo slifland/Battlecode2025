@@ -7,6 +7,7 @@ import Version14.Micro.SplasherMicro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
 import Version14.Utility.BitBoard;
+import Version14.Utility.FastIterableLocSet;
 import Version14.Utility.Utilities;
 import Version14.Utility.splasherUtil;
 import battlecode.common.*;
@@ -48,11 +49,13 @@ public class Splasher {
 
     static boolean exploredSymmetry = false;
 
-    public static BitBoard enemyDefenseTowers;
+    //public static BitBoard enemyDefenseTowers;
+    public static FastIterableLocSet enemyDefenseTowers;
 
     static navState navTarget;
 
-    public static BitBoard checkedRuin;
+    //public static BitBoard checkedRuin;
+    public static FastIterableLocSet checkedRuin;
 
 
 
@@ -63,9 +66,12 @@ public class Splasher {
         }
         if(turnCount == 1) {
             home = staticRC.getLocation();
-            checkedRuin = new BitBoard();
-            enemyDefenseTowers = new BitBoard();
+            //checkedRuin = new BitBoard();
+            checkedRuin = new FastIterableLocSet();
+            //enemyDefenseTowers = new BitBoard();
+            enemyDefenseTowers = new FastIterableLocSet();
         }
+
         updateInfo();
         updateState();
         if(staticRC.isMovementReady() || staticRC.isActionReady()) {
@@ -84,8 +90,10 @@ public class Splasher {
                     break;
             }
         }
-        if(Clock.getBytecodesLeft() > 7000) {
+        if(Clock.getBytecodesLeft() > 5000) {
+            //int price = Clock.getBytecodesLeft();
             splasherUtil.refreshPaintAverages();
+            //System.out.println(price - Clock.getBytecodesLeft());
         }
 //        if(curObjective== null)staticRC.setIndicatorString(state.toString());
 //        else staticRC.setIndicatorString(state + " : " + curObjective);
@@ -102,7 +110,8 @@ public class Splasher {
                 if (navTarget != null) {
                     switch (navTarget) {
                         case horizontal, rotational, vertical -> exploredSymmetry = true;
-                        case ruin -> checkedRuin.setBit(curObjective, true);
+                        //case ruin -> checkedRuin.setBit(curObjective, true);
+                        case ruin -> checkedRuin.add(curObjective);
                     }
                 }
                 curObjective = null;
@@ -141,7 +150,8 @@ public class Splasher {
                 if(curObjective == null && !unclaimedRuins.isEmpty()) {
                     int minDist = Integer.MAX_VALUE;
                     for (Ruin r : unclaimedRuins) {
-                        if (checkedRuin.getBit(r.location)) continue;
+                        //if (checkedRuin.getBit(r.location)) continue;
+                        if(checkedRuin.contains(r.location)) continue;
                         if (r.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
                             minDist = r.location.distanceSquaredTo(staticRC.getLocation());
                             curObjective = r.location;
@@ -180,7 +190,8 @@ public class Splasher {
                         SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearestUnfilledRuin), nearestUnfilledRuin);
                     }
                     else {
-                        checkedRuin.setBit(nearestUnfilledRuin, true);
+                        //checkedRuin.setBit(nearestUnfilledRuin, true);
+                        checkedRuin.add(nearestUnfilledRuin);
                     }
                 }
             }
@@ -204,7 +215,8 @@ public class Splasher {
             if(navTarget != null) {
                 switch (navTarget) {
                     case horizontal, rotational, vertical -> exploredSymmetry = true;
-                    case ruin -> {checkedRuin.setBit(curObjective, true);}
+                    //case ruin -> {checkedRuin.setBit(curObjective, true);}
+                    case ruin -> checkedRuin.add(curObjective);
                 }
             }
             curObjective = null;
@@ -276,7 +288,8 @@ public class Splasher {
         if((curObjective == null || navTarget == navState.ruin) && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
-                if(enemyDefenseTowers.getBit(r.location)) continue;
+                //if(enemyDefenseTowers.getBit(r.location)) continue;
+                if(enemyDefenseTowers.contains(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -288,7 +301,8 @@ public class Splasher {
         if(curObjective == null && !unclaimedRuins.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
-                if(checkedRuin.getBit(r.location)) continue;
+                //if(checkedRuin.getBit(r.location)) continue;
+                if(checkedRuin.contains(r.location)) continue;
                 if(r.location.distanceSquaredTo(curLoc) < minDist) {
                     minDist = r.location.distanceSquaredTo(curLoc);
                     curObjective = r.location;
@@ -451,7 +465,8 @@ public class Splasher {
             splasherUtil.refreshPaintAverages();
         }
         if(seenEnemyTower != null && Soldier.isDefenseTower(seenEnemyTower)) {
-            enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            //enemyDefenseTowers.setBit(seenEnemyTower.getLocation(), true);
+            enemyDefenseTowers.add(seenEnemyTower.getLocation());
         }
         //System.out.println(price - Clock.getBytecodesLeft());
     }
