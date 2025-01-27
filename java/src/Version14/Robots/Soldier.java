@@ -61,7 +61,7 @@ public class Soldier {
     public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
     public final static int refillThreshold = 35;    //Paint level at which soldiers go to refill
-    public final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
+    public final static int doneRefillingThreshold = 100;    //Paint level at which soldiers can stop refilling
     //final static int REFRESH_ENEMY_PAINT_AVERAGES = 5;
     public static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
     public static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers

@@ -90,6 +90,12 @@ public class Mopper {
                 clear();
                 break;
         }
+        if(staticRC.isActionReady() && enemyRobots.length > 0) {
+            MopperMicro.attackAnything();
+            if(!staticRC.isActionReady()) {
+                System.out.println("hi");
+            }
+        }
 //        if(curObjective != null ) staticRC.setIndicatorString(state + " : " + curObjective);
 //        else staticRC.setIndicatorString(state.toString());
         //System.out.println(Clock.getBytecodesLeft());
