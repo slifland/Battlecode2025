@@ -12,10 +12,11 @@ emojiMap = {
 errors = []
 currentBot = 'Version14'
 
-bots = ['Version13']
+bots = ['Version13', 'Version12', 'Version11', 'Version10']
 botsSet = set(bots)
 maps = ['gridworld', 'sayhi', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack', 'catface', 'giver', 'quack', 'galaxy', 'leavemealone', 'windmill', 'Piglets2', 'Flower', 'Filter'
-       , 'yearofthesnake', 'walalilongla', 'starburst', 'sierpinski', 'sunrise', 'roads', 'rain']
+       , 'yearofthesnake', 'walalilongla', 'starburst', 'sierpinski', 'sunrise', 'roads', 'rain', 'AlarmClock', 'Barcode', 'BatSignal', 'Brat', 'Bread,' 'Castle', 'Circuit', 'Crab', 'CastleDefense', 'FourCorners', 'Gears', 
+       'HungerGames', 'Leaf', 'Oasis', 'Paintball', 'Parking_lot']
 mapsSet = set(maps)
 
 matches = set(product(bots, maps))
