@@ -31,6 +31,7 @@ public class RobotPlayer {
      * You can use static variables like this to save any information you want. Keep in mind that even though
      * these variables are static, in Battlecode they aren't actually shared between your robots.
      */
+    public static boolean canSeeEnemyPaint = false;
     public static int turnCount = 0;
     public static int soldiers = 0;
     public static int moppers = 0;
@@ -161,6 +162,7 @@ public class RobotPlayer {
 //            moppers = 0;
 //            soldiers = 0;
 //        }
+        canSeeEnemyPaint = false;
         MapLocation nextLoc = SpawnMicro.bestSpawn();
         if(toBuild == null || turnCount % 10 == 0) {
             toBuild = chooseBuild();
@@ -175,10 +177,10 @@ public class RobotPlayer {
             }
             totalBuilt++;
 
-            if(staticRC.canSendMessage(nextLoc))
-            {
-                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
-            }
+//            if(staticRC.canSendMessage(nextLoc))
+//            {
+//                staticRC.sendMessage(nextLoc, Communication.createExploreLocationMessage(locationQueue.remove(staticRC)));
+//            }
         }
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
@@ -363,6 +365,9 @@ public class RobotPlayer {
             if(!(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
                 splasherScore += 2;
             }
+        }
+        if(canSeeEnemyPaint && moppers == 0) {
+            mopperScore++;
         }
         int denominator = soldierScore + mopperScore + splasherScore;
         return new double[]{(double) soldierScore / denominator, (double) mopperScore / denominator, (double) splasherScore / denominator};

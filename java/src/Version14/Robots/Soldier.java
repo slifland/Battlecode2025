@@ -87,36 +87,32 @@ public class Soldier {
         //update the state
         updateState();
         //run the state
-        switch(state)
-        {
-            case Explore ->
-            {
-                staticRC.setIndicatorString("Exploring");
-                explore();
-            }
-            case Navigate ->
-            {
-                staticRC.setIndicatorString("Navigating");
-                navigate();
-            }
-            case Refill ->
-            {
-                staticRC.setIndicatorString("Refilling");
-                refill();
-            }
-            case Tower ->
-            {
-                staticRC.setIndicatorString("Attacking Tower");
-                tower();
-            }
-            case RuinBuilding ->
-            {
-                staticRC.setIndicatorString("Building a Ruin");
-                ruinBuilding();
-            }
-            case Fill -> {
-                staticRC.setIndicatorString("Filling a pattern");
-                fill();
+        if(staticRC.isMovementReady() || staticRC.isActionReady()) {
+            switch (state) {
+                case Explore -> {
+                    staticRC.setIndicatorString("Exploring");
+                    explore();
+                }
+                case Navigate -> {
+                    staticRC.setIndicatorString("Navigating");
+                    navigate();
+                }
+                case Refill -> {
+                    staticRC.setIndicatorString("Refilling");
+                    refill();
+                }
+                case Tower -> {
+                    staticRC.setIndicatorString("Attacking Tower");
+                    tower();
+                }
+                case RuinBuilding -> {
+                    staticRC.setIndicatorString("Building a Ruin");
+                    ruinBuilding();
+                }
+                case Fill -> {
+                    staticRC.setIndicatorString("Filling a pattern");
+                    fill();
+                }
             }
         }
         if(closestUnclaimedRuin != null) {
@@ -342,7 +338,7 @@ public class Soldier {
 
         }
         else {
-            if (staticRC.getRoundNum() % 25 == 0 || target == null || staticRC.getLocation().distanceSquaredTo(target) < 8) {
+            if (staticRC.getRoundNum() % 30 == 0 || target == null || staticRC.getLocation().distanceSquaredTo(target) < 8) {
                 generateExploreLocation();
                 //target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
             }
@@ -352,6 +348,7 @@ public class Soldier {
         if(staticRC.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
         }
+        staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
     }
 
     //returns a location to explore
@@ -363,7 +360,12 @@ public class Soldier {
             staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
         }
         else {
+            int i = 0;
             target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+            while(target.isWithinDistanceSquared(staticRC.getLocation(), (int)(adjustedMapSize * 15)) || target.isWithinDistanceSquared(spawnLocation, (int) (adjustedMapSize * 15))) {
+                target = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+                if(i++ >= 12) break;
+            }
         }
     }
 

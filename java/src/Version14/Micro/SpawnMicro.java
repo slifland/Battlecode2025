@@ -1,6 +1,8 @@
 package Version14.Micro;
 
 import battlecode.common.*;
+
+import static Version14.RobotPlayer.canSeeEnemyPaint;
 import static Version14.RobotPlayer.staticRC;
 
 public class SpawnMicro {
@@ -21,11 +23,12 @@ public class SpawnMicro {
                 //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
                 int score = 0;
                 score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
-                score += switch (staticRC.senseMapInfo(tileLoc).getPaint()) {
+                score += switch (potentialTiles[i].getPaint()) {
                     case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
                     case PaintType.EMPTY -> 0;
                     case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
                 };
+                if(!canSeeEnemyPaint && potentialTiles[i].getPaint().isEnemy()) canSeeEnemyPaint = true;
                 if (score > bestScore) {
                     bestScore = score;
                     bestTile = tileLoc;
@@ -39,11 +42,14 @@ public class SpawnMicro {
                 //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
                 int score = 0;
                 score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
-                score += switch (staticRC.senseMapInfo(tileLoc).getPaint()) {
+                score += switch (tile.getPaint()) {
                     case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
                     case PaintType.EMPTY -> 0;
                     case PaintType.ENEMY_PRIMARY, PaintType.ENEMY_SECONDARY -> -1;
                 };
+                if(!canSeeEnemyPaint && tile.getPaint().isEnemy()) {
+                    canSeeEnemyPaint = true;
+                }
                 if (score > bestScore) {
                     bestScore = score;
                     bestTile = tileLoc;

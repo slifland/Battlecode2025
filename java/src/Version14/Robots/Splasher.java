@@ -14,17 +14,12 @@ import battlecode.common.*;
 import static Version14.Misc.Communication.*;
 
 import static Version14.RobotPlayer.*;
+import static Version14.Robots.Soldier.closestCorner;
 
 enum splasherStates {
-    navigate, refill, contest
+    navigate, refill, contest, hunt
 }
 
-
-//TODO: ALTER SPLASHER MCIRO so that ally squares are negative, neutral scores 0,
-// and enemy squares positive so that we won't randomly attack neutral
-// also - call best attack first, and if null, dont go into micro mode
-// if not null, go into micro mode, targeting the best attack location - this way avoid the issue of getting stuck on
-// rogue enemy tiles
 
 public class Splasher {
 
@@ -84,13 +79,119 @@ public class Splasher {
                 case contest:
                     contest();
                     break;
+                case hunt:
+                    hunt();
+                    break;
             }
         }
         if(Clock.getBytecodesLeft() > 7000) {
             splasherUtil.refreshPaintAverages();
         }
-        if(curObjective== null)staticRC.setIndicatorString(state.toString());
-        else staticRC.setIndicatorString(state + " : " + curObjective);
+//        if(curObjective== null)staticRC.setIndicatorString(state.toString());
+//        else staticRC.setIndicatorString(state + " : " + curObjective);
+    }
+
+    //attempts to find enemy ruins, and mess them up
+    public static void hunt() throws GameActionException {
+        staticRC.setIndicatorString("HUNT");
+        System.out.println("hello!");
+        MapLocation bestAttack = splasherUtil.bestAttack(seenEnemyTower != null, 3);
+        //find the enemy!
+        if(bestAttack == null) {
+            if(curObjective != null && staticRC.getLocation().isWithinDistanceSquared(curObjective, 8)) {
+                if (navTarget != null) {
+                    switch (navTarget) {
+                        case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
+                        case navState.ruin -> checkedRuin.setBit(curObjective, true);
+                    }
+                }
+                curObjective = null;
+            }
+            if(!exploredSymmetry && knownSymmetry != Symmetry.Unknown && navTarget != null && navTarget != navState.horizontal && navTarget != navState.rotational && navTarget != navState.vertical) {
+                switch(knownSymmetry) {
+                    case Rotational:
+                        curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                        navTarget = navState.rotational;
+                        break;
+                    case Horizontal:
+                        curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                        navTarget = navState.horizontal;
+                        break;
+                    case Vertical:
+                        curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                        navTarget = navState.vertical;
+                }
+            }
+            if(curObjective == null) {
+                if(knownSymmetry != Symmetry.Unknown && !exploredSymmetry) {
+                    switch(knownSymmetry) {
+                        case Rotational:
+                            curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                            navTarget = navState.rotational;
+                            break;
+                        case Horizontal:
+                            curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                            navTarget = navState.horizontal;
+                            break;
+                        case Vertical:
+                            curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                            navTarget = navState.vertical;
+                    }
+                }
+                if(curObjective == null && !unclaimedRuins.isEmpty()) {
+                    int minDist = Integer.MAX_VALUE;
+                    for (Ruin r : unclaimedRuins) {
+                        if (checkedRuin.getBit(r.location)) continue;
+                        if (r.location.distanceSquaredTo(staticRC.getLocation()) < minDist) {
+                            minDist = r.location.distanceSquaredTo(staticRC.getLocation());
+                            curObjective = r.location;
+                            navTarget = navState.ruin;
+                        }
+                    }
+                }
+                if(curObjective == null) {
+                    double ran = rng.nextDouble();
+                    if(ran <= 0.20) {
+                        MapLocation closestCorner = closestCorner();
+                        curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
+                        staticRC.setIndicatorLine(staticRC.getLocation(), curObjective,0,  255,255);
+                    }
+                    else {
+                        curObjective = new MapLocation(rng.nextInt(staticRC.getMapWidth()), rng.nextInt(staticRC.getMapHeight()));
+                    }
+                    navTarget = navState.random;
+                }
+            }
+            staticRC.setIndicatorString(navTarget + " : " + curObjective);
+            if(staticRC.isMovementReady()) {
+                Direction dir = Pathfinding.bugBFS(curObjective);
+                if(staticRC.canMove(dir)) {
+                    staticRC.move(dir);
+                }
+            }
+        }
+        //attack the enemy!
+        else {
+            if(staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
+            if(staticRC.isMovementReady() && staticRC.isActionReady()) SplasherMicro.integratedSplasherMicro(seenEnemyTower != null, bestAttack);
+            else if(staticRC.isMovementReady()) {
+                if(nearestUnfilledRuin != null && nearestUnfilledRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED)) {
+                    if(splasherUtil.needsClearing()) {
+                        SplasherMicro.runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearestUnfilledRuin), nearestUnfilledRuin);
+                    }
+                    else {
+                        checkedRuin.setBit(nearestUnfilledRuin, true);
+                    }
+                }
+            }
+            if(staticRC.isActionReady()) {
+                if(staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
+                if(Clock.getBytecodesLeft() > 4000) {
+                    bestAttack = splasherUtil.cheapBestAttack(seenEnemyTower != null, 3);
+                    if(bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
+                }
+            }
+        }
     }
 
     //attempts to navigate to a known location - enemy average, usually
@@ -153,6 +254,22 @@ public class Splasher {
                         }
                     }
                 }
+                default ->{
+                    switch(knownSymmetry) {
+                        case Rotational:
+                            curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
+                            navTarget = navState.rotational;
+                            break;
+                        case Horizontal:
+                            curObjective = new MapLocation(home.x, staticRC.getMapHeight() - 1 - home.y);
+                            navTarget = navState.horizontal;
+                            break;
+                        case Vertical:
+                            curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
+                            navTarget = navState.vertical;
+                            break;
+                    }
+                }
             }
             correctSymmetry = true;
         }
@@ -203,7 +320,7 @@ public class Splasher {
         if(curObjective == null) {
             double d = rng.nextDouble();
             if(d <= 0.6) {
-                MapLocation closestCorner = Soldier.closestCorner();
+                MapLocation closestCorner = closestCorner();
                 curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
                 //System.out.println("hello!");
             }
@@ -291,8 +408,8 @@ public class Splasher {
 
     //determines the current state for the splashers
     public static void updateState() throws GameActionException {
+        //state = (staticRC.getRoundNum() > 70 + (adjustedMapSize * 12)) ? splasherStates.navigate : splasherStates.hunt;
         state = splasherStates.navigate;
-
         if((staticRC.getPaint() <= refillThreshold || (state == splasherStates.refill && staticRC.getPaint() <= endRefillThreshold)) && (nearestPaintTower != null || staticRC.getPaint() < 50)) {
             state = splasherStates.refill;
             fillingStation = nearestPaintTower;
@@ -303,7 +420,7 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if((averageEnemyPaint != null && numEnemyTiles > 1) || (seenEnemyTower != null && staticRC.getHealth() > 100)) {
+        if((averageEnemyPaint != null && numEnemyTiles > 2) || (seenEnemyTower != null)) {
             state = splasherStates.contest;
         }
     }

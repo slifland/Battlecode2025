@@ -1,10 +1,12 @@
 package Version14.Utility;
 
 import Version14.RobotPlayer;
+import Version14.Robots.Splasher;
 import battlecode.common.*;
 
 import static Version14.RobotPlayer.*;
 import static Version14.RobotPlayer.map;
+import static Version14.Robots.Soldier.tilesNearRuin;
 import static Version14.Robots.Splasher.nearestUnfilledRuin;
 import static Version14.Robots.Splasher.*;
 
@@ -5570,5 +5572,1367 @@ public class splasherUtil {
         offSetY = (highestIndex % 7) - 1;
         //System.out.println("Cheap Price: " + (price - Clock.getBytecodesLeft()));
         return new MapLocation(staticRC.getLocation().x + offSetX, staticRC.getLocation().y + offSetY);
+    }
+    //checks whether we should still "claim" this ruin
+    //if there is an obstacle stopping us from completing it, then we should abandon t
+    public static boolean needsClearing() throws GameActionException {
+        if(staticRC.canSenseRobotAtLocation(nearestUnfilledRuin)) {
+            return false;
+        }
+        if (staticRC.getLocation().distanceSquaredTo(nearestUnfilledRuin) > 8 && !checkedRuin.getBit(nearestUnfilledRuin)) {
+            return true;
+        }
+        switch (tilesNearRuin.length) {
+            case 1 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 2 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    return true;
+                }
+            }
+            case 3 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 4 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 5 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 6 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 7 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 8 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 9 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 10 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 11 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 12 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 13 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 14 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 15 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 16 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 17 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 18 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 19 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 20 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 21 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[20].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 22 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[20].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[21].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 23 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[20].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[21].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[22].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 24 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[20].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[21].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[22].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[23].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+            case 25 -> {
+                if (tilesNearRuin[0].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[1].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[2].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[3].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[4].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[5].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[6].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[7].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[8].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[9].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[10].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[11].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[12].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[13].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[14].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[15].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[16].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[17].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[18].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[19].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[20].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[21].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[22].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[23].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+                if (tilesNearRuin[24].getPaint().isEnemy()) {
+                    
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
