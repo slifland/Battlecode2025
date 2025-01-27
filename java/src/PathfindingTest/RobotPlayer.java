@@ -98,7 +98,7 @@ public class RobotPlayer {
                             rc.move(dir);
                         }
                         int bytecodesLeft = Clock.getBytecodesLeft();
-                        WallChecker.findOverWallTiles(rc);
+                        WallChecker_FullVision.findOverWallTiles(rc);
                         System.out.println(bytecodesLeft - Clock.getBytecodesLeft());
                     }
                     else if(rc.getType().isRobotType())
