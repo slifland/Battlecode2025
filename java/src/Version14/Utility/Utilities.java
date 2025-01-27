@@ -70,7 +70,7 @@ public class Utilities
          else if(staticRC.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) {
              return staticRC.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
          }
-         else if(staticRC.getMoney() > 10000) {
+         else if(staticRC.getMoney() > 7500) {
              return staticRC.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
          }
          int hash = center.x * 3 + ((center.y + 11)* 13);

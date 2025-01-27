@@ -197,8 +197,8 @@ public class RobotPlayer {
     private static void checkDisintegrate() throws GameActionException {
         MapInfo[] square = staticRC.senseNearbyMapInfos(8);
         boolean hasRebuilder = false;
-        for(int i = 0; i < 9; i++) {
-            if(i == 4) continue;
+        for(int i = 0; i < 25; i++) {
+            if(i == 12) continue;
             if(square[i].getPaint().isEnemy()) return;
             if(staticRC.canSenseRobotAtLocation(square[i].getMapLocation())) {
                 RobotInfo r = staticRC.senseRobotAtLocation(square[i].getMapLocation());
@@ -208,7 +208,7 @@ public class RobotPlayer {
                 }
             }
         }
-        if(hasRebuilder && staticRC.getMoney() > 10000 && staticRC.getPaint() <= 100) {
+        if(hasRebuilder && staticRC.getMoney() > 8500 && staticRC.getPaint() <= 100) {
             staticRC.disintegrate();
         }
     }
