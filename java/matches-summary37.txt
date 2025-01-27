@@ -1,0 +1,29 @@
+|  | Version13 |
+| :---: | :---: |
+| gridworld | Won (2000, 2000) |
+| sayhi | Tied (420, 362) |
+| Money | Won (297, 302) |
+| Mirage | Tied (306, 514) |
+| Justice | Lost (1959, 2000) |
+| gardenworld | Lost (666, 637) |
+| memstore | Won (409, 369) |
+| Thirds | Tied (585, 344) |
+| TargetPractice | Lost (268, 297) |
+| Racetrack | Tied (667, 411) |
+| catface | Tied (299, 309) |
+| giver | Won (353, 344) |
+| quack | Won (659, 656) |
+| galaxy | Lost (337, 1118) |
+| leavemealone | Won (584, 392) |
+| windmill | Tied (473, 359) |
+| Piglets2 | Tied (375, 656) |
+| Flower | Tied (487, 500) |
+| Filter | Tied (2000, 2000) |
+| yearofthesnake | Tied (387, 423) |
+| walalilongla | Tied (394, 303) |
+| starburst | Lost (454, 728) |
+| sierpinski | Tied (453, 525) |
+| sunrise | Won (709, 671) |
+| roads | Lost (573, 1058) |
+| rain | Won (486, 680) |
+
