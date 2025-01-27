@@ -146,8 +146,8 @@ public class Soldier {
         STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
         TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
-        //y = 0.019x + 32.4 -> calibrates it to 40 at min size and 100 at max size
-        FORCE_MONEY_ROUND = (int)(0.019 * mapSize + 32.4);//turn at which any time before that soldiers will always build money towers
+        //y = 0.011x + 35.6 -> calibrates it to 40 at min size and 75 at max size
+        FORCE_MONEY_ROUND = (int)(0.011 * mapSize + 35.6);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
@@ -268,7 +268,7 @@ public class Soldier {
         }
         fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(16) == 0) ? SoldierState.Explore : SoldierState.Navigate;
+        state = (staticRC.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(20 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
 
         if(staticRC.getNumberTowers() < 25 && closestUnclaimedRuin != null && !checkedRuin.getBit(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(staticRC.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
@@ -322,7 +322,7 @@ public class Soldier {
 //            validateRuinClaim();
 //            navigate();
 //        }
-        if((turnCount == 1 && rng.nextInt(5) == 0) || wallHug) {
+        if((turnCount == 1 && rng.nextInt(16-(int)adjustedMapSize) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -357,7 +357,7 @@ public class Soldier {
     //returns a location to explore
     public static void generateExploreLocation() throws GameActionException {
         double ran = rng.nextDouble();
-        if(ran <= 0.25) {
+        if(ran <= 0.20 && staticRC.getRoundNum() > 25) {
             MapLocation closestCorner = closestCorner();
             target = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
             staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
@@ -526,7 +526,8 @@ public class Soldier {
             staticRC.attack(closestEnemyTower);
         }
         if(staticRC.isMovementReady()) {
-            Direction dir = Micro.runMicro((((allyRobots.length - enemyRobots.length > 4) || allyRobots.length > 10) && staticRC.getHealth() > 25) || staticRC.getNumberTowers() >= START_RUSHING_TOWER_NUMBER);
+            boolean isRushing = seenEnemyTower == null || !isDefenseTower(seenEnemyTower);
+            Direction dir = Micro.runMicro(isRushing);
             if(staticRC.canMove(dir)) staticRC.move(dir);
         }
         if(staticRC.canAttack(closestEnemyTower)) {

@@ -2393,35 +2393,2381 @@ public class splasherUtil {
         int[] potentialAttackSquares = new int[81];
         //int index = 0;
         int totalTracker = 0;
-        for(int index = 0; index < 69; index++) {
-            while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80) {
-                totalTracker++;
-            }
-            PaintType paint = nearbyTiles[index].getPaint();
-            if(nearbyTiles[index].hasRuin()) {
-                if(seenEnemyTower != null && nearbyTiles[index].getMapLocation().equals(seenEnemyTower.getLocation())) {
-                    localSquares[totalTracker] += 3;
-                    totalPoints += 3;
-                }
-            }
-            //favor the enemy most, but also like empty squares
-            else if(paint.isAlly()) {
-                if(seenEnemyTower == null || !nearbyTiles[index].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4)) {
-                    localSquares[totalTracker]--;
-                }
-            }
-            else if(paint.isEnemy()){
-                if(nearestUnfilledRuin != null && nearbyTiles[index].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8)) {
-                    localSquares[totalTracker]+= 2;
-                    totalPoints+= 2;
-                }
-                else {
-                    localSquares[totalTracker] += 1;
-                    totalPoints += 1;
-                }
-            }
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
             totalTracker++;
         }
+        PaintType paint = nearbyTiles[0].getPaint();
+        if(nearbyTiles[0].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[0].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[0].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[0].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[1].getPaint();
+        if(nearbyTiles[1].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[1].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[1].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[1].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[2].getPaint();
+        if(nearbyTiles[2].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[2].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[2].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[2].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[3].getPaint();
+        if(nearbyTiles[3].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[3].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[3].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[3].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[4].getPaint();
+        if(nearbyTiles[4].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[4].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[4].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[4].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[5].getPaint();
+        if(nearbyTiles[5].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[5].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[5].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[5].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[6].getPaint();
+        if(nearbyTiles[6].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[6].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[6].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[6].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[7].getPaint();
+        if(nearbyTiles[7].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[7].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[7].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[7].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[8].getPaint();
+        if(nearbyTiles[8].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[8].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[8].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[8].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[9].getPaint();
+        if(nearbyTiles[9].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[9].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[9].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[9].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[10].getPaint();
+        if(nearbyTiles[10].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[10].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[10].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[10].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[11].getPaint();
+        if(nearbyTiles[11].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[11].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[11].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[11].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[12].getPaint();
+        if(nearbyTiles[12].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[12].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[12].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[12].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[13].getPaint();
+        if(nearbyTiles[13].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[13].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[13].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[13].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[14].getPaint();
+        if(nearbyTiles[14].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[14].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[14].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[14].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[15].getPaint();
+        if(nearbyTiles[15].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[15].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[15].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[15].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[16].getPaint();
+        if(nearbyTiles[16].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[16].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[16].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[16].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[17].getPaint();
+        if(nearbyTiles[17].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[17].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[17].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[17].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[18].getPaint();
+        if(nearbyTiles[18].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[18].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[18].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[18].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[19].getPaint();
+        if(nearbyTiles[19].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[19].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[19].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[19].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[20].getPaint();
+        if(nearbyTiles[20].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[20].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[20].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[20].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[21].getPaint();
+        if(nearbyTiles[21].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[21].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[21].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[21].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[22].getPaint();
+        if(nearbyTiles[22].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[22].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[22].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[22].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[23].getPaint();
+        if(nearbyTiles[23].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[23].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[23].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[23].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[24].getPaint();
+        if(nearbyTiles[24].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[24].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[24].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[24].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[25].getPaint();
+        if(nearbyTiles[25].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[25].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[25].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[25].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[26].getPaint();
+        if(nearbyTiles[26].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[26].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[26].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[26].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[27].getPaint();
+        if(nearbyTiles[27].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[27].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[27].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[27].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[28].getPaint();
+        if(nearbyTiles[28].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[28].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[28].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[28].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[29].getPaint();
+        if(nearbyTiles[29].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[29].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[29].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[29].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[30].getPaint();
+        if(nearbyTiles[30].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[30].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[30].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[30].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[31].getPaint();
+        if(nearbyTiles[31].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[31].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[31].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[31].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[32].getPaint();
+        if(nearbyTiles[32].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[32].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[32].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[32].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[33].getPaint();
+        if(nearbyTiles[33].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[33].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[33].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[33].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[34].getPaint();
+        if(nearbyTiles[34].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[34].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[34].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[34].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[35].getPaint();
+        if(nearbyTiles[35].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[35].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[35].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[35].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[36].getPaint();
+        if(nearbyTiles[36].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[36].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[36].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[36].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[37].getPaint();
+        if(nearbyTiles[37].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[37].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[37].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[37].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[38].getPaint();
+        if(nearbyTiles[38].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[38].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[38].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[38].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[39].getPaint();
+        if(nearbyTiles[39].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[39].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[39].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[39].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[40].getPaint();
+        if(nearbyTiles[40].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[40].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[40].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[40].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[41].getPaint();
+        if(nearbyTiles[41].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[41].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[41].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[41].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[42].getPaint();
+        if(nearbyTiles[42].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[42].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[42].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[42].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[43].getPaint();
+        if(nearbyTiles[43].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[43].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[43].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[43].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[44].getPaint();
+        if(nearbyTiles[44].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[44].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[44].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[44].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[45].getPaint();
+        if(nearbyTiles[45].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[45].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[45].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[45].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[46].getPaint();
+        if(nearbyTiles[46].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[46].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[46].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[46].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[47].getPaint();
+        if(nearbyTiles[47].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[47].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[47].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[47].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[48].getPaint();
+        if(nearbyTiles[48].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[48].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[48].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[48].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[49].getPaint();
+        if(nearbyTiles[49].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[49].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[49].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[49].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[50].getPaint();
+        if(nearbyTiles[50].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[50].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[50].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[50].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[51].getPaint();
+        if(nearbyTiles[51].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[51].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[51].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[51].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[52].getPaint();
+        if(nearbyTiles[52].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[52].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[52].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[52].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[53].getPaint();
+        if(nearbyTiles[53].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[53].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[53].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[53].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[54].getPaint();
+        if(nearbyTiles[54].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[54].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[54].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[54].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[55].getPaint();
+        if(nearbyTiles[55].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[55].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[55].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[55].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[56].getPaint();
+        if(nearbyTiles[56].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[56].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[56].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[56].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[57].getPaint();
+        if(nearbyTiles[57].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[57].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[57].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[57].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[58].getPaint();
+        if(nearbyTiles[58].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[58].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[58].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[58].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[59].getPaint();
+        if(nearbyTiles[59].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[59].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[59].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[59].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[60].getPaint();
+        if(nearbyTiles[60].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[60].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[60].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[60].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[61].getPaint();
+        if(nearbyTiles[61].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[61].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[61].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[61].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[62].getPaint();
+        if(nearbyTiles[62].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[62].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[62].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[62].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[63].getPaint();
+        if(nearbyTiles[63].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[63].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[63].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[63].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[64].getPaint();
+        if(nearbyTiles[64].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[64].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[64].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[64].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[65].getPaint();
+        if(nearbyTiles[65].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[65].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[65].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[65].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[66].getPaint();
+        if(nearbyTiles[66].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[66].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[66].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[66].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[67].getPaint();
+        if(nearbyTiles[67].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[67].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[67].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[67].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+        totalTracker++;
+        while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
+        {
+            totalTracker++;
+        }
+        paint = nearbyTiles[68].getPaint();
+        if(nearbyTiles[68].hasRuin())
+        {
+            if(seenEnemyTower != null && nearbyTiles[68].getMapLocation().equals(seenEnemyTower.getLocation()))
+            {
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
+            }
+        }
+        else if(paint.isAlly())
+        {
+            if(seenEnemyTower == null || !nearbyTiles[68].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
+            {
+                localSquares[totalTracker]--;
+            }
+        }
+        else if(paint.isEnemy())
+        {
+            if(nearestUnfilledRuin != null && nearbyTiles[68].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
+            {
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
+            }
+            else
+            {
+                localSquares[totalTracker] += 1;
+                totalPoints += 1;
+            }
+        }
+
+//        for(int index = 0; index < 69; index++) {
+//            while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80) {
+//                totalTracker++;
+//            }
+//            paint = nearbyTiles[index].getPaint();
+//            if(nearbyTiles[index].hasRuin()) {
+//                if(seenEnemyTower != null && nearbyTiles[index].getMapLocation().equals(seenEnemyTower.getLocation())) {
+//                    localSquares[totalTracker] += 3;
+//                    totalPoints += 3;
+//                }
+//            }
+//            //favor the enemy most, but also like empty squares
+//            else if(paint.isAlly()) {
+//                if(seenEnemyTower == null || !nearbyTiles[index].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4)) {
+//                    localSquares[totalTracker]--;
+//                }
+//            }
+//            else if(paint.isEnemy()){
+//                if(nearestUnfilledRuin != null && nearbyTiles[index].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8)) {
+//                    localSquares[totalTracker]+= 2;
+//                    totalPoints+= 2;
+//                }
+//                else {
+//                    localSquares[totalTracker] += 1;
+//                    totalPoints += 1;
+//                }
+//            }
+//            totalTracker++;
+//        }
         // Unrolled loop for all 69 iterations
 
         if(totalPoints < minScore) {return null;}

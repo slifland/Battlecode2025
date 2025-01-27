@@ -54,6 +54,8 @@ public class RobotPlayer {
     public static MapLocation paintAverage2 = new MapLocation(0,0);
     public static int paintCount1;
     public static int paintCount2;
+
+    public static double adjustedMapSize;
     
 
     /*
@@ -92,6 +94,8 @@ public class RobotPlayer {
         mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
         DISPERSION_RADIUS = (int) (0.03875 * (rc.getMapWidth() * rc.getMapHeight()) - 2.5);
+        //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
+        adjustedMapSize = mapSize *  0.003 + 2.8;
 
         Communication.setup();
 
@@ -320,11 +324,9 @@ public class RobotPlayer {
     //calculates the ideal weights for each robot, given the current situation
     public static double[] calculateIdealWeights() {
         //constants specifically for this method
-        int earlyRoundDef = 200;
+        int earlyRoundDef = 100;
         //double mapSizeScalar = 1.0 / 200.0;
         //double adjustedMapSize = mapSize * mapSizeScalar;
-        //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
-        double adjustedMapSize = mapSize *  0.003 + 2.8;
         int earlySoldierBonus = 5 + (int)adjustedMapSize;
         int soldierScore;
         int mopperScore;
