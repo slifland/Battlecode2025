@@ -49,6 +49,8 @@ public class Mopper {
 
     public static boolean needsClearing = false;
 
+    public static MapLocation closestUnseenRuin;
+
     public static boolean exploredSymmetry = false;
 
     //public static boolean[][] checkedRuin;
@@ -60,6 +62,8 @@ public class Mopper {
     public static FastIterableLocSet checkedTower;
 
     public static navState navTarget;
+
+    static int scanCount = 0;
 
 
     //static int uselessTurnsCount = 0;
@@ -102,7 +106,6 @@ public class Mopper {
                 System.out.println("hi");
             }
         }
-//        if(curObjective != null ) staticRC.setIndicatorString(state + " : " + curObjective);
 //        else staticRC.setIndicatorString(state.toString());
         //System.out.println(Clock.getBytecodesLeft());
     }
@@ -173,7 +176,7 @@ public class Mopper {
             correctSymmetry = true;
         }
         //if we know of any unclaimed ruins, lets try to help out there
-        if(curObjective == null && !unclaimedRuins.isEmpty()) {
+        if(curObjective == null && (!unclaimedRuins.isEmpty() || closestUnseenRuin != null)) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
                 //if(checkedRuin[r.location.x][r.location.y]) continue;
@@ -184,6 +187,11 @@ public class Mopper {
                     curObjective = r.location;
                     navTarget = navState.ruin;
                 }
+            }
+            if(closestUnseenRuin != null && staticRC.getLocation().distanceSquaredTo(closestUnseenRuin) < minDist) {
+                staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 255, 0 , 0);
+                curObjective = closestUnseenRuin;
+                navTarget = navState.ruin;
             }
         }
         if(curObjective == null && !enemyTowers.isEmpty()) {
@@ -382,6 +390,8 @@ public class Mopper {
             enemyDefenseTowers.add(seenEnemyTower.getLocation());
         }
 
+        closestUnseenRuin = Symmetry.closestUnseenRuin();
+
 //        for(MapInfo tile : nearbyTiles) {
 //            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
 //            if(knownSymmetry == RobotPlayer.SymmetryType.Unknown) {
@@ -397,7 +407,9 @@ public class Mopper {
 //                count++;
 //            }
 //        }
+        int price = Clock.getBytecodesLeft();
         MopperUtil.scanNearbyTiles();
+        System.out.println(price - Clock.getBytecodesLeft());
     }
 
 

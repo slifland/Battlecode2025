@@ -38,399 +38,399 @@ public class splasherUtil {
         {
             case 57->
             {
-                Symmetry.processTile(nearbyTiles[0]);
+                //Symmetry.processTile(nearbyTiles[0]);
                 if(nearbyTiles[0].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[0].getMapLocation()))
                 {
                     x += nearbyTiles[0].getMapLocation().x;
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[1]);
+                //Symmetry.processTile(nearbyTiles[1]);
                 if(nearbyTiles[1].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[1].getMapLocation()))
                 {
                     x += nearbyTiles[1].getMapLocation().x;
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[2]);
+                //Symmetry.processTile(nearbyTiles[2]);
                 if(nearbyTiles[2].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[2].getMapLocation()))
                 {
                     x += nearbyTiles[2].getMapLocation().x;
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[3]);
+                //Symmetry.processTile(nearbyTiles[3]);
                 if(nearbyTiles[3].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[3].getMapLocation()))
                 {
                     x += nearbyTiles[3].getMapLocation().x;
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[4]);
+                //Symmetry.processTile(nearbyTiles[4]);
                 if(nearbyTiles[4].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[4].getMapLocation()))
                 {
                     x += nearbyTiles[4].getMapLocation().x;
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[5]);
+                //Symmetry.processTile(nearbyTiles[5]);
                 if(nearbyTiles[5].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[5].getMapLocation()))
                 {
                     x += nearbyTiles[5].getMapLocation().x;
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[6]);
+                //Symmetry.processTile(nearbyTiles[6]);
                 if(nearbyTiles[6].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[6].getMapLocation()))
                 {
                     x += nearbyTiles[6].getMapLocation().x;
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[7]);
+                //Symmetry.processTile(nearbyTiles[7]);
                 if(nearbyTiles[7].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[7].getMapLocation()))
                 {
                     x += nearbyTiles[7].getMapLocation().x;
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[8]);
+                //Symmetry.processTile(nearbyTiles[8]);
                 if(nearbyTiles[8].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[8].getMapLocation()))
                 {
                     x += nearbyTiles[8].getMapLocation().x;
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[9]);
+                //Symmetry.processTile(nearbyTiles[9]);
                 if(nearbyTiles[9].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[9].getMapLocation()))
                 {
                     x += nearbyTiles[9].getMapLocation().x;
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[10]);
+                //Symmetry.processTile(nearbyTiles[10]);
                 if(nearbyTiles[10].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[10].getMapLocation()))
                 {
                     x += nearbyTiles[10].getMapLocation().x;
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[11]);
+                //Symmetry.processTile(nearbyTiles[11]);
                 if(nearbyTiles[11].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[11].getMapLocation()))
                 {
                     x += nearbyTiles[11].getMapLocation().x;
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[12]);
+                //Symmetry.processTile(nearbyTiles[12]);
                 if(nearbyTiles[12].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[12].getMapLocation()))
                 {
                     x += nearbyTiles[12].getMapLocation().x;
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[13]);
+                //Symmetry.processTile(nearbyTiles[13]);
                 if(nearbyTiles[13].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[13].getMapLocation()))
                 {
                     x += nearbyTiles[13].getMapLocation().x;
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[14]);
+                //Symmetry.processTile(nearbyTiles[14]);
                 if(nearbyTiles[14].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[14].getMapLocation()))
                 {
                     x += nearbyTiles[14].getMapLocation().x;
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[15]);
+                //Symmetry.processTile(nearbyTiles[15]);
                 if(nearbyTiles[15].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[15].getMapLocation()))
                 {
                     x += nearbyTiles[15].getMapLocation().x;
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[16]);
+                //Symmetry.processTile(nearbyTiles[16]);
                 if(nearbyTiles[16].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[16].getMapLocation()))
                 {
                     x += nearbyTiles[16].getMapLocation().x;
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[17]);
+                //Symmetry.processTile(nearbyTiles[17]);
                 if(nearbyTiles[17].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[17].getMapLocation()))
                 {
                     x += nearbyTiles[17].getMapLocation().x;
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[18]);
+                //Symmetry.processTile(nearbyTiles[18]);
                 if(nearbyTiles[18].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[18].getMapLocation()))
                 {
                     x += nearbyTiles[18].getMapLocation().x;
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[19]);
+                //Symmetry.processTile(nearbyTiles[19]);
                 if(nearbyTiles[19].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[19].getMapLocation()))
                 {
                     x += nearbyTiles[19].getMapLocation().x;
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[20]);
+                //Symmetry.processTile(nearbyTiles[20]);
                 if(nearbyTiles[20].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[20].getMapLocation()))
                 {
                     x += nearbyTiles[20].getMapLocation().x;
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[21]);
+                //Symmetry.processTile(nearbyTiles[21]);
                 if(nearbyTiles[21].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[21].getMapLocation()))
                 {
                     x += nearbyTiles[21].getMapLocation().x;
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[22]);
+                //Symmetry.processTile(nearbyTiles[22]);
                 if(nearbyTiles[22].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[22].getMapLocation()))
                 {
                     x += nearbyTiles[22].getMapLocation().x;
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[23]);
+                //Symmetry.processTile(nearbyTiles[23]);
                 if(nearbyTiles[23].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[23].getMapLocation()))
                 {
                     x += nearbyTiles[23].getMapLocation().x;
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[24]);
+                //Symmetry.processTile(nearbyTiles[24]);
                 if(nearbyTiles[24].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[24].getMapLocation()))
                 {
                     x += nearbyTiles[24].getMapLocation().x;
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[25]);
+                //Symmetry.processTile(nearbyTiles[25]);
                 if(nearbyTiles[25].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[25].getMapLocation()))
                 {
                     x += nearbyTiles[25].getMapLocation().x;
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[26]);
+                //Symmetry.processTile(nearbyTiles[26]);
                 if(nearbyTiles[26].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[26].getMapLocation()))
                 {
                     x += nearbyTiles[26].getMapLocation().x;
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[27]);
+                //Symmetry.processTile(nearbyTiles[27]);
                 if(nearbyTiles[27].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[27].getMapLocation()))
                 {
                     x += nearbyTiles[27].getMapLocation().x;
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[28]);
+                //Symmetry.processTile(nearbyTiles[28]);
                 if(nearbyTiles[28].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[28].getMapLocation()))
                 {
                     x += nearbyTiles[28].getMapLocation().x;
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[29]);
+                //Symmetry.processTile(nearbyTiles[29]);
                 if(nearbyTiles[29].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[29].getMapLocation()))
                 {
                     x += nearbyTiles[29].getMapLocation().x;
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[30]);
+                //Symmetry.processTile(nearbyTiles[30]);
                 if(nearbyTiles[30].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[30].getMapLocation()))
                 {
                     x += nearbyTiles[30].getMapLocation().x;
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[31]);
+                //Symmetry.processTile(nearbyTiles[31]);
                 if(nearbyTiles[31].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[31].getMapLocation()))
                 {
                     x += nearbyTiles[31].getMapLocation().x;
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[32]);
+                //Symmetry.processTile(nearbyTiles[32]);
                 if(nearbyTiles[32].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[32].getMapLocation()))
                 {
                     x += nearbyTiles[32].getMapLocation().x;
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[33]);
+                //Symmetry.processTile(nearbyTiles[33]);
                 if(nearbyTiles[33].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[33].getMapLocation()))
                 {
                     x += nearbyTiles[33].getMapLocation().x;
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[34]);
+                //Symmetry.processTile(nearbyTiles[34]);
                 if(nearbyTiles[34].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[34].getMapLocation()))
                 {
                     x += nearbyTiles[34].getMapLocation().x;
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[35]);
+                //Symmetry.processTile(nearbyTiles[35]);
                 if(nearbyTiles[35].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[35].getMapLocation()))
                 {
                     x += nearbyTiles[35].getMapLocation().x;
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[36]);
+                //Symmetry.processTile(nearbyTiles[36]);
                 if(nearbyTiles[36].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[36].getMapLocation()))
                 {
                     x += nearbyTiles[36].getMapLocation().x;
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[37]);
+                //Symmetry.processTile(nearbyTiles[37]);
                 if(nearbyTiles[37].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[37].getMapLocation()))
                 {
                     x += nearbyTiles[37].getMapLocation().x;
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[38]);
+                //Symmetry.processTile(nearbyTiles[38]);
                 if(nearbyTiles[38].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[38].getMapLocation()))
                 {
                     x += nearbyTiles[38].getMapLocation().x;
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[39]);
+                //Symmetry.processTile(nearbyTiles[39]);
                 if(nearbyTiles[39].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[39].getMapLocation()))
                 {
                     x += nearbyTiles[39].getMapLocation().x;
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[40]);
+                //Symmetry.processTile(nearbyTiles[40]);
                 if(nearbyTiles[40].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[40].getMapLocation()))
                 {
                     x += nearbyTiles[40].getMapLocation().x;
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[41]);
+                //Symmetry.processTile(nearbyTiles[41]);
                 if(nearbyTiles[41].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[41].getMapLocation()))
                 {
                     x += nearbyTiles[41].getMapLocation().x;
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[42]);
+                //Symmetry.processTile(nearbyTiles[42]);
                 if(nearbyTiles[42].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[42].getMapLocation()))
                 {
                     x += nearbyTiles[42].getMapLocation().x;
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[43]);
+                //Symmetry.processTile(nearbyTiles[43]);
                 if(nearbyTiles[43].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[43].getMapLocation()))
                 {
                     x += nearbyTiles[43].getMapLocation().x;
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[44]);
+                //Symmetry.processTile(nearbyTiles[44]);
                 if(nearbyTiles[44].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[44].getMapLocation()))
                 {
                     x += nearbyTiles[44].getMapLocation().x;
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[45]);
+                //Symmetry.processTile(nearbyTiles[45]);
                 if(nearbyTiles[45].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[45].getMapLocation()))
                 {
                     x += nearbyTiles[45].getMapLocation().x;
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[46]);
+                //Symmetry.processTile(nearbyTiles[46]);
                 if(nearbyTiles[46].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[46].getMapLocation()))
                 {
                     x += nearbyTiles[46].getMapLocation().x;
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[47]);
+                //Symmetry.processTile(nearbyTiles[47]);
                 if(nearbyTiles[47].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[47].getMapLocation()))
                 {
                     x += nearbyTiles[47].getMapLocation().x;
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[48]);
+                //Symmetry.processTile(nearbyTiles[48]);
                 if(nearbyTiles[48].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[48].getMapLocation()))
                 {
                     x += nearbyTiles[48].getMapLocation().x;
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[49]);
+                //Symmetry.processTile(nearbyTiles[49]);
                 if(nearbyTiles[49].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[49].getMapLocation()))
                 {
                     x += nearbyTiles[49].getMapLocation().x;
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[50]);
+                //Symmetry.processTile(nearbyTiles[50]);
                 if(nearbyTiles[50].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[50].getMapLocation()))
                 {
                     x += nearbyTiles[50].getMapLocation().x;
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[51]);
+                //Symmetry.processTile(nearbyTiles[51]);
                 if(nearbyTiles[51].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[51].getMapLocation()))
                 {
                     x += nearbyTiles[51].getMapLocation().x;
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[52]);
+                //Symmetry.processTile(nearbyTiles[52]);
                 if(nearbyTiles[52].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[52].getMapLocation()))
                 {
                     x += nearbyTiles[52].getMapLocation().x;
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[53]);
+                //Symmetry.processTile(nearbyTiles[53]);
                 if(nearbyTiles[53].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[53].getMapLocation()))
                 {
                     x += nearbyTiles[53].getMapLocation().x;
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[54]);
+                //Symmetry.processTile(nearbyTiles[54]);
                 if(nearbyTiles[54].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[54].getMapLocation()))
                 {
                     x += nearbyTiles[54].getMapLocation().x;
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[55]);
+                //Symmetry.processTile(nearbyTiles[55]);
                 if(nearbyTiles[55].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[55].getMapLocation()))
                 {
                     x += nearbyTiles[55].getMapLocation().x;
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[56]);
+                //Symmetry.processTile(nearbyTiles[56]);
                 if(nearbyTiles[56].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[56].getMapLocation()))
                 {
                     x += nearbyTiles[56].getMapLocation().x;
@@ -440,448 +440,448 @@ public class splasherUtil {
             }
             case 64->
             {
-                Symmetry.processTile(nearbyTiles[0]);
+                //Symmetry.processTile(nearbyTiles[0]);
                 if(nearbyTiles[0].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[0].getMapLocation()))
                 {
                     x += nearbyTiles[0].getMapLocation().x;
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[1]);
+                //Symmetry.processTile(nearbyTiles[1]);
                 if(nearbyTiles[1].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[1].getMapLocation()))
                 {
                     x += nearbyTiles[1].getMapLocation().x;
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[2]);
+                //Symmetry.processTile(nearbyTiles[2]);
                 if(nearbyTiles[2].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[2].getMapLocation()))
                 {
                     x += nearbyTiles[2].getMapLocation().x;
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[3]);
+                //Symmetry.processTile(nearbyTiles[3]);
                 if(nearbyTiles[3].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[3].getMapLocation()))
                 {
                     x += nearbyTiles[3].getMapLocation().x;
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[4]);
+                //Symmetry.processTile(nearbyTiles[4]);
                 if(nearbyTiles[4].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[4].getMapLocation()))
                 {
                     x += nearbyTiles[4].getMapLocation().x;
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[5]);
+                //Symmetry.processTile(nearbyTiles[5]);
                 if(nearbyTiles[5].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[5].getMapLocation()))
                 {
                     x += nearbyTiles[5].getMapLocation().x;
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[6]);
+                //Symmetry.processTile(nearbyTiles[6]);
                 if(nearbyTiles[6].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[6].getMapLocation()))
                 {
                     x += nearbyTiles[6].getMapLocation().x;
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[7]);
+                //Symmetry.processTile(nearbyTiles[7]);
                 if(nearbyTiles[7].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[7].getMapLocation()))
                 {
                     x += nearbyTiles[7].getMapLocation().x;
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[8]);
+                //Symmetry.processTile(nearbyTiles[8]);
                 if(nearbyTiles[8].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[8].getMapLocation()))
                 {
                     x += nearbyTiles[8].getMapLocation().x;
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[9]);
+                //Symmetry.processTile(nearbyTiles[9]);
                 if(nearbyTiles[9].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[9].getMapLocation()))
                 {
                     x += nearbyTiles[9].getMapLocation().x;
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[10]);
+                //Symmetry.processTile(nearbyTiles[10]);
                 if(nearbyTiles[10].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[10].getMapLocation()))
                 {
                     x += nearbyTiles[10].getMapLocation().x;
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[11]);
+                //Symmetry.processTile(nearbyTiles[11]);
                 if(nearbyTiles[11].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[11].getMapLocation()))
                 {
                     x += nearbyTiles[11].getMapLocation().x;
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[12]);
+                //Symmetry.processTile(nearbyTiles[12]);
                 if(nearbyTiles[12].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[12].getMapLocation()))
                 {
                     x += nearbyTiles[12].getMapLocation().x;
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[13]);
+                //Symmetry.processTile(nearbyTiles[13]);
                 if(nearbyTiles[13].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[13].getMapLocation()))
                 {
                     x += nearbyTiles[13].getMapLocation().x;
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[14]);
+                //Symmetry.processTile(nearbyTiles[14]);
                 if(nearbyTiles[14].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[14].getMapLocation()))
                 {
                     x += nearbyTiles[14].getMapLocation().x;
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[15]);
+                //Symmetry.processTile(nearbyTiles[15]);
                 if(nearbyTiles[15].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[15].getMapLocation()))
                 {
                     x += nearbyTiles[15].getMapLocation().x;
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[16]);
+                //Symmetry.processTile(nearbyTiles[16]);
                 if(nearbyTiles[16].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[16].getMapLocation()))
                 {
                     x += nearbyTiles[16].getMapLocation().x;
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[17]);
+                //Symmetry.processTile(nearbyTiles[17]);
                 if(nearbyTiles[17].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[17].getMapLocation()))
                 {
                     x += nearbyTiles[17].getMapLocation().x;
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[18]);
+                //Symmetry.processTile(nearbyTiles[18]);
                 if(nearbyTiles[18].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[18].getMapLocation()))
                 {
                     x += nearbyTiles[18].getMapLocation().x;
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[19]);
+                //Symmetry.processTile(nearbyTiles[19]);
                 if(nearbyTiles[19].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[19].getMapLocation()))
                 {
                     x += nearbyTiles[19].getMapLocation().x;
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[20]);
+                //Symmetry.processTile(nearbyTiles[20]);
                 if(nearbyTiles[20].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[20].getMapLocation()))
                 {
                     x += nearbyTiles[20].getMapLocation().x;
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[21]);
+                //Symmetry.processTile(nearbyTiles[21]);
                 if(nearbyTiles[21].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[21].getMapLocation()))
                 {
                     x += nearbyTiles[21].getMapLocation().x;
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[22]);
+                //Symmetry.processTile(nearbyTiles[22]);
                 if(nearbyTiles[22].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[22].getMapLocation()))
                 {
                     x += nearbyTiles[22].getMapLocation().x;
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[23]);
+                //Symmetry.processTile(nearbyTiles[23]);
                 if(nearbyTiles[23].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[23].getMapLocation()))
                 {
                     x += nearbyTiles[23].getMapLocation().x;
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[24]);
+                //Symmetry.processTile(nearbyTiles[24]);
                 if(nearbyTiles[24].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[24].getMapLocation()))
                 {
                     x += nearbyTiles[24].getMapLocation().x;
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[25]);
+                //Symmetry.processTile(nearbyTiles[25]);
                 if(nearbyTiles[25].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[25].getMapLocation()))
                 {
                     x += nearbyTiles[25].getMapLocation().x;
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[26]);
+                //Symmetry.processTile(nearbyTiles[26]);
                 if(nearbyTiles[26].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[26].getMapLocation()))
                 {
                     x += nearbyTiles[26].getMapLocation().x;
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[27]);
+                //Symmetry.processTile(nearbyTiles[27]);
                 if(nearbyTiles[27].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[27].getMapLocation()))
                 {
                     x += nearbyTiles[27].getMapLocation().x;
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[28]);
+                //Symmetry.processTile(nearbyTiles[28]);
                 if(nearbyTiles[28].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[28].getMapLocation()))
                 {
                     x += nearbyTiles[28].getMapLocation().x;
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[29]);
+                //Symmetry.processTile(nearbyTiles[29]);
                 if(nearbyTiles[29].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[29].getMapLocation()))
                 {
                     x += nearbyTiles[29].getMapLocation().x;
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[30]);
+                //Symmetry.processTile(nearbyTiles[30]);
                 if(nearbyTiles[30].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[30].getMapLocation()))
                 {
                     x += nearbyTiles[30].getMapLocation().x;
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[31]);
+                //Symmetry.processTile(nearbyTiles[31]);
                 if(nearbyTiles[31].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[31].getMapLocation()))
                 {
                     x += nearbyTiles[31].getMapLocation().x;
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[32]);
+                //Symmetry.processTile(nearbyTiles[32]);
                 if(nearbyTiles[32].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[32].getMapLocation()))
                 {
                     x += nearbyTiles[32].getMapLocation().x;
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[33]);
+                //Symmetry.processTile(nearbyTiles[33]);
                 if(nearbyTiles[33].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[33].getMapLocation()))
                 {
                     x += nearbyTiles[33].getMapLocation().x;
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[34]);
+                //Symmetry.processTile(nearbyTiles[34]);
                 if(nearbyTiles[34].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[34].getMapLocation()))
                 {
                     x += nearbyTiles[34].getMapLocation().x;
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[35]);
+                //Symmetry.processTile(nearbyTiles[35]);
                 if(nearbyTiles[35].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[35].getMapLocation()))
                 {
                     x += nearbyTiles[35].getMapLocation().x;
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[36]);
+                //Symmetry.processTile(nearbyTiles[36]);
                 if(nearbyTiles[36].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[36].getMapLocation()))
                 {
                     x += nearbyTiles[36].getMapLocation().x;
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[37]);
+                //Symmetry.processTile(nearbyTiles[37]);
                 if(nearbyTiles[37].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[37].getMapLocation()))
                 {
                     x += nearbyTiles[37].getMapLocation().x;
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[38]);
+                //Symmetry.processTile(nearbyTiles[38]);
                 if(nearbyTiles[38].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[38].getMapLocation()))
                 {
                     x += nearbyTiles[38].getMapLocation().x;
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[39]);
+                //Symmetry.processTile(nearbyTiles[39]);
                 if(nearbyTiles[39].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[39].getMapLocation()))
                 {
                     x += nearbyTiles[39].getMapLocation().x;
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[40]);
+                //Symmetry.processTile(nearbyTiles[40]);
                 if(nearbyTiles[40].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[40].getMapLocation()))
                 {
                     x += nearbyTiles[40].getMapLocation().x;
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[41]);
+                //Symmetry.processTile(nearbyTiles[41]);
                 if(nearbyTiles[41].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[41].getMapLocation()))
                 {
                     x += nearbyTiles[41].getMapLocation().x;
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[42]);
+                //Symmetry.processTile(nearbyTiles[42]);
                 if(nearbyTiles[42].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[42].getMapLocation()))
                 {
                     x += nearbyTiles[42].getMapLocation().x;
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[43]);
+                //Symmetry.processTile(nearbyTiles[43]);
                 if(nearbyTiles[43].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[43].getMapLocation()))
                 {
                     x += nearbyTiles[43].getMapLocation().x;
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[44]);
+                //Symmetry.processTile(nearbyTiles[44]);
                 if(nearbyTiles[44].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[44].getMapLocation()))
                 {
                     x += nearbyTiles[44].getMapLocation().x;
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[45]);
+                //Symmetry.processTile(nearbyTiles[45]);
                 if(nearbyTiles[45].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[45].getMapLocation()))
                 {
                     x += nearbyTiles[45].getMapLocation().x;
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[46]);
+                //Symmetry.processTile(nearbyTiles[46]);
                 if(nearbyTiles[46].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[46].getMapLocation()))
                 {
                     x += nearbyTiles[46].getMapLocation().x;
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[47]);
+                //Symmetry.processTile(nearbyTiles[47]);
                 if(nearbyTiles[47].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[47].getMapLocation()))
                 {
                     x += nearbyTiles[47].getMapLocation().x;
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[48]);
+                //Symmetry.processTile(nearbyTiles[48]);
                 if(nearbyTiles[48].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[48].getMapLocation()))
                 {
                     x += nearbyTiles[48].getMapLocation().x;
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[49]);
+                //Symmetry.processTile(nearbyTiles[49]);
                 if(nearbyTiles[49].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[49].getMapLocation()))
                 {
                     x += nearbyTiles[49].getMapLocation().x;
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[50]);
+                //Symmetry.processTile(nearbyTiles[50]);
                 if(nearbyTiles[50].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[50].getMapLocation()))
                 {
                     x += nearbyTiles[50].getMapLocation().x;
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[51]);
+                //Symmetry.processTile(nearbyTiles[51]);
                 if(nearbyTiles[51].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[51].getMapLocation()))
                 {
                     x += nearbyTiles[51].getMapLocation().x;
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[52]);
+                //Symmetry.processTile(nearbyTiles[52]);
                 if(nearbyTiles[52].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[52].getMapLocation()))
                 {
                     x += nearbyTiles[52].getMapLocation().x;
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[53]);
+                //Symmetry.processTile(nearbyTiles[53]);
                 if(nearbyTiles[53].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[53].getMapLocation()))
                 {
                     x += nearbyTiles[53].getMapLocation().x;
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[54]);
+                //Symmetry.processTile(nearbyTiles[54]);
                 if(nearbyTiles[54].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[54].getMapLocation()))
                 {
                     x += nearbyTiles[54].getMapLocation().x;
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[55]);
+                //Symmetry.processTile(nearbyTiles[55]);
                 if(nearbyTiles[55].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[55].getMapLocation()))
                 {
                     x += nearbyTiles[55].getMapLocation().x;
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[56]);
+                //Symmetry.processTile(nearbyTiles[56]);
                 if(nearbyTiles[56].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[56].getMapLocation()))
                 {
                     x += nearbyTiles[56].getMapLocation().x;
                     y += nearbyTiles[56].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[57]);
+                //Symmetry.processTile(nearbyTiles[57]);
                 if(nearbyTiles[57].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[57].getMapLocation()))
                 {
                     x += nearbyTiles[57].getMapLocation().x;
                     y += nearbyTiles[57].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[58]);
+                //Symmetry.processTile(nearbyTiles[58]);
                 if(nearbyTiles[58].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[58].getMapLocation()))
                 {
                     x += nearbyTiles[58].getMapLocation().x;
                     y += nearbyTiles[58].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[59]);
+                //Symmetry.processTile(nearbyTiles[59]);
                 if(nearbyTiles[59].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[59].getMapLocation()))
                 {
                     x += nearbyTiles[59].getMapLocation().x;
                     y += nearbyTiles[59].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[60]);
+                //Symmetry.processTile(nearbyTiles[60]);
                 if(nearbyTiles[60].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[60].getMapLocation()))
                 {
                     x += nearbyTiles[60].getMapLocation().x;
                     y += nearbyTiles[60].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[61]);
+                //Symmetry.processTile(nearbyTiles[61]);
                 if(nearbyTiles[61].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[61].getMapLocation()))
                 {
                     x += nearbyTiles[61].getMapLocation().x;
                     y += nearbyTiles[61].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[62]);
+                //Symmetry.processTile(nearbyTiles[62]);
                 if(nearbyTiles[62].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[62].getMapLocation()))
                 {
                     x += nearbyTiles[62].getMapLocation().x;
                     y += nearbyTiles[62].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[63]);
+                //Symmetry.processTile(nearbyTiles[63]);
                 if(nearbyTiles[63].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[63].getMapLocation()))
                 {
                     x += nearbyTiles[63].getMapLocation().x;
@@ -891,483 +891,483 @@ public class splasherUtil {
             }
             case 69->
             {
-                Symmetry.processTile(nearbyTiles[0]);
+                //Symmetry.processTile(nearbyTiles[0]);
                 if(nearbyTiles[0].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[0].getMapLocation()))
                 {
                     x += nearbyTiles[0].getMapLocation().x;
                     y += nearbyTiles[0].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[1]);
+                //Symmetry.processTile(nearbyTiles[1]);
                 if(nearbyTiles[1].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[1].getMapLocation()))
                 {
                     x += nearbyTiles[1].getMapLocation().x;
                     y += nearbyTiles[1].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[2]);
+                //Symmetry.processTile(nearbyTiles[2]);
                 if(nearbyTiles[2].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[2].getMapLocation()))
                 {
                     x += nearbyTiles[2].getMapLocation().x;
                     y += nearbyTiles[2].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[3]);
+                //Symmetry.processTile(nearbyTiles[3]);
                 if(nearbyTiles[3].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[3].getMapLocation()))
                 {
                     x += nearbyTiles[3].getMapLocation().x;
                     y += nearbyTiles[3].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[4]);
+                //Symmetry.processTile(nearbyTiles[4]);
                 if(nearbyTiles[4].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[4].getMapLocation()))
                 {
                     x += nearbyTiles[4].getMapLocation().x;
                     y += nearbyTiles[4].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[5]);
+                //Symmetry.processTile(nearbyTiles[5]);
                 if(nearbyTiles[5].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[5].getMapLocation()))
                 {
                     x += nearbyTiles[5].getMapLocation().x;
                     y += nearbyTiles[5].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[6]);
+                //Symmetry.processTile(nearbyTiles[6]);
                 if(nearbyTiles[6].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[6].getMapLocation()))
                 {
                     x += nearbyTiles[6].getMapLocation().x;
                     y += nearbyTiles[6].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[7]);
+                //Symmetry.processTile(nearbyTiles[7]);
                 if(nearbyTiles[7].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[7].getMapLocation()))
                 {
                     x += nearbyTiles[7].getMapLocation().x;
                     y += nearbyTiles[7].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[8]);
+                //Symmetry.processTile(nearbyTiles[8]);
                 if(nearbyTiles[8].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[8].getMapLocation()))
                 {
                     x += nearbyTiles[8].getMapLocation().x;
                     y += nearbyTiles[8].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[9]);
+                //Symmetry.processTile(nearbyTiles[9]);
                 if(nearbyTiles[9].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[9].getMapLocation()))
                 {
                     x += nearbyTiles[9].getMapLocation().x;
                     y += nearbyTiles[9].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[10]);
+                //Symmetry.processTile(nearbyTiles[10]);
                 if(nearbyTiles[10].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[10].getMapLocation()))
                 {
                     x += nearbyTiles[10].getMapLocation().x;
                     y += nearbyTiles[10].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[11]);
+                //Symmetry.processTile(nearbyTiles[11]);
                 if(nearbyTiles[11].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[11].getMapLocation()))
                 {
                     x += nearbyTiles[11].getMapLocation().x;
                     y += nearbyTiles[11].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[12]);
+                //Symmetry.processTile(nearbyTiles[12]);
                 if(nearbyTiles[12].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[12].getMapLocation()))
                 {
                     x += nearbyTiles[12].getMapLocation().x;
                     y += nearbyTiles[12].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[13]);
+                //Symmetry.processTile(nearbyTiles[13]);
                 if(nearbyTiles[13].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[13].getMapLocation()))
                 {
                     x += nearbyTiles[13].getMapLocation().x;
                     y += nearbyTiles[13].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[14]);
+                //Symmetry.processTile(nearbyTiles[14]);
                 if(nearbyTiles[14].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[14].getMapLocation()))
                 {
                     x += nearbyTiles[14].getMapLocation().x;
                     y += nearbyTiles[14].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[15]);
+                //Symmetry.processTile(nearbyTiles[15]);
                 if(nearbyTiles[15].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[15].getMapLocation()))
                 {
                     x += nearbyTiles[15].getMapLocation().x;
                     y += nearbyTiles[15].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[16]);
+                //Symmetry.processTile(nearbyTiles[16]);
                 if(nearbyTiles[16].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[16].getMapLocation()))
                 {
                     x += nearbyTiles[16].getMapLocation().x;
                     y += nearbyTiles[16].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[17]);
+                //Symmetry.processTile(nearbyTiles[17]);
                 if(nearbyTiles[17].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[17].getMapLocation()))
                 {
                     x += nearbyTiles[17].getMapLocation().x;
                     y += nearbyTiles[17].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[18]);
+                //Symmetry.processTile(nearbyTiles[18]);
                 if(nearbyTiles[18].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[18].getMapLocation()))
                 {
                     x += nearbyTiles[18].getMapLocation().x;
                     y += nearbyTiles[18].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[19]);
+                //Symmetry.processTile(nearbyTiles[19]);
                 if(nearbyTiles[19].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[19].getMapLocation()))
                 {
                     x += nearbyTiles[19].getMapLocation().x;
                     y += nearbyTiles[19].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[20]);
+                //Symmetry.processTile(nearbyTiles[20]);
                 if(nearbyTiles[20].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[20].getMapLocation()))
                 {
                     x += nearbyTiles[20].getMapLocation().x;
                     y += nearbyTiles[20].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[21]);
+                //Symmetry.processTile(nearbyTiles[21]);
                 if(nearbyTiles[21].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[21].getMapLocation()))
                 {
                     x += nearbyTiles[21].getMapLocation().x;
                     y += nearbyTiles[21].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[22]);
+                //Symmetry.processTile(nearbyTiles[22]);
                 if(nearbyTiles[22].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[22].getMapLocation()))
                 {
                     x += nearbyTiles[22].getMapLocation().x;
                     y += nearbyTiles[22].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[23]);
+                //Symmetry.processTile(nearbyTiles[23]);
                 if(nearbyTiles[23].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[23].getMapLocation()))
                 {
                     x += nearbyTiles[23].getMapLocation().x;
                     y += nearbyTiles[23].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[24]);
+                //Symmetry.processTile(nearbyTiles[24]);
                 if(nearbyTiles[24].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[24].getMapLocation()))
                 {
                     x += nearbyTiles[24].getMapLocation().x;
                     y += nearbyTiles[24].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[25]);
+                //Symmetry.processTile(nearbyTiles[25]);
                 if(nearbyTiles[25].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[25].getMapLocation()))
                 {
                     x += nearbyTiles[25].getMapLocation().x;
                     y += nearbyTiles[25].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[26]);
+                //Symmetry.processTile(nearbyTiles[26]);
                 if(nearbyTiles[26].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[26].getMapLocation()))
                 {
                     x += nearbyTiles[26].getMapLocation().x;
                     y += nearbyTiles[26].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[27]);
+                //Symmetry.processTile(nearbyTiles[27]);
                 if(nearbyTiles[27].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[27].getMapLocation()))
                 {
                     x += nearbyTiles[27].getMapLocation().x;
                     y += nearbyTiles[27].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[28]);
+                //Symmetry.processTile(nearbyTiles[28]);
                 if(nearbyTiles[28].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[28].getMapLocation()))
                 {
                     x += nearbyTiles[28].getMapLocation().x;
                     y += nearbyTiles[28].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[29]);
+                //Symmetry.processTile(nearbyTiles[29]);
                 if(nearbyTiles[29].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[29].getMapLocation()))
                 {
                     x += nearbyTiles[29].getMapLocation().x;
                     y += nearbyTiles[29].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[30]);
+                //Symmetry.processTile(nearbyTiles[30]);
                 if(nearbyTiles[30].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[30].getMapLocation()))
                 {
                     x += nearbyTiles[30].getMapLocation().x;
                     y += nearbyTiles[30].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[31]);
+                //Symmetry.processTile(nearbyTiles[31]);
                 if(nearbyTiles[31].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[31].getMapLocation()))
                 {
                     x += nearbyTiles[31].getMapLocation().x;
                     y += nearbyTiles[31].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[32]);
+                //Symmetry.processTile(nearbyTiles[32]);
                 if(nearbyTiles[32].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[32].getMapLocation()))
                 {
                     x += nearbyTiles[32].getMapLocation().x;
                     y += nearbyTiles[32].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[33]);
+                //Symmetry.processTile(nearbyTiles[33]);
                 if(nearbyTiles[33].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[33].getMapLocation()))
                 {
                     x += nearbyTiles[33].getMapLocation().x;
                     y += nearbyTiles[33].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[34]);
+                //Symmetry.processTile(nearbyTiles[34]);
                 if(nearbyTiles[34].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[34].getMapLocation()))
                 {
                     x += nearbyTiles[34].getMapLocation().x;
                     y += nearbyTiles[34].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[35]);
+                //Symmetry.processTile(nearbyTiles[35]);
                 if(nearbyTiles[35].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[35].getMapLocation()))
                 {
                     x += nearbyTiles[35].getMapLocation().x;
                     y += nearbyTiles[35].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[36]);
+                //Symmetry.processTile(nearbyTiles[36]);
                 if(nearbyTiles[36].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[36].getMapLocation()))
                 {
                     x += nearbyTiles[36].getMapLocation().x;
                     y += nearbyTiles[36].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[37]);
+                //Symmetry.processTile(nearbyTiles[37]);
                 if(nearbyTiles[37].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[37].getMapLocation()))
                 {
                     x += nearbyTiles[37].getMapLocation().x;
                     y += nearbyTiles[37].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[38]);
+                //Symmetry.processTile(nearbyTiles[38]);
                 if(nearbyTiles[38].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[38].getMapLocation()))
                 {
                     x += nearbyTiles[38].getMapLocation().x;
                     y += nearbyTiles[38].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[39]);
+                //Symmetry.processTile(nearbyTiles[39]);
                 if(nearbyTiles[39].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[39].getMapLocation()))
                 {
                     x += nearbyTiles[39].getMapLocation().x;
                     y += nearbyTiles[39].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[40]);
+                //Symmetry.processTile(nearbyTiles[40]);
                 if(nearbyTiles[40].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[40].getMapLocation()))
                 {
                     x += nearbyTiles[40].getMapLocation().x;
                     y += nearbyTiles[40].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[41]);
+                //Symmetry.processTile(nearbyTiles[41]);
                 if(nearbyTiles[41].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[41].getMapLocation()))
                 {
                     x += nearbyTiles[41].getMapLocation().x;
                     y += nearbyTiles[41].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[42]);
+                //Symmetry.processTile(nearbyTiles[42]);
                 if(nearbyTiles[42].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[42].getMapLocation()))
                 {
                     x += nearbyTiles[42].getMapLocation().x;
                     y += nearbyTiles[42].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[43]);
+                //Symmetry.processTile(nearbyTiles[43]);
                 if(nearbyTiles[43].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[43].getMapLocation()))
                 {
                     x += nearbyTiles[43].getMapLocation().x;
                     y += nearbyTiles[43].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[44]);
+                //Symmetry.processTile(nearbyTiles[44]);
                 if(nearbyTiles[44].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[44].getMapLocation()))
                 {
                     x += nearbyTiles[44].getMapLocation().x;
                     y += nearbyTiles[44].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[45]);
+                //Symmetry.processTile(nearbyTiles[45]);
                 if(nearbyTiles[45].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[45].getMapLocation()))
                 {
                     x += nearbyTiles[45].getMapLocation().x;
                     y += nearbyTiles[45].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[46]);
+                //Symmetry.processTile(nearbyTiles[46]);
                 if(nearbyTiles[46].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[46].getMapLocation()))
                 {
                     x += nearbyTiles[46].getMapLocation().x;
                     y += nearbyTiles[46].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[47]);
+                //Symmetry.processTile(nearbyTiles[47]);
                 if(nearbyTiles[47].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[47].getMapLocation()))
                 {
                     x += nearbyTiles[47].getMapLocation().x;
                     y += nearbyTiles[47].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[48]);
+                //Symmetry.processTile(nearbyTiles[48]);
                 if(nearbyTiles[48].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[48].getMapLocation()))
                 {
                     x += nearbyTiles[48].getMapLocation().x;
                     y += nearbyTiles[48].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[49]);
+                //Symmetry.processTile(nearbyTiles[49]);
                 if(nearbyTiles[49].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[49].getMapLocation()))
                 {
                     x += nearbyTiles[49].getMapLocation().x;
                     y += nearbyTiles[49].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[50]);
+                //Symmetry.processTile(nearbyTiles[50]);
                 if(nearbyTiles[50].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[50].getMapLocation()))
                 {
                     x += nearbyTiles[50].getMapLocation().x;
                     y += nearbyTiles[50].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[51]);
+                //Symmetry.processTile(nearbyTiles[51]);
                 if(nearbyTiles[51].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[51].getMapLocation()))
                 {
                     x += nearbyTiles[51].getMapLocation().x;
                     y += nearbyTiles[51].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[52]);
+                //Symmetry.processTile(nearbyTiles[52]);
                 if(nearbyTiles[52].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[52].getMapLocation()))
                 {
                     x += nearbyTiles[52].getMapLocation().x;
                     y += nearbyTiles[52].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[53]);
+                //Symmetry.processTile(nearbyTiles[53]);
                 if(nearbyTiles[53].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[53].getMapLocation()))
                 {
                     x += nearbyTiles[53].getMapLocation().x;
                     y += nearbyTiles[53].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[54]);
+                //Symmetry.processTile(nearbyTiles[54]);
                 if(nearbyTiles[54].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[54].getMapLocation()))
                 {
                     x += nearbyTiles[54].getMapLocation().x;
                     y += nearbyTiles[54].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[55]);
+                //Symmetry.processTile(nearbyTiles[55]);
                 if(nearbyTiles[55].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[55].getMapLocation()))
                 {
                     x += nearbyTiles[55].getMapLocation().x;
                     y += nearbyTiles[55].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[56]);
+                //Symmetry.processTile(nearbyTiles[56]);
                 if(nearbyTiles[56].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[56].getMapLocation()))
                 {
                     x += nearbyTiles[56].getMapLocation().x;
                     y += nearbyTiles[56].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[57]);
+                //Symmetry.processTile(nearbyTiles[57]);
                 if(nearbyTiles[57].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[57].getMapLocation()))
                 {
                     x += nearbyTiles[57].getMapLocation().x;
                     y += nearbyTiles[57].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[58]);
+                //Symmetry.processTile(nearbyTiles[58]);
                 if(nearbyTiles[58].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[58].getMapLocation()))
                 {
                     x += nearbyTiles[58].getMapLocation().x;
                     y += nearbyTiles[58].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[59]);
+                //Symmetry.processTile(nearbyTiles[59]);
                 if(nearbyTiles[59].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[59].getMapLocation()))
                 {
                     x += nearbyTiles[59].getMapLocation().x;
                     y += nearbyTiles[59].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[60]);
+                //Symmetry.processTile(nearbyTiles[60]);
                 if(nearbyTiles[60].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[60].getMapLocation()))
                 {
                     x += nearbyTiles[60].getMapLocation().x;
                     y += nearbyTiles[60].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[61]);
+                //Symmetry.processTile(nearbyTiles[61]);
                 if(nearbyTiles[61].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[61].getMapLocation()))
                 {
                     x += nearbyTiles[61].getMapLocation().x;
                     y += nearbyTiles[61].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[62]);
+                //Symmetry.processTile(nearbyTiles[62]);
                 if(nearbyTiles[62].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[62].getMapLocation()))
                 {
                     x += nearbyTiles[62].getMapLocation().x;
                     y += nearbyTiles[62].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[63]);
+                //Symmetry.processTile(nearbyTiles[63]);
                 if(nearbyTiles[63].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[63].getMapLocation()))
                 {
                     x += nearbyTiles[63].getMapLocation().x;
                     y += nearbyTiles[63].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[64]);
+                //Symmetry.processTile(nearbyTiles[64]);
                 if(nearbyTiles[64].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[64].getMapLocation()))
                 {
                     x += nearbyTiles[64].getMapLocation().x;
                     y += nearbyTiles[64].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[65]);
+                //Symmetry.processTile(nearbyTiles[65]);
                 if(nearbyTiles[65].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[65].getMapLocation()))
                 {
                     x += nearbyTiles[65].getMapLocation().x;
                     y += nearbyTiles[65].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[66]);
+                //Symmetry.processTile(nearbyTiles[66]);
                 if(nearbyTiles[66].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[66].getMapLocation()))
                 {
                     x += nearbyTiles[66].getMapLocation().x;
                     y += nearbyTiles[66].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[67]);
+                //Symmetry.processTile(nearbyTiles[67]);
                 if(nearbyTiles[67].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[67].getMapLocation()))
                 {
                     x += nearbyTiles[67].getMapLocation().x;
                     y += nearbyTiles[67].getMapLocation().y;
                     numEnemyTiles++;
                 }
-                Symmetry.processTile(nearbyTiles[68]);
+                //Symmetry.processTile(nearbyTiles[68]);
                 if(nearbyTiles[68].getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(nearbyTiles[68].getMapLocation()))
                 {
                     x += nearbyTiles[68].getMapLocation().x;
@@ -1378,7 +1378,7 @@ public class splasherUtil {
             default -> {
                 //now, check if we can see any enemy tiles
                 for (MapInfo tile : nearbyTiles) {
-                    Symmetry.processTile(tile);
+                    //Symmetry.processTile(tile);
                     if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(tile.getMapLocation())) {
                         x += tile.getMapLocation().x;
                         y += tile.getMapLocation().y;

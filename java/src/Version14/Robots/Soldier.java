@@ -57,6 +57,7 @@ public class Soldier {
 
     public static MapLocation workingOnRuin;
 
+    public static MapLocation closestUnseenRuin;
 
     public static MapLocation averageEnemyPaint;
 
@@ -141,7 +142,8 @@ public class Soldier {
     public static void initializeMapDependentVariables() throws GameActionException {
         int mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();
         TURN_TO_NAVIGATE_TO_TOWERS = (int)(mapSize / 12.5); //indicates at what turn we will prioritize going towards enemy towers
-        STOP_EXPLORING =  (int)(mapSize / 12.5); //indicates when soldiers will began defaulting to navigate instead of explore
+        //y = 0.036x + 20.6
+        STOP_EXPLORING = (int) (mapSize * 0.036 + 20.6); //indicates when soldiers will began defaulting to navigate instead of explore
         TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
         //y = 0.011x + 35.6 -> calibrates it to 40 at min size and 75 at max size
@@ -170,6 +172,7 @@ public class Soldier {
         }
         closestEnemyTower = closestEnemyTower();
         closestUnclaimedRuin = closestUnclaimedRuin();
+        closestUnseenRuin = closestUnseenRuin();
         if(turnCount == 1)  SoldierUtil.scanNearbyTilesSoldier();
 
         if(workingOnRuin != null && staticRC.canSenseRobotAtLocation(workingOnRuin)) {
@@ -353,7 +356,7 @@ public class Soldier {
         if(staticRC.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
         }
-        staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
+        //staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
     }
 
     //returns a location to explore
@@ -362,7 +365,7 @@ public class Soldier {
         if(ran <= 0.20 && staticRC.getRoundNum() > 25) {
             MapLocation closestCorner = closestCorner();
             target = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
-            staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
+            //staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
         }
         else {
             int i = 0;
@@ -408,6 +411,14 @@ public class Soldier {
             if(dir != null && staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
         }
+
+        else if(closestUnseenRuin != null) {
+            //System.out.println("hello!");
+            Direction dir = Pathfinding.bugBFS(closestUnseenRuin);
+            if(staticRC.canMove(dir)) staticRC.move(dir);
+            staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 0,255);
+            attemptFill();
+        }
         else if (knownSymmetry != SymmetryType.Unknown && !checkedSymmetry){
             if(oppositeHome == null) {
                 SymmetryType[] possible = Symmetry.possibleSymmetry();
@@ -432,6 +443,13 @@ public class Soldier {
             if(staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
         }
+//        else if(closestUnseenRuin != null) {
+//            System.out.println("hello!");
+//            Direction dir = Pathfinding.bugBFS(closestUnseenRuin);
+//            if(staticRC.canMove(dir)) staticRC.move(dir);
+//            staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 0,255);
+//            attemptFill();
+//        }
 //        else if(!Communication.unclaimedRuins.isEmpty()) {
 //            Direction dir = Pathfinding.bugBFS(closestUnclaimedRuin);
 //            if(staticRC.canMove(dir)) staticRC.move(dir);

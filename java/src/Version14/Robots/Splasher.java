@@ -46,6 +46,8 @@ public class Splasher {
     public static MapLocation nearestUnfilledRuin;
     public static MapLocation averageEnemyPaint;
 
+    public static MapLocation closestUnseenRuin;
+
     static boolean correctSymmetry = false;
 
     private static MapLocation home;
@@ -150,7 +152,7 @@ public class Splasher {
                             navTarget = navState.vertical;
                     }
                 }
-                if(curObjective == null && !unclaimedRuins.isEmpty()) {
+                if(curObjective == null && (!unclaimedRuins.isEmpty() || closestUnseenRuin != null)) {
                     int minDist = Integer.MAX_VALUE;
                     for (Ruin r : unclaimedRuins) {
                         //if (checkedRuin.getBit(r.location)) continue;
@@ -160,6 +162,11 @@ public class Splasher {
                             curObjective = r.location;
                             navTarget = navState.ruin;
                         }
+                    }
+                    if(closestUnseenRuin != null && staticRC.getLocation().distanceSquaredTo(closestUnseenRuin) < minDist) {
+                        curObjective = closestUnseenRuin;
+                        navTarget = navState.ruin;
+                        staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 255, 0);
                     }
                 }
                 if(curObjective == null) {
@@ -301,7 +308,7 @@ public class Splasher {
             }
         }
         //if we know of any unclaimed ruins, lets try to help out there
-        if(curObjective == null && !unclaimedRuins.isEmpty()) {
+        if(curObjective == null && (!unclaimedRuins.isEmpty() || closestUnseenRuin != null)) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : unclaimedRuins) {
                 //if(checkedRuin.getBit(r.location)) continue;
@@ -311,6 +318,11 @@ public class Splasher {
                     curObjective = r.location;
                     navTarget = navState.ruin;
                 }
+            }
+            if(closestUnseenRuin != null && staticRC.getLocation().distanceSquaredTo(closestUnseenRuin) < minDist) {
+                curObjective = closestUnseenRuin;
+                navTarget = navState.ruin;
+                staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 255, 0);
             }
         }
         //next, if we have enemy towers, go there
@@ -444,6 +456,7 @@ public class Splasher {
 
     //updates the local information necessary for the splasher to run its turn
     public static void updateInfo() throws GameActionException {
+        closestUnseenRuin = closestUnseenRuin();
         MapLocation curLoc = staticRC.getLocation();
         //gets the nearest paint tower, updating every so often
         if(turnCount % PAINT_TOWER_REFRESH == 0) {

@@ -929,8 +929,7 @@ public class MopperMicro {
                 microArray = null;
                 return;
             }
-        }
-        ;
+        };
         int actionRadius = UnitType.MOPPER.actionRadiusSquared;
         //determining the best space
         //mopperMicroInfo bestMicro = microArray[0];

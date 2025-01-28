@@ -28,9 +28,9 @@ public class Symmetry {
 
 
     public static void processTile(MapInfo toCheck) {
-        MapLocation locToCheck = toCheck.getMapLocation();
         //try to figure out what the symmetry is
         if (knownSymmetry == SymmetryType.Unknown) {
+            MapLocation locToCheck = toCheck.getMapLocation();
             int score = (toCheck.isPassable()) ? 1 : toCheck.isWall() ? 2 : 3;
             map[locToCheck.x][locToCheck.y] = score;
             if(score <= 1) return;
@@ -64,23 +64,10 @@ public class Symmetry {
             }
         }
         //if we already know symmetry, then only care if there is a ruin
-        else {
-            if(!hasProcessedSymmetry) {
+        else if(!hasProcessedSymmetry) {
                 processSymmetry();
                 hasProcessedSymmetry = true;
             }
-            if (toCheck.hasRuin()) {
-                MapLocation newRuin = switch (knownSymmetry) {
-                    case Horizontal -> new MapLocation(locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
-                    case Rotational ->
-                            new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
-                    case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
-                    case Unknown -> null;
-                };
-                    unseenRuins.remove(locToCheck);
-                    if(!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);
-            }
-        }
     }
 
     //used to update our knowledge after learning of symmetry
@@ -117,6 +104,24 @@ public class Symmetry {
             case 12 -> new SymmetryType[]{SymmetryType.Horizontal, SymmetryType.Vertical};
             default -> new SymmetryType[]{SymmetryType.Horizontal, SymmetryType.Vertical, SymmetryType.Rotational};
         };
+    }
+
+    //returns the closest unseen ruin
+    public static MapLocation closestUnseenRuin() {
+        MapLocation curRuin = null;
+        int bestIndex = -1;
+        int minDist = Integer.MAX_VALUE;
+        MapLocation curLoc = staticRC.getLocation();
+        unseenRuins.updateIterable();
+        for(int i = 0; i < unseenRuins.size; i++) {
+            curRuin = unseenRuins.get(i);
+            int dist = curLoc.distanceSquaredTo(curRuin);
+            if(dist < minDist) {
+                minDist = dist;
+                bestIndex = i;
+            }
+        }
+        return (bestIndex == -1) ? null : unseenRuins.get(bestIndex);
     }
 
 }
