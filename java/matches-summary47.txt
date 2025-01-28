@@ -1,0 +1,44 @@
+|  | Version14 | Version13 |
+| :---: | :---: | :---: |
+| gridworld | Tied (918, 1437) | Won (1886, 1199) |
+| sayhi | Tied (365, 847) | Tied (647, 442) |
+| Money | Tied (543, 281) | Tied (545, 350) |
+| Mirage | Tied (516, 899) | Won (615, 513) |
+| Justice | Tied (1450, 1693) | Won (818, 1265) |
+| gardenworld | Lost (613, 653) | Tied (598, 1197) |
+| memstore | Tied (584, 551) | Lost (569, 1022) |
+| Thirds | Tied (375, 395) | Tied (629, 474) |
+| TargetPractice | Tied (354, 2000) | Won (805, 363) |
+| Racetrack | Tied (440, 429) | Lost (275, 359) |
+| catface | Tied (361, 345) | Tied (598, 471) |
+| giver | Tied (337, 571) | Won (487, 385) |
+| quack | Won (487, 1198) | Tied (766, 492) |
+| galaxy | Tied (622, 503) | Lost (398, 649) |
+| leavemealone | Tied (2000, 686) | Tied (345, 647) |
+| windmill | Lost (493, 501) | Tied (299, 671) |
+| Piglets2 | Tied (484, 638) | Won (616, 467) |
+| Flower | Tied (189, 345) | Lost (425, 385) |
+| Filter | Lost (184, 191) | Tied (199, 307) |
+| yearofthesnake | Tied (695, 507) | Tied (403, 766) |
+| walalilongla | Lost (537, 649) | Won (416, 590) |
+| starburst | Tied (357, 1034) | Tied (273, 710) |
+| sierpinski | Won (384, 417) | Won (475, 490) |
+| sunrise | Tied (961, 451) | Tied (653, 629) |
+| roads | Won (419, 224) | Tied (405, 348) |
+| rain | Tied (631, 1781) | Tied (1067, 703) |
+| AlarmClock | Tied (332, 405) | Won (281, 807) |
+| Barcode | Tied (311, 626) | Lost (449, 420) |
+| BatSignal | Lost (1638, 1242) | Tied (422, 1147) |
+| Brat | Won (299, 233) | Won (378, 1045) |
+| Bread,Castle | Tied (341, 415) | Won (816, 388) |
+| Circuit | Won (699, 1726) | Tied (1618, 594) |
+| Crab | Tied (334, 495) | Won (433, 542) |
+| CastleDefense | Tied (144, 155) | Tied (413, 214) |
+| FourCorners | Tied (240, 269) | Lost (241, 269) |
+| Gears | Tied (575, 464) | Won (585, 517) |
+| HungerGames | Lost (530, 388) | Tied (490, 588) |
+| Leaf | Won (375, 408) | Won (360, 389) |
+| Oasis | Tied (442, 550) | Won (462, 473) |
+| Paintball | Lost (1461, 1814) | Tied (243, 245) |
+| Parking_lot | Tied (582, 443) | Tied (692, 396) |
+
