@@ -142,8 +142,8 @@ public class Soldier {
         STOP_EXPLORING = (int) (mapSize * 0.027 + 24.2); //indicates when soldiers will began defaulting to navigate instead of explore
         TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
-        //y = 0.011x + 35.6 -> calibrates it to 40 at min size and 75 at max size
-        FORCE_MONEY_ROUND = (int)(0.011 * mapSize + 35.6);//turn at which any time before that soldiers will always build money towers
+        //y = 0.01x + 34 -> calibrates it to 38 at min size and 70 at max size
+        FORCE_MONEY_ROUND = (int)(0.01 * mapSize + 34);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
@@ -176,7 +176,6 @@ public class Soldier {
         }
 
         if(turnCount % 20 == 0) {
-            //checkedRuin = new BitBoard();
             checkedRuin.clear();
         }
     }
@@ -301,7 +300,7 @@ public class Soldier {
         }
         else {
             double ran = rng.nextDouble();
-            if (ran <= 0.20 && staticRC.getRoundNum() > 25) {
+            if (ran <= .30 && staticRC.getRoundNum() > 10) {
                 MapLocation closestCorner = closestCorner();
                 target = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
                 //staticRC.setIndicatorLine(staticRC.getLocation(), target, 255, 255,255);
@@ -512,7 +511,7 @@ public class Soldier {
         }
         //int dist = staticRC.getLocation().distanceSquaredTo(closestUnclaimedRuin);
         //claimedRuin = closestUnclaimedRuin;
-        if(curPattern == null || turnCount % 25 == 0) {
+        if(curPattern == null || (turnCount % 25 == 0 && allyRobots.length > 0)) {
             //curPattern = Utilities.inferPatternFromExistingSpots(closestUnclaimedRuin, tilesNearRuin);
             curPattern = Utilities.getPatternFromWeightedHash(closestUnclaimedRuin);
         }

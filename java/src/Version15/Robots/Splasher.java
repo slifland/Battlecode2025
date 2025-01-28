@@ -365,7 +365,7 @@ public class Splasher {
                 curObjective = closestUnseenRuin;
                 staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 255, 0);
             }
-            System.out.println(curObjective);
+            //System.out.println(curObjective);
         }
         //MOVE TO OBJECTIVE
         //int price = Clock.getBytecodesLeft();

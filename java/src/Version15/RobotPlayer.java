@@ -160,7 +160,7 @@ public class RobotPlayer {
 //        }
         canSeeEnemyPaint = false;
         MapLocation nextLoc = SpawnMicro.bestSpawn();
-        if(toBuild == null || turnCount % 10 == 0) {
+        if(toBuild == null || turnCount % 15 == 0) {
             toBuild = chooseBuild();
         }
         if(nextLoc != null && toBuild != null && staticRC.canBuildRobot(toBuild, nextLoc) && (staticRC.getMoney() > 1200 || totalBuilt < (staticRC.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
@@ -190,8 +190,10 @@ public class RobotPlayer {
             staticRC.attack(r.getLocation());
         }
         if(staticRC.canAttack(null)) staticRC.attack(null);
-        //TODO: implement disintegration for real
         if(enemyRobots.length == 0 && (staticRC.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_MONEY_TOWER) && staticRC.getMoney() > 8500 && staticRC.getPaint() <= 100) {
+            checkDisintegrate();
+        }
+        else if(enemyRobots.length ==0 && turnsSinceSeenEnemy > 50 && (staticRC.getType() == UnitType.LEVEL_ONE_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER) && staticRC.getPaint() <= 100) {
             checkDisintegrate();
         }
     }
@@ -211,6 +213,7 @@ public class RobotPlayer {
             }
         }
         if(hasRebuilder) {
+            System.out.println("hello!");
             staticRC.disintegrate();
         }
     }
