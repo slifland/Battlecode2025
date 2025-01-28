@@ -407,9 +407,9 @@ public class Mopper {
 //                count++;
 //            }
 //        }
-        int price = Clock.getBytecodesLeft();
+        //int price = Clock.getBytecodesLeft();
         MopperUtil.scanNearbyTiles();
-        System.out.println(price - Clock.getBytecodesLeft());
+        //System.out.println(price - Clock.getBytecodesLeft());
     }
 
 
