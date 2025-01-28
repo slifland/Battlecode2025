@@ -95,7 +95,7 @@ public class Splasher {
                     break;
             }
         }
-        if(Clock.getBytecodesLeft() > 5000) {
+        if(Clock.getBytecodesLeft() > 7000) {
             //int price = Clock.getBytecodesLeft();
             splasherUtil.refreshPaintAverages();
             //System.out.println(price - Clock.getBytecodesLeft());

@@ -456,19 +456,37 @@ public class Communication {
         Return false if we already knew of this exact Ruin, Return true if we had to update our memory
      */
     private static boolean updateRuinsMemory(Ruin ruin) {
-        if(!seenRuins.contains(ruin.location)){
-        unseenRuins.remove(ruin.location);
-        seenRuins.add(ruin.location);
-        if (knownSymmetry != SymmetryType.Unknown) {
-            MapLocation newRuin = switch (knownSymmetry) {
-                case Horizontal -> new MapLocation(ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
-                case Rotational ->
-                        new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
-                case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
-                case Unknown -> null;
-            };
-            if (!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);
-        }
+        if (!seenRuins.contains(ruin.location)) {
+            if(ruin.status == 2) {
+                unseenRuins.add(ruin.location);
+                if (knownSymmetry != SymmetryType.Unknown) {
+                    MapLocation newRuin = switch (knownSymmetry) {
+                        case Horizontal ->
+                                new MapLocation(ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Rotational ->
+                                new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
+                        case Unknown -> null;
+                    };
+                    if (!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);
+                }
+
+            }
+            else {
+                unseenRuins.remove(ruin.location);
+                seenRuins.add(ruin.location);
+                if (knownSymmetry != SymmetryType.Unknown) {
+                    MapLocation newRuin = switch (knownSymmetry) {
+                        case Horizontal ->
+                                new MapLocation(ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Rotational ->
+                                new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
+                        case Unknown -> null;
+                    };
+                    if (!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);
+                }
+            }
         }
         Ruin mem = allMemory[ruin.location.x][ruin.location.y]; //might be null
 

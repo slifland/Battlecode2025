@@ -35,7 +35,7 @@ public class RobotPlayer {
     public static int moppers = 0;
     public static int splashers = 0;
     public static int totalBuilt = 0;
-    public static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
+    public static int BUILD_ROUND_NUM_DIVISOR = 65; //decides the number of robots we can build - lower number = build more frequently
     public static int mapSize = 0;
     public static int turnsSinceSeenEnemy = 0;
     public static UnitType toBuild = null;
@@ -92,6 +92,8 @@ public class RobotPlayer {
         DISPERSION_RADIUS = (int) (0.03875 * (rc.getMapWidth() * rc.getMapHeight()) - 2.5);
         //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
         adjustedMapSize = mapSize *  0.003 + 2.8;
+        //y = 0.009x + 11.4 - > calibrated to be 15 on smallest map and 45 on biggest map
+        Utilities.RADIUS_FROM_CENTER = (int)(mapSize * 0.009 + 11.4);
 
         Communication.setup();
 
@@ -122,8 +124,7 @@ public class RobotPlayer {
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
-                if(exploreTarget != null)
-                    staticRC.setIndicatorDot(exploreTarget, 255, 0, 0);
+                //staticRC.setIndicatorString(knownSymmetry.toString());
                 //staticRC.setIndicatorString("" + Communication.processRuinQueue.size());
             }
              catch (GameActionException e) {
@@ -298,6 +299,7 @@ public class RobotPlayer {
     public static UnitType chooseBuild() {
         if(staticRC.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
         else if(enemyRobots.length > 1) return UnitType.MOPPER;
+        //else if (totalBuilt == 0 && knownSymmetry != SymmetryType.Unknown) return UnitType.SPLASHER;
 
         //we have a finite total amount of paint, so make sure we use it wisely
         if(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
@@ -331,8 +333,8 @@ public class RobotPlayer {
 
         if(staticRC.getRoundNum() < earlyRoundDef) {
             soldierScore = earlySoldierBonus;
-            mopperScore = 1;
-            splasherScore = 1;
+            mopperScore = 0;
+            splasherScore = (knownSymmetry == SymmetryType.Unknown) ? 0 : 2;
             if(adjustedMapSize <= 6) {
                 mopperScore++;
             }
