@@ -1,0 +1,44 @@
+|  | Version13 |
+| :---: | :---: |
+| gridworld | Won (1470, 1384) |
+| sayhi | Lost (295, 716) |
+| Money | Tied (281, 515) |
+| Mirage | Tied (618, 412) |
+| Justice | Lost (1280, 2000) |
+| gardenworld | Tied (830, 608) |
+| memstore | Tied (360, 733) |
+| Thirds | Lost (342, 313) |
+| TargetPractice | Tied (378, 348) |
+| Racetrack | Lost (616, 642) |
+| catface | Tied (712, 339) |
+| giver | Tied (557, 530) |
+| quack | Tied (324, 613) |
+| galaxy | Tied (340, 526) |
+| leavemealone | Won (492, 519) |
+| windmill | Tied (688, 307) |
+| Piglets2 | Tied (484, 448) |
+| Flower | Lost (484, 392) |
+| Filter | Tied (285, 2000) |
+| yearofthesnake | Won (568, 584) |
+| walalilongla | Won (551, 513) |
+| starburst | Won (730, 985) |
+| sierpinski | Won (543, 850) |
+| sunrise | Won (545, 382) |
+| roads | Tied (922, 340) |
+| rain | Tied (262, 418) |
+| AlarmClock | Tied (314, 314) |
+| Barcode | Lost (298, 471) |
+| BatSignal | Tied (572, 1372) |
+| Brat | Won (533, 2000) |
+| Bread,Castle | Won (794, 327) |
+| Circuit | Won (2000, 471) |
+| Crab | Tied (392, 735) |
+| CastleDefense | Tied (218, 777) |
+| FourCorners | Lost (229, 273) |
+| Gears | Lost (591, 513) |
+| HungerGames | Won (425, 605) |
+| Leaf | Tied (386, 351) |
+| Oasis | Won (493, 385) |
+| Paintball | Won (375, 340) |
+| Parking_lot | Lost (453, 307) |
+
