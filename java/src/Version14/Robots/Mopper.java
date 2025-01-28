@@ -3,16 +3,15 @@ package Version14.Robots;
 import Version14.Micro.MopperMicro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
-import Version14.Utility.BitBoard;
-import Version14.Utility.FastIterableLocSet;
-import Version14.Utility.MopperUtil;
-import Version14.Utility.Utilities;
+import Version14.Utility.*;
+import Version14.Utility.Symmetry.SymmetryType;
 import battlecode.common.*;
 
 import static Version14.Misc.Communication.enemyTowers;
 import static Version14.Misc.Communication.unclaimedRuins;
 import static Version14.RobotPlayer.*;
 import static Version14.Utility.BitBoard.*;
+import static Version14.Utility.Symmetry.knownSymmetry;
 
 enum mopStates {
     navigate, contest, refill, clear
@@ -126,10 +125,10 @@ public class Mopper {
             curObjective = null;
             navTarget = null;
         }
-        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
+        else if(curObjective != null && knownSymmetry != SymmetryType.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
                 case navState.horizontal -> {
-                    if(knownSymmetry != Symmetry.Horizontal) {
+                    if(knownSymmetry != SymmetryType.Horizontal) {
                         switch(knownSymmetry) {
                             case Rotational:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
@@ -143,7 +142,7 @@ public class Mopper {
                     }
                 }
                 case navState.rotational -> {
-                    if(knownSymmetry != Symmetry.Rotational) {
+                    if(knownSymmetry != SymmetryType.Rotational) {
                         switch(knownSymmetry) {
                             case Vertical:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
@@ -157,7 +156,7 @@ public class Mopper {
                     }
                 }
                 case navState.vertical -> {
-                    if(knownSymmetry != Symmetry.Vertical) {
+                    if(knownSymmetry != SymmetryType.Vertical) {
                         switch(knownSymmetry) {
                             case Rotational:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
@@ -202,7 +201,7 @@ public class Mopper {
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null && !exploredSymmetry) {
-            Symmetry[] possible = Utilities.possibleSymmetry();
+            SymmetryType[] possible = Symmetry.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
@@ -385,7 +384,7 @@ public class Mopper {
 
 //        for(MapInfo tile : nearbyTiles) {
 //            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
-//            if(knownSymmetry == RobotPlayer.Symmetry.Unknown) {
+//            if(knownSymmetry == RobotPlayer.SymmetryType.Unknown) {
 //                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
 //                if(!tile.isPassable())  Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
 //            }

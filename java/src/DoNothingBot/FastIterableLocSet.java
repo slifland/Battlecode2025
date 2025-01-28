@@ -1,4 +1,4 @@
-package Version14.Utility;
+package DoNothingBot;
 import battlecode.common.MapLocation;
 
 public class FastIterableLocSet {
@@ -28,7 +28,7 @@ public class FastIterableLocSet {
         if (keys.indexOf(key) == -1) {
             if (size == maxlen)
                 return;
-            //System.out.println(loc);
+            System.out.println(loc);
             keys.append(key);
             size++;
         }
@@ -67,7 +67,7 @@ public class FastIterableLocSet {
     }
 
     public MapLocation get(int index) {
-        return locs[index];
+        return locs[index / 3];
     }
 
     public boolean contains(MapLocation loc) {

@@ -4,10 +4,7 @@ import Version14.Misc.Communication;
 import Version14.Micro.Micro;
 import Version14.Pathfinding.Pathfinding;
 import Version14.Misc.Ruin;
-import Version14.Utility.BitBoard;
-import Version14.Utility.FastIterableLocSet;
-import Version14.Utility.SoldierUtil;
-import Version14.Utility.Utilities;
+import Version14.Utility.*;
 import battlecode.common.*;
 import battlecode.schema.RobotType;
 
@@ -16,6 +13,8 @@ import static Version14.RobotPlayer.rng;
 import static Version14.Misc.Communication.alliedPaintTowers;
 import static Version14.RobotPlayer.*;
 import static Version14.Utility.SoldierUtil.needsHelp;
+import static Version14.Utility.Symmetry.SymmetryType.*;
+import static Version14.Utility.Symmetry.*;
 //import static Version14.Utility.SoldierUtil.validateRuinClaim;
 
 public class Soldier {
@@ -41,8 +40,8 @@ public class Soldier {
     public static boolean wallHug;
     public static boolean clockwise;
     public static MapLocation spawnLocation;
-    public static boolean[][] invalidResourceCenters;
-
+    //public static boolean[][] invalidResourceCenters;
+    public static FastIterableLocSet invalidResourceCenters;
     //public static BitBoard checkedRuin;
     public static FastIterableLocSet checkedRuin;
 
@@ -81,9 +80,7 @@ public class Soldier {
             clockwise = rng.nextInt(2) == 0;
             initializeMapDependentVariables();
             spawnLocation = staticRC.getLocation();
-            invalidResourceCenters = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
-            //checkedRuin = new BitBoard();
-            //enemyDefenseTowers = new BitBoard();
+            invalidResourceCenters = new FastIterableLocSet();
             checkedRuin = new FastIterableLocSet();
             enemyDefenseTowers = new FastIterableLocSet();
         }
@@ -411,9 +408,9 @@ public class Soldier {
             if(dir != null && staticRC.canMove(dir)) staticRC.move(dir);
             attemptFill();
         }
-        else if (knownSymmetry != Symmetry.Unknown && !checkedSymmetry){
+        else if (knownSymmetry != SymmetryType.Unknown && !checkedSymmetry){
             if(oppositeHome == null) {
-                Symmetry[] possible = Utilities.possibleSymmetry();
+                SymmetryType[] possible = Symmetry.possibleSymmetry();
                 int sym = rng.nextInt(possible.length);
                 switch (possible[sym]) {
                     case Horizontal:
@@ -653,7 +650,8 @@ public class Soldier {
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(!farFromEdge(loc)) {
             //invalidResourceCenters.add(loc);
-            invalidResourceCenters[loc.x][loc.y] = true;
+            //invalidResourceCenters[loc.x][loc.y] = true;
+            invalidResourceCenters.add(loc);
             //invalidResourceCenters.setBit(loc, true);
             return false;
         }
@@ -661,7 +659,8 @@ public class Soldier {
         for (MapInfo tile : tiles) {
             if (!tile.isPassable() || tile.getMark().isAlly()){
                 //invalidResourceCenters.add(loc);
-                invalidResourceCenters[loc.x][loc.y] = true;
+                //invalidResourceCenters[loc.x][loc.y] = true;
+                invalidResourceCenters.add(loc);
                 //invalidResourceCenters.setBit(loc, true);
                 return false;
             }

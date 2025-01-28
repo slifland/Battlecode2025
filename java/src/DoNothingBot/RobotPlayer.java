@@ -22,7 +22,7 @@ public class RobotPlayer {
      * these variables are static, in Battlecode they aren't actually shared between your robots.
      */
     static int turnCount = 0;
-
+    static final FastIterableLocSet test = new FastIterableLocSet();
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random
@@ -60,6 +60,20 @@ public class RobotPlayer {
         rc.setIndicatorString("Hello world!");
 
         while (true) {
+            System.out.println(rc.getLocation());
+            test.add(rc.getLocation().x, rc.getLocation().y);
+//            for(int i = 0; i < 5; i++) {
+//                for(int j = 0; j < 5; j++) {
+//                    test.add(i, j);
+//                }
+//            }
+            for(int i = 0; i < 5; i++) {
+                    test.add(new MapLocation(37,4));
+            }
+            System.out.println(test.size);
+            test.remove(rc.getLocation().x, rc.getLocation().y);
+            System.out.println(test.size);
+            test.updateIterable();
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
             // loop. If we ever leave this loop and return from run(), the robot dies! At the end of the
             // loop, we call Clock.yield(), signifying that we've done everything we want to do.

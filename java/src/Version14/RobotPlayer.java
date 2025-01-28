@@ -8,6 +8,8 @@ import Version14.Robots.Splasher;
 import Version14.Utility.Utilities;
 import battlecode.common.*;
 import battlecode.common.UnitType;
+import Version14.Utility.Symmetry;
+import static Version14.Utility.Symmetry.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,10 +23,6 @@ import java.util.Random;
  * is created!
  */
 public class RobotPlayer {
-    public enum Symmetry
-    {
-        Horizontal, Vertical, Rotational, Unknown
-    }
 
     /**
      * We will use this variable to count the number of turns this robot has been alive.
@@ -67,9 +65,6 @@ public class RobotPlayer {
     public static RobotInfo[] enemyRobots;
     public static MapLocation[] nearbyRuins;
 
-    public static int[][] map; //used for map symmetry - 0 is not checked, 1 is not of interest, 2 is wall, 3 is ruin
-    public static int symmetries = 0b1110; //used to store what symmetries are true - horizontal, vertical, rotational (LSB is always zero)
-    public static Symmetry knownSymmetry = Symmetry.Unknown; //0 - horizontal, 1 = vertical, 2 = rotational, -1 = unknown
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random
@@ -100,10 +95,10 @@ public class RobotPlayer {
 
         Communication.setup();
 
-        if(rc.getType().isTowerType())
-        {
-            locationQueue = new RandomQueue(rc, 7);
-        }
+//        if(rc.getType().isTowerType())
+//        {
+//            locationQueue = new RandomQueue(rc, 7);
+//        }
 
         //sectors = new Sector[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];
         //Sector.hasTraveled = new boolean[Sector.ceil(staticRC.getMapWidth(), 7) * Sector.ceil(staticRC.getMapHeight(), 7)];

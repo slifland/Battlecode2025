@@ -3,9 +3,12 @@ package Version14.Misc;
 import Version14.Robots.Mopper;
 import Version14.Robots.Soldier;
 import Version14.Robots.Splasher;
+import Version14.Utility.Symmetry;
 import battlecode.common.*;
+import static Version14.Utility.Symmetry.SymmetryType;
 
 import static Version14.RobotPlayer.*;
+import static Version14.Utility.Symmetry.*;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -249,6 +252,8 @@ public class Communication
 
         for(MapLocation ruinLoc : nearbyRuins)
         {
+            seenRuins.add(ruinLoc);
+            unseenRuins.remove(ruinLoc);
             int status = 0;
             boolean isPaintTower = false;
 
@@ -291,7 +296,7 @@ public class Communication
     public static void sendRuinLocationsToTower(MapLocation tower) throws GameActionException
     {
         if(unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) {
-            if(knownSymmetry != Symmetry.Unknown && staticRC.canSendMessage(tower)) {
+            if(knownSymmetry != SymmetryType.Unknown && staticRC.canSendMessage(tower)) {
                 staticRC.sendMessage(tower, symmetriesToMessage(symmetries));
             }
             return;
@@ -319,7 +324,7 @@ public class Communication
      */
     public static void broadcastMessages() throws GameActionException
     {
-        if(staticRC.canBroadcastMessage() && knownSymmetry != Symmetry.Unknown)
+        if(staticRC.canBroadcastMessage() && knownSymmetry != Symmetry.SymmetryType.Unknown)
         {
             staticRC.broadcastMessage(symmetriesToMessage(symmetries));
         }
@@ -419,12 +424,12 @@ public class Communication
     //Takes in an int message and converts into a representative Ruin object
     public static Ruin messageToRuin(int message)
     {
-        if(knownSymmetry == Symmetry.Unknown && (message >> 28 & 0b1110) != 0b1110) {
+        if(knownSymmetry == SymmetryType.Unknown && (message >> 28 & 0b1110) != 0b1110) {
             symmetries = message >> 28 & 0b1110;
             switch (symmetries) {
-                case 2 -> knownSymmetry = Symmetry.Rotational;
-                case 4 -> knownSymmetry = Symmetry.Vertical;
-                case 8 -> knownSymmetry = Symmetry.Horizontal;
+                case 2 -> knownSymmetry = SymmetryType.Rotational;
+                case 4 -> knownSymmetry = SymmetryType.Vertical;
+                case 8 -> knownSymmetry = SymmetryType.Horizontal;
             }
         }
         MapLocation loc = new MapLocation((message >> 2) & 63, (message >> 8) & 63);
@@ -447,10 +452,10 @@ public class Communication
         message >>= 28;
         symmetries = message & 0b1110;
         switch(symmetries) {
-            case 2 -> knownSymmetry = Symmetry.Rotational;
-            case 4 -> knownSymmetry = Symmetry.Vertical;
-            case 8 -> knownSymmetry = Symmetry.Horizontal;
-            default -> knownSymmetry = Symmetry.Unknown;
+            case 2 -> knownSymmetry = SymmetryType.Rotational;
+            case 4 -> knownSymmetry = SymmetryType.Vertical;
+            case 8 -> knownSymmetry = SymmetryType.Horizontal;
+            default -> knownSymmetry = SymmetryType.Unknown;
         }
     }
 
@@ -498,6 +503,9 @@ public class Communication
      */
     private static boolean updateRuinsMemory(Ruin ruin)
     {
+        unseenRuins.remove(ruin.location);
+        seenRuins.add(ruin.location);
+
         Ruin mem = allMemory[ruin.location.x][ruin.location.y]; //might be null
 
         if(ruin.equals(mem)) //we already know of this exact Ruin

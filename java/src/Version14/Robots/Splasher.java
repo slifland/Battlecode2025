@@ -11,11 +11,14 @@ import Version14.Utility.FastIterableLocSet;
 import Version14.Utility.Utilities;
 import Version14.Utility.splasherUtil;
 import battlecode.common.*;
+import Version14.Utility.Symmetry.SymmetryType;
+import Version14.Utility.Symmetry;
 
 import static Version14.Misc.Communication.*;
 
 import static Version14.RobotPlayer.*;
 import static Version14.Robots.Soldier.closestCorner;
+import static Version14.Utility.Symmetry.*;
 
 enum splasherStates {
     navigate, refill, contest, hunt
@@ -116,7 +119,7 @@ public class Splasher {
                 }
                 curObjective = null;
             }
-            if(!exploredSymmetry && knownSymmetry != Symmetry.Unknown && navTarget != null && navTarget != navState.horizontal && navTarget != navState.rotational && navTarget != navState.vertical) {
+            if(!exploredSymmetry && knownSymmetry != SymmetryType.Unknown && navTarget != null && navTarget != navState.horizontal && navTarget != navState.rotational && navTarget != navState.vertical) {
                 switch(knownSymmetry) {
                     case Rotational:
                         curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
@@ -132,7 +135,7 @@ public class Splasher {
                 }
             }
             if(curObjective == null) {
-                if(knownSymmetry != Symmetry.Unknown && !exploredSymmetry) {
+                if(knownSymmetry != SymmetryType.Unknown && !exploredSymmetry) {
                     switch(knownSymmetry) {
                         case Rotational:
                             curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
@@ -222,10 +225,10 @@ public class Splasher {
             curObjective = null;
             navTarget = null;
         }
-        else if(curObjective != null && knownSymmetry != Symmetry.Unknown && !correctSymmetry && navTarget != null) {
+        else if(curObjective != null && knownSymmetry != SymmetryType.Unknown && !correctSymmetry && navTarget != null) {
             switch(navTarget) {
                 case horizontal -> {
-                    if(knownSymmetry != Symmetry.Horizontal) {
+                    if(knownSymmetry != SymmetryType.Horizontal) {
                         switch(knownSymmetry) {
                             case Rotational:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
@@ -239,7 +242,7 @@ public class Splasher {
                     }
                 }
                 case rotational -> {
-                    if(knownSymmetry != Symmetry.Rotational) {
+                    if(knownSymmetry != SymmetryType.Rotational) {
                         switch(knownSymmetry) {
                             case Vertical:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, home.y);
@@ -253,7 +256,7 @@ public class Splasher {
                     }
                 }
                 case vertical -> {
-                    if(knownSymmetry != Symmetry.Vertical) {
+                    if(knownSymmetry != SymmetryType.Vertical) {
                         switch(knownSymmetry) {
                             case Rotational:
                                 curObjective = new MapLocation(staticRC.getMapWidth() - 1 - home.x, staticRC.getMapHeight() - 1 - home.y);
@@ -313,7 +316,7 @@ public class Splasher {
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
         if(curObjective == null && !exploredSymmetry) {
-            Symmetry[] possible = Utilities.possibleSymmetry();
+            SymmetryType[] possible = Symmetry.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
             switch(possible[sym]) {
                 case Horizontal:
@@ -481,7 +484,7 @@ public class Splasher {
 //        //now, check if we can see any enemy tiles
 //        for (MapInfo tile : nearbyTiles) {
 //            Utilities.attemptCompleteResourcePattern(tile.getMapLocation());
-//            if (knownSymmetry == Symmetry.Unknown) {
+//            if (knownSymmetry == SymmetryType.Unknown) {
 //                map[tile.getMapLocation().x][tile.getMapLocation().y] = (tile.isPassable()) ? 1 : (tile.isWall()) ? 2 : 3;
 //                if (!tile.isPassable()) Utilities.validateSymmetry(tile.getMapLocation(), tile.hasRuin());
 //            }
