@@ -297,6 +297,7 @@ public class Soldier {
     public static void generateExploreLocation() throws GameActionException {
         if(closestUnseenRuin != null) {
             target = closestUnseenRuin;
+            staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 0,255);
         }
         else {
             double ran = rng.nextDouble();

@@ -358,6 +358,15 @@ public class Splasher {
             }
             navTarget = navState.random;
         }
+
+        if((navTarget == navState.ruin || navTarget == navState.random) && closestUnseenRuin != null) {
+            if(navTarget == navState.random) curObjective = closestUnseenRuin;
+            else if(staticRC.getLocation().distanceSquaredTo(closestUnseenRuin) < staticRC.getLocation().distanceSquaredTo(curObjective)){
+                curObjective = closestUnseenRuin;
+                staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 0, 255, 0);
+            }
+            System.out.println(curObjective);
+        }
         //MOVE TO OBJECTIVE
         //int price = Clock.getBytecodesLeft();
         Direction dir = Pathfinding.bugBFS(curObjective);

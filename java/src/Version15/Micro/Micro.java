@@ -60,17 +60,17 @@ class microInfo {
                         if(robot.getPaintAmount() >= 50 ) {
                             switch (paint) {
                                 case EMPTY -> {
-                                    potentialPaintLoss += (dist <= GameConstants.SPLASHER_ATTACK_AOE_RADIUS_SQUARED) ? 1 : 0;
+                                    potentialPaintLoss += (dist <= 16) ? 1 : 0;
                                 }
                                 case ALLY_SECONDARY, ALLY_PRIMARY -> {
-                                    potentialPaintLoss += (dist <= GameConstants.SPLASHER_ATTACK_ENEMY_PAINT_RADIUS_SQUARED) ? 1 : 0;
+                                    potentialPaintLoss += (dist <= 9) ? 1 : 0;
                                 }
                             }
                         }
                     }
                     case MOPPER -> {
-                        if (dist <= 2) potentialPaintLoss += 5;
-                        else if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
+                        if (dist <= 2) potentialPaintLoss +=Math.min(5, adjacentAllies);
+                        if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                     }
                     case SOLDIER -> {
                         potentialPaintLoss += (paint == PaintType.EMPTY && dist <= UnitType.SOLDIER.actionRadiusSquared) ? 1 : 0;

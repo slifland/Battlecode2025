@@ -2671,16 +2671,16 @@ class mopperMicroInfo {
                     if(robot.getPaintAmount() >= 50) {
                         potentialPaintLoss += switch (paintType) {
                             case ALLY_PAINT ->
-                                    (dist <= GameConstants.SPLASHER_ATTACK_ENEMY_PAINT_RADIUS_SQUARED) ? 1 : 0;
+                                    (dist <= 9) ? 1 : 0;
                             case NEUTRAL_PAINT ->
-                                    (dist <= GameConstants.SPLASHER_ATTACK_AOE_RADIUS_SQUARED) ? 1 : 0;
+                                    (dist <= 16) ? 1 : 0;
                             default -> 0;
                         };
                     }
                 }
                 case MOPPER -> {
-                    if (dist <= 2) potentialPaintLoss += 5;
-                    else if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
+                    if (dist <= 2) potentialPaintLoss += Math.min(5, adjacentAllies);
+                    if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                 }
                 case SOLDIER -> {
                     potentialPaintLoss += (paintType == NEUTRAL_PAINT && dist <= UnitType.SOLDIER.actionRadiusSquared) ? 1 : 0;
