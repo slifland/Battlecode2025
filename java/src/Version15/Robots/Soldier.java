@@ -61,6 +61,9 @@ public class Soldier {
 
     public static MapLocation averageEnemyPaint;
 
+
+
+
     public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
     public final static int refillThreshold = 35;    //Paint level at which soldiers go to refill
@@ -121,22 +124,14 @@ public class Soldier {
         if(closestUnclaimedRuin != null) {
             attemptCompleteTowerPattern(closestUnclaimedRuin);
         }
-        if(Clock.getBytecodesLeft() > 5600) {
+        if(knownSymmetry != SymmetryType.Unknown) {
+            if(Clock.getBytecodesLeft() > 4200)
+                SoldierUtil.scanNearbyTilesSoldier();
+        }
+        else if(Clock.getBytecodesLeft() > 5500) {
             SoldierUtil.scanNearbyTilesSoldier();
         }
-//        if(claimedRuin != null && VALIDATE_RUIN_CLAIM_FREQUENCY % turnCount == 0) {
-//            validateRuinClaim();
-//        }
-//        if(Clock.getBytecodesLeft() > 3000) {
-//            Utilities.updatePaintAverages();
-//        }
-        //if(claimedRuin != null) staticRC.setIndicatorString(claimedRuin.toString());
 
-//        if(target == null) staticRC.setIndicatorString(state.toString());
-//        else staticRC.setIndicatorString(state.toString() + " : " + target.toString());
-//        if(staticRC.isMovementReady() && !staticRC.senseMapInfo(staticRC.getLocation()).getPaint().isAlly()){
-//            moveToSafety();
-//        }
     }
 
     public static void initializeMapDependentVariables() throws GameActionException {

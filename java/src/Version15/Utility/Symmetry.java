@@ -32,6 +32,7 @@ public class Symmetry {
         if (knownSymmetry == SymmetryType.Unknown) {
             MapLocation locToCheck = toCheck.getMapLocation();
             int score = (toCheck.isPassable()) ? 1 : toCheck.isWall() ? 2 : 3;
+            if (map[locToCheck.x][locToCheck.y] != 0) return;
             map[locToCheck.x][locToCheck.y] = score;
             if(score <= 1) return;
             int x = locToCheck.x;

@@ -238,6 +238,8 @@ public class Mopper {
             }
             navTarget = navState.random;
         }
+
+        
         //MOVE TO OBJECTIVE
         Direction dir = Pathfinding.bugBFS(curObjective);
         if(staticRC.canMove(dir)) staticRC.move(dir);
