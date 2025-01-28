@@ -145,7 +145,7 @@ public class Soldier {
         TURN_TO_NAVIGATE_TO_TOWERS = (int)(0.016 * mapSize + 93.6); //indicates at what turn we will prioritize going towards enemy towers
         //y = y = 0.027x + 24.2 -> calibrated to 35 on smallest and 120 on largest
         STOP_EXPLORING = (int) (mapSize * 0.027 + 24.2); //indicates when soldiers will began defaulting to navigate instead of explore
-        TURN_TO_FILL = (int)(mapSize / 37.5); //turn at which filling becomes allowed
+        TURN_TO_FILL = (int)((4000 - mapSize) / 100); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
         //y = 0.011x + 35.6 -> calibrates it to 40 at min size and 75 at max size
         FORCE_MONEY_ROUND = (int)(0.011 * mapSize + 35.6);//turn at which any time before that soldiers will always build money towers
