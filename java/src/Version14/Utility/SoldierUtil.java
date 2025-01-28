@@ -1381,30 +1381,4340 @@ public class SoldierUtil {
 //        }
 //    }
 
-    public static boolean check(int index) {
-        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation(), pattern, ruin) != tilesNearRuin[index].getPaint().isSecondary())) {
-            return true;
-        }
-        return false;
-    }
+//    public static boolean check(int index) {
+//        if (tilesNearRuin[index].getPaint() == PaintType.EMPTY || (pattern != null && tilesNearRuin[index].getPaint().isAlly() && Utilities.getColorFromCustomPattern(tilesNearRuin[index].getMapLocation().getMapLocation(), pattern, ruin) != tilesNearRuin[index].getPaint().isSecondary())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public static boolean needsHelp(MapLocation ruinInput) throws GameActionException {
-//        for(RobotInfo r : allyRobots) {
-//            if(r.getLocation().isWithinDistanceSquared(ruinInput, 8) && r.getType() == UnitType.SOLDIER && r.getHealth() > 50) {
-//                return false;
-//            }
-//        }
         ruin = ruinInput;
         pattern = (curPattern != null) ? curPattern : Utilities.getPatternFromWeightedHash(ruinInput);
         boolean hasEmpty = false;
-        for(MapInfo tile : tilesNearRuin) {
-            PaintType paint = tile.getPaint();
-            if(paint.isEnemy()) {
-                checkedRuin.add(ruinInput);
-                return false;
+        PaintType paint;
+        switch(tilesNearRuin.length)
+        {
+            case 1->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
             }
-            if(!hasEmpty) if(paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin)) hasEmpty = true;
+            case 2->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 3->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 4->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 5->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 6->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 7->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 8->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 9->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 10->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 11->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 12->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 13->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 14->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 15->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 16->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 17->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 18->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 19->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 20->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 21->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[20].getPaint();
+                if (tilesNearRuin[20].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[20].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 22->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[20].getPaint();
+                if (tilesNearRuin[20].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[20].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[21].getPaint();
+                if (tilesNearRuin[21].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[21].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 23->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[20].getPaint();
+                if (tilesNearRuin[20].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[20].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[21].getPaint();
+                if (tilesNearRuin[21].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[21].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[22].getPaint();
+                if (tilesNearRuin[22].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[22].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 24->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[20].getPaint();
+                if (tilesNearRuin[20].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[20].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[21].getPaint();
+                if (tilesNearRuin[21].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[21].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[22].getPaint();
+                if (tilesNearRuin[22].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[22].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[23].getPaint();
+                if (tilesNearRuin[23].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[23].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            case 25->
+            {
+                paint = tilesNearRuin[0].getPaint();
+                if (tilesNearRuin[0].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[0].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[1].getPaint();
+                if (tilesNearRuin[1].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[1].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[2].getPaint();
+                if (tilesNearRuin[2].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[2].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[3].getPaint();
+                if (tilesNearRuin[3].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[3].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[4].getPaint();
+                if (tilesNearRuin[4].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[4].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[5].getPaint();
+                if (tilesNearRuin[5].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[5].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[6].getPaint();
+                if (tilesNearRuin[6].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[6].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[7].getPaint();
+                if (tilesNearRuin[7].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[7].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[8].getPaint();
+                if (tilesNearRuin[8].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[8].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[9].getPaint();
+                if (tilesNearRuin[9].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[9].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[10].getPaint();
+                if (tilesNearRuin[10].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[10].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[11].getPaint();
+                if (tilesNearRuin[11].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[11].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[12].getPaint();
+                if (tilesNearRuin[12].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[12].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[13].getPaint();
+                if (tilesNearRuin[13].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[13].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[14].getPaint();
+                if (tilesNearRuin[14].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[14].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[15].getPaint();
+                if (tilesNearRuin[15].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[15].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[16].getPaint();
+                if (tilesNearRuin[16].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[16].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[17].getPaint();
+                if (tilesNearRuin[17].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[17].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[18].getPaint();
+                if (tilesNearRuin[18].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[18].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[19].getPaint();
+                if (tilesNearRuin[19].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[19].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[20].getPaint();
+                if (tilesNearRuin[20].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[20].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[21].getPaint();
+                if (tilesNearRuin[21].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[21].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[22].getPaint();
+                if (tilesNearRuin[22].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[22].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[23].getPaint();
+                if (tilesNearRuin[23].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[23].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+                paint = tilesNearRuin[24].getPaint();
+                if (tilesNearRuin[24].getPaint().isEnemy())
+                {
+                    checkedRuin.add(ruinInput);
+                    return false;
+                }
+                if (!hasEmpty)
+                {
+                    if (paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tilesNearRuin[24].getMapLocation(), pattern, ruin))
+                    {
+                        hasEmpty = true;
+                    }
+                }
+            }
+            default -> {
+                for(MapInfo tile : tilesNearRuin) {
+                    paint = tile.getPaint();
+                    if(paint.isEnemy()) {
+                        checkedRuin.add(ruinInput);
+                        return false;
+                    }
+                    if(!hasEmpty) if(paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation(), pattern, ruin)) hasEmpty = true;
+                }
+            }
         }
+
+//        for(MapInfo tile : tilesNearRuin) {
+//            PaintType paint = tile.getPaint();
+//            if(paint.isEnemy()) {
+//                checkedRuin.add(ruinInput);
+//                return false;
+//            }
+//            if(!hasEmpty) if(paint == PaintType.EMPTY || paint.isSecondary() != Utilities.getColorFromCustomPattern(tile.getMapLocation().getMapLocation(), pattern, ruin)) hasEmpty = true;
+//        }
         if(hasEmpty) return true;
         if (staticRC.senseNearbyRobots(ruin, 8, staticRC.getTeam()).length == 0) return true;
         return false;
