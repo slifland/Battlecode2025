@@ -387,6 +387,23 @@ public class Splasher {
                 return;
             }
         }
+        if(staticRC.canSenseRobotAtLocation(fillingStation) && (staticRC.senseRobotAtLocation(fillingStation).getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.senseRobotAtLocation(fillingStation).getType() != UnitType.LEVEL_TWO_PAINT_TOWER && staticRC.senseRobotAtLocation(fillingStation).getType() != UnitType.LEVEL_THREE_PAINT_TOWER)){
+            alliedPaintTowers.remove(new Ruin(fillingStation, 1, true));
+            fillingStation = nextNearestPaintTower();
+            if(fillingStation == null){
+                if(seenEnemyTower != null) {
+                    if(staticRC.canAttack(seenEnemyTower.getLocation())) staticRC.attack(seenEnemyTower.getLocation());
+                    Direction dir = Micro.runMicro(true);
+                    if(staticRC.canMove(dir)) staticRC.move(dir);
+                    if(staticRC.canAttack(seenEnemyTower.getLocation())) staticRC.attack(seenEnemyTower.getLocation());
+                }
+                else{
+                    explore();
+                }
+                return;
+            }
+
+        }
         if(staticRC.getLocation().isWithinDistanceSquared(fillingStation, 9)) {
             Micro.refillingMicro(fillingStation);
         }
