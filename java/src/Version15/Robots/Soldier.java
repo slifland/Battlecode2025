@@ -61,6 +61,8 @@ public class Soldier {
 
     public static MapLocation averageEnemyPaint;
 
+    public static FastIterableLocSet checkedPattern;
+
 
 
 
@@ -87,6 +89,7 @@ public class Soldier {
             invalidResourceCenters = new FastIterableLocSet();
             checkedRuin = new FastIterableLocSet();
             enemyDefenseTowers = new FastIterableLocSet();
+            checkedPattern = new FastIterableLocSet();
         }
         //attemptCompleteTowerPattern();
         updateInfo();
@@ -177,6 +180,7 @@ public class Soldier {
 
         if(turnCount % 20 == 0) {
             checkedRuin.clear();
+            checkedPattern.clear();
         }
     }
 
@@ -240,7 +244,7 @@ public class Soldier {
 
         //check if we see any uncompleted resource patterns marked out
         if(closestUnfilledPatternCenter != null && enemyRobots.length == 0) {
-            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25 || staticRC.getNumberTowers() == 25) && validateLocation(closestUnfilledPatternCenter)) {
+            if((closestUnclaimedRuin == null || closestUnclaimedRuin.distanceSquaredTo(closestUnfilledPatternCenter) > 25 || staticRC.getNumberTowers() == 25) && !checkedPattern.contains(closestUnfilledPatternCenter) && validateLocation(closestUnfilledPatternCenter)) {
                 if(staticRC.getRoundNum() > TURN_TO_FILL) state = SoldierState.Fill;
             }
         }
@@ -571,37 +575,117 @@ public class Soldier {
         if(!staticRC.getLocation().isWithinDistanceSquared(loc, 4)) return false;
         MapInfo[] tiles = staticRC.senseNearbyMapInfos(loc, 8);
         if(tiles.length < 25) {
-            return false;
+            for(int i = 0; i < tiles.length; i++) {
+                if(!tiles[i].isPassable() || tiles[i].getPaint().isEnemy()) {
+                    checkedPattern.add(tiles[i].getMapLocation());
+                    return false;
+                }
+            }
+            return true;
         }
-//        for(int i = 0; i < 25; i++) {
-//            if(!tiles[i].isPassable() || tiles[i].getPaint().isEnemy()) return false;
-//        }
-        if (!tiles[0].isPassable() || tiles[0].getPaint().isEnemy()) return false;
-        if (!tiles[1].isPassable() || tiles[1].getPaint().isEnemy()) return false;
-        if (!tiles[2].isPassable() || tiles[2].getPaint().isEnemy()) return false;
-        if (!tiles[3].isPassable() || tiles[3].getPaint().isEnemy()) return false;
-        if (!tiles[4].isPassable() || tiles[4].getPaint().isEnemy()) return false;
-        if (!tiles[5].isPassable() || tiles[5].getPaint().isEnemy()) return false;
-        if (!tiles[6].isPassable() || tiles[6].getPaint().isEnemy()) return false;
-        if (!tiles[7].isPassable() || tiles[7].getPaint().isEnemy()) return false;
-        if (!tiles[8].isPassable() || tiles[8].getPaint().isEnemy()) return false;
-        if (!tiles[9].isPassable() || tiles[9].getPaint().isEnemy()) return false;
-        if (!tiles[10].isPassable() || tiles[10].getPaint().isEnemy()) return false;
-        if (!tiles[11].isPassable() || tiles[11].getPaint().isEnemy()) return false;
-        if (!tiles[12].isPassable() || tiles[12].getPaint().isEnemy()) return false;
-        if (!tiles[13].isPassable() || tiles[13].getPaint().isEnemy()) return false;
-        if (!tiles[14].isPassable() || tiles[14].getPaint().isEnemy()) return false;
-        if (!tiles[15].isPassable() || tiles[15].getPaint().isEnemy()) return false;
-        if (!tiles[16].isPassable() || tiles[16].getPaint().isEnemy()) return false;
-        if (!tiles[17].isPassable() || tiles[17].getPaint().isEnemy()) return false;
-        if (!tiles[18].isPassable() || tiles[18].getPaint().isEnemy()) return false;
-        if (!tiles[19].isPassable() || tiles[19].getPaint().isEnemy()) return false;
-        if (!tiles[20].isPassable() || tiles[20].getPaint().isEnemy()) return false;
-        if (!tiles[21].isPassable() || tiles[21].getPaint().isEnemy()) return false;
-        if (!tiles[22].isPassable() || tiles[22].getPaint().isEnemy()) return false;
-        if (!tiles[23].isPassable() || tiles[23].getPaint().isEnemy()) return false;
-        if (!tiles[24].isPassable() || tiles[24].getPaint().isEnemy()) return false;
-       // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
+        else {
+            if (!tiles[0].isPassable() || tiles[0].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[0].getMapLocation());
+                return false;
+            }
+            if (!tiles[1].isPassable() || tiles[1].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[1].getMapLocation());
+                return false;
+            }
+            if (!tiles[2].isPassable() || tiles[2].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[2].getMapLocation());
+                return false;
+            }
+            if (!tiles[3].isPassable() || tiles[3].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[3].getMapLocation());
+                return false;
+            }
+            if (!tiles[4].isPassable() || tiles[4].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[4].getMapLocation());
+                return false;
+            }
+            if (!tiles[5].isPassable() || tiles[5].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[5].getMapLocation());
+                return false;
+            }
+            if (!tiles[6].isPassable() || tiles[6].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[6].getMapLocation());
+                return false;
+            }
+            if (!tiles[7].isPassable() || tiles[7].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[7].getMapLocation());
+                return false;
+            }
+            if (!tiles[8].isPassable() || tiles[8].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[8].getMapLocation());
+                return false;
+            }
+            if (!tiles[9].isPassable() || tiles[9].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[9].getMapLocation());
+                return false;
+            }
+            if (!tiles[10].isPassable() || tiles[10].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[10].getMapLocation());
+                return false;
+            }
+            if (!tiles[11].isPassable() || tiles[11].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[11].getMapLocation());
+                return false;
+            }
+            if (!tiles[12].isPassable() || tiles[12].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[12].getMapLocation());
+                return false;
+            }
+            if (!tiles[13].isPassable() || tiles[13].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[13].getMapLocation());
+                return false;
+            }
+            if (!tiles[14].isPassable() || tiles[14].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[14].getMapLocation());
+                return false;
+            }
+            if (!tiles[15].isPassable() || tiles[15].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[15].getMapLocation());
+                return false;
+            }
+            if (!tiles[16].isPassable() || tiles[16].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[16].getMapLocation());
+                return false;
+            }
+            if (!tiles[17].isPassable() || tiles[17].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[17].getMapLocation());
+                return false;
+            }
+            if (!tiles[18].isPassable() || tiles[18].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[18].getMapLocation());
+                return false;
+            }
+            if (!tiles[19].isPassable() || tiles[19].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[19].getMapLocation());
+                return false;
+            }
+            if (!tiles[20].isPassable() || tiles[20].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[20].getMapLocation());
+                return false;
+            }
+            if (!tiles[21].isPassable() || tiles[21].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[21].getMapLocation());
+                return false;
+            }
+            if (!tiles[22].isPassable() || tiles[22].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[22].getMapLocation());
+                return false;
+            }
+            if (!tiles[23].isPassable() || tiles[23].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[23].getMapLocation());
+                return false;
+            }
+            if (!tiles[24].isPassable() || tiles[24].getPaint().isEnemy()) {
+                checkedPattern.add(tiles[24].getMapLocation());
+                return false;
+            }
+        }
+        // System.out.println("normal price:" + (price - Clock.getBytecodesLeft()));
         return true;
     }
     //checks whether the 5x5 area around a location is empty of obstacles
