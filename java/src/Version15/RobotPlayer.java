@@ -267,6 +267,7 @@ public class RobotPlayer {
             Communication.scanForRuins();
             Communication.sendMessagesRobot();
 
+
             //////////////////////////////////////////////////////////////////////////////////////////////////
             //boolean p = false;
             /*/
