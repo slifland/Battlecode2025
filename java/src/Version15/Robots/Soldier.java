@@ -66,6 +66,7 @@ public class Soldier {
 
 
 
+
     public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
     public final static int refillThreshold = 35;    //Paint level at which soldiers go to refill
@@ -131,7 +132,7 @@ public class Soldier {
             if(Clock.getBytecodesLeft() > 4200)
                 SoldierUtil.scanNearbyTilesSoldier();
         }
-        else if(Clock.getBytecodesLeft() > 5500) {
+        else if(Clock.getBytecodesLeft() > 5800) {
             SoldierUtil.scanNearbyTilesSoldier();
         }
 
