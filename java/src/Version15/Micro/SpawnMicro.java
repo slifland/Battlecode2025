@@ -3,7 +3,7 @@ package Version15.Micro;
 import battlecode.common.*;
 
 import static Version15.RobotPlayer.canSeeEnemyPaint;
-import static Version15.RobotPlayer.staticRC;
+import static Version15.RobotPlayer.rc;
 
 public class SpawnMicro {
     //spawn according to these priorities:
@@ -14,15 +14,15 @@ public class SpawnMicro {
     public static MapLocation bestSpawn() throws GameActionException {
         int bestScore = Integer.MIN_VALUE;
         MapLocation bestTile = null;
-        MapInfo[] potentialTiles = staticRC.senseNearbyMapInfos(GameConstants.BUILD_ROBOT_RADIUS_SQUARED);
-        MapLocation center = new MapLocation(staticRC.getMapWidth() / 2, staticRC.getMapHeight() / 2);
+        MapInfo[] potentialTiles = rc.senseNearbyMapInfos(GameConstants.BUILD_ROBOT_RADIUS_SQUARED);
+        MapLocation center = new MapLocation(rc.getMapWidth() / 2, rc.getMapHeight() / 2);
         if(potentialTiles.length == 13) {
             for (int i = 0; i < 13; i++) {
                 if (i == 7) continue;
                 MapLocation tileLoc = potentialTiles[i].getMapLocation();
                 //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
                 int score = 0;
-                score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
+                score += (rc.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
                 score += switch (potentialTiles[i].getPaint()) {
                     case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
                     case PaintType.EMPTY -> 0;
@@ -37,11 +37,11 @@ public class SpawnMicro {
         }
         else {
             for(MapInfo tile : potentialTiles) {
-                if(tile.getMapLocation().equals(staticRC.getLocation())) continue;
+                if(tile.getMapLocation().equals(rc.getLocation())) continue;
                 MapLocation tileLoc = tile.getMapLocation();
                 //Direction dirToSquare = staticRC.getLocation().directionTo(tileLoc);
                 int score = 0;
-                score += (staticRC.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
+                score += (rc.getLocation().distanceSquaredTo(center) - tileLoc.distanceSquaredTo(center));
                 score += switch (tile.getPaint()) {
                     case PaintType.ALLY_PRIMARY, ALLY_SECONDARY -> 3;
                     case PaintType.EMPTY -> 0;

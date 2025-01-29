@@ -3,8 +3,9 @@ package Version15.Utility;
 import battlecode.common.MapInfo;
 import battlecode.common.MapLocation;
 
-import static Version15.RobotPlayer.staticRC;
-import static Version15.RobotPlayer.turnCount;
+import java.util.Map;
+
+import static Version15.RobotPlayer.rc;
 
 
 public class Symmetry {
@@ -88,10 +89,19 @@ public class Symmetry {
 
     public static MapLocation opposite(MapLocation locToCheck) {
         return switch (knownSymmetry) {
-            case Horizontal -> new MapLocation(locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
+            case Horizontal -> new MapLocation(locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
             case Rotational ->
-                    new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
-            case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
+                    new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
+            case Vertical -> new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
+            case Unknown -> null;
+        };
+    }
+    public static MapLocation opposite(MapLocation locToCheck, SymmetryType symmetryType) {
+        return switch (symmetryType) {
+            case Horizontal -> new MapLocation(locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
+            case Rotational ->
+                    new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
+            case Vertical -> new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
             case Unknown -> null;
         };
     }
@@ -107,12 +117,66 @@ public class Symmetry {
         };
     }
 
+    public static MapLocation[] possibleRuins(SymmetryType possibleSymmetry)
+    {
+        MapLocation[] possibleRuins = new MapLocation[seenRuins.size];
+        switch(possibleSymmetry)
+        {
+            case Rotational:
+                seenRuins.updateIterable();
+                for(int i = 0; i < seenRuins.size; i++)
+                {
+                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Rotational);
+                }
+                break;
+
+            case Horizontal:
+                seenRuins.updateIterable();
+                for(int i = 0; i < seenRuins.size; i++)
+                {
+                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Horizontal);
+                }
+                break;
+
+            case Vertical:
+                seenRuins.updateIterable();
+                for(int i = 0; i < seenRuins.size; i++)
+                {
+                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Vertical);
+                }
+                break;
+        }
+        return possibleRuins;
+    }
+
+    public static MapLocation closestPossibleRuin()
+    {
+        int closestDistance = Integer.MAX_VALUE;
+        MapLocation closestPossible = null;
+        MapLocation currentLocation = rc.getLocation();
+
+        SymmetryType[] possibleSymmetries = possibleSymmetry();
+        for(SymmetryType symmetryType : possibleSymmetries)
+        {
+            for(MapLocation possibleRuin : possibleRuins(symmetryType))
+            {
+                int distance = currentLocation.distanceSquaredTo(possibleRuin);
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPossible = possibleRuin;
+                }
+            }
+        }
+        return closestPossible;
+    }
+
     //returns the closest unseen ruin
     public static MapLocation closestUnseenRuin() {
         MapLocation curRuin = null;
         int bestIndex = -1;
         int minDist = Integer.MAX_VALUE;
-        MapLocation curLoc = staticRC.getLocation();
+        MapLocation curLoc = rc.getLocation();
         unseenRuins.updateIterable();
         for(int i = 0; i < unseenRuins.size; i++) {
             curRuin = unseenRuins.get(i);

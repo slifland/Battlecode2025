@@ -17,7 +17,7 @@ public class MopperUtil {
         int x = 0;
         int y = 0;
         int count = 0;
-        FastIterableLocSet behindWall = WallChecker_FullVision.findOverWallTiles(staticRC);
+        FastIterableLocSet behindWall = WallChecker_FullVision.findOverWallTiles(rc);
         MapLocation tileLoc;
         switch (nearbyTiles.length) {
             case 57 -> {

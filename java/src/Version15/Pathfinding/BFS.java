@@ -4,7 +4,7 @@ import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 
-import static Version15.RobotPlayer.staticRC;
+import static Version15.RobotPlayer.rc;
 
 public class BFS
 {
@@ -329,128 +329,128 @@ public class BFS
 
     public static Direction moveTowards(MapLocation destination) throws GameActionException
     {
-        MapLocation start = staticRC.getLocation();
+        MapLocation start = rc.getLocation();
         lookup = new Direction[7][7];
 
         l0 = getLocationFromIndex(0, start);
         dist0 = 1000000;
         h0 = l0.distanceSquaredTo(destination);
-        exists0 = staticRC.onTheMap(l0) && staticRC.sensePassability(l0) && !staticRC.canSenseRobotAtLocation(l0);
+        exists0 = rc.onTheMap(l0) && rc.sensePassability(l0) && !rc.canSenseRobotAtLocation(l0);
 
         l1 = getLocationFromIndex(1, start);
         dist1 = 1000000;
         h1 = l1.distanceSquaredTo(destination);
-        exists1 = staticRC.onTheMap(l1) && staticRC.sensePassability(l1) && !staticRC.canSenseRobotAtLocation(l1);
+        exists1 = rc.onTheMap(l1) && rc.sensePassability(l1) && !rc.canSenseRobotAtLocation(l1);
 
         l2 = getLocationFromIndex(2, start);
         dist2 = 1000000;
         h2 = l2.distanceSquaredTo(destination);
-        exists2 = staticRC.onTheMap(l2) && staticRC.sensePassability(l2) && !staticRC.canSenseRobotAtLocation(l2);
+        exists2 = rc.onTheMap(l2) && rc.sensePassability(l2) && !rc.canSenseRobotAtLocation(l2);
 
         l3 = getLocationFromIndex(3, start);
         dist3 = 1000000;
         h3 = l3.distanceSquaredTo(destination);
-        exists3 = staticRC.onTheMap(l3) && staticRC.sensePassability(l3) && !staticRC.canSenseRobotAtLocation(l3);
+        exists3 = rc.onTheMap(l3) && rc.sensePassability(l3) && !rc.canSenseRobotAtLocation(l3);
 
         l4 = getLocationFromIndex(4, start);
         dist4 = 1000000;
         h4 = l4.distanceSquaredTo(destination);
-        exists4 = staticRC.onTheMap(l4) && staticRC.sensePassability(l4) && !staticRC.canSenseRobotAtLocation(l4);
+        exists4 = rc.onTheMap(l4) && rc.sensePassability(l4) && !rc.canSenseRobotAtLocation(l4);
 
         l5 = getLocationFromIndex(5, start);
         dist5 = 1000000;
         h5 = l5.distanceSquaredTo(destination);
-        exists5 = staticRC.onTheMap(l5) && staticRC.sensePassability(l5) && !staticRC.canSenseRobotAtLocation(l5);
+        exists5 = rc.onTheMap(l5) && rc.sensePassability(l5) && !rc.canSenseRobotAtLocation(l5);
 
         l6 = getLocationFromIndex(6, start);
         dist6 = 1000000;
         h6 = l6.distanceSquaredTo(destination);
-        exists6 = staticRC.onTheMap(l6) && staticRC.sensePassability(l6) && !staticRC.canSenseRobotAtLocation(l6);
+        exists6 = rc.onTheMap(l6) && rc.sensePassability(l6) && !rc.canSenseRobotAtLocation(l6);
 
         l7 = getLocationFromIndex(7, start);
         dist7 = 1000000;
         h7 = l7.distanceSquaredTo(destination);
-        exists7 = staticRC.onTheMap(l7) && staticRC.sensePassability(l7) && !staticRC.canSenseRobotAtLocation(l7);
+        exists7 = rc.onTheMap(l7) && rc.sensePassability(l7) && !rc.canSenseRobotAtLocation(l7);
 
         l8 = getLocationFromIndex(8, start);
         dist8 = 1000000;
         h8 = l8.distanceSquaredTo(destination);
-        exists8 = staticRC.onTheMap(l8) && staticRC.sensePassability(l8) && !staticRC.canSenseRobotAtLocation(l8);
+        exists8 = rc.onTheMap(l8) && rc.sensePassability(l8) && !rc.canSenseRobotAtLocation(l8);
 
         l9 = getLocationFromIndex(9, start);
         dist9 = 1000000;
         h9 = l9.distanceSquaredTo(destination);
-        exists9 = staticRC.onTheMap(l9) && staticRC.sensePassability(l9) && !staticRC.canSenseRobotAtLocation(l9);
+        exists9 = rc.onTheMap(l9) && rc.sensePassability(l9) && !rc.canSenseRobotAtLocation(l9);
 
         l10 = getLocationFromIndex(10, start);
         dist10 = 1000000;
         h10 = l10.distanceSquaredTo(destination);
-        exists10 = staticRC.onTheMap(l10) && staticRC.sensePassability(l10) && !staticRC.canSenseRobotAtLocation(l10);
+        exists10 = rc.onTheMap(l10) && rc.sensePassability(l10) && !rc.canSenseRobotAtLocation(l10);
 
         l11 = getLocationFromIndex(11, start);
         dist11 = 1000000;
         h11 = l11.distanceSquaredTo(destination);
-        exists11 = staticRC.onTheMap(l11) && staticRC.sensePassability(l11) && !staticRC.canSenseRobotAtLocation(l11);
+        exists11 = rc.onTheMap(l11) && rc.sensePassability(l11) && !rc.canSenseRobotAtLocation(l11);
 
         l12 = getLocationFromIndex(12, start);
         dist12 = 1000000;
         h12 = l12.distanceSquaredTo(destination);
-        exists12 = staticRC.onTheMap(l12) && staticRC.sensePassability(l12) && !staticRC.canSenseRobotAtLocation(l12);
+        exists12 = rc.onTheMap(l12) && rc.sensePassability(l12) && !rc.canSenseRobotAtLocation(l12);
 
         l13 = getLocationFromIndex(13, start);
         dist13 = 1000000;
         h13 = l13.distanceSquaredTo(destination);
-        exists13 = staticRC.onTheMap(l13) && staticRC.sensePassability(l13) && !staticRC.canSenseRobotAtLocation(l13);
+        exists13 = rc.onTheMap(l13) && rc.sensePassability(l13) && !rc.canSenseRobotAtLocation(l13);
 
         l14 = getLocationFromIndex(14, start);
         dist14 = 1000000;
         h14 = l14.distanceSquaredTo(destination);
-        exists14 = staticRC.onTheMap(l14) && staticRC.sensePassability(l14) && !staticRC.canSenseRobotAtLocation(l14);
+        exists14 = rc.onTheMap(l14) && rc.sensePassability(l14) && !rc.canSenseRobotAtLocation(l14);
 
         l15 = getLocationFromIndex(15, start);
         dist15 = 1000000;
         h15 = l15.distanceSquaredTo(destination);
-        exists15 = staticRC.onTheMap(l15) && staticRC.sensePassability(l15) && !staticRC.canSenseRobotAtLocation(l15);
+        exists15 = rc.onTheMap(l15) && rc.sensePassability(l15) && !rc.canSenseRobotAtLocation(l15);
 
         l16 = getLocationFromIndex(16, start);
         dist16 = 1000000;
         h16 = l16.distanceSquaredTo(destination);
-        exists16 = staticRC.onTheMap(l16) && staticRC.sensePassability(l16) && !staticRC.canSenseRobotAtLocation(l16);
+        exists16 = rc.onTheMap(l16) && rc.sensePassability(l16) && !rc.canSenseRobotAtLocation(l16);
 
         l17 = getLocationFromIndex(17, start);
         dist17 = 1000000;
         h17 = l17.distanceSquaredTo(destination);
-        exists17 = staticRC.onTheMap(l17) && staticRC.sensePassability(l17) && !staticRC.canSenseRobotAtLocation(l17);
+        exists17 = rc.onTheMap(l17) && rc.sensePassability(l17) && !rc.canSenseRobotAtLocation(l17);
 
         l18 = getLocationFromIndex(18, start);
         dist18 = 1000000;
         h18 = l18.distanceSquaredTo(destination);
-        exists18 = staticRC.onTheMap(l18) && staticRC.sensePassability(l18) && !staticRC.canSenseRobotAtLocation(l18);
+        exists18 = rc.onTheMap(l18) && rc.sensePassability(l18) && !rc.canSenseRobotAtLocation(l18);
 
         l19 = getLocationFromIndex(19, start);
         dist19 = 1000000;
         h19 = l19.distanceSquaredTo(destination);
-        exists19 = staticRC.onTheMap(l19) && staticRC.sensePassability(l19) && !staticRC.canSenseRobotAtLocation(l19);
+        exists19 = rc.onTheMap(l19) && rc.sensePassability(l19) && !rc.canSenseRobotAtLocation(l19);
 
         l20 = getLocationFromIndex(20, start);
         dist20 = 1000000;
         h20 = l20.distanceSquaredTo(destination);
-        exists20 = staticRC.onTheMap(l20) && staticRC.sensePassability(l20) && !staticRC.canSenseRobotAtLocation(l20);
+        exists20 = rc.onTheMap(l20) && rc.sensePassability(l20) && !rc.canSenseRobotAtLocation(l20);
 
         l21 = getLocationFromIndex(21, start);
         dist21 = 1000000;
         h21 = l21.distanceSquaredTo(destination);
-        exists21 = staticRC.onTheMap(l21) && staticRC.sensePassability(l21) && !staticRC.canSenseRobotAtLocation(l21);
+        exists21 = rc.onTheMap(l21) && rc.sensePassability(l21) && !rc.canSenseRobotAtLocation(l21);
 
         l22 = getLocationFromIndex(22, start);
         dist22 = 1000000;
         h22 = l22.distanceSquaredTo(destination);
-        exists22 = staticRC.onTheMap(l22) && staticRC.sensePassability(l22) && !staticRC.canSenseRobotAtLocation(l22);
+        exists22 = rc.onTheMap(l22) && rc.sensePassability(l22) && !rc.canSenseRobotAtLocation(l22);
 
         l23 = getLocationFromIndex(23, start);
         dist23 = 1000000;
         h23 = l23.distanceSquaredTo(destination);
-        exists23 = staticRC.onTheMap(l23) && staticRC.sensePassability(l23) && !staticRC.canSenseRobotAtLocation(l23);
+        exists23 = rc.onTheMap(l23) && rc.sensePassability(l23) && !rc.canSenseRobotAtLocation(l23);
 
         l24 = getLocationFromIndex(24, start);
         dist24 = 0;
@@ -460,122 +460,122 @@ public class BFS
         l25 = getLocationFromIndex(25, start);
         dist25 = 1000000;
         h25 = l25.distanceSquaredTo(destination);
-        exists25 = staticRC.onTheMap(l25) && staticRC.sensePassability(l25) && !staticRC.canSenseRobotAtLocation(l25);
+        exists25 = rc.onTheMap(l25) && rc.sensePassability(l25) && !rc.canSenseRobotAtLocation(l25);
 
         l26 = getLocationFromIndex(26, start);
         dist26 = 1000000;
         h26 = l26.distanceSquaredTo(destination);
-        exists26 = staticRC.onTheMap(l26) && staticRC.sensePassability(l26) && !staticRC.canSenseRobotAtLocation(l26);
+        exists26 = rc.onTheMap(l26) && rc.sensePassability(l26) && !rc.canSenseRobotAtLocation(l26);
 
         l27 = getLocationFromIndex(27, start);
         dist27 = 1000000;
         h27 = l27.distanceSquaredTo(destination);
-        exists27 = staticRC.onTheMap(l27) && staticRC.sensePassability(l27) && !staticRC.canSenseRobotAtLocation(l27);
+        exists27 = rc.onTheMap(l27) && rc.sensePassability(l27) && !rc.canSenseRobotAtLocation(l27);
 
         l28 = getLocationFromIndex(28, start);
         dist28 = 1000000;
         h28 = l28.distanceSquaredTo(destination);
-        exists28 = staticRC.onTheMap(l28) && staticRC.sensePassability(l28) && !staticRC.canSenseRobotAtLocation(l28);
+        exists28 = rc.onTheMap(l28) && rc.sensePassability(l28) && !rc.canSenseRobotAtLocation(l28);
 
         l29 = getLocationFromIndex(29, start);
         dist29 = 1000000;
         h29 = l29.distanceSquaredTo(destination);
-        exists29 = staticRC.onTheMap(l29) && staticRC.sensePassability(l29) && !staticRC.canSenseRobotAtLocation(l29);
+        exists29 = rc.onTheMap(l29) && rc.sensePassability(l29) && !rc.canSenseRobotAtLocation(l29);
 
         l30 = getLocationFromIndex(30, start);
         dist30 = 1000000;
         h30 = l30.distanceSquaredTo(destination);
-        exists30 = staticRC.onTheMap(l30) && staticRC.sensePassability(l30) && !staticRC.canSenseRobotAtLocation(l30);
+        exists30 = rc.onTheMap(l30) && rc.sensePassability(l30) && !rc.canSenseRobotAtLocation(l30);
 
         l31 = getLocationFromIndex(31, start);
         dist31 = 1000000;
         h31 = l31.distanceSquaredTo(destination);
-        exists31 = staticRC.onTheMap(l31) && staticRC.sensePassability(l31) && !staticRC.canSenseRobotAtLocation(l31);
+        exists31 = rc.onTheMap(l31) && rc.sensePassability(l31) && !rc.canSenseRobotAtLocation(l31);
 
         l32 = getLocationFromIndex(32, start);
         dist32 = 1000000;
         h32 = l32.distanceSquaredTo(destination);
-        exists32 = staticRC.onTheMap(l32) && staticRC.sensePassability(l32) && !staticRC.canSenseRobotAtLocation(l32);
+        exists32 = rc.onTheMap(l32) && rc.sensePassability(l32) && !rc.canSenseRobotAtLocation(l32);
 
         l33 = getLocationFromIndex(33, start);
         dist33 = 1000000;
         h33 = l33.distanceSquaredTo(destination);
-        exists33 = staticRC.onTheMap(l33) && staticRC.sensePassability(l33) && !staticRC.canSenseRobotAtLocation(l33);
+        exists33 = rc.onTheMap(l33) && rc.sensePassability(l33) && !rc.canSenseRobotAtLocation(l33);
 
         l34 = getLocationFromIndex(34, start);
         dist34 = 1000000;
         h34 = l34.distanceSquaredTo(destination);
-        exists34 = staticRC.onTheMap(l34) && staticRC.sensePassability(l34) && !staticRC.canSenseRobotAtLocation(l34);
+        exists34 = rc.onTheMap(l34) && rc.sensePassability(l34) && !rc.canSenseRobotAtLocation(l34);
 
         l35 = getLocationFromIndex(35, start);
         dist35 = 1000000;
         h35 = l35.distanceSquaredTo(destination);
-        exists35 = staticRC.onTheMap(l35) && staticRC.sensePassability(l35) && !staticRC.canSenseRobotAtLocation(l35);
+        exists35 = rc.onTheMap(l35) && rc.sensePassability(l35) && !rc.canSenseRobotAtLocation(l35);
 
         l36 = getLocationFromIndex(36, start);
         dist36 = 1000000;
         h36 = l36.distanceSquaredTo(destination);
-        exists36 = staticRC.onTheMap(l36) && staticRC.sensePassability(l36) && !staticRC.canSenseRobotAtLocation(l36);
+        exists36 = rc.onTheMap(l36) && rc.sensePassability(l36) && !rc.canSenseRobotAtLocation(l36);
 
         l37 = getLocationFromIndex(37, start);
         dist37 = 1000000;
         h37 = l37.distanceSquaredTo(destination);
-        exists37 = staticRC.onTheMap(l37) && staticRC.sensePassability(l37) && !staticRC.canSenseRobotAtLocation(l37);
+        exists37 = rc.onTheMap(l37) && rc.sensePassability(l37) && !rc.canSenseRobotAtLocation(l37);
 
         l38 = getLocationFromIndex(38, start);
         dist38 = 1000000;
         h38 = l38.distanceSquaredTo(destination);
-        exists38 = staticRC.onTheMap(l38) && staticRC.sensePassability(l38) && !staticRC.canSenseRobotAtLocation(l38);
+        exists38 = rc.onTheMap(l38) && rc.sensePassability(l38) && !rc.canSenseRobotAtLocation(l38);
 
         l39 = getLocationFromIndex(39, start);
         dist39 = 1000000;
         h39 = l39.distanceSquaredTo(destination);
-        exists39 = staticRC.onTheMap(l39) && staticRC.sensePassability(l39) && !staticRC.canSenseRobotAtLocation(l39);
+        exists39 = rc.onTheMap(l39) && rc.sensePassability(l39) && !rc.canSenseRobotAtLocation(l39);
 
         l40 = getLocationFromIndex(40, start);
         dist40 = 1000000;
         h40 = l40.distanceSquaredTo(destination);
-        exists40 = staticRC.onTheMap(l40) && staticRC.sensePassability(l40) && !staticRC.canSenseRobotAtLocation(l40);
+        exists40 = rc.onTheMap(l40) && rc.sensePassability(l40) && !rc.canSenseRobotAtLocation(l40);
 
         l41 = getLocationFromIndex(41, start);
         dist41 = 1000000;
         h41 = l41.distanceSquaredTo(destination);
-        exists41 = staticRC.onTheMap(l41) && staticRC.sensePassability(l41) && !staticRC.canSenseRobotAtLocation(l41);
+        exists41 = rc.onTheMap(l41) && rc.sensePassability(l41) && !rc.canSenseRobotAtLocation(l41);
 
         l42 = getLocationFromIndex(42, start);
         dist42 = 1000000;
         h42 = l42.distanceSquaredTo(destination);
-        exists42 = staticRC.onTheMap(l42) && staticRC.sensePassability(l42) && !staticRC.canSenseRobotAtLocation(l42);
+        exists42 = rc.onTheMap(l42) && rc.sensePassability(l42) && !rc.canSenseRobotAtLocation(l42);
 
         l43 = getLocationFromIndex(43, start);
         dist43 = 1000000;
         h43 = l43.distanceSquaredTo(destination);
-        exists43 = staticRC.onTheMap(l43) && staticRC.sensePassability(l43) && !staticRC.canSenseRobotAtLocation(l43);
+        exists43 = rc.onTheMap(l43) && rc.sensePassability(l43) && !rc.canSenseRobotAtLocation(l43);
 
         l44 = getLocationFromIndex(44, start);
         dist44 = 1000000;
         h44 = l44.distanceSquaredTo(destination);
-        exists44 = staticRC.onTheMap(l44) && staticRC.sensePassability(l44) && !staticRC.canSenseRobotAtLocation(l44);
+        exists44 = rc.onTheMap(l44) && rc.sensePassability(l44) && !rc.canSenseRobotAtLocation(l44);
 
         l45 = getLocationFromIndex(45, start);
         dist45 = 1000000;
         h45 = l45.distanceSquaredTo(destination);
-        exists45 = staticRC.onTheMap(l45) && staticRC.sensePassability(l45) && !staticRC.canSenseRobotAtLocation(l45);
+        exists45 = rc.onTheMap(l45) && rc.sensePassability(l45) && !rc.canSenseRobotAtLocation(l45);
 
         l46 = getLocationFromIndex(46, start);
         dist46 = 1000000;
         h46 = l46.distanceSquaredTo(destination);
-        exists46 = staticRC.onTheMap(l46) && staticRC.sensePassability(l46) && !staticRC.canSenseRobotAtLocation(l46);
+        exists46 = rc.onTheMap(l46) && rc.sensePassability(l46) && !rc.canSenseRobotAtLocation(l46);
 
         l47 = getLocationFromIndex(47, start);
         dist47 = 1000000;
         h47 = l47.distanceSquaredTo(destination);
-        exists47 = staticRC.onTheMap(l47) && staticRC.sensePassability(l47) && !staticRC.canSenseRobotAtLocation(l47);
+        exists47 = rc.onTheMap(l47) && rc.sensePassability(l47) && !rc.canSenseRobotAtLocation(l47);
 
         l48 = getLocationFromIndex(48, start);
         dist48 = 1000000;
         h48 = l48.distanceSquaredTo(destination);
-        exists48 = staticRC.onTheMap(l48) && staticRC.sensePassability(l48) && !staticRC.canSenseRobotAtLocation(l48);
+        exists48 = rc.onTheMap(l48) && rc.sensePassability(l48) && !rc.canSenseRobotAtLocation(l48);
 
         int closestDistance = Integer.MAX_VALUE;
         int closestIndex = 0;
