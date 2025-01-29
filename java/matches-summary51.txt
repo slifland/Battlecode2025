@@ -1,0 +1,44 @@
+|  | Version14 | Version13 | Version12 | Version11 |
+| :---: | :---: | :---: | :---: | :---: |
+| gridworld | Tied (918, 1437) | Won (1884, 1199) | Won (289, 499) | Won (688, 524) |
+| sayhi | Lost (483, 404) | Tied (647, 442) | Lost (763, 596) | Won (557, 516) |
+| Money | Tied (547, 334) | Tied (365, 350) | Won (364, 417) | Won (311, 360) |
+| Mirage | Tied (364, 476) | Won (940, 346) | Tied (791, 364) | Tied (326, 407) |
+| Justice | Won (1124, 1693) | Tied (2000, 1456) | Tied (490, 1133) | Tied (415, 382) |
+| gardenworld | Won (648, 917) | Tied (808, 719) | Tied (815, 591) | Lost (419, 629) |
+| memstore | Tied (591, 420) | Tied (570, 498) | Lost (295, 294) | Lost (405, 457) |
+| Thirds | Tied (454, 523) | Tied (464, 441) | Tied (689, 440) | Tied (393, 422) |
+| TargetPractice | Tied (318, 339) | Tied (654, 363) | Lost (450, 284) | Lost (276, 272) |
+| Racetrack | Tied (599, 693) | Tied (503, 294) | Tied (407, 759) | Lost (530, 278) |
+| catface | Tied (280, 245) | Won (763, 365) | Won (299, 298) | Won (251, 638) |
+| giver | Tied (468, 920) | Won (394, 293) | Won (326, 277) | Tied (345, 297) |
+| quack | Won (567, 593) | Tied (766, 492) | Won (486, 456) | Won (713, 557) |
+| galaxy | Tied (555, 557) | Lost (398, 626) | Lost (429, 642) | Lost (422, 448) |
+| leavemealone | Tied (730, 619) | Tied (345, 647) | Won (454, 714) | Won (532, 602) |
+| windmill | Lost (493, 501) | Tied (299, 846) | Tied (386, 1276) | Lost (352, 349) |
+| Piglets2 | Lost (571, 909) | Won (576, 467) | Tied (476, 457) | Won (507, 505) |
+| Flower | Tied (162, 422) | Lost (472, 385) | Lost (473, 411) | Lost (2000, 665) |
+| Filter | Tied (330, 138) | Tied (194, 242) | Lost (355, 232) | Tied (212, 321) |
+| yearofthesnake | Lost (465, 370) | Tied (403, 766) | Tied (409, 709) | Lost (303, 474) |
+| walalilongla | Lost (571, 729) | Tied (403, 538) | Tied (419, 579) | Tied (407, 334) |
+| starburst | Tied (484, 337) | Lost (918, 738) | Lost (330, 949) | Lost (537, 328) |
+| sierpinski | Won (441, 459) | Won (475, 470) | Won (497, 447) | Tied (531, 426) |
+| sunrise | Tied (796, 757) | Won (653, 490) | Won (543, 504) | Lost (324, 377) |
+| roads | Tied (344, 333) | Won (470, 860) | Tied (529, 354) | Tied (352, 383) |
+| rain | Won (1754, 1375) | Tied (1067, 703) | Lost (749, 377) | Tied (734, 486) |
+| AlarmClock | Tied (375, 320) | Won (278, 482) | Won (320, 513) | Won (501, 647) |
+| Barcode | Tied (280, 626) | Lost (449, 420) | Tied (741, 556) | Lost (332, 463) |
+| BatSignal | Won (2000, 1004) | Tied (422, 1263) | Won (782, 329) | Tied (475, 522) |
+| Brat | Won (299, 233) | Won (378, 1045) | Won (257, 204) | Lost (372, 525) |
+| Bread,Castle | Tied (386, 285) | Won (507, 388) | Won (335, 384) | Lost (488, 403) |
+| Circuit | Tied (1042, 841) | Tied (1136, 1232) | Won (1732, 2000) | Won (710, 1245) |
+| Crab | Tied (344, 541) | Won (438, 542) | Tied (554, 600) | Tied (293, 454) |
+| CastleDefense | Tied (144, 155) | Tied (413, 214) | Won (245, 501) | Lost (172, 267) |
+| FourCorners | Tied (170, 272) | Lost (237, 208) | Tied (248, 653) | Lost (310, 229) |
+| Gears | Tied (650, 585) | Won (583, 680) | Tied (978, 514) | Tied (520, 660) |
+| HungerGames | Won (444, 476) | Tied (490, 588) | Tied (410, 481) | Tied (505, 319) |
+| Leaf | Won (488, 401) | Tied (420, 390) | Tied (346, 421) | Tied (408, 496) |
+| Oasis | Won (363, 416) | Won (400, 406) | Won (366, 516) | Won (346, 437) |
+| Paintball | Tied (1461, 2000) | Tied (243, 245) | Tied (196, 153) | Tied (185, 216) |
+| Parking_lot | Lost (943, 580) | Tied (692, 396) | Tied (537, 459) | Lost (294, 340) |
+
