@@ -160,6 +160,7 @@ public class Symmetry {
         {
             for(MapLocation possibleRuin : possibleRuins(symmetryType))
             {
+                if(seenRuins.contains(possibleRuin)) continue;
                 int distance = currentLocation.distanceSquaredTo(possibleRuin);
                 if(distance < closestDistance)
                 {
