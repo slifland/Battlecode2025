@@ -47,17 +47,11 @@ class splasherMicroInfo {
     void populateSplasherMicroInfo() throws GameActionException {
         if(averageEnemyPaint != null) distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
         else if(seenEnemyTower != null) distanceToEnemyAverage = loc.distanceSquaredTo(seenEnemyTower.getLocation());
-        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
-        if(allyRobots.length > 5) {
-            adjacentAllies = rc.senseNearbyRobots(2, rc.getTeam()).length;
-        }
-        else {
             for (RobotInfo robot : allyRobots) {
                 if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
                     adjacentAllies++;
                 }
             }
-        }
         //find the closest enemy, and also see if we are safe from towers
 //        for(RobotInfo robot : enemyRobots) {
 //            int dist = loc.distanceSquaredTo(robot.getLocation());

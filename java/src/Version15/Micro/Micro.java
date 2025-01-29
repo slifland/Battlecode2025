@@ -40,16 +40,11 @@ class microInfo {
     //takes in a map info, and populates this relevant micro info object using it, as well as known information
     public void populateMicro() throws GameActionException {
         //find the closest ally, and count allies that are cardinally adjacent to this square
-        if(allyRobots.length > 5) {
-            adjacentAllies = rc.senseNearbyRobots(2, rc.getTeam()).length;
-        }
-        else {
             for (RobotInfo robot : allyRobots) {
                 if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
                     adjacentAllies++;
                 }
             }
-        }
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());
