@@ -63,8 +63,6 @@ public class Splasher {
     //public static BitBoard checkedRuin;
     public static FastIterableLocSet checkedRuin;
 
-    public static int EXPLORE_FILL_TOWER_THRESHOLD;
-
 
 
 
@@ -78,7 +76,6 @@ public class Splasher {
             checkedRuin = new FastIterableLocSet();
             //enemyDefenseTowers = new BitBoard();
             enemyDefenseTowers = new FastIterableLocSet();
-            EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.003 * mapSize) + 5.8);
         }
 
         updateInfo();
@@ -100,10 +97,6 @@ public class Splasher {
             //int price = Clock.getBytecodesLeft();
             splasherUtil.refreshPaintAverages();
             //System.out.println(price - Clock.getBytecodesLeft());
-        }
-        if(rc.isActionReady() && Clock.getBytecodesLeft() > 4000 && rc.getNumberTowers() >= EXPLORE_FILL_TOWER_THRESHOLD) {
-            MapLocation bestAttack = splasherUtil.cheapBestAttack(seenEnemyTower != null, 3);
-            if(bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack);
         }
 //        if(curObjective== null)rc.setIndicatorString(state.toString());
 //        else rc.setIndicatorString(state + " : " + curObjective);
