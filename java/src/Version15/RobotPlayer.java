@@ -37,7 +37,7 @@ public class  RobotPlayer {
     public static int splashers = 0;
     public static int totalBuilt = 0;
     public static boolean hunterBuilder;
-    public static int BUILD_ROUND_NUM_DIVISOR = 65; //decides the number of robots we can build - lower number = build more frequently
+    public static int BUILD_ROUND_NUM_DIVISOR = 50; //decides the number of robots we can build - lower number = build more frequently
     public static int mapSize = 0;
     public static int turnsSinceSeenEnemy = 0;
     public static UnitType toBuild = null;
@@ -129,16 +129,18 @@ public class  RobotPlayer {
                     case MOPPER: Mopper.runMopper(); break;
                     case SPLASHER:
                     {
-                        if(rc.getRoundNum() > 200)
-                        {
-                            Splasher.runSplasher();
-                        }
-                        else
-                        {
-                            HunterSplasher.runHunterSplasher();
-                        }
+                        Splasher.runSplasher();
+
+//                        if(rc.getRoundNum() > 200)
+//                        {
+//                            Splasher.runSplasher();
+//                        }
+//                        else
+//                        {
+//                            HunterSplasher.runHunterSplasher();
+//                        }
                         break;
-//                       Splasher.runSplasher();
+                       //Splasher.runSplasher();
                     }
 
                     default: runTower(); break;
@@ -360,9 +362,9 @@ public class  RobotPlayer {
             soldierScore = earlySoldierBonus;
             mopperScore = 0;
             splasherScore = (knownSymmetry == SymmetryType.Unknown) ? 0 : 2;
-            if(adjustedMapSize <= 6) {
-                mopperScore++;
-            }
+//            if(adjustedMapSize <= 6) {
+//                mopperScore++;
+//            }
         }
         else {
             soldierScore = 2;

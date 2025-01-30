@@ -2858,14 +2858,14 @@ public class SplasherMicro {
                 continue;
             }
 
-//            if (health <= 100 || !rc.isActionReady()) {
-//                //if one is in tower range and the other isnt, get out of tower range
-//                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
-//                if (bestMicro.inTowerRange && !m.inTowerRange) {
-//                    bestMicro = m;
-//                    continue;
-//                }
-//            }
+            if (health <= 100 || !rc.isActionReady()) {
+                //if one is in tower range and the other isnt, get out of tower range
+                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
+                if (bestMicro.inTowerRange && !m.inTowerRange) {
+                    bestMicro = m;
+                    continue;
+                }
+            }
 
 
             int dist = bestMicro.loc.distanceSquaredTo(target);

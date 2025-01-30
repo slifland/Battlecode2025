@@ -64,7 +64,7 @@ public class Utilities
 
     //gets the pattern to build from a hash of the location, as well as a series of other considerations
     public static boolean[][] getPatternFromWeightedHash(MapLocation center) throws GameActionException {
-         if(center.distanceSquaredTo(new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && (rc.getRoundNum() < 300 || enemyRobots.length >= 1)) {
+         if(center.distanceSquaredTo(new MapLocation(rc.getMapWidth()/ 2, rc.getMapHeight()/ 2)) <= RADIUS_FROM_CENTER && (adjustedMapSize <= 6 || enemyRobots.length >= 1)) {
             return rc.getTowerPattern(UnitType.LEVEL_ONE_DEFENSE_TOWER);
         }
          else if(rc.getRoundNum() <= Soldier.FORCE_MONEY_ROUND) {

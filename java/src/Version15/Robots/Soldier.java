@@ -68,8 +68,8 @@ public class Soldier {
 
     public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
-    public final static int refillThreshold = 35;    //Paint level at which soldiers go to refill
-    public final static int doneRefillingThreshold = 100;    //Paint level at which soldiers can stop refilling
+    public final static int refillThreshold = 15;    //Paint level at which soldiers go to refill
+    public final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
     //final static int REFRESH_ENEMY_PAINT_AVERAGES = 5;
     public static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
     public static int TURN_TO_NAVIGATE_TO_TOWERS; //indicates at what turn we will prioritize going towards enemy towers
@@ -143,15 +143,15 @@ public class Soldier {
         TURN_TO_NAVIGATE_TO_TOWERS = (int)(0.016 * mapSize + 93.6); //indicates at what turn we will prioritize going towards enemy towers
         //y = y = 0.027x + 24.2 -> calibrated to 35 on smallest and 120 on largest
         STOP_EXPLORING = (int) (mapSize * 0.027 + 24.2); //indicates when soldiers will began defaulting to navigate instead of explore
-        TURN_TO_FILL = (int)((4000 - mapSize) / 50); //turn at which filling becomes allowed
+        TURN_TO_FILL = (int)((4000 - mapSize) / 25); //turn at which filling becomes allowed
         INCENTIVIZE_MONEY_ROUND = 80; //turn at which any time before that soldiers will give a slight weight to building money towers
         //y = 0.01x + 34 -> calibrates it to 38 at min size and 70 at max size
         FORCE_MONEY_ROUND = (int)(0.01 * mapSize + 34);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
-        //EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
-        EXPLORE_FILL_TOWER_THRESHOLD = 0;
+        EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
+        //EXPLORE_FILL_TOWER_THRESHOLD = 0;
 
     }
 
@@ -179,7 +179,7 @@ public class Soldier {
             workingOnRuin = null;
         }
 
-        if(turnCount % 20 == 0) {
+        if(turnCount % 5 == 0) {
             checkedRuin.clear();
         }
         if(turnCount % 40 == 0) {
@@ -212,7 +212,7 @@ public class Soldier {
         }
         fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(20 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
+        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(19 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
 
         if(rc.getNumberTowers() < 25 && closestUnclaimedRuin != null && /*!checkedRuin.getBit(closestUnclaimedRuin)*/!checkedRuin.contains(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
@@ -267,7 +267,7 @@ public class Soldier {
 //            validateRuinClaim();
 //            navigate();
 //        }
-        if((turnCount == 1 && rng.nextInt(16-(int)adjustedMapSize) == 0) || wallHug) {
+        if((turnCount == 1 && rng.nextInt(15-(int)adjustedMapSize) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -307,18 +307,18 @@ public class Soldier {
         }
         else {
             double ran = rng.nextDouble();
-            if (ran <= .30 && rc.getRoundNum() > 10) {
-                MapLocation closestCorner = closestCorner();
-                target = new MapLocation(Math.abs(rc.getMapWidth() - 1 - closestCorner.x), Math.abs(rc.getMapHeight() - 1 - closestCorner.y));
-                //rc.setIndicatorLine(rc.getLocation(), target, 255, 255,255);
-            } else {
+//            if (ran <= .10 && rc.getRoundNum() > 10) {
+//                MapLocation closestCorner = closestCorner();
+//                target = new MapLocation(Math.abs(rc.getMapWidth() - 1 - closestCorner.x), Math.abs(rc.getMapHeight() - 1 - closestCorner.y));
+//                //rc.setIndicatorLine(rc.getLocation(), target, 255, 255,255);
+//            } else {
                 int i = 0;
                 target = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
                 while (target.isWithinDistanceSquared(rc.getLocation(), (int) (adjustedMapSize * 15)) || target.isWithinDistanceSquared(spawnLocation, (int) (adjustedMapSize * 15))) {
                     target = new MapLocation(rng.nextInt(rc.getMapWidth()), rng.nextInt(rc.getMapHeight()));
                     if (i++ >= 12) break;
                 }
-            }
+            //}
         }
     }
 
@@ -516,7 +516,7 @@ public class Soldier {
             rc.attack(closestEnemyTower);
         }
         if(rc.isMovementReady()) {
-            boolean isRushing = seenEnemyTower == null || !isDefenseTower(seenEnemyTower);
+            boolean isRushing = (seenEnemyTower == null || !isDefenseTower(seenEnemyTower) && (rc.getHealth() > 50 || rc.getRoundNum() > START_RUSHING_TOWER_NUMBER) || allyRobots.length - enemyRobots.length > 4);
             Direction dir = Micro.runMicro(isRushing);
             if(rc.canMove(dir)) rc.move(dir);
         }

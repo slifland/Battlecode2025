@@ -44,6 +44,7 @@ public class Soldier {
     static boolean[][] invalidResourceCenters;
     static boolean canFinishPattern =false;
 
+
     static final int clearContestedRuinsAndWaitingRuins = 50; //how often we should clear this hashSet
     //static MapLocation currentSector;
 
