@@ -1454,7 +1454,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[0].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1485,7 +1485,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[1].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1516,7 +1516,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[2].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1547,7 +1547,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[3].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1578,7 +1578,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[4].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1609,7 +1609,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[5].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1640,7 +1640,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[6].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1671,7 +1671,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[7].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1702,7 +1702,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[8].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1733,7 +1733,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[9].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1764,7 +1764,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[10].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1795,7 +1795,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[11].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1826,7 +1826,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[12].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1857,7 +1857,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[13].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1888,7 +1888,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[14].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1919,7 +1919,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[15].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1950,7 +1950,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[16].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -1981,7 +1981,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[17].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2012,7 +2012,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[18].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2043,7 +2043,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[19].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2074,7 +2074,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[20].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2105,7 +2105,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[21].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2136,7 +2136,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[22].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2167,7 +2167,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[23].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2198,7 +2198,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[24].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2229,7 +2229,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[25].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2260,7 +2260,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[26].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2291,7 +2291,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[27].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2322,7 +2322,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[28].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2353,7 +2353,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[29].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2384,7 +2384,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[30].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2415,7 +2415,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[31].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2446,7 +2446,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[32].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2477,7 +2477,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[33].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2508,7 +2508,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[34].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2539,7 +2539,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[35].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2570,7 +2570,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[36].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2601,7 +2601,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[37].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2632,7 +2632,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[38].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2663,7 +2663,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[39].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2694,7 +2694,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[40].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2725,7 +2725,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[41].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2756,7 +2756,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[42].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2787,7 +2787,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[43].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2818,7 +2818,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[44].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2849,7 +2849,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[45].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2880,7 +2880,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[46].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2911,7 +2911,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[47].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2942,7 +2942,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[48].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -2973,7 +2973,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[49].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3004,7 +3004,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[50].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3035,7 +3035,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[51].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3066,7 +3066,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[52].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3097,7 +3097,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[53].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3128,7 +3128,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[54].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3159,7 +3159,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[55].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3190,7 +3190,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[56].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3221,7 +3221,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[57].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3252,7 +3252,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[58].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3283,7 +3283,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[59].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3314,7 +3314,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[60].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3345,7 +3345,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[61].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3376,7 +3376,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[62].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3407,7 +3407,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[63].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3438,7 +3438,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[64].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3469,7 +3469,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[65].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3500,7 +3500,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[66].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3531,7 +3531,7 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[67].isPassable())
         {
             localSquares[totalTracker]++;
         }
@@ -3562,10 +3562,12 @@ public class splasherUtil {
                 totalPoints += 2;
             }
         }
-        else if(!paint.isAlly())
+        else if(!paint.isAlly() && nearbyTiles[68].isPassable())
         {
             localSquares[totalTracker]++;
         }
+        totalTracker++;
+
 
 
 //        for(int index = 0; index < 69; index++) {
@@ -4215,7 +4217,7 @@ public class splasherUtil {
                     totalPoints += 2;
                 }
             }
-            else if(!paint.isAlly()) {
+            else if(!paint.isAlly() && tile.isPassable()) {
                 localSquares[index]++;
             }
             index++;

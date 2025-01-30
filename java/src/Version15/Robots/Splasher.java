@@ -41,7 +41,7 @@ public class Splasher {
     private static MapLocation nearestPaintTower;
     public static int distanceToNearestPaintTower = -1;
     //final variables
-    private static final int refillThreshold = 50;
+    private static final int refillThreshold = 80;
     private static int endRefillThreshold = 200;
 
     public static MapLocation nearestUnfilledRuin;
@@ -112,9 +112,9 @@ public class Splasher {
 
     //attempts to navigate to a known location - enemy average, usually
     public static void navigate() throws GameActionException {
-        if(turnCount % 200 == 0) {
-            exploredSymmetry = false;
-        }
+//        if(turnCount % 200 == 0) {
+//            exploredSymmetry = false;
+//        }
         MapLocation curLoc = rc.getLocation();
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             if(navTarget != null) {
@@ -128,66 +128,7 @@ public class Splasher {
             navTarget = null;
         }
         else if(curObjective != null && knownSymmetry != SymmetryType.Unknown && !correctSymmetry && navTarget != null) {
-            switch(navTarget) {
-                case horizontal -> {
-                    if(knownSymmetry != SymmetryType.Horizontal) {
-                        switch(knownSymmetry) {
-                            case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, rc.getMapHeight() - 1 - home.y);
-                                navTarget = navState.rotational;
-                                break;
-                            case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, home.y);
-                                navTarget = navState.vertical;
-                                break;
-                        }
-                    }
-                }
-                case rotational -> {
-                    if(knownSymmetry != SymmetryType.Rotational) {
-                        switch(knownSymmetry) {
-                            case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, home.y);
-                                navTarget = navState.vertical;
-                                break;
-                            case Horizontal:
-                                curObjective = new MapLocation(home.x, rc.getMapHeight() - 1 - home.y);
-                                navTarget = navState.horizontal;
-                                break;
-                        }
-                    }
-                }
-                case vertical -> {
-                    if(knownSymmetry != SymmetryType.Vertical) {
-                        switch(knownSymmetry) {
-                            case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, rc.getMapHeight() - 1 - home.y);
-                                navTarget = navState.rotational;
-                                break;
-                            case Horizontal:
-                                curObjective = new MapLocation(home.x, rc.getMapHeight() - 1 - home.y);
-                                navTarget = navState.horizontal;
-                                break;
-                        }
-                    }
-                }
-                default ->{
-                    switch(knownSymmetry) {
-                        case Rotational:
-                            curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, rc.getMapHeight() - 1 - home.y);
-                            navTarget = navState.rotational;
-                            break;
-                        case Horizontal:
-                            curObjective = new MapLocation(home.x, rc.getMapHeight() - 1 - home.y);
-                            navTarget = navState.horizontal;
-                            break;
-                        case Vertical:
-                            curObjective = new MapLocation(rc.getMapWidth() - 1 - home.x, home.y);
-                            navTarget = navState.vertical;
-                            break;
-                    }
-                }
-            }
+            curObjective = Symmetry.opposite(home);
             correctSymmetry = true;
         }
         if((curObjective == null) && !enemyTowers.isEmpty()) {
@@ -290,7 +231,7 @@ public class Splasher {
                 if(seenEnemyTower != null) {
                     if(rc.canAttack(seenEnemyTower.getLocation())) rc.attack(seenEnemyTower.getLocation());
                     Direction dir = Micro.runMicro(true);
-                    if(rc.canMove(dir)) rc.move(dir);
+                    if(dir != null && rc.canMove(dir)) rc.move(dir);
                     if(rc.canAttack(seenEnemyTower.getLocation())) rc.attack(seenEnemyTower.getLocation());
                 }
                 else{

@@ -68,7 +68,7 @@ public class Soldier {
 
     public static final int ENEMY_TOWER_REFRESH = 3;
     //Constants
-    public final static int refillThreshold = 15;    //Paint level at which soldiers go to refill
+    public final static int refillThreshold = 35;    //Paint level at which soldiers go to refill
     public final static int doneRefillingThreshold = 150;    //Paint level at which soldiers can stop refilling
     //final static int REFRESH_ENEMY_PAINT_AVERAGES = 5;
     public static int EXPLORE_FILL_TOWER_THRESHOLD; //determines at what round we will fill indiscriminately while exploring
@@ -210,6 +210,9 @@ public class Soldier {
             enemyDefenseTowers.add(seenEnemyTower.getLocation());
         }
         closestEnemyTower = closestEnemyTower();
+        if(seenEnemyTower != null && closestEnemyTower != null && !seenEnemyTower.getLocation().equals(closestEnemyTower) && rc.canSenseRobotAtLocation(closestEnemyTower)) {
+            seenEnemyTower = rc.senseRobotAtLocation(closestEnemyTower);
+        }
         closestUnclaimedRuin = closestUnclaimedRuin();
         closestUnseenRuin = closestUnseenRuin();
         if(turnCount == 1)  SoldierUtil.scanNearbyTilesSoldier();
@@ -554,8 +557,9 @@ public class Soldier {
         if(rc.canAttack(closestEnemyTower)) {
             rc.attack(closestEnemyTower);
         }
+        System.out.println(rc.canAttack(closestEnemyTower));
         if(rc.isMovementReady()) {
-            boolean isRushing = (seenEnemyTower == null || !isDefenseTower(seenEnemyTower) && (rc.getHealth() > 50 || rc.getRoundNum() > START_RUSHING_TOWER_NUMBER) || allyRobots.length - enemyRobots.length > 4);
+            boolean isRushing = (closestEnemyTower == null || !isDefenseTower(seenEnemyTower) && (rc.getHealth() > 50 || rc.getRoundNum() > START_RUSHING_TOWER_NUMBER) || allyRobots.length - enemyRobots.length > 4);
             Direction dir = Micro.runMicro(isRushing);
             if(rc.canMove(dir)) rc.move(dir);
         }
@@ -897,7 +901,7 @@ public class Soldier {
             if(ruin.location.distanceSquaredTo(rc.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(rc.getLocation());
                 r = ruin;
-                if (minDist <= 25) return r.location;
+                if (minDist <= 8) return r.location;
             }
         }
         return (minDist == Integer.MAX_VALUE) ? null : r.location;
@@ -910,7 +914,7 @@ public class Soldier {
             if(ruin.location.distanceSquaredTo(rc.getLocation()) < minDist) {
                 minDist = ruin.location.distanceSquaredTo(rc.getLocation());
                 r = ruin;
-                if (minDist <= 25) return r.location;
+                if (minDist <= 8) return r.location;
             }
         }
         return (minDist == Integer.MAX_VALUE) ? null : r.location;

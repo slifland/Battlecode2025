@@ -112,9 +112,9 @@ public class Mopper {
 
     //attempts to navigate to a known location
     public static void navigate() throws GameActionException {
-        if(turnCount % 200 == 0) {
-            exploredSymmetry = false;
-        }
+//        if(turnCount % 200 == 0) {
+//            exploredSymmetry = false;
+//        }
         MapLocation curLoc = rc.getLocation();
         if(curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             switch(navTarget) {
@@ -129,50 +129,7 @@ public class Mopper {
             navTarget = null;
         }
         else if(curObjective != null && knownSymmetry != SymmetryType.Unknown && !correctSymmetry && navTarget != null) {
-            switch(navTarget) {
-                case navState.horizontal -> {
-                    if(knownSymmetry != SymmetryType.Horizontal) {
-                        switch(knownSymmetry) {
-                            case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
-                                navTarget = navState.rotational;
-                                break;
-                            case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
-                                navTarget = navState.vertical;
-                                break;
-                        }
-                    }
-                }
-                case navState.rotational -> {
-                    if(knownSymmetry != SymmetryType.Rotational) {
-                        switch(knownSymmetry) {
-                            case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
-                                navTarget = navState.vertical;
-                                break;
-                            case Horizontal:
-                                curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
-                                navTarget = navState.horizontal;
-                                break;
-                        }
-                    }
-                }
-                case navState.vertical -> {
-                    if(knownSymmetry != SymmetryType.Vertical) {
-                        switch(knownSymmetry) {
-                            case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
-                                navTarget = navState.rotational;
-                                break;
-                            case Horizontal:
-                                curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
-                                navTarget = navState.horizontal;
-                                break;
-                        }
-                    }
-                }
-            }
+            curObjective = Symmetry.opposite(spawnLocation);
             correctSymmetry = true;
         }
         //if we know of any unclaimed ruins, lets try to help out there

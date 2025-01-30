@@ -512,8 +512,15 @@ public class Micro {
                     break;
                 }
 
-                //depending on our health, and whether we have nearby allies, we may be fine moving into tower range
-                if (rc.isActionReady() && (health >= soldierHealthAttackThreshold || isRushing || (Soldier.seenEnemyTower != null && Soldier.seenEnemyTower.health <= 100))) {
+                if(!rc.isActionReady()) {
+                    //check if one space is in tower range and the other isn't
+                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) break;
+                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) {
+                        bestMicro = microArray[i];
+                        break;
+                    }
+                }
+                else if((isRushing) || (Soldier.seenEnemyTower != null && ((health >= soldierHealthAttackThreshold && !Soldier.isDefenseTower(Soldier.seenEnemyTower)) || Soldier.seenEnemyTower.health <= 100))) {
                     //we are fine being in tower range as long as we can attack, because we have enough health
                     if (bestMicro.inTowerRange && !microArray[i].inTowerRange) break;
                     if (!bestMicro.inTowerRange && microArray[i].inTowerRange) {
@@ -521,16 +528,7 @@ public class Micro {
                         break;
                     }
                 }
-                //definitely don't be in tower range!
-                else {
-                    //check if one space is in tower range and the other isn't
-                    if (!bestMicro.inTowerRange && microArray[i].inTowerRange) break;
-                    if (bestMicro.inTowerRange && !microArray[i].inTowerRange) {
-                        bestMicro = microArray[i];
-                        break;
-                    }
 
-                }
                 //look at which place will lose us the least paint at the end of this turn
                 if (bestMicro.paintLoss < microArray[i].paintLoss) break;
                 if (microArray[i].paintLoss < bestMicro.paintLoss) {

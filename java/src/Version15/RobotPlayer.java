@@ -375,7 +375,7 @@ public class  RobotPlayer {
         }
         else {
             soldierScore = 2;
-            mopperScore = 2;
+            mopperScore = 1;
             splasherScore = 4;
 //            if(turnsSinceSeenEnemy <= 20) {
 //                splasherScore++;
