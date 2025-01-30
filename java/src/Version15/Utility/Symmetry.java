@@ -34,7 +34,7 @@ public class Symmetry {
             int score = (toCheck.isPassable()) ? 1 : toCheck.isWall() ? 2 : 3;
             if (map[locToCheck.x][locToCheck.y] != 0) return;
             map[locToCheck.x][locToCheck.y] = score;
-            //if(score <= 1) return;
+            if(score <= 1) return;
             int x = locToCheck.x;
             int y = locToCheck.y;
             int toCompareHorizontal = map[x][map[0].length - 1 - y];

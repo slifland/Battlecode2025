@@ -2707,7 +2707,7 @@ class splasherMicroInfo {
                     }
                 }
                 case MOPPER -> {
-                    if (dist <= 2) potentialPaintLoss += (5-Math.min(5, adjacentAllies));
+                    if (dist <= 2) potentialPaintLoss += Math.min(5, adjacentAllies);
                     if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                 }
                 case SOLDIER -> {
