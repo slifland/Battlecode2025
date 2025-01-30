@@ -10,9 +10,9 @@ emojiMap = {
     'Error': ':heavy_exclamation_mark:'
 }
 errors = []
-currentBot = 'Version15'
+currentBot = 'Version11'
 
-bots = ['Version14']
+bots = ['Version15', 'Version14', 'Version13', 'Version12']
 botsSet = set(bots)
 maps = ['gridworld', 'sayhi', 'Money', 'Mirage', 'Justice', 'gardenworld', 'memstore', 'Thirds', 'TargetPractice', 'Racetrack', 'catface', 'giver', 'quack', 'galaxy', 'leavemealone', 'windmill', 'Piglets2', 'Flower', 'Filter'
        , 'yearofthesnake', 'walalilongla', 'starburst', 'sierpinski', 'sunrise', 'roads', 'rain', 'AlarmClock', 'Barcode', 'BatSignal', 'Brat', 'Bread,' 'Castle', 'Circuit', 'Crab', 'CastleDefense', 'FourCorners', 'Gears', 
