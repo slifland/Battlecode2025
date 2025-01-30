@@ -207,7 +207,7 @@ public class Splasher {
                     navTarget = navState.ruin;
                 }
             }
-            if(closestUnseenRuin != null && rc.getLocation().distanceSquaredTo(closestUnseenRuin) < rc.getLocation().distanceSquaredTo(curObjective)) {
+            if(closestUnseenRuin != null && rc.getLocation().distanceSquaredTo(closestUnseenRuin) < minDist) {
                 curObjective = closestUnseenRuin;
                 navTarget = navState.ruin;
                 rc.setIndicatorLine(rc.getLocation(), closestUnseenRuin, 0, 255, 0);
