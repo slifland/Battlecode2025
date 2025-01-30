@@ -1,0 +1,44 @@
+|  | Version14 | Version11 |
+| :---: | :---: | :---: |
+| gridworld | Tied (416, 672) | Won (495, 539) |
+| sayhi | Tied (468, 501) | Lost (414, 314) |
+| Money | Tied (533, 293) | Tied (467, 335) |
+| Mirage | Lost (499, 423) | Tied (403, 363) |
+| Justice | Tied (683, 863) | Won (335, 493) |
+| gardenworld | Won (466, 887) | Won (473, 366) |
+| memstore | Lost (489, 616) | Lost (371, 451) |
+| Thirds | Tied (495, 661) | Tied (570, 478) |
+| TargetPractice | Won (368, 299) | Lost (211, 321) |
+| Racetrack | Lost (447, 457) | Won (312, 368) |
+| catface | Tied (499, 672) | Won (412, 307) |
+| giver | Tied (649, 552) | Tied (321, 279) |
+| quack | Tied (569, 981) | Tied (334, 564) |
+| galaxy | Tied (607, 649) | Tied (612, 487) |
+| leavemealone | Won (372, 945) | Won (272, 292) |
+| windmill | Tied (462, 469) | Tied (681, 455) |
+| Piglets2 | Tied (503, 333) | Won (338, 487) |
+| Flower | Lost (2000, 543) | Tied (368, 452) |
+| Filter | Tied (323, 331) | Lost (346, 381) |
+| yearofthesnake | Won (455, 372) | Lost (358, 469) |
+| walalilongla | Tied (878, 870) | Won (497, 412) |
+| starburst | Won (304, 441) | Lost (338, 369) |
+| sierpinski | Lost (630, 410) | Lost (730, 387) |
+| sunrise | Won (770, 787) | Tied (446, 741) |
+| roads | Lost (304, 518) | Won (477, 357) |
+| rain | Won (1352, 200) | Won (675, 250) |
+| AlarmClock | Tied (619, 414) | Lost (375, 377) |
+| Barcode | Won (351, 411) | Tied (423, 1240) |
+| BatSignal | Tied (921, 449) | Tied (300, 639) |
+| Brat | Tied (292, 404) | Lost (377, 361) |
+| Bread,Castle | Won (459, 511) | Won (452, 635) |
+| Circuit | Tied (614, 443) | Won (1080, 361) |
+| Crab | Lost (282, 346) | Tied (545, 332) |
+| CastleDefense | Won (178, 160) | Lost (313, 180) |
+| FourCorners | Tied (2000, 501) | Lost (379, 518) |
+| Gears | Tied (408, 472) | Lost (519, 452) |
+| HungerGames | Won (425, 440) | Lost (505, 393) |
+| Leaf | Lost (1165, 1285) | Tied (367, 346) |
+| Oasis | Won (387, 360) | Won (352, 364) |
+| Paintball | Tied (703, 1899) | Won (245, 386) |
+| Parking_lot | Won (477, 430) | Tied (350, 455) |
+
