@@ -150,7 +150,8 @@ public class Soldier {
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
         //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
-        EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
+        //EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
+        EXPLORE_FILL_TOWER_THRESHOLD = 0;
 
     }
 
