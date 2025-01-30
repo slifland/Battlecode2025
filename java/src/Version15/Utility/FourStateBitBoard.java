@@ -12,11 +12,11 @@ public class FourStateBitBoard {
     }
 
     public int locationToIndex(MapLocation loc) {
-        return (loc.x + loc.y * staticRC.getMapWidth()) * 2;
+        return (loc.x + loc.y * rc.getMapWidth()) * 2;
     }
 
     public MapLocation indexToLocation(int index) {
-        return new MapLocation((index / 2) % staticRC.getMapWidth(), (index / 2) / staticRC.getMapWidth());    }
+        return new MapLocation((index / 2) % rc.getMapWidth(), (index / 2) / rc.getMapWidth());    }
 
 //    public int getBits(MapLocation loc) {
 //        int index = locationToIndex(loc);
