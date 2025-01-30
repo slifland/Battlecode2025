@@ -127,6 +127,10 @@ public class Soldier {
         if(closestUnclaimedRuin != null) {
             attemptCompleteTowerPattern(closestUnclaimedRuin);
         }
+        //lets still fill in some around it to prevent the enemy from getting it
+        if(rc.isActionReady() && closestUnclaimedRuin != null && checkedRuin.contains(closestUnclaimedRuin)) {
+            attemptFillAroundCenter(closestUnclaimedRuin);
+        }
         if(knownSymmetry != SymmetryType.Unknown) {
             if(Clock.getBytecodesLeft() > 4200)
                 SoldierUtil.scanNearbyTilesSoldier();
@@ -135,6 +139,33 @@ public class Soldier {
             SoldierUtil.scanNearbyTilesSoldier();
         }
 
+    }
+
+    private static void attemptFillAroundCenter(MapLocation center) throws GameActionException {
+        MapInfo[] tilesToFill = rc.senseNearbyMapInfos(center, 8);
+        int minDist = Integer.MAX_VALUE;
+        boolean hasRobot= false;
+        MapLocation bestLoc = null;
+        boolean[][] desiredPattern = Utilities.getPatternFromWeightedHash(center);
+        for(MapInfo m : tilesToFill) {
+            if(m.getPaint() == PaintType.EMPTY) {
+                MapLocation tileLoc = m.getMapLocation();
+                int dist = (averageEnemyPaint != null) ? tileLoc.distanceSquaredTo(averageEnemyPaint) : tileLoc.distanceSquaredTo(center);
+                boolean curRobot = rc.canSenseRobotAtLocation(tileLoc);
+                if(!hasRobot && dist < minDist) {
+                    hasRobot = curRobot;
+                    minDist = dist;
+                    bestLoc = tileLoc;
+                }
+                else if(hasRobot && curRobot && dist < minDist) {
+                    minDist = dist;
+                    bestLoc = tileLoc;
+                }
+            }
+        }
+        if(bestLoc != null && rc.canAttack(bestLoc)) {
+            rc.attack(bestLoc, Utilities.getColorFromCustomPattern(bestLoc, desiredPattern, center));
+        }
     }
 
     public static void initializeMapDependentVariables() throws GameActionException {
