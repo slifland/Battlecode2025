@@ -2699,7 +2699,7 @@ public class SplasherMicro {
 //    }
     //same as above, but takes in a best attack
     public static void integratedSplasherMicro(boolean fightingTower) throws GameActionException {
-        int minScore = 1;
+        int minScore = 2;
         if (rc.isActionReady() && rc.isMovementReady()) {
             MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, minScore);
             //we have a best place to attack

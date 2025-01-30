@@ -1397,8 +1397,9 @@ public class splasherUtil {
         int bestDist = Integer.MAX_VALUE;
         boolean isEnemyTile = false;
         MapLocation curLoc = rc.getLocation();
+        PaintType paint;
         for(MapInfo tile : nearbyTiles) {
-            PaintType paint = tile.getPaint();
+            paint = tile.getPaint();
             if(paint.isEnemy() && !isEnemyTile) {
                 isEnemyTile = true;
                 bestTile = tile;
@@ -1426,11 +1427,12 @@ public class splasherUtil {
         int[] potentialAttackSquares = new int[81];
         //int index = 0;
         int totalTracker = 0;
+        PaintType paint;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
         {
             totalTracker++;
         }
-        PaintType paint = nearbyTiles[0].getPaint();
+        paint = nearbyTiles[0].getPaint();
         if(nearbyTiles[0].hasRuin())
         {
             if(seenEnemyTower != null && nearbyTiles[0].getMapLocation().equals(seenEnemyTower.getLocation()))
@@ -1439,25 +1441,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[0].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[0].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1473,25 +1472,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[1].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[1].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1507,25 +1503,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[2].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[2].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1541,25 +1534,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[3].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[3].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1575,25 +1565,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[4].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[4].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1609,25 +1596,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[5].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[5].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1643,25 +1627,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[6].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[6].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1677,25 +1658,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[7].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[7].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1711,25 +1689,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[8].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[8].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1745,25 +1720,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[9].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[9].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1779,25 +1751,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[10].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[10].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1813,25 +1782,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[11].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[11].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1847,25 +1813,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[12].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[12].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1881,25 +1844,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[13].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[13].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1915,25 +1875,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[14].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[14].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1949,25 +1906,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[15].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[15].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -1983,25 +1937,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[16].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[16].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2017,25 +1968,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[17].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[17].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2051,25 +1999,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[18].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[18].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2085,25 +2030,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[19].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[19].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2119,25 +2061,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[20].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[20].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2153,25 +2092,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[21].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[21].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2187,25 +2123,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[22].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[22].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2221,25 +2154,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[23].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[23].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2255,25 +2185,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[24].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[24].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2289,25 +2216,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[25].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[25].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2323,25 +2247,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[26].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[26].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2357,25 +2278,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[27].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[27].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2391,25 +2309,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[28].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[28].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2425,25 +2340,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[29].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[29].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2459,25 +2371,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[30].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[30].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2493,25 +2402,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[31].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[31].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2527,25 +2433,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[32].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[32].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2561,25 +2464,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[33].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[33].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2595,25 +2495,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[34].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[34].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2629,25 +2526,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[35].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[35].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2663,25 +2557,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[36].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[36].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2697,25 +2588,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[37].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[37].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2731,25 +2619,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[38].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[38].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2765,25 +2650,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[39].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[39].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2799,25 +2681,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[40].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[40].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2833,25 +2712,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[41].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[41].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2867,25 +2743,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[42].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[42].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2901,25 +2774,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[43].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[43].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2935,25 +2805,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[44].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[44].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -2969,25 +2836,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[45].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[45].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3003,25 +2867,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[46].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[46].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3037,25 +2898,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[47].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[47].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3071,25 +2929,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[48].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[48].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3105,25 +2960,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[49].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[49].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3139,25 +2991,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[50].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[50].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3173,25 +3022,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[51].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[51].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3207,25 +3053,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[52].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[52].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3241,25 +3084,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[53].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[53].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3275,25 +3115,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[54].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[54].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3309,25 +3146,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[55].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[55].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3343,25 +3177,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[56].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[56].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3377,25 +3208,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[57].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[57].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3411,25 +3239,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[58].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[58].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3445,25 +3270,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[59].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[59].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3479,25 +3301,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[60].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[60].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3513,25 +3332,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[61].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[61].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3547,25 +3363,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[62].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[62].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3581,25 +3394,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[63].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[63].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3615,25 +3425,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[64].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[64].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3649,25 +3456,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[65].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[65].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3683,25 +3487,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[66].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[66].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3717,25 +3518,22 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[67].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[67].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
+        }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
         }
         totalTracker++;
         while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80)
@@ -3751,26 +3549,24 @@ public class splasherUtil {
                 totalPoints += 3;
             }
         }
-        else if(paint.isAlly())
-        {
-            if(seenEnemyTower == null || !nearbyTiles[68].getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4))
-            {
-                localSquares[totalTracker]--;
-            }
-        }
         else if(paint.isEnemy())
         {
             if(nearestUnfilledRuin != null && nearbyTiles[68].getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8))
             {
-                localSquares[totalTracker] += 2;
-                totalPoints += 2;
+                localSquares[totalTracker] += 3;
+                totalPoints += 3;
             }
             else
             {
-                localSquares[totalTracker] += 1;
-                totalPoints += 1;
+                localSquares[totalTracker] += 2;
+                totalPoints += 2;
             }
         }
+        else if(!paint.isAlly())
+        {
+            localSquares[totalTracker]++;
+        }
+
 
 //        for(int index = 0; index < 69; index++) {
 //            while(totalTracker == 0 || totalTracker == 1 || totalTracker == 7 || totalTracker == 8 || totalTracker == 9 || totalTracker == 17 || totalTracker == 63 || totalTracker == 71 || totalTracker == 72 || totalTracker == 73 || totalTracker == 79 || totalTracker == 80) {
@@ -3812,10 +3608,10 @@ public class splasherUtil {
 //            for(int j = -1; j <= 1; j++) {
 //                potentialAttackSquares[i] += localSquares[i + j];
 //            }
-//            potentialAttackSquares[i] += (localSquares[i - 18]  < 1) ? localSquares[i - 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 18]  < 1) ? localSquares[i + 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i - 2]  < 1) ? localSquares[i - 2] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 2]  < 1) ? localSquares[i + 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 18]  < 2) ? localSquares[i - 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 18]  < 2) ? localSquares[i + 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 2]  < 2) ? localSquares[i - 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 2]  < 2) ? localSquares[i + 2] : 0;
 //        }
 //        for(int i = 29; i <= 33; i++) {
 //            for(int j = 10; j >= 8; j--) {
@@ -3825,10 +3621,10 @@ public class splasherUtil {
 //            for(int j = -1; j <= 1; j++) {
 //                potentialAttackSquares[i] += localSquares[i + j];
 //            }
-//            potentialAttackSquares[i] += (localSquares[i - 18]  < 1) ? localSquares[i - 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 18]  < 1) ? localSquares[i + 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i - 2]  < 1) ? localSquares[i - 2] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 2]  < 1) ? localSquares[i + 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 18]  < 2) ? localSquares[i - 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 18]  < 2) ? localSquares[i + 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 2]  < 2) ? localSquares[i - 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 2]  < 2) ? localSquares[i + 2] : 0;
 //        }
 //        for(int i = 38; i <= 42; i++) {
 //            for(int j = 10; j >= 8; j--) {
@@ -3838,10 +3634,10 @@ public class splasherUtil {
 //            for(int j = -1; j <= 1; j++) {
 //                potentialAttackSquares[i] += localSquares[i + j];
 //            }
-//            potentialAttackSquares[i] += (localSquares[i - 18]  < 1) ? localSquares[i - 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 18]  < 1) ? localSquares[i + 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i - 2]  < 1) ? localSquares[i - 2] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 2]  < 1) ? localSquares[i + 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 18]  < 2) ? localSquares[i - 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 18]  < 2) ? localSquares[i + 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 2]  < 2) ? localSquares[i - 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 2]  < 2) ? localSquares[i + 2] : 0;
 //        }
 //        for(int i = 47; i <= 51; i++) {
 //            for(int j = 10; j >= 8; j--) {
@@ -3851,10 +3647,10 @@ public class splasherUtil {
 //            for(int j = -1; j <= 1; j++) {
 //                potentialAttackSquares[i] += localSquares[i + j];
 //            }
-//            potentialAttackSquares[i] += (localSquares[i - 18]  < 1) ? localSquares[i - 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 18]  < 1) ? localSquares[i + 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i - 2]  < 1) ? localSquares[i - 2] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 2]  < 1) ? localSquares[i + 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 18]  < 2) ? localSquares[i - 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 18]  < 2) ? localSquares[i + 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 2]  < 2) ? localSquares[i - 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 2]  < 2) ? localSquares[i + 2] : 0;
 //        }
 //        for(int i = 56; i <= 60; i++) {
 //            for(int j = 10; j >= 8; j--) {
@@ -3864,10 +3660,10 @@ public class splasherUtil {
 //            for(int j = -1; j <= 1; j++) {
 //                potentialAttackSquares[i] += localSquares[i + j];
 //            }
-//            potentialAttackSquares[i] += (localSquares[i - 18]  < 1) ? localSquares[i - 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 18]  < 1) ? localSquares[i + 18] : 0;
-//            potentialAttackSquares[i] += (localSquares[i - 2]  < 1) ? localSquares[i - 2] : 0;
-//            potentialAttackSquares[i] += (localSquares[i + 2]  < 1) ? localSquares[i + 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 18]  < 2) ? localSquares[i - 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 18]  < 2) ? localSquares[i + 18] : 0;
+//            potentialAttackSquares[i] += (localSquares[i - 2]  < 2) ? localSquares[i - 2] : 0;
+//            potentialAttackSquares[i] += (localSquares[i + 2]  < 2) ? localSquares[i + 2] : 0;
 //        }
         potentialAttackSquares[20] += localSquares[20 + 10];
         potentialAttackSquares[20] += localSquares[20 - 10];
@@ -3878,10 +3674,10 @@ public class splasherUtil {
         potentialAttackSquares[20] += localSquares[20 + -1];
         potentialAttackSquares[20] += localSquares[20 ];
         potentialAttackSquares[20] += localSquares[20 + 1];
-        potentialAttackSquares[20] += (localSquares[20 - 18]  < 1) ? localSquares[20 - 18] : 0;
-        potentialAttackSquares[20] += (localSquares[20 + 18]  < 1) ? localSquares[20 + 18] : 0;
-        potentialAttackSquares[20] += (localSquares[20 - 2]  < 1) ? localSquares[20 - 2] : 0;
-        potentialAttackSquares[20] += (localSquares[20 + 2]  < 1) ? localSquares[20 + 2] : 0;
+        potentialAttackSquares[20] += (localSquares[20 - 18]  < 2) ? localSquares[20 - 18] : 0;
+        potentialAttackSquares[20] += (localSquares[20 + 18]  < 2) ? localSquares[20 + 18] : 0;
+        potentialAttackSquares[20] += (localSquares[20 - 2]  < 2) ? localSquares[20 - 2] : 0;
+        potentialAttackSquares[20] += (localSquares[20 + 2]  < 2) ? localSquares[20 + 2] : 0;
         potentialAttackSquares[21] += localSquares[21 + 10];
         potentialAttackSquares[21] += localSquares[21 - 10];
         potentialAttackSquares[21] += localSquares[21 + 9];
@@ -3891,10 +3687,10 @@ public class splasherUtil {
         potentialAttackSquares[21] += localSquares[21 + -1];
         potentialAttackSquares[21] += localSquares[21 ];
         potentialAttackSquares[21] += localSquares[21 + 1];
-        potentialAttackSquares[21] += (localSquares[21 - 18]  < 1) ? localSquares[21 - 18] : 0;
-        potentialAttackSquares[21] += (localSquares[21 + 18]  < 1) ? localSquares[21 + 18] : 0;
-        potentialAttackSquares[21] += (localSquares[21 - 2]  < 1) ? localSquares[21 - 2] : 0;
-        potentialAttackSquares[21] += (localSquares[21 + 2]  < 1) ? localSquares[21 + 2] : 0;
+        potentialAttackSquares[21] += (localSquares[21 - 18]  < 2) ? localSquares[21 - 18] : 0;
+        potentialAttackSquares[21] += (localSquares[21 + 18]  < 2) ? localSquares[21 + 18] : 0;
+        potentialAttackSquares[21] += (localSquares[21 - 2]  < 2) ? localSquares[21 - 2] : 0;
+        potentialAttackSquares[21] += (localSquares[21 + 2]  < 2) ? localSquares[21 + 2] : 0;
         potentialAttackSquares[22] += localSquares[22 + 10];
         potentialAttackSquares[22] += localSquares[22 - 10];
         potentialAttackSquares[22] += localSquares[22 + 9];
@@ -3904,10 +3700,10 @@ public class splasherUtil {
         potentialAttackSquares[22] += localSquares[22 + -1];
         potentialAttackSquares[22] += localSquares[22 ];
         potentialAttackSquares[22] += localSquares[22 + 1];
-        potentialAttackSquares[22] += (localSquares[22 - 18]  < 1) ? localSquares[22 - 18] : 0;
-        potentialAttackSquares[22] += (localSquares[22 + 18]  < 1) ? localSquares[22 + 18] : 0;
-        potentialAttackSquares[22] += (localSquares[22 - 2]  < 1) ? localSquares[22 - 2] : 0;
-        potentialAttackSquares[22] += (localSquares[22 + 2]  < 1) ? localSquares[22 + 2] : 0;
+        potentialAttackSquares[22] += (localSquares[22 - 18]  < 2) ? localSquares[22 - 18] : 0;
+        potentialAttackSquares[22] += (localSquares[22 + 18]  < 2) ? localSquares[22 + 18] : 0;
+        potentialAttackSquares[22] += (localSquares[22 - 2]  < 2) ? localSquares[22 - 2] : 0;
+        potentialAttackSquares[22] += (localSquares[22 + 2]  < 2) ? localSquares[22 + 2] : 0;
         potentialAttackSquares[23] += localSquares[23 + 10];
         potentialAttackSquares[23] += localSquares[23 - 10];
         potentialAttackSquares[23] += localSquares[23 + 9];
@@ -3917,10 +3713,10 @@ public class splasherUtil {
         potentialAttackSquares[23] += localSquares[23 + -1];
         potentialAttackSquares[23] += localSquares[23 ];
         potentialAttackSquares[23] += localSquares[23 + 1];
-        potentialAttackSquares[23] += (localSquares[23 - 18]  < 1) ? localSquares[23 - 18] : 0;
-        potentialAttackSquares[23] += (localSquares[23 + 18]  < 1) ? localSquares[23 + 18] : 0;
-        potentialAttackSquares[23] += (localSquares[23 - 2]  < 1) ? localSquares[23 - 2] : 0;
-        potentialAttackSquares[23] += (localSquares[23 + 2]  < 1) ? localSquares[23 + 2] : 0;
+        potentialAttackSquares[23] += (localSquares[23 - 18]  < 2) ? localSquares[23 - 18] : 0;
+        potentialAttackSquares[23] += (localSquares[23 + 18]  < 2) ? localSquares[23 + 18] : 0;
+        potentialAttackSquares[23] += (localSquares[23 - 2]  < 2) ? localSquares[23 - 2] : 0;
+        potentialAttackSquares[23] += (localSquares[23 + 2]  < 2) ? localSquares[23 + 2] : 0;
         potentialAttackSquares[24] += localSquares[24 + 10];
         potentialAttackSquares[24] += localSquares[24 - 10];
         potentialAttackSquares[24] += localSquares[24 + 9];
@@ -3930,10 +3726,10 @@ public class splasherUtil {
         potentialAttackSquares[24] += localSquares[24 + -1];
         potentialAttackSquares[24] += localSquares[24 ];
         potentialAttackSquares[24] += localSquares[24 + 1];
-        potentialAttackSquares[24] += (localSquares[24 - 18]  < 1) ? localSquares[24 - 18] : 0;
-        potentialAttackSquares[24] += (localSquares[24 + 18]  < 1) ? localSquares[24 + 18] : 0;
-        potentialAttackSquares[24] += (localSquares[24 - 2]  < 1) ? localSquares[24 - 2] : 0;
-        potentialAttackSquares[24] += (localSquares[24 + 2]  < 1) ? localSquares[24 + 2] : 0;
+        potentialAttackSquares[24] += (localSquares[24 - 18]  < 2) ? localSquares[24 - 18] : 0;
+        potentialAttackSquares[24] += (localSquares[24 + 18]  < 2) ? localSquares[24 + 18] : 0;
+        potentialAttackSquares[24] += (localSquares[24 - 2]  < 2) ? localSquares[24 - 2] : 0;
+        potentialAttackSquares[24] += (localSquares[24 + 2]  < 2) ? localSquares[24 + 2] : 0;
         potentialAttackSquares[29] += localSquares[29 + 10];
         potentialAttackSquares[29] += localSquares[29 - 10];
         potentialAttackSquares[29] += localSquares[29 + 9];
@@ -3943,10 +3739,10 @@ public class splasherUtil {
         potentialAttackSquares[29] += localSquares[29 + -1];
         potentialAttackSquares[29] += localSquares[29 ];
         potentialAttackSquares[29] += localSquares[29 + 1];
-        potentialAttackSquares[29] += (localSquares[29 - 18]  < 1) ? localSquares[29 - 18] : 0;
-        potentialAttackSquares[29] += (localSquares[29 + 18]  < 1) ? localSquares[29 + 18] : 0;
-        potentialAttackSquares[29] += (localSquares[29 - 2]  < 1) ? localSquares[29 - 2] : 0;
-        potentialAttackSquares[29] += (localSquares[29 + 2]  < 1) ? localSquares[29 + 2] : 0;
+        potentialAttackSquares[29] += (localSquares[29 - 18]  < 2) ? localSquares[29 - 18] : 0;
+        potentialAttackSquares[29] += (localSquares[29 + 18]  < 2) ? localSquares[29 + 18] : 0;
+        potentialAttackSquares[29] += (localSquares[29 - 2]  < 2) ? localSquares[29 - 2] : 0;
+        potentialAttackSquares[29] += (localSquares[29 + 2]  < 2) ? localSquares[29 + 2] : 0;
         potentialAttackSquares[30] += localSquares[30 + 10];
         potentialAttackSquares[30] += localSquares[30 - 10];
         potentialAttackSquares[30] += localSquares[30 + 9];
@@ -3956,10 +3752,10 @@ public class splasherUtil {
         potentialAttackSquares[30] += localSquares[30 + -1];
         potentialAttackSquares[30] += localSquares[30 ];
         potentialAttackSquares[30] += localSquares[30 + 1];
-        potentialAttackSquares[30] += (localSquares[30 - 18]  < 1) ? localSquares[30 - 18] : 0;
-        potentialAttackSquares[30] += (localSquares[30 + 18]  < 1) ? localSquares[30 + 18] : 0;
-        potentialAttackSquares[30] += (localSquares[30 - 2]  < 1) ? localSquares[30 - 2] : 0;
-        potentialAttackSquares[30] += (localSquares[30 + 2]  < 1) ? localSquares[30 + 2] : 0;
+        potentialAttackSquares[30] += (localSquares[30 - 18]  < 2) ? localSquares[30 - 18] : 0;
+        potentialAttackSquares[30] += (localSquares[30 + 18]  < 2) ? localSquares[30 + 18] : 0;
+        potentialAttackSquares[30] += (localSquares[30 - 2]  < 2) ? localSquares[30 - 2] : 0;
+        potentialAttackSquares[30] += (localSquares[30 + 2]  < 2) ? localSquares[30 + 2] : 0;
         potentialAttackSquares[31] += localSquares[31 + 10];
         potentialAttackSquares[31] += localSquares[31 - 10];
         potentialAttackSquares[31] += localSquares[31 + 9];
@@ -3969,10 +3765,10 @@ public class splasherUtil {
         potentialAttackSquares[31] += localSquares[31 + -1];
         potentialAttackSquares[31] += localSquares[31 ];
         potentialAttackSquares[31] += localSquares[31 + 1];
-        potentialAttackSquares[31] += (localSquares[31 - 18]  < 1) ? localSquares[31 - 18] : 0;
-        potentialAttackSquares[31] += (localSquares[31 + 18]  < 1) ? localSquares[31 + 18] : 0;
-        potentialAttackSquares[31] += (localSquares[31 - 2]  < 1) ? localSquares[31 - 2] : 0;
-        potentialAttackSquares[31] += (localSquares[31 + 2]  < 1) ? localSquares[31 + 2] : 0;
+        potentialAttackSquares[31] += (localSquares[31 - 18]  < 2) ? localSquares[31 - 18] : 0;
+        potentialAttackSquares[31] += (localSquares[31 + 18]  < 2) ? localSquares[31 + 18] : 0;
+        potentialAttackSquares[31] += (localSquares[31 - 2]  < 2) ? localSquares[31 - 2] : 0;
+        potentialAttackSquares[31] += (localSquares[31 + 2]  < 2) ? localSquares[31 + 2] : 0;
         potentialAttackSquares[32] += localSquares[32 + 10];
         potentialAttackSquares[32] += localSquares[32 - 10];
         potentialAttackSquares[32] += localSquares[32 + 9];
@@ -3982,10 +3778,10 @@ public class splasherUtil {
         potentialAttackSquares[32] += localSquares[32 + -1];
         potentialAttackSquares[32] += localSquares[32 ];
         potentialAttackSquares[32] += localSquares[32 + 1];
-        potentialAttackSquares[32] += (localSquares[32 - 18]  < 1) ? localSquares[32 - 18] : 0;
-        potentialAttackSquares[32] += (localSquares[32 + 18]  < 1) ? localSquares[32 + 18] : 0;
-        potentialAttackSquares[32] += (localSquares[32 - 2]  < 1) ? localSquares[32 - 2] : 0;
-        potentialAttackSquares[32] += (localSquares[32 + 2]  < 1) ? localSquares[32 + 2] : 0;
+        potentialAttackSquares[32] += (localSquares[32 - 18]  < 2) ? localSquares[32 - 18] : 0;
+        potentialAttackSquares[32] += (localSquares[32 + 18]  < 2) ? localSquares[32 + 18] : 0;
+        potentialAttackSquares[32] += (localSquares[32 - 2]  < 2) ? localSquares[32 - 2] : 0;
+        potentialAttackSquares[32] += (localSquares[32 + 2]  < 2) ? localSquares[32 + 2] : 0;
         potentialAttackSquares[33] += localSquares[33 + 10];
         potentialAttackSquares[33] += localSquares[33 - 10];
         potentialAttackSquares[33] += localSquares[33 + 9];
@@ -3995,10 +3791,10 @@ public class splasherUtil {
         potentialAttackSquares[33] += localSquares[33 + -1];
         potentialAttackSquares[33] += localSquares[33 ];
         potentialAttackSquares[33] += localSquares[33 + 1];
-        potentialAttackSquares[33] += (localSquares[33 - 18]  < 1) ? localSquares[33 - 18] : 0;
-        potentialAttackSquares[33] += (localSquares[33 + 18]  < 1) ? localSquares[33 + 18] : 0;
-        potentialAttackSquares[33] += (localSquares[33 - 2]  < 1) ? localSquares[33 - 2] : 0;
-        potentialAttackSquares[33] += (localSquares[33 + 2]  < 1) ? localSquares[33 + 2] : 0;
+        potentialAttackSquares[33] += (localSquares[33 - 18]  < 2) ? localSquares[33 - 18] : 0;
+        potentialAttackSquares[33] += (localSquares[33 + 18]  < 2) ? localSquares[33 + 18] : 0;
+        potentialAttackSquares[33] += (localSquares[33 - 2]  < 2) ? localSquares[33 - 2] : 0;
+        potentialAttackSquares[33] += (localSquares[33 + 2]  < 2) ? localSquares[33 + 2] : 0;
         potentialAttackSquares[38] += localSquares[38 + 10];
         potentialAttackSquares[38] += localSquares[38 - 10];
         potentialAttackSquares[38] += localSquares[38 + 9];
@@ -4008,10 +3804,10 @@ public class splasherUtil {
         potentialAttackSquares[38] += localSquares[38 + -1];
         potentialAttackSquares[38] += localSquares[38 ];
         potentialAttackSquares[38] += localSquares[38 + 1];
-        potentialAttackSquares[38] += (localSquares[38 - 18]  < 1) ? localSquares[38 - 18] : 0;
-        potentialAttackSquares[38] += (localSquares[38 + 18]  < 1) ? localSquares[38 + 18] : 0;
-        potentialAttackSquares[38] += (localSquares[38 - 2]  < 1) ? localSquares[38 - 2] : 0;
-        potentialAttackSquares[38] += (localSquares[38 + 2]  < 1) ? localSquares[38 + 2] : 0;
+        potentialAttackSquares[38] += (localSquares[38 - 18]  < 2) ? localSquares[38 - 18] : 0;
+        potentialAttackSquares[38] += (localSquares[38 + 18]  < 2) ? localSquares[38 + 18] : 0;
+        potentialAttackSquares[38] += (localSquares[38 - 2]  < 2) ? localSquares[38 - 2] : 0;
+        potentialAttackSquares[38] += (localSquares[38 + 2]  < 2) ? localSquares[38 + 2] : 0;
         potentialAttackSquares[39] += localSquares[39 + 10];
         potentialAttackSquares[39] += localSquares[39 - 10];
         potentialAttackSquares[39] += localSquares[39 + 9];
@@ -4021,10 +3817,10 @@ public class splasherUtil {
         potentialAttackSquares[39] += localSquares[39 + -1];
         potentialAttackSquares[39] += localSquares[39 ];
         potentialAttackSquares[39] += localSquares[39 + 1];
-        potentialAttackSquares[39] += (localSquares[39 - 18]  < 1) ? localSquares[39 - 18] : 0;
-        potentialAttackSquares[39] += (localSquares[39 + 18]  < 1) ? localSquares[39 + 18] : 0;
-        potentialAttackSquares[39] += (localSquares[39 - 2]  < 1) ? localSquares[39 - 2] : 0;
-        potentialAttackSquares[39] += (localSquares[39 + 2]  < 1) ? localSquares[39 + 2] : 0;
+        potentialAttackSquares[39] += (localSquares[39 - 18]  < 2) ? localSquares[39 - 18] : 0;
+        potentialAttackSquares[39] += (localSquares[39 + 18]  < 2) ? localSquares[39 + 18] : 0;
+        potentialAttackSquares[39] += (localSquares[39 - 2]  < 2) ? localSquares[39 - 2] : 0;
+        potentialAttackSquares[39] += (localSquares[39 + 2]  < 2) ? localSquares[39 + 2] : 0;
         potentialAttackSquares[40] += localSquares[40 + 10];
         potentialAttackSquares[40] += localSquares[40 - 10];
         potentialAttackSquares[40] += localSquares[40 + 9];
@@ -4034,10 +3830,10 @@ public class splasherUtil {
         potentialAttackSquares[40] += localSquares[40 + -1];
         potentialAttackSquares[40] += localSquares[40 ];
         potentialAttackSquares[40] += localSquares[40 + 1];
-        potentialAttackSquares[40] += (localSquares[40 - 18]  < 1) ? localSquares[40 - 18] : 0;
-        potentialAttackSquares[40] += (localSquares[40 + 18]  < 1) ? localSquares[40 + 18] : 0;
-        potentialAttackSquares[40] += (localSquares[40 - 2]  < 1) ? localSquares[40 - 2] : 0;
-        potentialAttackSquares[40] += (localSquares[40 + 2]  < 1) ? localSquares[40 + 2] : 0;
+        potentialAttackSquares[40] += (localSquares[40 - 18]  < 2) ? localSquares[40 - 18] : 0;
+        potentialAttackSquares[40] += (localSquares[40 + 18]  < 2) ? localSquares[40 + 18] : 0;
+        potentialAttackSquares[40] += (localSquares[40 - 2]  < 2) ? localSquares[40 - 2] : 0;
+        potentialAttackSquares[40] += (localSquares[40 + 2]  < 2) ? localSquares[40 + 2] : 0;
         potentialAttackSquares[41] += localSquares[41 + 10];
         potentialAttackSquares[41] += localSquares[41 - 10];
         potentialAttackSquares[41] += localSquares[41 + 9];
@@ -4047,10 +3843,10 @@ public class splasherUtil {
         potentialAttackSquares[41] += localSquares[41 + -1];
         potentialAttackSquares[41] += localSquares[41 ];
         potentialAttackSquares[41] += localSquares[41 + 1];
-        potentialAttackSquares[41] += (localSquares[41 - 18]  < 1) ? localSquares[41 - 18] : 0;
-        potentialAttackSquares[41] += (localSquares[41 + 18]  < 1) ? localSquares[41 + 18] : 0;
-        potentialAttackSquares[41] += (localSquares[41 - 2]  < 1) ? localSquares[41 - 2] : 0;
-        potentialAttackSquares[41] += (localSquares[41 + 2]  < 1) ? localSquares[41 + 2] : 0;
+        potentialAttackSquares[41] += (localSquares[41 - 18]  < 2) ? localSquares[41 - 18] : 0;
+        potentialAttackSquares[41] += (localSquares[41 + 18]  < 2) ? localSquares[41 + 18] : 0;
+        potentialAttackSquares[41] += (localSquares[41 - 2]  < 2) ? localSquares[41 - 2] : 0;
+        potentialAttackSquares[41] += (localSquares[41 + 2]  < 2) ? localSquares[41 + 2] : 0;
         potentialAttackSquares[42] += localSquares[42 + 10];
         potentialAttackSquares[42] += localSquares[42 - 10];
         potentialAttackSquares[42] += localSquares[42 + 9];
@@ -4060,10 +3856,10 @@ public class splasherUtil {
         potentialAttackSquares[42] += localSquares[42 + -1];
         potentialAttackSquares[42] += localSquares[42 ];
         potentialAttackSquares[42] += localSquares[42 + 1];
-        potentialAttackSquares[42] += (localSquares[42 - 18]  < 1) ? localSquares[42 - 18] : 0;
-        potentialAttackSquares[42] += (localSquares[42 + 18]  < 1) ? localSquares[42 + 18] : 0;
-        potentialAttackSquares[42] += (localSquares[42 - 2]  < 1) ? localSquares[42 - 2] : 0;
-        potentialAttackSquares[42] += (localSquares[42 + 2]  < 1) ? localSquares[42 + 2] : 0;
+        potentialAttackSquares[42] += (localSquares[42 - 18]  < 2) ? localSquares[42 - 18] : 0;
+        potentialAttackSquares[42] += (localSquares[42 + 18]  < 2) ? localSquares[42 + 18] : 0;
+        potentialAttackSquares[42] += (localSquares[42 - 2]  < 2) ? localSquares[42 - 2] : 0;
+        potentialAttackSquares[42] += (localSquares[42 + 2]  < 2) ? localSquares[42 + 2] : 0;
         potentialAttackSquares[47] += localSquares[47 + 10];
         potentialAttackSquares[47] += localSquares[47 - 10];
         potentialAttackSquares[47] += localSquares[47 + 9];
@@ -4073,10 +3869,10 @@ public class splasherUtil {
         potentialAttackSquares[47] += localSquares[47 + -1];
         potentialAttackSquares[47] += localSquares[47 ];
         potentialAttackSquares[47] += localSquares[47 + 1];
-        potentialAttackSquares[47] += (localSquares[47 - 18]  < 1) ? localSquares[47 - 18] : 0;
-        potentialAttackSquares[47] += (localSquares[47 + 18]  < 1) ? localSquares[47 + 18] : 0;
-        potentialAttackSquares[47] += (localSquares[47 - 2]  < 1) ? localSquares[47 - 2] : 0;
-        potentialAttackSquares[47] += (localSquares[47 + 2]  < 1) ? localSquares[47 + 2] : 0;
+        potentialAttackSquares[47] += (localSquares[47 - 18]  < 2) ? localSquares[47 - 18] : 0;
+        potentialAttackSquares[47] += (localSquares[47 + 18]  < 2) ? localSquares[47 + 18] : 0;
+        potentialAttackSquares[47] += (localSquares[47 - 2]  < 2) ? localSquares[47 - 2] : 0;
+        potentialAttackSquares[47] += (localSquares[47 + 2]  < 2) ? localSquares[47 + 2] : 0;
         potentialAttackSquares[48] += localSquares[48 + 10];
         potentialAttackSquares[48] += localSquares[48 - 10];
         potentialAttackSquares[48] += localSquares[48 + 9];
@@ -4086,10 +3882,10 @@ public class splasherUtil {
         potentialAttackSquares[48] += localSquares[48 + -1];
         potentialAttackSquares[48] += localSquares[48 ];
         potentialAttackSquares[48] += localSquares[48 + 1];
-        potentialAttackSquares[48] += (localSquares[48 - 18]  < 1) ? localSquares[48 - 18] : 0;
-        potentialAttackSquares[48] += (localSquares[48 + 18]  < 1) ? localSquares[48 + 18] : 0;
-        potentialAttackSquares[48] += (localSquares[48 - 2]  < 1) ? localSquares[48 - 2] : 0;
-        potentialAttackSquares[48] += (localSquares[48 + 2]  < 1) ? localSquares[48 + 2] : 0;
+        potentialAttackSquares[48] += (localSquares[48 - 18]  < 2) ? localSquares[48 - 18] : 0;
+        potentialAttackSquares[48] += (localSquares[48 + 18]  < 2) ? localSquares[48 + 18] : 0;
+        potentialAttackSquares[48] += (localSquares[48 - 2]  < 2) ? localSquares[48 - 2] : 0;
+        potentialAttackSquares[48] += (localSquares[48 + 2]  < 2) ? localSquares[48 + 2] : 0;
         potentialAttackSquares[49] += localSquares[49 + 10];
         potentialAttackSquares[49] += localSquares[49 - 10];
         potentialAttackSquares[49] += localSquares[49 + 9];
@@ -4099,10 +3895,10 @@ public class splasherUtil {
         potentialAttackSquares[49] += localSquares[49 + -1];
         potentialAttackSquares[49] += localSquares[49 ];
         potentialAttackSquares[49] += localSquares[49 + 1];
-        potentialAttackSquares[49] += (localSquares[49 - 18]  < 1) ? localSquares[49 - 18] : 0;
-        potentialAttackSquares[49] += (localSquares[49 + 18]  < 1) ? localSquares[49 + 18] : 0;
-        potentialAttackSquares[49] += (localSquares[49 - 2]  < 1) ? localSquares[49 - 2] : 0;
-        potentialAttackSquares[49] += (localSquares[49 + 2]  < 1) ? localSquares[49 + 2] : 0;
+        potentialAttackSquares[49] += (localSquares[49 - 18]  < 2) ? localSquares[49 - 18] : 0;
+        potentialAttackSquares[49] += (localSquares[49 + 18]  < 2) ? localSquares[49 + 18] : 0;
+        potentialAttackSquares[49] += (localSquares[49 - 2]  < 2) ? localSquares[49 - 2] : 0;
+        potentialAttackSquares[49] += (localSquares[49 + 2]  < 2) ? localSquares[49 + 2] : 0;
         potentialAttackSquares[50] += localSquares[50 + 10];
         potentialAttackSquares[50] += localSquares[50 - 10];
         potentialAttackSquares[50] += localSquares[50 + 9];
@@ -4112,10 +3908,10 @@ public class splasherUtil {
         potentialAttackSquares[50] += localSquares[50 + -1];
         potentialAttackSquares[50] += localSquares[50 ];
         potentialAttackSquares[50] += localSquares[50 + 1];
-        potentialAttackSquares[50] += (localSquares[50 - 18]  < 1) ? localSquares[50 - 18] : 0;
-        potentialAttackSquares[50] += (localSquares[50 + 18]  < 1) ? localSquares[50 + 18] : 0;
-        potentialAttackSquares[50] += (localSquares[50 - 2]  < 1) ? localSquares[50 - 2] : 0;
-        potentialAttackSquares[50] += (localSquares[50 + 2]  < 1) ? localSquares[50 + 2] : 0;
+        potentialAttackSquares[50] += (localSquares[50 - 18]  < 2) ? localSquares[50 - 18] : 0;
+        potentialAttackSquares[50] += (localSquares[50 + 18]  < 2) ? localSquares[50 + 18] : 0;
+        potentialAttackSquares[50] += (localSquares[50 - 2]  < 2) ? localSquares[50 - 2] : 0;
+        potentialAttackSquares[50] += (localSquares[50 + 2]  < 2) ? localSquares[50 + 2] : 0;
         potentialAttackSquares[51] += localSquares[51 + 10];
         potentialAttackSquares[51] += localSquares[51 - 10];
         potentialAttackSquares[51] += localSquares[51 + 9];
@@ -4125,10 +3921,10 @@ public class splasherUtil {
         potentialAttackSquares[51] += localSquares[51 + -1];
         potentialAttackSquares[51] += localSquares[51 ];
         potentialAttackSquares[51] += localSquares[51 + 1];
-        potentialAttackSquares[51] += (localSquares[51 - 18]  < 1) ? localSquares[51 - 18] : 0;
-        potentialAttackSquares[51] += (localSquares[51 + 18]  < 1) ? localSquares[51 + 18] : 0;
-        potentialAttackSquares[51] += (localSquares[51 - 2]  < 1) ? localSquares[51 - 2] : 0;
-        potentialAttackSquares[51] += (localSquares[51 + 2]  < 1) ? localSquares[51 + 2] : 0;
+        potentialAttackSquares[51] += (localSquares[51 - 18]  < 2) ? localSquares[51 - 18] : 0;
+        potentialAttackSquares[51] += (localSquares[51 + 18]  < 2) ? localSquares[51 + 18] : 0;
+        potentialAttackSquares[51] += (localSquares[51 - 2]  < 2) ? localSquares[51 - 2] : 0;
+        potentialAttackSquares[51] += (localSquares[51 + 2]  < 2) ? localSquares[51 + 2] : 0;
         potentialAttackSquares[56] += localSquares[56 + 10];
         potentialAttackSquares[56] += localSquares[56 - 10];
         potentialAttackSquares[56] += localSquares[56 + 9];
@@ -4138,10 +3934,10 @@ public class splasherUtil {
         potentialAttackSquares[56] += localSquares[56 + -1];
         potentialAttackSquares[56] += localSquares[56 ];
         potentialAttackSquares[56] += localSquares[56 + 1];
-        potentialAttackSquares[56] += (localSquares[56 - 18]  < 1) ? localSquares[56 - 18] : 0;
-        potentialAttackSquares[56] += (localSquares[56 + 18]  < 1) ? localSquares[56 + 18] : 0;
-        potentialAttackSquares[56] += (localSquares[56 - 2]  < 1) ? localSquares[56 - 2] : 0;
-        potentialAttackSquares[56] += (localSquares[56 + 2]  < 1) ? localSquares[56 + 2] : 0;
+        potentialAttackSquares[56] += (localSquares[56 - 18]  < 2) ? localSquares[56 - 18] : 0;
+        potentialAttackSquares[56] += (localSquares[56 + 18]  < 2) ? localSquares[56 + 18] : 0;
+        potentialAttackSquares[56] += (localSquares[56 - 2]  < 2) ? localSquares[56 - 2] : 0;
+        potentialAttackSquares[56] += (localSquares[56 + 2]  < 2) ? localSquares[56 + 2] : 0;
         potentialAttackSquares[57] += localSquares[57 + 10];
         potentialAttackSquares[57] += localSquares[57 - 10];
         potentialAttackSquares[57] += localSquares[57 + 9];
@@ -4151,10 +3947,10 @@ public class splasherUtil {
         potentialAttackSquares[57] += localSquares[57 + -1];
         potentialAttackSquares[57] += localSquares[57 ];
         potentialAttackSquares[57] += localSquares[57 + 1];
-        potentialAttackSquares[57] += (localSquares[57 - 18]  < 1) ? localSquares[57 - 18] : 0;
-        potentialAttackSquares[57] += (localSquares[57 + 18]  < 1) ? localSquares[57 + 18] : 0;
-        potentialAttackSquares[57] += (localSquares[57 - 2]  < 1) ? localSquares[57 - 2] : 0;
-        potentialAttackSquares[57] += (localSquares[57 + 2]  < 1) ? localSquares[57 + 2] : 0;
+        potentialAttackSquares[57] += (localSquares[57 - 18]  < 2) ? localSquares[57 - 18] : 0;
+        potentialAttackSquares[57] += (localSquares[57 + 18]  < 2) ? localSquares[57 + 18] : 0;
+        potentialAttackSquares[57] += (localSquares[57 - 2]  < 2) ? localSquares[57 - 2] : 0;
+        potentialAttackSquares[57] += (localSquares[57 + 2]  < 2) ? localSquares[57 + 2] : 0;
         potentialAttackSquares[58] += localSquares[58 + 10];
         potentialAttackSquares[58] += localSquares[58 - 10];
         potentialAttackSquares[58] += localSquares[58 + 9];
@@ -4164,10 +3960,10 @@ public class splasherUtil {
         potentialAttackSquares[58] += localSquares[58 + -1];
         potentialAttackSquares[58] += localSquares[58 ];
         potentialAttackSquares[58] += localSquares[58 + 1];
-        potentialAttackSquares[58] += (localSquares[58 - 18]  < 1) ? localSquares[58 - 18] : 0;
-        potentialAttackSquares[58] += (localSquares[58 + 18]  < 1) ? localSquares[58 + 18] : 0;
-        potentialAttackSquares[58] += (localSquares[58 - 2]  < 1) ? localSquares[58 - 2] : 0;
-        potentialAttackSquares[58] += (localSquares[58 + 2]  < 1) ? localSquares[58 + 2] : 0;
+        potentialAttackSquares[58] += (localSquares[58 - 18]  < 2) ? localSquares[58 - 18] : 0;
+        potentialAttackSquares[58] += (localSquares[58 + 18]  < 2) ? localSquares[58 + 18] : 0;
+        potentialAttackSquares[58] += (localSquares[58 - 2]  < 2) ? localSquares[58 - 2] : 0;
+        potentialAttackSquares[58] += (localSquares[58 + 2]  < 2) ? localSquares[58 + 2] : 0;
         potentialAttackSquares[59] += localSquares[59 + 10];
         potentialAttackSquares[59] += localSquares[59 - 10];
         potentialAttackSquares[59] += localSquares[59 + 9];
@@ -4177,10 +3973,10 @@ public class splasherUtil {
         potentialAttackSquares[59] += localSquares[59 + -1];
         potentialAttackSquares[59] += localSquares[59 ];
         potentialAttackSquares[59] += localSquares[59 + 1];
-        potentialAttackSquares[59] += (localSquares[59 - 18]  < 1) ? localSquares[59 - 18] : 0;
-        potentialAttackSquares[59] += (localSquares[59 + 18]  < 1) ? localSquares[59 + 18] : 0;
-        potentialAttackSquares[59] += (localSquares[59 - 2]  < 1) ? localSquares[59 - 2] : 0;
-        potentialAttackSquares[59] += (localSquares[59 + 2]  < 1) ? localSquares[59 + 2] : 0;
+        potentialAttackSquares[59] += (localSquares[59 - 18]  < 2) ? localSquares[59 - 18] : 0;
+        potentialAttackSquares[59] += (localSquares[59 + 18]  < 2) ? localSquares[59 + 18] : 0;
+        potentialAttackSquares[59] += (localSquares[59 - 2]  < 2) ? localSquares[59 - 2] : 0;
+        potentialAttackSquares[59] += (localSquares[59 + 2]  < 2) ? localSquares[59 + 2] : 0;
         potentialAttackSquares[60] += localSquares[60 + 10];
         potentialAttackSquares[60] += localSquares[60 - 10];
         potentialAttackSquares[60] += localSquares[60 + 9];
@@ -4190,10 +3986,10 @@ public class splasherUtil {
         potentialAttackSquares[60] += localSquares[60 + -1];
         potentialAttackSquares[60] += localSquares[60 ];
         potentialAttackSquares[60] += localSquares[60 + 1];
-        potentialAttackSquares[60] += (localSquares[60 - 18]  < 1) ? localSquares[60 - 18] : 0;
-        potentialAttackSquares[60] += (localSquares[60 + 18]  < 1) ? localSquares[60 + 18] : 0;
-        potentialAttackSquares[60] += (localSquares[60 - 2]  < 1) ? localSquares[60 - 2] : 0;
-        potentialAttackSquares[60] += (localSquares[60 + 2]  < 1) ? localSquares[60 + 2] : 0;
+        potentialAttackSquares[60] += (localSquares[60 - 18]  < 2) ? localSquares[60 - 18] : 0;
+        potentialAttackSquares[60] += (localSquares[60 + 18]  < 2) ? localSquares[60 + 18] : 0;
+        potentialAttackSquares[60] += (localSquares[60 - 2]  < 2) ? localSquares[60 - 2] : 0;
+        potentialAttackSquares[60] += (localSquares[60 + 2]  < 2) ? localSquares[60 + 2] : 0;
         int highest = potentialAttackSquares[20];
         int highestIndex = 20;
 //        for(int i = 21; i <= 60; i++) {
@@ -4409,20 +4205,18 @@ public class splasherUtil {
                     totalPoints += 3;
                 }
             }
-            else if(paint.isAlly()) {
-                if(seenEnemyTower == null || !tile.getMapLocation().isWithinDistanceSquared(seenEnemyTower.getLocation(), 4)) {
-                    localSquares[index]--;
-                }
-            }
             else if(paint.isEnemy()){
                 if(nearestUnfilledRuin != null && tile.getMapLocation().isWithinDistanceSquared(nearestUnfilledRuin, 8)) {
-                    localSquares[index] += 2;
-                    totalPoints+= 2;
+                    localSquares[index] += 3;
+                    totalPoints+= 3;
                 }
                 else {
-                    localSquares[index] += 1;
-                    totalPoints += 1;
+                    localSquares[index] += 2;
+                    totalPoints += 2;
                 }
+            }
+            else if(!paint.isAlly()) {
+                localSquares[index]++;
             }
             index++;
         }
@@ -4476,10 +4270,10 @@ public class splasherUtil {
         potentialAttackSquares[14] += localSquares[14 + -1];
         potentialAttackSquares[14] += localSquares[14 ];
         potentialAttackSquares[14] += localSquares[14 + 1];
-        potentialAttackSquares[14] += (localSquares[14 - 13]  < 1) ? localSquares[14 - 13] : 0;
-        potentialAttackSquares[14] += (localSquares[14 + 14]  < 1) ? localSquares[14 + 14] : 0;
-        potentialAttackSquares[14] += (localSquares[14 - 2]  < 1) ? localSquares[14 - 2] : 0;
-        potentialAttackSquares[14] += (localSquares[14 + 2]  < 1) ? localSquares[14 + 2] : 0;
+        potentialAttackSquares[14] += (localSquares[14 - 13]  < 2) ? localSquares[14 - 13] : 0;
+        potentialAttackSquares[14] += (localSquares[14 + 14]  < 2) ? localSquares[14 + 14] : 0;
+        potentialAttackSquares[14] += (localSquares[14 - 2]  < 2) ? localSquares[14 - 2] : 0;
+        potentialAttackSquares[14] += (localSquares[14 + 2]  < 2) ? localSquares[14 + 2] : 0;
 
         potentialAttackSquares[15] += localSquares[15 + 8];
         potentialAttackSquares[15] += localSquares[15 - 8];
@@ -4490,10 +4284,10 @@ public class splasherUtil {
         potentialAttackSquares[15] += localSquares[15 + -1];
         potentialAttackSquares[15] += localSquares[15 ];
         potentialAttackSquares[15] += localSquares[15 + 1];
-        potentialAttackSquares[15] += (localSquares[15 - 13]  < 1) ? localSquares[15 - 13] : 0;
-        potentialAttackSquares[15] += (localSquares[15 + 14]  < 1) ? localSquares[15 + 14] : 0;
-        potentialAttackSquares[15] += (localSquares[15 - 2]  < 1) ? localSquares[15 - 2] : 0;
-        potentialAttackSquares[15] += (localSquares[15 + 2]  < 1) ? localSquares[15 + 2] : 0;
+        potentialAttackSquares[15] += (localSquares[15 - 13]  < 2) ? localSquares[15 - 13] : 0;
+        potentialAttackSquares[15] += (localSquares[15 + 14]  < 2) ? localSquares[15 + 14] : 0;
+        potentialAttackSquares[15] += (localSquares[15 - 2]  < 2) ? localSquares[15 - 2] : 0;
+        potentialAttackSquares[15] += (localSquares[15 + 2]  < 2) ? localSquares[15 + 2] : 0;
 
         potentialAttackSquares[16] += localSquares[16 + 8];
         potentialAttackSquares[16] += localSquares[16 - 8];
@@ -4504,10 +4298,10 @@ public class splasherUtil {
         potentialAttackSquares[16] += localSquares[16 + -1];
         potentialAttackSquares[16] += localSquares[16 ];
         potentialAttackSquares[16] += localSquares[16 + 1];
-        potentialAttackSquares[16] += (localSquares[16 - 13]  < 1) ? localSquares[16 - 13] : 0;
-        potentialAttackSquares[16] += (localSquares[16 + 14]  < 1) ? localSquares[16 + 14] : 0;
-        potentialAttackSquares[16] += (localSquares[16 - 2]  < 1) ? localSquares[16 - 2] : 0;
-        potentialAttackSquares[16] += (localSquares[16 + 2]  < 1) ? localSquares[16 + 2] : 0;
+        potentialAttackSquares[16] += (localSquares[16 - 13]  < 2) ? localSquares[16 - 13] : 0;
+        potentialAttackSquares[16] += (localSquares[16 + 14]  < 2) ? localSquares[16 + 14] : 0;
+        potentialAttackSquares[16] += (localSquares[16 - 2]  < 2) ? localSquares[16 - 2] : 0;
+        potentialAttackSquares[16] += (localSquares[16 + 2]  < 2) ? localSquares[16 + 2] : 0;
 
         potentialAttackSquares[21] += localSquares[21 + 8];
         potentialAttackSquares[21] += localSquares[21 - 8];
@@ -4518,10 +4312,10 @@ public class splasherUtil {
         potentialAttackSquares[21] += localSquares[21 + -1];
         potentialAttackSquares[21] += localSquares[21 ];
         potentialAttackSquares[21] += localSquares[21 + 1];
-        potentialAttackSquares[21] += (localSquares[21 - 14]  < 1) ? localSquares[21 - 14] : 0;
-        potentialAttackSquares[21] += (localSquares[21 + 14]  < 1) ? localSquares[21 + 14] : 0;
-        potentialAttackSquares[21] += (localSquares[21 - 2]  < 1) ? localSquares[21 - 2] : 0;
-        potentialAttackSquares[21] += (localSquares[21 + 2]  < 1) ? localSquares[21 + 2] : 0;
+        potentialAttackSquares[21] += (localSquares[21 - 14]  < 2) ? localSquares[21 - 14] : 0;
+        potentialAttackSquares[21] += (localSquares[21 + 14]  < 2) ? localSquares[21 + 14] : 0;
+        potentialAttackSquares[21] += (localSquares[21 - 2]  < 2) ? localSquares[21 - 2] : 0;
+        potentialAttackSquares[21] += (localSquares[21 + 2]  < 2) ? localSquares[21 + 2] : 0;
         potentialAttackSquares[22] += localSquares[22 + 8];
         potentialAttackSquares[22] += localSquares[22 - 8];
         potentialAttackSquares[22] += localSquares[22 + 7];
@@ -4531,10 +4325,10 @@ public class splasherUtil {
         potentialAttackSquares[22] += localSquares[22 + -1];
         potentialAttackSquares[22] += localSquares[22 ];
         potentialAttackSquares[22] += localSquares[22 + 1];
-        potentialAttackSquares[22] += (localSquares[22 - 14]  < 1) ? localSquares[22 - 14] : 0;
-        potentialAttackSquares[22] += (localSquares[22 + 14]  < 1) ? localSquares[22 + 14] : 0;
-        potentialAttackSquares[22] += (localSquares[22 - 2]  < 1) ? localSquares[22 - 2] : 0;
-        potentialAttackSquares[22] += (localSquares[22 + 2]  < 1) ? localSquares[22 + 2] : 0;
+        potentialAttackSquares[22] += (localSquares[22 - 14]  < 2) ? localSquares[22 - 14] : 0;
+        potentialAttackSquares[22] += (localSquares[22 + 14]  < 2) ? localSquares[22 + 14] : 0;
+        potentialAttackSquares[22] += (localSquares[22 - 2]  < 2) ? localSquares[22 - 2] : 0;
+        potentialAttackSquares[22] += (localSquares[22 + 2]  < 2) ? localSquares[22 + 2] : 0;
         potentialAttackSquares[23] += localSquares[23 + 8];
         potentialAttackSquares[23] += localSquares[23 - 8];
         potentialAttackSquares[23] += localSquares[23 + 7];
@@ -4544,10 +4338,10 @@ public class splasherUtil {
         potentialAttackSquares[23] += localSquares[23 + -1];
         potentialAttackSquares[23] += localSquares[23 ];
         potentialAttackSquares[23] += localSquares[23 + 1];
-        potentialAttackSquares[23] += (localSquares[23 - 14]  < 1) ? localSquares[23 - 14] : 0;
-        potentialAttackSquares[23] += (localSquares[23 + 14]  < 1) ? localSquares[23 + 14] : 0;
-        potentialAttackSquares[23] += (localSquares[23 - 2]  < 1) ? localSquares[23 - 2] : 0;
-        potentialAttackSquares[23] += (localSquares[23 + 2]  < 1) ? localSquares[23 + 2] : 0;
+        potentialAttackSquares[23] += (localSquares[23 - 14]  < 2) ? localSquares[23 - 14] : 0;
+        potentialAttackSquares[23] += (localSquares[23 + 14]  < 2) ? localSquares[23 + 14] : 0;
+        potentialAttackSquares[23] += (localSquares[23 - 2]  < 2) ? localSquares[23 - 2] : 0;
+        potentialAttackSquares[23] += (localSquares[23 + 2]  < 2) ? localSquares[23 + 2] : 0;
         potentialAttackSquares[28] += localSquares[28 + 8];
         potentialAttackSquares[28] += localSquares[28 - 8];
         potentialAttackSquares[28] += localSquares[28 + 7];
@@ -4557,10 +4351,10 @@ public class splasherUtil {
         potentialAttackSquares[28] += localSquares[28 + -1];
         potentialAttackSquares[28] += localSquares[28 ];
         potentialAttackSquares[28] += localSquares[28 + 1];
-        potentialAttackSquares[28] += (localSquares[28 - 14]  < 1) ? localSquares[28 - 14] : 0;
-        potentialAttackSquares[28] += (localSquares[28 + 13]  < 1) ? localSquares[28 + 13] : 0;
-        potentialAttackSquares[28] += (localSquares[28 - 2]  < 1) ? localSquares[28 - 2] : 0;
-        potentialAttackSquares[28] += (localSquares[28 + 2]  < 1) ? localSquares[28 + 2] : 0;
+        potentialAttackSquares[28] += (localSquares[28 - 14]  < 2) ? localSquares[28 - 14] : 0;
+        potentialAttackSquares[28] += (localSquares[28 + 13]  < 2) ? localSquares[28 + 13] : 0;
+        potentialAttackSquares[28] += (localSquares[28 - 2]  < 2) ? localSquares[28 - 2] : 0;
+        potentialAttackSquares[28] += (localSquares[28 + 2]  < 2) ? localSquares[28 + 2] : 0;
         potentialAttackSquares[29] += localSquares[29 + 8];
         potentialAttackSquares[29] += localSquares[29 - 8];
         potentialAttackSquares[29] += localSquares[29 + 7];
@@ -4570,10 +4364,10 @@ public class splasherUtil {
         potentialAttackSquares[29] += localSquares[29 + -1];
         potentialAttackSquares[29] += localSquares[29 ];
         potentialAttackSquares[29] += localSquares[29 + 1];
-        potentialAttackSquares[29] += (localSquares[29 - 14]  < 1) ? localSquares[29 - 14] : 0;
-        potentialAttackSquares[29] += (localSquares[29 + 13]  < 1) ? localSquares[29 + 13] : 0;
-        potentialAttackSquares[29] += (localSquares[29 - 2]  < 1) ? localSquares[29 - 2] : 0;
-        potentialAttackSquares[29] += (localSquares[29 + 2]  < 1) ? localSquares[29 + 2] : 0;
+        potentialAttackSquares[29] += (localSquares[29 - 14]  < 2) ? localSquares[29 - 14] : 0;
+        potentialAttackSquares[29] += (localSquares[29 + 13]  < 2) ? localSquares[29 + 13] : 0;
+        potentialAttackSquares[29] += (localSquares[29 - 2]  < 2) ? localSquares[29 - 2] : 0;
+        potentialAttackSquares[29] += (localSquares[29 + 2]  < 2) ? localSquares[29 + 2] : 0;
         potentialAttackSquares[30] += localSquares[30 + 8];
         potentialAttackSquares[30] += localSquares[30 - 8];
         potentialAttackSquares[30] += localSquares[30 + 7];
@@ -4583,10 +4377,10 @@ public class splasherUtil {
         potentialAttackSquares[30] += localSquares[30 + -1];
         potentialAttackSquares[30] += localSquares[30 ];
         potentialAttackSquares[30] += localSquares[30 + 1];
-        potentialAttackSquares[30] += (localSquares[30 - 14]  < 1) ? localSquares[30 - 14] : 0;
-        potentialAttackSquares[30] += (localSquares[30 + 13]  < 1) ? localSquares[30 + 13] : 0;
-        potentialAttackSquares[30] += (localSquares[30 - 2]  < 1) ? localSquares[30 - 2] : 0;
-        potentialAttackSquares[30] += (localSquares[30 + 2]  < 1) ? localSquares[30 + 2] : 0;
+        potentialAttackSquares[30] += (localSquares[30 - 14]  < 2) ? localSquares[30 - 14] : 0;
+        potentialAttackSquares[30] += (localSquares[30 + 13]  < 2) ? localSquares[30 + 13] : 0;
+        potentialAttackSquares[30] += (localSquares[30 - 2]  < 2) ? localSquares[30 - 2] : 0;
+        potentialAttackSquares[30] += (localSquares[30 + 2]  < 2) ? localSquares[30 + 2] : 0;
         int highest = potentialAttackSquares[14];
         int highestIndex = 14;
         for(int i = 15; i <= 30; i++) {

@@ -323,7 +323,7 @@ public class  RobotPlayer {
     public static UnitType chooseBuild() {
         if(rc.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
         else if(enemyRobots.length > 1) return UnitType.MOPPER;
-        else if(rc.getMapWidth() * rc.getMapHeight() > 1600 && rc.getNumberTowers() < 5 && rc.getRoundNum() < 100) return UnitType.SPLASHER;
+        else if(mapSize > 1600 && rc.getNumberTowers() > 3 && rc.getRoundNum() < 100 && rc.getMoney() > 1300) return UnitType.SPLASHER;
         //else if (totalBuilt == 0 && knownSymmetry != SymmetryType.Unknown) return UnitType.SPLASHER;
 
         //we have a finite total amount of paint, so make sure we use it wisely

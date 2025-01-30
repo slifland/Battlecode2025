@@ -183,7 +183,7 @@ public class Splasher {
             }
             correctSymmetry = true;
         }
-        if((curObjective == null || navTarget == navState.ruin) && !enemyTowers.isEmpty()) {
+        if((curObjective == null) && !enemyTowers.isEmpty()) {
             int minDist = Integer.MAX_VALUE;
             for(Ruin r : enemyTowers) {
                 //if(enemyDefenseTowers.getBit(r.location)) continue;
@@ -207,7 +207,7 @@ public class Splasher {
                     navTarget = navState.ruin;
                 }
             }
-            if(closestUnseenRuin != null && rc.getLocation().distanceSquaredTo(closestUnseenRuin) < minDist) {
+            if(closestUnseenRuin != null && rc.getLocation().distanceSquaredTo(closestUnseenRuin) < rc.getLocation().distanceSquaredTo(curObjective)) {
                 curObjective = closestUnseenRuin;
                 navTarget = navState.ruin;
                 rc.setIndicatorLine(rc.getLocation(), closestUnseenRuin, 0, 255, 0);
@@ -246,6 +246,7 @@ public class Splasher {
             }
             navTarget = navState.random;
         }
+
 
         if((navTarget == navState.ruin || navTarget == navState.random) && closestUnseenRuin != null) {
             if(navTarget == navState.random) curObjective = closestUnseenRuin;

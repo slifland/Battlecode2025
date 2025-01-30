@@ -41,6 +41,7 @@ public class HunterSplasher
 
     static void explore() throws GameActionException
     {
+        if(rc.getLocation().isWithinDistanceSquared(randomExploreLocation, 8)) randomExploreLocation = Utilities.generateRandomLocation(rc);
         MapLocation closestLocation = Symmetry.closestPossibleRuinHunter();
 
         Direction dirToMove;
@@ -48,7 +49,6 @@ public class HunterSplasher
             dirToMove = Pathfinding.bugBFS(closestLocation);
         else
             dirToMove = Pathfinding.bugBFS(randomExploreLocation);
-
         if(closestLocation != null)
         {
             rc.setIndicatorDot(closestLocation, 255, 0, 0);
