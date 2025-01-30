@@ -188,8 +188,8 @@ public class Soldier {
         FORCE_MONEY_ROUND = (int)(0.01 * mapSize + 34);//turn at which any time before that soldiers will always build money towers
         //y = y = y = 0.003x + 4.8-> calibrates it to be 6 on the smallest map size and 15 on the largest map size
         START_RUSHING_TOWER_NUMBER = (int) ((0.003 * mapSize) + 4.8);
-        //y = 0.004x + 5.4 -> calibrates to 8 on smallest map and 20 on largest map
-        EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.004 * mapSize) + 6.4);
+        //y = 0.003x + 5.8-> calibrates to 7 on smallest map and 15 on largest map
+        EXPLORE_FILL_TOWER_THRESHOLD = (int) ((0.003 * mapSize) + 5.8);
         //EXPLORE_FILL_TOWER_THRESHOLD = 0;
 
     }
@@ -251,7 +251,7 @@ public class Soldier {
         }
         fillingStation = null;
         //default to navigate, which defaults to explore if there is nothing to navigate to
-        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(19 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
+        state = (rc.getRoundNum() < STOP_EXPLORING || (state == SoldierState.Explore) || rng.nextInt(18 - (int)adjustedMapSize) == 0) ? SoldierState.Explore : SoldierState.Navigate;
         //check if we see any nearby unclaimed ruins
 
         if(rc.getNumberTowers() < 25 && closestUnclaimedRuin != null && /*!checkedRuin.getBit(closestUnclaimedRuin)*/!checkedRuin.contains(closestUnclaimedRuin) && closestUnclaimedRuin.isWithinDistanceSquared(rc.getLocation(), GameConstants.VISION_RADIUS_SQUARED) && ! Utilities.basicLocationIsBehindWall(closestUnclaimedRuin)) {
@@ -306,7 +306,7 @@ public class Soldier {
 //            validateRuinClaim();
 //            navigate();
 //        }
-        if((turnCount == 1 && rng.nextInt(15-(int)adjustedMapSize) == 0) || wallHug) {
+        if((turnCount == 1 && rng.nextInt(Math.max(12-(int)adjustedMapSize, 5)) == 0) || wallHug) {
             wallHug = true;
             //find the closest wall to you, and set that as your current objective
             if(target == null) {
@@ -332,7 +332,7 @@ public class Soldier {
             Direction dir = Pathfinding.bugBFS(target);
             if (dir != null && rc.canMove(dir)) rc.move(dir);
         }
-        if(rc.getNumberTowers() > EXPLORE_FILL_TOWER_THRESHOLD) {
+        if(rc.getNumberTowers() >= EXPLORE_FILL_TOWER_THRESHOLD) {
             attemptFill();
         }
         //rc.setIndicatorLine(rc.getLocation(), target, 255, 255,255);
@@ -583,7 +583,7 @@ public class Soldier {
             workingOnRuin = null;
             return;
         }
-        if (rc.isActionReady() && 100 < rc.getPaint() && rc.getRoundNum() > EXPLORE_FILL_TOWER_THRESHOLD) attemptFill();
+        if (rc.isActionReady() && rc.getPaint() > 100 && rc.getRoundNum() > EXPLORE_FILL_TOWER_THRESHOLD * 10) attemptFill();
     }
 
 
