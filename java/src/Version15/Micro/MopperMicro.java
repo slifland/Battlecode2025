@@ -21,7 +21,7 @@ class mopperMicroInfo {
     int paintLoss;
     int potentialPaintLoss;
 
-    public mopperMicroInfo(MapInfo tile) throws GameActionException {
+    public mopperMicroInfo(MapInfo tile) {
         if (!tile.isPassable()) {
             passable = false;
             return;
@@ -43,7 +43,7 @@ class mopperMicroInfo {
     }
 
     //populates the info you can't get from only knowing the tile
-    void populateMopperMicroInfo() throws GameActionException {
+    void populateMopperMicroInfo() {
         distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
         potentialPaintLoss = 0;
 //        MapLocation[] enemyPaintAverages = Utilities.getEnemyPaintAverages();
@@ -53,12 +53,12 @@ class mopperMicroInfo {
 //            case 2 -> Math.min(loc.distanceSquaredTo(enemyPaintAverages[0]), loc.distanceSquaredTo(enemyPaintAverages[1]));
 //            default -> Integer.MAX_VALUE;
 //        };
-        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?
-            for (RobotInfo robot : allyRobots) {
-                if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
-                    adjacentAllies++;
-                }
+        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
+        for (RobotInfo robot : allyRobots) {
+            if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
+                adjacentAllies++;
             }
+        }
 //        //find the closest enemy, and also see if we are safe from towers
 //        for (RobotInfo robot : enemyRobots) {
 //            int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -2679,7 +2679,7 @@ class mopperMicroInfo {
                     }
                 }
                 case MOPPER -> {
-                    if (dist <= 2) potentialPaintLoss += 5-(Math.min(5, adjacentAllies));
+                    if (dist <= 2) potentialPaintLoss += (5-Math.min(5, adjacentAllies));
                     if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                 }
                 case SOLDIER -> {

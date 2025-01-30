@@ -18,7 +18,7 @@ class microInfo {
     public int potentialPaintLoss;
 
     //creates a micro Info tile, populating its information based on a map info tile
-    public microInfo(MapInfo tile) throws GameActionException {
+    public microInfo(MapInfo tile) {
         passable = tile.isPassable();
         //we don't need to populate info if the tile is not passable - waste of bytecodes
         if(!passable) return;
@@ -38,16 +38,13 @@ class microInfo {
     
 
     //takes in a map info, and populates this relevant micro info object using it, as well as known information
-    public void populateMicro() throws GameActionException {
+    public void populateMicro() {
         //find the closest ally, and count allies that are cardinally adjacent to this square
-//        if(allyRobots.length > 5) {
-//            adjacentAllies = rc.senseNearbyRobots(loc, 2, rc.getTeam()).length;
-//        }
-            for (RobotInfo robot : allyRobots) {
-                if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
-                    adjacentAllies++;
-                }
+        for(RobotInfo robot : allyRobots) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
+                adjacentAllies++;
             }
+        }
         //find the closest enemy, and also see if we are safe from towers
         for(RobotInfo robot : enemyRobots) {
             int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -72,7 +69,7 @@ class microInfo {
                         }
                     }
                     case MOPPER -> {
-                        if (dist <= 2) potentialPaintLoss += 5-(Math.min(5, adjacentAllies));
+                        if (dist <= 2) potentialPaintLoss += (5-Math.min(5, adjacentAllies));
                         if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                     }
                     case SOLDIER -> {

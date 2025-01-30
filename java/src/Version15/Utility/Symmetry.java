@@ -3,9 +3,8 @@ package Version15.Utility;
 import battlecode.common.MapInfo;
 import battlecode.common.MapLocation;
 
-import java.util.Map;
-
 import static Version15.RobotPlayer.staticRC;
+import static Version15.RobotPlayer.turnCount;
 
 
 public class Symmetry {
@@ -96,15 +95,6 @@ public class Symmetry {
             case Unknown -> null;
         };
     }
-    public static MapLocation opposite(MapLocation locToCheck, SymmetryType symmetryType) {
-        return switch (symmetryType) {
-            case Horizontal -> new MapLocation(locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
-            case Rotational ->
-                    new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
-            case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
-            case Unknown -> null;
-        };
-    }
 
     //returns an array of possible symmetries
     public static SymmetryType[] possibleSymmetry() {
@@ -115,61 +105,6 @@ public class Symmetry {
             case 12 -> new SymmetryType[]{SymmetryType.Horizontal, SymmetryType.Vertical};
             default -> new SymmetryType[]{SymmetryType.Horizontal, SymmetryType.Vertical, SymmetryType.Rotational};
         };
-    }
-
-    public static MapLocation[] possibleRuins(SymmetryType possibleSymmetry)
-    {
-        MapLocation[] possibleRuins = new MapLocation[seenRuins.size];
-        switch(possibleSymmetry)
-        {
-            case Rotational:
-                seenRuins.updateIterable();
-                for(int i = 0; i < seenRuins.size; i++)
-                {
-                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Rotational);
-                }
-                break;
-
-            case Horizontal:
-                seenRuins.updateIterable();
-                for(int i = 0; i < seenRuins.size; i++)
-                {
-                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Horizontal);
-                }
-                break;
-
-            case Vertical:
-                seenRuins.updateIterable();
-                for(int i = 0; i < seenRuins.size; i++)
-                {
-                    possibleRuins[i] = opposite(seenRuins.get(i), SymmetryType.Vertical);
-                }
-                break;
-        }
-        return possibleRuins;
-    }
-
-    public static MapLocation closestPossibleRuin()
-    {
-        int closestDistance = Integer.MAX_VALUE;
-        MapLocation closestPossible = null;
-        MapLocation currentLocation = staticRC.getLocation();
-
-        SymmetryType[] possibleSymmetries = possibleSymmetry();
-        for(SymmetryType symmetryType : possibleSymmetries)
-        {
-            for(MapLocation possibleRuin : possibleRuins(symmetryType))
-            {
-                if(seenRuins.contains(possibleRuin)) continue;
-                int distance = currentLocation.distanceSquaredTo(possibleRuin);
-                if(distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestPossible = possibleRuin;
-                }
-            }
-        }
-        return closestPossible;
     }
 
     //returns the closest unseen ruin

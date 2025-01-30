@@ -22,7 +22,7 @@ class splasherMicroInfo {
     int paintLoss;
     int potentialPaintLoss;
 
-    public splasherMicroInfo(MapInfo tile) throws GameActionException {
+    public splasherMicroInfo(MapInfo tile) {
         if(!tile.isPassable()) {
             passable = false;
             return;
@@ -44,14 +44,15 @@ class splasherMicroInfo {
     }
 
     //populates the info you can't get from only knowing the tile
-    void populateSplasherMicroInfo() throws GameActionException {
+    void populateSplasherMicroInfo() {
         if(averageEnemyPaint != null) distanceToEnemyAverage = loc.distanceSquaredTo(averageEnemyPaint);
         else if(seenEnemyTower != null) distanceToEnemyAverage = loc.distanceSquaredTo(seenEnemyTower.getLocation());
-            for (RobotInfo robot : allyRobots) {
-                if (loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
-                    adjacentAllies++;
-                }
+        //count adjacent allies (depending on ally robots length, might be faster to call sensenearbyrobots?)
+        for(RobotInfo robot : allyRobots) {
+            if(loc.isWithinDistanceSquared(robot.getLocation(), 2)) {
+                adjacentAllies++;
             }
+        }
         //find the closest enemy, and also see if we are safe from towers
 //        for(RobotInfo robot : enemyRobots) {
 //            int dist = loc.distanceSquaredTo(robot.getLocation());
@@ -2706,7 +2707,7 @@ class splasherMicroInfo {
                     }
                 }
                 case MOPPER -> {
-                    if (dist <= 2) potentialPaintLoss += 5-(Math.min(5, adjacentAllies));
+                    if (dist <= 2) potentialPaintLoss += (5-Math.min(5, adjacentAllies));
                     if (dist < 8) potentialPaintLoss += Math.min(adjacentAllies, 5);
                 }
                 case SOLDIER -> {

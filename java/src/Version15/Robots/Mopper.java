@@ -69,9 +69,9 @@ public class Mopper {
     //static int uselessTurnsCount = 0;
 
     public static void runMopper() throws GameActionException {
-        if(turnCount == 1){
-            spawnLocation = rc.getLocation();
-            //checkedRuin = new boolean[rc.getMapWidth()][rc.getMapHeight()];
+        if (turnCount == 1) {
+            spawnLocation = staticRC.getLocation();
+            //checkedRuin = new boolean[staticRC.getMapWidth()][staticRC.getMapHeight()];
             //checkedRuin = new BitBoard();
             checkedRuin = new FastIterableLocSet();
             navTarget = null;
@@ -88,22 +88,22 @@ public class Mopper {
                 break;
             case contest:
                 contest();
-                //if(rc.isActionReady()) uselessTurnsCount++;
+                //if(staticRC.isActionReady()) uselessTurnsCount++;
                 //else uselessTurnsCount = 0;
                 break;
             case refill:
                 refill();
-                //if(rc.isActionReady()) uselessTurnsCount++;
+                //if(staticRC.isActionReady()) uselessTurnsCount++;
                 //else uselessTurnsCount = 0;
                 break;
             case clear:
                 clear();
                 break;
         }
-        if (rc.isActionReady() && enemyRobots.length > 0) {
+        if (staticRC.isActionReady() && enemyRobots.length > 0) {
             MopperMicro.attackAnything();
         }
-        //rc.setIndicatorString(state.toString());
+        //staticRC.setIndicatorString(state.toString());
         //System.out.println(Clock.getBytecodesLeft());
     }
 
@@ -112,57 +112,57 @@ public class Mopper {
 //        if(turnCount % 200 == 0) {
 //            exploredSymmetry = false;
 //        }
-        MapLocation curLoc = rc.getLocation();
+        MapLocation curLoc = staticRC.getLocation();
         if (curObjective != null && curLoc.distanceSquaredTo(curObjective) < 8) {
             switch (navTarget) {
-                case horizontal, rotational, vertical -> exploredSymmetry = true;
+                case navState.horizontal, navState.rotational, navState.vertical -> exploredSymmetry = true;
                 //case navState.ruin -> checkedRuin[curObjective.x][curObjective.y] = true;
                 //case navState.ruin -> checkedRuin.setBit(curObjective, true);
-                case ruin -> checkedRuin.add(curObjective);
+                case navState.ruin -> checkedRuin.add(curObjective);
                 //case navState.tower -> checkedTower.setBit(curObjective, true);
-                case tower -> checkedTower.add(curObjective);
+                case navState.tower -> checkedTower.add(curObjective);
             }
             curObjective = null;
             navTarget = null;
         } else if (curObjective != null && knownSymmetry != SymmetryType.Unknown && !correctSymmetry && navTarget != null) {
             switch (navTarget) {
-                case horizontal -> {
+                case navState.horizontal -> {
                     if (knownSymmetry != SymmetryType.Horizontal) {
                         switch (knownSymmetry) {
                             case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                                 navTarget = navState.rotational;
                                 break;
                             case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                                 navTarget = navState.vertical;
                                 break;
                         }
                     }
                 }
-                case rotational -> {
+                case navState.rotational -> {
                     if (knownSymmetry != SymmetryType.Rotational) {
                         switch (knownSymmetry) {
                             case Vertical:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                                 navTarget = navState.vertical;
                                 break;
                             case Horizontal:
-                                curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                                curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                                 navTarget = navState.horizontal;
                                 break;
                         }
                     }
                 }
-                case vertical -> {
+                case navState.vertical -> {
                     if (knownSymmetry != SymmetryType.Vertical) {
                         switch (knownSymmetry) {
                             case Rotational:
-                                curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                                curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                                 navTarget = navState.rotational;
                                 break;
                             case Horizontal:
-                                curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                                curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                                 navTarget = navState.horizontal;
                                 break;
                         }
@@ -184,8 +184,8 @@ public class Mopper {
                     navTarget = navState.ruin;
                 }
             }
-            if (closestUnseenRuin != null && (curObjective == null || rc.getLocation().distanceSquaredTo(closestUnseenRuin) < curLoc.distanceSquaredTo(curObjective))) {
-                rc.setIndicatorLine(rc.getLocation(), closestUnseenRuin, 255, 0, 0);
+            if (closestUnseenRuin != null && (curObjective == null || staticRC.getLocation().distanceSquaredTo(closestUnseenRuin) < curLoc.distanceSquaredTo(curObjective))) {
+                staticRC.setIndicatorLine(staticRC.getLocation(), closestUnseenRuin, 255, 0, 0);
                 curObjective = closestUnseenRuin;
                 navTarget = navState.ruin;
             }
@@ -205,20 +205,20 @@ public class Mopper {
         }
         //next, if we have enemy towers, go there
         //finally, navigate to the opposite of where we spawned
-        if(curObjective == null && !exploredSymmetry) {
+        if (curObjective == null && !exploredSymmetry) {
             SymmetryType[] possible = Symmetry.possibleSymmetry();
             int sym = rng.nextInt(possible.length);
-            switch(possible[sym]) {
+            switch (possible[sym]) {
                 case Horizontal:
-                    curObjective = new MapLocation(spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                    curObjective = new MapLocation(spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                     navTarget = navState.horizontal;
                     break;
                 case Rotational:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, rc.getMapHeight() - 1 - spawnLocation.y);
+                    curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, staticRC.getMapHeight() - 1 - spawnLocation.y);
                     navTarget = navState.rotational;
                     break;
                 case Vertical:
-                    curObjective = new MapLocation(rc.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
+                    curObjective = new MapLocation(staticRC.getMapWidth() - 1 - spawnLocation.x, spawnLocation.y);
                     navTarget = navState.vertical;
                     break;
             }
@@ -228,39 +228,39 @@ public class Mopper {
             double d = rng.nextDouble();
             if (d <= 0.5) {
                 MapLocation closestCorner = Soldier.closestCorner();
-                curObjective = new MapLocation(Math.abs(rc.getMapWidth() - 1 - closestCorner.x), Math.abs(rc.getMapHeight() - 1 - closestCorner.y));
+                curObjective = new MapLocation(Math.abs(staticRC.getMapWidth() - 1 - closestCorner.x), Math.abs(staticRC.getMapHeight() - 1 - closestCorner.y));
             } else {
-                curObjective = new MapLocation(rng.nextInt(rc.getMapHeight() - 6) + 3, rng.nextInt(rc.getMapHeight() - 6) + 3);
+                curObjective = new MapLocation(rng.nextInt(staticRC.getMapHeight() - 6) + 3, rng.nextInt(staticRC.getMapHeight() - 6) + 3);
             }
             navTarget = navState.random;
         }
 
         //MOVE TO OBJECTIVE
         Direction dir = Pathfinding.bugBFS(curObjective);
-        if (rc.canMove(dir)) rc.move(dir);
-        if (rc.isActionReady() && enemyRobots.length >= 1 && Clock.getBytecodesLeft() > 3000) {
+        if (staticRC.canMove(dir)) staticRC.move(dir);
+        if (staticRC.isActionReady() && enemyRobots.length >= 1 && Clock.getBytecodesLeft() > 3000) {
             RobotInfo bestTarget = findBestTarget();
-            if (bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
-                rc.attack(bestTarget.getLocation());
+            if (bestTarget != null && staticRC.canAttack(bestTarget.getLocation())) {
+                staticRC.attack(bestTarget.getLocation());
             } else {
                 Direction dirToSweep = MopperMicro.dirToSweep(1);
-                if (dirToSweep != null && rc.canMopSwing(dirToSweep)) rc.mopSwing(dirToSweep);
+                if (dirToSweep != null && staticRC.canMopSwing(dirToSweep)) staticRC.mopSwing(dirToSweep);
             }
         }
-        rc.setIndicatorString("navigate! " + curObjective + " : " + navTarget);
+        staticRC.setIndicatorString("navigate! " + curObjective + " : " + navTarget);
     }
 
     //attempts to contest by mopping up enemy stuff, and stealing paint from enemies
     public static void contest() throws GameActionException {
-//        if(rc.isActionReady()) {
+//        if(staticRC.isActionReady()) {
 //            MapLocation bestMop = findBestMop();
-//            if(rc.canAttack(bestMop)) rc.attack(bestMop);
+//            if(staticRC.canAttack(bestMop)) staticRC.attack(bestMop);
 //        }
 //        Direction dir = Micro.runMicro();
-//        if(rc.canMove(dir)) rc.move(dir);
-//        if(rc.isActionReady()) {
+//        if(staticRC.canMove(dir)) staticRC.move(dir);
+//        if(staticRC.isActionReady()) {
 //            MapLocation bestMop = findBestMop();
-//            if(rc.canAttack(bestMop)) rc.attack(bestMop);
+//            if(staticRC.canAttack(bestMop)) staticRC.attack(bestMop);
 //        }
         MopperMicro.integratedMopperMicro();
     }
@@ -268,59 +268,59 @@ public class Mopper {
     //attempts to refill by stealing paint from enemy robots
     public static void refill() throws GameActionException {
         RobotInfo bestTarget = findBestTarget();
-        if(bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
-            rc.attack(bestTarget.getLocation());
+        if (bestTarget != null && staticRC.canAttack(bestTarget.getLocation())) {
+            staticRC.attack(bestTarget.getLocation());
         }
         //Direction dir = Micro.runMicro();
-        //if(rc.canMove(dir)) rc.move(dir);
-        if(averageEnemyPaint != null) MopperMicro.integratedMopperMicro();
+        //if(staticRC.canMove(dir)) staticRC.move(dir);
+        if (averageEnemyPaint != null) MopperMicro.integratedMopperMicro();
         else {
             Direction dirToSweep = MopperMicro.dirToSweep(3);
-            if (dirToSweep != null && rc.canMopSwing(dirToSweep)) {
-                rc.mopSwing(dirToSweep);
+            if (dirToSweep != null && staticRC.canMopSwing(dirToSweep)) {
+                staticRC.mopSwing(dirToSweep);
                 return;
             }
         }
-        if (rc.isActionReady() && Clock.getBytecodesLeft() > 3000) {
+        if (staticRC.isActionReady() && Clock.getBytecodesLeft() > 3000) {
             bestTarget = findBestTarget();
-            if (bestTarget != null && rc.canAttack(bestTarget.getLocation())) {
-                rc.attack(bestTarget.getLocation());
+            if (bestTarget != null && staticRC.canAttack(bestTarget.getLocation())) {
+                staticRC.attack(bestTarget.getLocation());
             }
         }
-        if (rc.isActionReady()) MopperMicro.attackAnything();
+        if (staticRC.isActionReady()) MopperMicro.attackAnything();
     }
 
     //tries to clear the enemy paint around one of our ruins
     public static void clear() throws GameActionException {
         MapLocation bestLoc = bestClear(nearbyRuin);
         Direction dir = MopperMicro.dirToSweep(2);
-        if (dir != null && rc.canMopSwing(dir)) {
-            rc.mopSwing(dir);
+        if (dir != null && staticRC.canMopSwing(dir)) {
+            staticRC.mopSwing(dir);
         }
 
-        if (bestLoc != null && rc.isActionReady()) {
-            if (rc.canAttack(bestLoc)) {
-                rc.attack(bestLoc);
-                MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(rc.getLocation(), nearbyRuin), nearbyRuin);
+        if (bestLoc != null && staticRC.isActionReady()) {
+            if (staticRC.canAttack(bestLoc)) {
+                staticRC.attack(bestLoc);
+                MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
             } else {
-                MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(rc.getLocation(), bestLoc), bestLoc);
+                MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestLoc), bestLoc);
             }
         } else {
-            //MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(rc.getLocation(), nearbyRuin), nearbyRuin);
-            MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(rc.getLocation(), nearbyRuin), nearbyRuin);
+            //MopperMicro.targetedMopperMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
+            MopperMicro.targetedClearMicro(MopperMicro.customLocationTo(staticRC.getLocation(), nearbyRuin), nearbyRuin);
         }
-        if(bestLoc != null && rc.canAttack(bestLoc)) rc.attack(bestLoc);
-        if(rc.isActionReady()) {
+        if (bestLoc != null && staticRC.canAttack(bestLoc)) staticRC.attack(bestLoc);
+        if (staticRC.isActionReady()) {
             MopperMicro.attackAnything();
         }
-        rc.setIndicatorString("clear! " + bestLoc);
+        staticRC.setIndicatorString("clear! " + bestLoc);
     }
 
     //determine a moppers state for this turn
     public static void updateState() throws GameActionException {
         state = mopStates.navigate;
         //try to steal paint from the enemy
-        if ((rc.getPaint() <= refillThreshold || (rc.getPaint() <= endRefillThreshold && state == mopStates.refill)) && enemyRobots.length > 2) {
+        if ((staticRC.getPaint() <= refillThreshold || (staticRC.getPaint() <= endRefillThreshold && state == mopStates.refill)) && enemyRobots.length > 2) {
             state = mopStates.refill;
             return;
         }
@@ -340,8 +340,8 @@ public class Mopper {
         int minDist = Integer.MAX_VALUE;
         MapLocation bestLoc = null;
         int bestScore = -1;
-        for (MapInfo tile : rc.senseNearbyMapInfos(ruin, 8)) {
-            int dist = tile.getMapLocation().distanceSquaredTo(rc.getLocation());
+        for (MapInfo tile : staticRC.senseNearbyMapInfos(ruin, 8)) {
+            int dist = tile.getMapLocation().distanceSquaredTo(staticRC.getLocation());
             int score = MopperMicro.determineScoreClear(tile.getMapLocation(), tile);
             if (score > bestScore || (score == bestScore && dist < minDist)) {
                 bestScore = score;
@@ -356,10 +356,10 @@ public class Mopper {
     public static RobotInfo findBestTarget() throws GameActionException {
         int highestScore = -1;
         RobotInfo target = null;
-        MapLocation curLoc = rc.getLocation();
+        MapLocation curLoc = staticRC.getLocation();
         for (RobotInfo robot : enemyRobots) {
             if (robot.getLocation().distanceSquaredTo(curLoc) > UnitType.MOPPER.actionRadiusSquared) continue;
-            MapInfo loc = rc.senseMapInfo(robot.getLocation());
+            MapInfo loc = staticRC.senseMapInfo(robot.getLocation());
             int score = (robot.getPaintAmount() == 0) ? 10 : robot.getType().paintCapacity - robot.getPaintAmount();
             //add a big bonus if we are also removing paint from the tile
             if (loc.getPaint().isEnemy()) score += 50;
