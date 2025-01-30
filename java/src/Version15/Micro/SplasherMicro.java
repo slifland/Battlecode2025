@@ -2699,11 +2699,12 @@ public class SplasherMicro {
 //    }
     //same as above, but takes in a best attack
     public static void integratedSplasherMicro(boolean fightingTower) throws GameActionException {
-        int minScore = 3;
+        int minScore = 1;
         if (staticRC.isActionReady() && staticRC.isMovementReady()) {
             MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, minScore);
             //we have a best place to attack
             if (bestAttack != null) {
+                //System.out.println(bestAttack);
                 //attack it
                 if (staticRC.canAttack(bestAttack)) {
                     staticRC.attack(bestAttack);
@@ -2717,7 +2718,7 @@ public class SplasherMicro {
                     }
                     //just see if we can get anything
                     else if (Clock.getBytecodesLeft() > 4000) {
-                        bestAttack = splasherUtil.cheapBestAttack(fightingTower, 2);
+                        bestAttack = splasherUtil.cheapBestAttack(fightingTower, 1);
                         if (staticRC.canAttack(bestAttack)) {
                             staticRC.attack(bestAttack);
                         }
@@ -2729,14 +2730,14 @@ public class SplasherMicro {
                 if(averageEnemyPaint != null) runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), averageEnemyPaint), averageEnemyPaint);
                 else if(seenEnemyTower != null) runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), seenEnemyTower.getLocation()), seenEnemyTower.getLocation());
                 if (Clock.getBytecodesLeft() > 4000) {
-                    bestAttack = splasherUtil.cheapBestAttack(fightingTower, 2);
+                    bestAttack = splasherUtil.cheapBestAttack(fightingTower, 1);
                     if (staticRC.canAttack(bestAttack)) {
                         staticRC.attack(bestAttack);
                     }
                 }
             }
         } else if (staticRC.isActionReady()) {
-            MapLocation bestAttack = splasherUtil.cheapBestAttack(fightingTower, 2);
+            MapLocation bestAttack = splasherUtil.cheapBestAttack(fightingTower, 1);
             if (bestAttack != null && staticRC.canAttack(bestAttack)) {
                 staticRC.attack(bestAttack);
             }
@@ -2748,6 +2749,7 @@ public class SplasherMicro {
 
     //runs the splasher micro trying to get within range of a target attack location
     public static void runTargetedSplasherMicro(Direction direction, MapLocation target) throws GameActionException {
+        health = staticRC.getHealth();
         microArray = new splasherMicroInfo[3];
         switch (direction) {
             case NORTH -> {
@@ -2856,14 +2858,14 @@ public class SplasherMicro {
                 continue;
             }
 
-            if (health <= 100 || !staticRC.isActionReady()) {
-                //if one is in tower range and the other isnt, get out of tower range
-                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
-                if (bestMicro.inTowerRange && !m.inTowerRange) {
-                    bestMicro = m;
-                    continue;
-                }
-            }
+//            if (health <= 100 || !staticRC.isActionReady()) {
+//                //if one is in tower range and the other isnt, get out of tower range
+//                if (!bestMicro.inTowerRange && m.inTowerRange) continue;
+//                if (bestMicro.inTowerRange && !m.inTowerRange) {
+//                    bestMicro = m;
+//                    continue;
+//                }
+//            }
 
 
             int dist = bestMicro.loc.distanceSquaredTo(target);
@@ -2920,6 +2922,7 @@ public class SplasherMicro {
 
     //attempts to stay safe while running a micro that optimizes for splashers
     private static void runSafeSplasherMicro() throws GameActionException {
+        health = staticRC.getHealth();
         if (!staticRC.isMovementReady()) return;
         microArray = new splasherMicroInfo[9];
         populateSplasherMicroArray();

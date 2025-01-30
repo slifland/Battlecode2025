@@ -363,7 +363,7 @@ public class Splasher {
             state = splasherStates.navigate;
             fillingStation = null;
         }
-        if((averageEnemyPaint != null && numEnemyTiles > 2) || (seenEnemyTower != null)) {
+        if((averageEnemyPaint != null && numEnemyTiles > 2) || (seenEnemyTower != null && !Soldier.isDefenseTower(seenEnemyTower))) {
             state = splasherStates.contest;
         }
     }
