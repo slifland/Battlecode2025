@@ -75,7 +75,7 @@ public class Utilities
          }
          int hash = center.x * 3 + ((center.y + 11)* 13);
          int decider = hash % 10;
-         if(decider <= 5) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
+         if(decider <= 4) return rc.getTowerPattern(UnitType.LEVEL_ONE_MONEY_TOWER);
          else return rc.getTowerPattern(UnitType.LEVEL_ONE_PAINT_TOWER);
 
     }

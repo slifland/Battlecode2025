@@ -150,6 +150,10 @@ public class Soldier {
         for(MapInfo m : tilesToFill) {
             if(m.getPaint() == PaintType.EMPTY) {
                 MapLocation tileLoc = m.getMapLocation();
+                if(tileLoc.equals(rc.getLocation()) && rc.canAttack(rc.getLocation())) {
+                    rc.attack(rc.getLocation());
+                    return;
+                }
                 int dist = (averageEnemyPaint != null) ? tileLoc.distanceSquaredTo(averageEnemyPaint) : tileLoc.distanceSquaredTo(center);
                 boolean curRobot = rc.canSenseRobotAtLocation(tileLoc);
                 if(!hasRobot && dist < minDist) {
@@ -160,6 +164,10 @@ public class Soldier {
                 else if(hasRobot && curRobot && dist < minDist) {
                     minDist = dist;
                     bestLoc = tileLoc;
+                    if(minDist <= 4 && rc.canAttack(bestLoc)) {
+                        rc.attack(bestLoc, Utilities.getColorFromCustomPattern(bestLoc, desiredPattern, center));
+                        return;
+                    }
                 }
             }
         }
@@ -210,7 +218,7 @@ public class Soldier {
             workingOnRuin = null;
         }
 
-        if(turnCount % 5 == 0) {
+        if(turnCount % 10 == 0) {
             checkedRuin.clear();
         }
         if(turnCount % 40 == 0) {

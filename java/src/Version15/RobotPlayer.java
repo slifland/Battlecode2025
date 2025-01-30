@@ -168,10 +168,17 @@ public class  RobotPlayer {
         if(enemyRobots.length == 0) turnsSinceSeenEnemy++;
         else turnsSinceSeenEnemy = 0;
         if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
-            if(rc.getMoney() > 2000 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3)
+            if(rc.getMoney() > 1000 && rc.canUpgradeTower(rc.getLocation()) && (rc.getNumberTowers() > 3 || rc.getPaint() > 500))
                 rc.upgradeTower(rc.getLocation());
         }
-        else if(rc.getMoney() > 2500 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3) {
+        else if((rc.getType() == UnitType.LEVEL_ONE_DEFENSE_TOWER || rc.getType() == UnitType.LEVEL_TWO_DEFENSE_TOWER) && rc.canUpgradeTower(rc.getLocation()) && (rc.getNumberTowers() > 3 || rc.getPaint() > 500) && enemyRobots.length > 1) {
+            rc.upgradeTower(rc.getLocation());
+        }
+        else if(rc.getMoney() > 2500 && rc.canUpgradeTower(rc.getLocation()) && (rc.getNumberTowers() > 3 || rc.getPaint() > 500) && rc.getType() == UnitType.LEVEL_ONE_MONEY_TOWER) {
+            rc.upgradeTower(rc.getLocation());
+        }
+        //give paint tower the chance to get to level three first
+        else if(rc.getMoney() > 5200 && rc.canUpgradeTower(rc.getLocation()) && (rc.getNumberTowers() > 3 || rc.getPaint() > 500) && rc.getType() == UnitType.LEVEL_TWO_MONEY_TOWER){
             rc.upgradeTower(rc.getLocation());
         }
 //        if(turnCount % 75 == 0) {
