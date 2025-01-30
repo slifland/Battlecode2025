@@ -33,7 +33,7 @@ public class Pathfinding
         if(!directionStack.isEmpty())
         {
             Direction currentDirection = directionStack.peek();
-            while(!rc.canMove(currentDirection))
+            while(!staticRC.canMove(currentDirection))
             {
                 if(turningRight)
                 {
@@ -47,7 +47,7 @@ public class Pathfinding
                 /*
                     We don't want to follow a border all the way around so let's turn around and go the opposite way
                  */
-                if(!rc.onTheMap(rc.getLocation().add(currentDirection)))
+                if(!staticRC.onTheMap(staticRC.getLocation().add(currentDirection)))
                 {
                     turningRight = !turningRight;
                     directionStack.clear();
@@ -64,8 +64,8 @@ public class Pathfinding
             return directionStack.pop();
         }
 
-        Direction dirTo = rc.getLocation().directionTo(destination);
-        if(rc.canMove(dirTo))
+        Direction dirTo = staticRC.getLocation().directionTo(destination);
+        if(staticRC.canMove(dirTo))
         {
             return dirTo;
         }
@@ -74,7 +74,7 @@ public class Pathfinding
             turningRight = decideTurningDirection(destination);
             Direction currentDirection = dirTo;
             directionStack.push(currentDirection);
-            while(!rc.canMove(currentDirection))
+            while(!staticRC.canMove(currentDirection))
             {
                 if(turningRight)
                 {
@@ -97,12 +97,12 @@ public class Pathfinding
 
     public static Direction bugBFS(MapLocation destination) throws GameActionException
     {
-        if(!destination.equals(previousDestination) || rc.getRoundNum() - lastResetRound >= RESET_THRESHOLD)
+        if(!destination.equals(previousDestination) || staticRC.getRoundNum() - lastResetRound >= RESET_THRESHOLD)
         {
-            initializeBugBFS(rc, destination);
+            initializeBugBFS(staticRC, destination);
         }
 
-        if(rc.getLocation().equals(destination))
+        if(staticRC.getLocation().equals(destination))
         {
             return Direction.CENTER;
         }
@@ -120,7 +120,7 @@ public class Pathfinding
 
     public static boolean decideTurningDirection(MapLocation destination) throws GameActionException
     {
-        MapLocation currentLocation = rc.getLocation();
+        MapLocation currentLocation = staticRC.getLocation();
         //if we see come to a new obstacle, decide the best turning direction and put in in the map
         if(obstacles.obstacleExists(currentLocation))
         {
@@ -149,14 +149,14 @@ public class Pathfinding
 
     private static int distanceAfterSimulation(MapLocation destination, boolean turningRight) throws GameActionException
     {
-        MapLocation virtualBug = rc.getLocation();
+        MapLocation virtualBug = staticRC.getLocation();
         DirectionStack virtualStack = new DirectionStack();
 
         int cutOff = 5;
         int i = 0;
         while(i < cutOff)
         {
-            if(virtualBug.equals(destination) || !rc.canSenseLocation(virtualBug))
+            if(virtualBug.equals(destination) || !staticRC.canSenseLocation(virtualBug))
             {
                 break;
             }
@@ -221,16 +221,16 @@ public class Pathfinding
     static boolean virtualCanMove(MapLocation start, Direction direction) throws GameActionException
     {
         MapLocation location = start.add(direction);
-        if(!rc.onTheMap(location))
+        if(!staticRC.onTheMap(location))
         {
             return false;
         }
-        else if(!rc.canSenseLocation(location))
+        else if(!staticRC.canSenseLocation(location))
         {
             return true;
         }
 
-        return rc.sensePassability(location) && !rc.canSenseRobotAtLocation(location);
+        return staticRC.sensePassability(location) && !staticRC.canSenseRobotAtLocation(location);
     }
 
 

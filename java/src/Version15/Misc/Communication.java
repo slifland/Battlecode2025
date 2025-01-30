@@ -113,12 +113,12 @@ public class Communication {
 
     //Called only once, when a new robot/tower is born
     public static void setup() throws GameActionException {
-        Communication.allMemory = new Ruin[rc.getMapWidth()][rc.getMapHeight()];
+        Communication.allMemory = new Ruin[staticRC.getMapWidth()][staticRC.getMapHeight()];
 
-        if (rc.getType().isTowerType()) {
-            rc.broadcastMessage(0b11);
+        if (staticRC.getType().isTowerType()) {
+            staticRC.broadcastMessage(0b11);
 
-            Ruin r = new Ruin(rc.getLocation(), 1, isPaintTower(rc.getType()));
+            Ruin r = new Ruin(staticRC.getLocation(), 1, isPaintTower(staticRC.getType()));
             updateRuinsMemory(r);
             broadcastRuinQueue.add(r);
         }
@@ -140,7 +140,7 @@ public class Communication {
             int price = Clock.getBytecodesLeft(); ////////////////////////////////////////////////////////////////////////////////////////////////////
             /**/
 
-        for (Message m : rc.readMessages(rc.getRoundNum() - 1)) {
+        for (Message m : staticRC.readMessages(staticRC.getRoundNum() - 1)) {
             processRuinQueue.add(m);
         }
 
@@ -175,7 +175,7 @@ public class Communication {
         Process all incoming messages for towers
     */
     public static void processMessagesTower() {
-        for (Message m : rc.readMessages(rc.getRoundNum() - 1)) {
+        for (Message m : staticRC.readMessages(staticRC.getRoundNum() - 1)) {
             switch (m.getBytes() & 0b11) {
                 case 0b00:
                     if (updateRuinsMemory(messageToRuin(m))) {
@@ -208,7 +208,7 @@ public class Communication {
         int i = 0;
         MapLocation[] tower = new MapLocation[30];
         for (RobotInfo robot : allyRobots) {
-            if (robot.getType().isTowerType() && rc.canSendMessage(robot.location)) {
+            if (robot.getType().isTowerType() && staticRC.canSendMessage(robot.location)) {
                 tower[i++] = robot.getLocation();
             }
         }
@@ -232,7 +232,7 @@ public class Communication {
             int status = 0;
             boolean isPaintTower = false;
 
-            RobotInfo ruinInfo = rc.senseRobotAtLocation(ruinLoc);
+            RobotInfo ruinInfo = staticRC.senseRobotAtLocation(ruinLoc);
 
             /*
                 If the ruin is unclaimed, ruinInfo will be null
@@ -241,7 +241,7 @@ public class Communication {
              */
             if (ruinInfo != null) {
                 //get the team information
-                if (ruinInfo.team == rc.getTeam())
+                if (ruinInfo.team == staticRC.getTeam())
                     status = 1;
                 else {
                     status = 2;
@@ -268,8 +268,8 @@ public class Communication {
     */
     public static void sendRuinLocationsToTower(MapLocation tower) throws GameActionException {
         if (unclaimedRuins.isEmpty() && enemyTowers.isEmpty() && alliedPaintTowers.isEmpty()) {
-            if (knownSymmetry != SymmetryType.Unknown && rc.canSendMessage(tower)) {
-                rc.sendMessage(tower, symmetriesToMessage(symmetries));
+            if (knownSymmetry != SymmetryType.Unknown && staticRC.canSendMessage(tower)) {
+                staticRC.sendMessage(tower, symmetriesToMessage(symmetries));
             }
             return;
         }
@@ -278,12 +278,12 @@ public class Communication {
             fillSendQueue();
 
         Ruin r;
-        if (rc.canSendMessage(tower)) {
+        if (staticRC.canSendMessage(tower)) {
             while (!sendQueue.isEmpty()) {
                 r = sendQueue.pop();
                 if (!validateRuin(r)) continue;
 
-                rc.sendMessage(tower, ruinToMessage(r));
+                staticRC.sendMessage(tower, ruinToMessage(r));
                 break;
             }
         }
@@ -293,15 +293,15 @@ public class Communication {
     Broadcasts information the tower has to nearby towers
      */
     public static void broadcastMessages() throws GameActionException {
-        if (rc.canBroadcastMessage() && knownSymmetry != Symmetry.SymmetryType.Unknown) {
-            rc.broadcastMessage(symmetriesToMessage(symmetries));
+        if (staticRC.canBroadcastMessage() && knownSymmetry != Symmetry.SymmetryType.Unknown) {
+            staticRC.broadcastMessage(symmetriesToMessage(symmetries));
         }
 
         Ruin r;
-        while (rc.canBroadcastMessage() && !broadcastRuinQueue.isEmpty()) {
+        while (staticRC.canBroadcastMessage() && !broadcastRuinQueue.isEmpty()) {
             r = broadcastRuinQueue.pop();
             if (validateRuin(r))
-                rc.broadcastMessage(ruinToMessage(r));
+                staticRC.broadcastMessage(ruinToMessage(r));
         }
     }
 
@@ -329,14 +329,14 @@ public class Communication {
         int first = i;
         do {
             ct = 0;
-            while (ct < numRuinsToSendToEachRobot && rc.canSendMessage(allyRobots[i].location)) {
+            while (ct < numRuinsToSendToEachRobot && staticRC.canSendMessage(allyRobots[i].location)) {
                 if (sendQueue.isEmpty())
                     fillSendQueue();
 
                 r = sendQueue.pop();
                 if (!validateRuin(r)) continue;
 
-                rc.sendMessage(allyRobots[i].location, ruinToMessage(r));
+                staticRC.sendMessage(allyRobots[i].location, ruinToMessage(r));
                 ct++;
             }
 
@@ -462,10 +462,10 @@ public class Communication {
                 if (knownSymmetry != SymmetryType.Unknown) {
                     MapLocation newRuin = switch (knownSymmetry) {
                         case Horizontal ->
-                                new MapLocation(ruin.location.x, rc.getMapHeight() - 1 - ruin.location.y);
+                                new MapLocation(ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
                         case Rotational ->
-                                new MapLocation(rc.getMapWidth() - 1 - ruin.location.x, rc.getMapHeight() - 1 - ruin.location.y);
-                        case Vertical -> new MapLocation(rc.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
+                                new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
                         case Unknown -> null;
                     };
                     if (!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);
@@ -478,10 +478,10 @@ public class Communication {
                 if (knownSymmetry != SymmetryType.Unknown) {
                     MapLocation newRuin = switch (knownSymmetry) {
                         case Horizontal ->
-                                new MapLocation(ruin.location.x, rc.getMapHeight() - 1 - ruin.location.y);
+                                new MapLocation(ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
                         case Rotational ->
-                                new MapLocation(rc.getMapWidth() - 1 - ruin.location.x, rc.getMapHeight() - 1 - ruin.location.y);
-                        case Vertical -> new MapLocation(rc.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
+                                new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, staticRC.getMapHeight() - 1 - ruin.location.y);
+                        case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - ruin.location.x, ruin.location.y);
                         case Unknown -> null;
                     };
                     if (!seenRuins.contains(newRuin)) unseenRuins.add(newRuin);

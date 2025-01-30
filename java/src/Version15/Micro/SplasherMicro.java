@@ -2734,81 +2734,81 @@ public class SplasherMicro {
     //3. Attack square with self -0b10
     //4. Attack square without moving -0b1
 //    public static void integratedSplasherMicro(boolean fightingTower) throws GameActionException {
-//        health = rc.getHealth();
-//        if (rc.isActionReady()) {
+//        health = staticRC.getHealth();
+//        if (staticRC.isActionReady()) {
 //            int minScore = 3;
 //            //MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, minScore);
 //            MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, Math.min(minScore, Splasher.numEnemyTiles));
 //            if (bestAttack != null) {
-//                if (rc.canAttack(bestAttack)) {
-//                    rc.attack(bestAttack);
-//                    rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+//                if (staticRC.canAttack(bestAttack)) {
+//                    staticRC.attack(bestAttack);
+//                    staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
 //                    runSafeSplasherMicro();
 //                } else {
-//                    rc.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(rc.getLocation(), bestAttack));
-//                    runTargetedSplasherMicro(MopperMicro.customLocationTo(rc.getLocation(), bestAttack), bestAttack);
-//                    if(rc.canAttack(bestAttack)) rc.attack(bestAttack);
+//                    staticRC.setIndicatorString("targeted micro: + "  + bestAttack +  " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(staticRC.getLocation(), bestAttack));
+//                    runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestAttack), bestAttack);
+//                    if(staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
 //                    else if(Clock.getBytecodesLeft() > 4000) {
 //                        bestAttack = splasherUtil.cheapBestAttack(fightingTower, minScore);
-//                        if(bestAttack != null && rc.canAttack(bestAttack)){
-//                            rc.attack(bestAttack);
+//                        if(bestAttack != null && staticRC.canAttack(bestAttack)){
+//                            staticRC.attack(bestAttack);
 //                        }
 //                    }
 //                }
 //            } else {
-//                rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+//                staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
 //                runSafeSplasherMicro();
 //                if(Clock.getBytecodesLeft() > 4000) {
 //                    bestAttack = splasherUtil.cheapBestAttack(fightingTower, minScore);
-//                    if(bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack);
+//                    if(bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
 //                }
 //            }
 //        } else {
-//            rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+//            staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
 //            runSafeSplasherMicro();
 //        }
 //    }
     //same as above, but takes in a best attack
     public static void integratedSplasherMicro(boolean fightingTower, MapLocation bestAttack) throws GameActionException {
-        if(rc.isMovementReady()) {
-            health = rc.getHealth();
-            if (rc.isActionReady()) {
+        if(staticRC.isMovementReady()) {
+            health = staticRC.getHealth();
+            if (staticRC.isActionReady()) {
                 int minScore = 2;
                 //MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, minScore);
                 //MapLocation bestAttack = splasherUtil.bestAttack(fightingTower, Math.min(minScore, Splasher.numEnemyTiles));
-                if (rc.canAttack(bestAttack)) {
-                    rc.attack(bestAttack);
-                    rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+                if (staticRC.canAttack(bestAttack)) {
+                    staticRC.attack(bestAttack);
+                    staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                     runSafeSplasherMicro();
                 } else {
-                    rc.setIndicatorString("targeted micro: + " + bestAttack + " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(rc.getLocation(), bestAttack));
-                    runTargetedSplasherMicro(MopperMicro.customLocationTo(rc.getLocation(), bestAttack), bestAttack);
-                    if (rc.canAttack(bestAttack)) rc.attack(bestAttack);
+                    staticRC.setIndicatorString("targeted micro: + " + bestAttack + " : " + averageEnemyPaint + " : " + MopperMicro.customLocationTo(staticRC.getLocation(), bestAttack));
+                    runTargetedSplasherMicro(MopperMicro.customLocationTo(staticRC.getLocation(), bestAttack), bestAttack);
+                    if (staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
                     else if (Clock.getBytecodesLeft() > 4100) {
                         bestAttack = splasherUtil.cheapBestAttack(fightingTower, minScore);
-                        if (bestAttack != null && rc.canAttack(bestAttack)) {
-                            rc.attack(bestAttack);
+                        if (bestAttack != null && staticRC.canAttack(bestAttack)) {
+                            staticRC.attack(bestAttack);
                         }
                     }
                 }
 //            } else {
-//                rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+//                staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
 //                runSafeSplasherMicro();
 //                if(Clock.getBytecodesLeft() > 4000) {
 //                    bestAttack = splasherUtil.cheapBestAttack(fightingTower, minScore);
-//                    if(bestAttack != null && rc.canAttack(bestAttack)) rc.attack(bestAttack);
+//                    if(bestAttack != null && staticRC.canAttack(bestAttack)) staticRC.attack(bestAttack);
 //                }
 //            }
             } else {
-                rc.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
+                staticRC.setIndicatorString("safeSplasherMicro" + " : " + averageEnemyPaint);
                 runSafeSplasherMicro();
             }
         }
         else {
-            if(rc.isActionReady()) {
+            if(staticRC.isActionReady()) {
                 MapLocation bestLoc = splasherUtil.cheapBestAttack(fightingTower, 2);
-                if(bestLoc != null && rc.canAttack(bestLoc)) {
-                    rc.attack(bestLoc);
+                if(bestLoc != null && staticRC.canAttack(bestLoc)) {
+                    staticRC.attack(bestLoc);
                 }
             }
         }
@@ -2820,91 +2820,91 @@ public class SplasherMicro {
         switch (direction) {
             case NORTH -> {
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y + 1);
-                    microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + -1, staticRC.getLocation().y + 1);
+                    microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x , rc.getLocation().y + 1);
-                    microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y + 1);
+                    microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
-                    microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                    microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
             }
             case NORTHEAST -> {
-                MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
-                microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y);
-                microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x, rc.getLocation().y + 1);
-                microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y);
+                microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x, staticRC.getLocation().y + 1);
+                microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
             }
             case EAST -> {
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + -1);
-                    microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + -1);
+                    microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y );
-                    microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y );
+                    microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y + 1);
-                    microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y + 1);
+                    microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
             }
             case SOUTHEAST -> {
-                MapLocation newLoc = new MapLocation(rc.getLocation().x, rc.getLocation().y - 1);
-                microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y - 1);
-                microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y);
-                microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x, staticRC.getLocation().y - 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y - 1);
+                microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y);
+                microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
             }
             case SOUTH -> {
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + -1, rc.getLocation().y - 1);
-                    microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + -1, staticRC.getLocation().y - 1);
+                    microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x , rc.getLocation().y - 1);
-                    microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x , staticRC.getLocation().y - 1);
+                    microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x + 1, rc.getLocation().y - 1);
-                    microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x + 1, staticRC.getLocation().y - 1);
+                    microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
             }
             case SOUTHWEST -> {
-                MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y - 1);
-                microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x, rc.getLocation().y - 1);
-                microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y);
-                microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y - 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x, staticRC.getLocation().y - 1);
+                microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y);
+                microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
             }
             case WEST -> {
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + -1);
-                    microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + -1);
+                    microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y );
-                    microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y );
+                    microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
                 {
-                    MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 1);
-                    microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                    MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + 1);
+                    microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 }
             }
             case NORTHWEST -> {
-                MapLocation newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y + 1);
-                microArray[0] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x - 1, rc.getLocation().y);
-                microArray[1] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
-                newLoc = new MapLocation(rc.getLocation().x, rc.getLocation().y + 1);
-                microArray[2] = (rc.canSenseRobotAtLocation(newLoc) || !rc.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                MapLocation newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y + 1);
+                microArray[0] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x - 1, staticRC.getLocation().y);
+                microArray[1] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
+                newLoc = new MapLocation(staticRC.getLocation().x, staticRC.getLocation().y + 1);
+                microArray[2] = (staticRC.canSenseRobotAtLocation(newLoc) || !staticRC.onTheMap(newLoc)) ? new splasherMicroInfo() : new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
             }
             case CENTER -> {
                 microArray = null;
@@ -2914,7 +2914,7 @@ public class SplasherMicro {
         //determining the best space
         //splasherMicroInfo bestMicro = microArray[0];
         int actionRadius = UnitType.SPLASHER.actionRadiusSquared;
-        splasherMicroInfo bestMicro = new splasherMicroInfo(rc.senseMapInfo(rc.getLocation()));
+        splasherMicroInfo bestMicro = new splasherMicroInfo(staticRC.senseMapInfo(staticRC.getLocation()));
         for(int i = 0; i < 3; i++) {
             splasherMicroInfo m = microArray[i];
             if(!m.passable) continue;
@@ -2923,7 +2923,7 @@ public class SplasherMicro {
                 continue;
             }
 
-            if(health <= 100 || !rc.isActionReady()) {
+            if(health <= 100 || !staticRC.isActionReady()) {
                 //if one is in tower range and the other isnt, get out of tower range
                 if(!bestMicro.inTowerRange && m.inTowerRange) continue;
                 if(bestMicro.inTowerRange && !m.inTowerRange) {
@@ -2980,14 +2980,14 @@ public class SplasherMicro {
                 continue;
             }
         }
-        if(bestMicro.passable && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) {
-            rc.move(rc.getLocation().directionTo(bestMicro.loc));
+        if(bestMicro.passable && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) {
+            staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
         }
     }
 
     //attempts to stay safe while running a micro that optimizes for splashers
     private static void runSafeSplasherMicro() throws GameActionException {
-        if(!rc.isMovementReady()) return;
+        if(!staticRC.isMovementReady()) return;
         microArray = new splasherMicroInfo[9];
         populateSplasherMicroArray();
         splasherMicroInfo bestMicro = microArray[0];
@@ -3059,14 +3059,14 @@ public class SplasherMicro {
                 bestMicro = m;
             }
         }
-        if(bestMicro.loc != null && rc.canMove(rc.getLocation().directionTo(bestMicro.loc))) rc.move(rc.getLocation().directionTo(bestMicro.loc));
+        if(bestMicro.loc != null && staticRC.canMove(staticRC.getLocation().directionTo(bestMicro.loc))) staticRC.move(staticRC.getLocation().directionTo(bestMicro.loc));
     }
 
     public static void populateSplasherMicroArray() throws GameActionException {
         microArray = new splasherMicroInfo[9];
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth() - 1;
-        MapLocation curLoc = rc.getLocation();
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth() - 1;
+        MapLocation curLoc = staticRC.getLocation();
         int curX = curLoc.x;
         int curY = curLoc.y;
         int totalFilled = 0;
@@ -3076,8 +3076,8 @@ public class SplasherMicro {
 //                for (int dy = -1; dy <= 1; dy++) {
 //                    if(curY + dy >= 0 && curY + dy <= mapHeight) {
 //                        MapLocation newLoc = new MapLocation(curX + dx, curY + dy);
-//                        if(rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-//                        else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+//                        if(staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+//                        else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
 //                        totalFilled++;
 //                    }
 //                }
@@ -3086,60 +3086,60 @@ public class SplasherMicro {
         if (curX + -1 >= 0 && curX + -1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY  >= 0 && curY  <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY );
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + -1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
         }
         if (curX  >= 0 && curX  <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX , curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY  >= 0 && curY  <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX , curY );
-                //if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                //if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX , curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
         }
         if (curX + 1 >= 0 && curX + 1 <= mapWidth) {
             if (curY + -1 >= 0 && curY + -1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + -1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY  >= 0 && curY  <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY );
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
             if (curY + 1 >= 0 && curY + 1 <= mapHeight) {
                 MapLocation newLoc = new MapLocation(curX + 1, curY + 1);
-                if (rc.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
-                else microArray[totalFilled] = new splasherMicroInfo(rc.senseMapInfo(newLoc));
+                if (staticRC.canSenseRobotAtLocation(newLoc)) microArray[totalFilled] = new splasherMicroInfo();
+                else microArray[totalFilled] = new splasherMicroInfo(staticRC.senseMapInfo(newLoc));
                 totalFilled++;
             }
         }

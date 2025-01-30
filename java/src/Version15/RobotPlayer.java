@@ -2,14 +2,13 @@ package Version15;
 
 import Version15.Misc.Communication;
 import Version15.Micro.SpawnMicro;
-import Version15.Robots.HunterSplasher;
 import Version15.Robots.Mopper;
 import Version15.Robots.Soldier;
 import Version15.Robots.Splasher;
 import Version15.Utility.Utilities;
 import battlecode.common.*;
 import battlecode.common.UnitType;
-
+import Version15.Utility.Symmetry;
 import static Version15.Utility.Symmetry.*;
 
 import java.util.LinkedList;
@@ -23,7 +22,7 @@ import java.util.Random;
  * The run() method inside this class is like your main function: this is what we'll call once your robot
  * is created!
  */
-public class  RobotPlayer {
+public class RobotPlayer {
 
     /**
      * We will use this variable to count the number of turns this robot has been alive.
@@ -40,7 +39,7 @@ public class  RobotPlayer {
     public static int mapSize = 0;
     public static int turnsSinceSeenEnemy = 0;
     public static UnitType toBuild = null;
-    public static RobotController rc;
+    public static RobotController staticRC;
 
     public static MapLocation exploreTarget;
     public static int DISPERSION_RADIUS;
@@ -87,8 +86,8 @@ public class  RobotPlayer {
     };
 
     public static void run(RobotController rc) throws GameActionException {
-        RobotPlayer.rc = rc;
-        mapSize = RobotPlayer.rc.getMapHeight() * RobotPlayer.rc.getMapWidth();
+        staticRC = rc;
+        mapSize = staticRC.getMapHeight() * staticRC.getMapWidth();
         distanceThreshold = (int) (0.0000378191 * mapSize * mapSize + 0.0624966779 * mapSize + 102.2835769561);
         DISPERSION_RADIUS = (int) (0.03875 * (rc.getMapWidth() * rc.getMapHeight()) - 2.5);
         //y = 0.003x + 2.8 -> calibrated to 4 on smallest map and 12 on biggest map
@@ -109,33 +108,19 @@ public class  RobotPlayer {
         while (true) {
 
             turnCount += 1;  // We have now been alive for one more turn!
-            RobotPlayer.rc = rc;
+            staticRC = rc;
             try {
-                if(RobotPlayer.rc.getRoundNum() == 1 || turnCount == 1) {
-                    map = new int[RobotPlayer.rc.getMapWidth()][RobotPlayer.rc.getMapHeight()];
+                if(staticRC.getRoundNum() == 1 || turnCount == 1) {
+                    map = new int[staticRC.getMapWidth()][staticRC.getMapHeight()];
                 }
                 /*
                     Complete all tasks which need to be completed in the beginning of the round
                 */
                 completeBeginningTasks();
-                switch (RobotPlayer.rc.getType()){
+                switch (staticRC.getType()){
                     case SOLDIER: Soldier.runSoldier(); break;
                     case MOPPER: Mopper.runMopper(); break;
-                    case SPLASHER:
-                    {
-//                        if(rc.getRoundNum() > 200)
-//                        {
-//                            rc.resign();
-//                            Splasher.runSplasher();
-//                        }
-//                        else
-//                        {
-//                            HunterSplasher.runHunterSplasher();
-//                        }
-//                        break;
-                        Splasher.runSplasher();
-                    }
-
+                    case SPLASHER: Splasher.runSplasher(); break;
                     default: runTower(); break;
                     }
                 bytecodeSensitiveOperations();
@@ -160,12 +145,12 @@ public class  RobotPlayer {
         Utilities.attemptCompletePatterns();
         if(enemyRobots.length == 0) turnsSinceSeenEnemy++;
         else turnsSinceSeenEnemy = 0;
-        if(rc.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || rc.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
-            if(rc.getMoney() > 2000 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3)
-                rc.upgradeTower(rc.getLocation());
+        if(staticRC.getType() == UnitType.LEVEL_ONE_PAINT_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(staticRC.getMoney() > 2000 && staticRC.canUpgradeTower(staticRC.getLocation()) && staticRC.getNumberTowers() > 3)
+                staticRC.upgradeTower(staticRC.getLocation());
         }
-        else if(rc.getMoney() > 2500 && rc.canUpgradeTower(rc.getLocation()) && rc.getNumberTowers() > 3) {
-            rc.upgradeTower(rc.getLocation());
+        else if(staticRC.getMoney() > 2500 && staticRC.canUpgradeTower(staticRC.getLocation()) && staticRC.getNumberTowers() > 3) {
+            staticRC.upgradeTower(staticRC.getLocation());
         }
 //        if(turnCount % 75 == 0) {
 //            totalBuilt = 0;
@@ -178,8 +163,8 @@ public class  RobotPlayer {
         if(toBuild == null || turnCount % 15 == 0) {
             toBuild = chooseBuild();
         }
-        if(nextLoc != null && toBuild != null && rc.canBuildRobot(toBuild, nextLoc) && (rc.getMoney() > 1200 || totalBuilt < (rc.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
-            rc.buildRobot(toBuild, nextLoc);
+        if(nextLoc != null && toBuild != null && staticRC.canBuildRobot(toBuild, nextLoc) && (staticRC.getMoney() > 1200 || totalBuilt < (staticRC.getRoundNum() / BUILD_ROUND_NUM_DIVISOR))) {
+            staticRC.buildRobot(toBuild, nextLoc);
             switch(toBuild) {
                 case SOLDIER: soldiers++; break;
                 case MOPPER: moppers++; break;
@@ -196,32 +181,32 @@ public class  RobotPlayer {
         int minHealth = Integer.MAX_VALUE;
         RobotInfo r = null;
         for(RobotInfo robot : enemyRobots) {
-            if(robot.health < minHealth && rc.canAttack(robot.getLocation())) {
+            if(robot.health < minHealth && staticRC.canAttack(robot.getLocation())) {
                 r = robot;
                 minHealth = robot.health;
             }
         }
-        if(r != null && rc.canAttack(r.getLocation())) {
-            rc.attack(r.getLocation());
+        if(r != null && staticRC.canAttack(r.getLocation())) {
+            staticRC.attack(r.getLocation());
         }
-        if(rc.canAttack(null)) rc.attack(null);
-        if(enemyRobots.length == 0 && (rc.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || rc.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || rc.getType() == UnitType.LEVEL_TWO_MONEY_TOWER) && rc.getMoney() > 8500 && rc.getPaint() <= 100) {
+        if(staticRC.canAttack(null)) staticRC.attack(null);
+        if(enemyRobots.length == 0 && (staticRC.getType() == UnitType.LEVEL_ONE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_MONEY_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_MONEY_TOWER) && staticRC.getMoney() > 8500 && staticRC.getPaint() <= 100) {
             checkDisintegrate();
         }
-        else if(enemyRobots.length ==0 && turnsSinceSeenEnemy > 50 && (rc.getType() == UnitType.LEVEL_ONE_DEFENSE_TOWER || rc.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER || rc.getType() == UnitType.LEVEL_TWO_DEFENSE_TOWER || rc.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER) && rc.getPaint() <= 100) {
+        else if(enemyRobots.length ==0 && turnsSinceSeenEnemy > 50 && (staticRC.getType() == UnitType.LEVEL_ONE_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_TWO_DEFENSE_TOWER || staticRC.getType() == UnitType.LEVEL_THREE_DEFENSE_TOWER) && staticRC.getPaint() <= 100) {
             checkDisintegrate();
         }
     }
 
     private static void checkDisintegrate() throws GameActionException {
-        MapInfo[] square = rc.senseNearbyMapInfos(8);
+        MapInfo[] square = staticRC.senseNearbyMapInfos(8);
         boolean hasRebuilder = false;
         for(int i = 0; i < 25; i++) {
             if(i == 12) continue;
             if(square[i].getPaint().isEnemy()) return;
-            if(rc.canSenseRobotAtLocation(square[i].getMapLocation())) {
-                RobotInfo r = rc.senseRobotAtLocation(square[i].getMapLocation());
-                if(r.getTeam() != rc.getTeam()) return;
+            if(staticRC.canSenseRobotAtLocation(square[i].getMapLocation())) {
+                RobotInfo r = staticRC.senseRobotAtLocation(square[i].getMapLocation());
+                if(r.getTeam() != staticRC.getTeam()) return;
                 if(r.type == UnitType.SOLDIER && r.getPaintAmount() > 100) {
                     hasRebuilder = true;
                 }
@@ -229,7 +214,7 @@ public class  RobotPlayer {
         }
         if(hasRebuilder) {
             System.out.println("hello!");
-            rc.disintegrate();
+            staticRC.disintegrate();
         }
     }
 
@@ -237,7 +222,7 @@ public class  RobotPlayer {
     {
         if(Clock.getBytecodesLeft() > 5000)
         {
-            for(MapInfo info : rc.senseNearbyMapInfos(rc.getType().actionRadiusSquared)) {
+            for(MapInfo info : staticRC.senseNearbyMapInfos(staticRC.getType().actionRadiusSquared)) {
                 Utilities.attemptCompleteResourcePattern( info.getMapLocation());
             }
         }
@@ -248,14 +233,14 @@ public class  RobotPlayer {
     static void completeBeginningTasks() throws GameActionException
     {
 
-        nearbyTiles = rc.senseNearbyMapInfos();
-        allyRobots = rc.senseNearbyRobots(-1, rc.getTeam());
-        enemyRobots = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
-        nearbyRuins = rc.senseNearbyRuins(-1);
+        nearbyTiles = staticRC.senseNearbyMapInfos();
+        allyRobots = staticRC.senseNearbyRobots(-1, staticRC.getTeam());
+        enemyRobots = staticRC.senseNearbyRobots(-1, staticRC.getTeam().opponent());
+        nearbyRuins = staticRC.senseNearbyRuins(-1);
 
-        Utilities.attemptCompleteResourcePattern( rc.getLocation());
+        Utilities.attemptCompleteResourcePattern( staticRC.getLocation());
 
-        if(rc.getType().isTowerType())
+        if(staticRC.getType().isTowerType())
         {
             Communication.processMessagesTower();
             Communication.broadcastMessages();
@@ -316,16 +301,15 @@ public class  RobotPlayer {
     //if it can see enemy robots
     //map size
     public static UnitType chooseBuild() {
-        if(rc.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
+        if(staticRC.getNumberTowers() == 2 && totalBuilt <= 1) return UnitType.SOLDIER;
         else if(enemyRobots.length > 1) return UnitType.MOPPER;
-//        else if(rc.getRoundNum() < 100) return UnitType.SPLASHER;
         //else if (totalBuilt == 0 && knownSymmetry != SymmetryType.Unknown) return UnitType.SPLASHER;
 
         //we have a finite total amount of paint, so make sure we use it wisely
-        if(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
-            if(rc.getPaint() < 300) {
-                if(rc.getPaint() >= 200) return UnitType.SOLDIER;
-                if(rc.getPaint() >= 100) return UnitType.MOPPER;
+        if(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER) {
+            if(staticRC.getPaint() < 300) {
+                if(staticRC.getPaint() >= 200) return UnitType.SOLDIER;
+                if(staticRC.getPaint() >= 100) return UnitType.MOPPER;
             }
         }
 
@@ -351,7 +335,7 @@ public class  RobotPlayer {
         int mopperScore;
         int splasherScore;
 
-        if(rc.getRoundNum() < earlyRoundDef) {
+        if(staticRC.getRoundNum() < earlyRoundDef) {
             soldierScore = earlySoldierBonus;
             mopperScore = 0;
             splasherScore = (knownSymmetry == SymmetryType.Unknown) ? 0 : 2;
@@ -379,7 +363,7 @@ public class  RobotPlayer {
                 mopperScore += adjustment / 2;
                 soldierScore += adjustment / 4;
             }
-            if(!(rc.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && rc.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
+            if(!(staticRC.getType() != UnitType.LEVEL_ONE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_THREE_PAINT_TOWER && staticRC.getType() != UnitType.LEVEL_TWO_PAINT_TOWER)) {
                 splasherScore += 2;
             }
         }

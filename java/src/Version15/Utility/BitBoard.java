@@ -12,11 +12,11 @@ public class BitBoard {
     }
 
     public int locationToIndex(MapLocation loc) {
-        return (loc.x + loc.y * rc.getMapWidth());
+        return (loc.x + loc.y * staticRC.getMapWidth());
     }
 
     public MapLocation indexToLocation(int index) {
-        return new MapLocation(index % rc.getMapWidth(), index / rc.getMapWidth());
+        return new MapLocation(index % staticRC.getMapWidth(), index / staticRC.getMapWidth());
     }
 
     public boolean getBit(MapLocation loc) {

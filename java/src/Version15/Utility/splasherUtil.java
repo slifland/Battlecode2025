@@ -17,14 +17,14 @@ public class splasherUtil {
     //used to see if we can run cheapBestAttack
     public static boolean farFromEdge(MapLocation loc) {
         //if(!loc.equals(staticRC.getLocation()) && !farFromEdge( staticRC.getLocation())) return true;
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth()- 1;
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth()- 1;
         return loc.x >= 3 && loc.y >= 3 && loc.x <= mapWidth - 3 && loc.y <= mapHeight - 3;
     }
     //used to see if we can run bestAttack
     public static boolean farFromEdgeNonMovement(MapLocation loc) {
-        int mapHeight = rc.getMapHeight() - 1;
-        int mapWidth = rc.getMapWidth()- 1;
+        int mapHeight = staticRC.getMapHeight() - 1;
+        int mapWidth = staticRC.getMapWidth()- 1;
         return loc.x >= 4 && loc.y >= 4 && loc.x <= mapWidth - 4 && loc.y <= mapHeight - 4;
     }
     //refreshes paint averages
@@ -1378,7 +1378,7 @@ public class splasherUtil {
             default -> {
                 //now, check if we can see any enemy tiles
                 for (MapInfo tile : nearbyTiles) {
-                    Symmetry.processTile(tile);
+                    //Symmetry.processTile(tile);
                     if (tile.getPaint().isEnemy() && !Utilities.basicLocationIsBehindWall(tile.getMapLocation())) {
                         x += tile.getMapLocation().x;
                         y += tile.getMapLocation().y;
@@ -1396,7 +1396,7 @@ public class splasherUtil {
         MapInfo bestTile = null;
         int bestDist = Integer.MAX_VALUE;
         boolean isEnemyTile = false;
-        MapLocation curLoc = rc.getLocation();
+        MapLocation curLoc = staticRC.getLocation();
         for(MapInfo tile : nearbyTiles) {
             PaintType paint = tile.getPaint();
             if(paint.isEnemy() && !isEnemyTile) {
@@ -1419,7 +1419,7 @@ public class splasherUtil {
     //returns the best location to attack based on how much impact the attack will have
     //returns null if the best attack has less than or equal impact to the minScore
     public static MapLocation bestAttack(boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdgeNonMovement( rc.getLocation())) return cheapBestAttack( fightingTower, minScore);
+        if(!farFromEdgeNonMovement( staticRC.getLocation())) return cheapBestAttack( fightingTower, minScore);
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;
         int[] localSquares = new int[81];
@@ -4373,19 +4373,19 @@ public class splasherUtil {
         else offSetX = 2;
         offSetY = (highestIndex % 9) - 4;
         //System.out.println("Price: " + (price - Clock.getBytecodesLeft()));
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
+        return new MapLocation(staticRC.getLocation().x + offSetX, staticRC.getLocation().y + offSetY);
     }
 
     //returns the best attack adjacent to the robot - cheaper, and allows the robot to go closer to the edge
     public static MapLocation cheapBestAttack(boolean fightingTower, int minScore) throws GameActionException {
-        if(!farFromEdge( rc.getLocation())) return basicBestAttack();
+        if(!farFromEdge( staticRC.getLocation())) return basicBestAttack();
         //int price = Clock.getBytecodesLeft();
         //keeps track of total potential points, so we can short circuit and save bytecode if possible
         int totalPoints = 0;
         int[] localSquares = new int[45];
         int[] potentialAttackSquares = new int[45];
         int index = 0;
-        for(MapInfo tile : rc.senseNearbyMapInfos(13)) {
+        for(MapInfo tile : staticRC.senseNearbyMapInfos(13)) {
             if(index == 0 || index == 4 || index == 5 || index == 11 || index == 33 || index == 39 || index == 40 || index == 44) {
                 index++;
                 continue;
@@ -4602,15 +4602,15 @@ public class splasherUtil {
         else offSetX = 1;
         offSetY = (highestIndex % 7) - 1;
         //System.out.println("Cheap Price: " + (price - Clock.getBytecodesLeft()));
-        return new MapLocation(rc.getLocation().x + offSetX, rc.getLocation().y + offSetY);
+        return new MapLocation(staticRC.getLocation().x + offSetX, staticRC.getLocation().y + offSetY);
     }
     //checks whether we should still "claim" this ruin
     //if there is an obstacle stopping us from completing it, then we should abandon t
     public static boolean needsClearing() throws GameActionException {
-        if(rc.canSenseRobotAtLocation(nearestUnfilledRuin)) {
+        if(staticRC.canSenseRobotAtLocation(nearestUnfilledRuin)) {
             return false;
         }
-        if (rc.getLocation().distanceSquaredTo(nearestUnfilledRuin) > 8 && !checkedRuin.contains(nearestUnfilledRuin)) {
+        if (staticRC.getLocation().distanceSquaredTo(nearestUnfilledRuin) > 8 && !checkedRuin.contains(nearestUnfilledRuin)) {
             return true;
         }
         switch (tilesNearRuin.length) {
