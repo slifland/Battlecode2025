@@ -1,0 +1,44 @@
+|  | Version14 | Version11 |
+| :---: | :---: | :---: |
+| gridworld | Won (1021, 831) | Tied (452, 666) |
+| sayhi | Lost (495, 407) | Won (386, 406) |
+| Money | Tied (388, 481) | Tied (259, 511) |
+| Mirage | Tied (583, 313) | Tied (506, 371) |
+| Justice | Tied (1181, 2000) | Tied (193, 355) |
+| gardenworld | Tied (775, 969) | Won (482, 778) |
+| memstore | Won (439, 446) | Won (527, 954) |
+| Thirds | Lost (891, 414) | Lost (579, 727) |
+| TargetPractice | Won (607, 599) | Lost (283, 247) |
+| Racetrack | Tied (493, 335) | Tied (829, 461) |
+| catface | Tied (257, 465) | Won (2000, 470) |
+| giver | Lost (353, 407) | Tied (318, 372) |
+| quack | Tied (1012, 913) | Lost (800, 337) |
+| galaxy | Tied (563, 674) | Tied (719, 366) |
+| leavemealone | Tied (426, 391) | Tied (318, 748) |
+| windmill | Lost (426, 287) | Tied (333, 763) |
+| Piglets2 | Lost (489, 485) | Won (472, 941) |
+| Flower | Tied (525, 361) | Tied (355, 447) |
+| Filter | Tied (209, 154) | Tied (464, 264) |
+| yearofthesnake | Tied (378, 301) | Lost (443, 319) |
+| walalilongla | Tied (526, 419) | Won (452, 459) |
+| starburst | Tied (569, 658) | Won (771, 557) |
+| sierpinski | Won (745, 407) | Tied (641, 318) |
+| sunrise | Tied (469, 696) | Tied (439, 881) |
+| roads | Tied (367, 437) | Won (547, 366) |
+| rain | Won (702, 853) | Won (451, 492) |
+| AlarmClock | Tied (426, 349) | Tied (332, 444) |
+| Barcode | Won (471, 271) | Won (629, 773) |
+| BatSignal | Tied (1035, 1415) | Tied (492, 565) |
+| Brat | Lost (1463, 2000) | Lost (257, 2000) |
+| Bread,Castle | Tied (500, 903) | Won (690, 506) |
+| Circuit | Lost (506, 1016) | Tied (894, 354) |
+| Crab | Lost (420, 505) | Lost (260, 472) |
+| CastleDefense | Tied (164, 174) | Tied (271, 330) |
+| FourCorners | Tied (839, 355) | Tied (2000, 363) |
+| Gears | Tied (577, 637) | Tied (599, 567) |
+| HungerGames | Won (487, 497) | Tied (500, 568) |
+| Leaf | Won (389, 352) | Tied (526, 328) |
+| Oasis | Won (399, 423) | Won (321, 404) |
+| Paintball | Tied (243, 782) | Tied (275, 228) |
+| Parking_lot | Lost (481, 580) | Lost (385, 428) |
+
