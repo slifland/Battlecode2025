@@ -5,7 +5,7 @@ import battlecode.common.MapLocation;
 
 import java.util.Map;
 
-import static Version15.RobotPlayer.rc;
+import static Version15.RobotPlayer.staticRC;
 
 
 public class Symmetry {
@@ -35,7 +35,7 @@ public class Symmetry {
             int score = (toCheck.isPassable()) ? 1 : toCheck.isWall() ? 2 : 3;
             if (map[locToCheck.x][locToCheck.y] != 0) return;
             map[locToCheck.x][locToCheck.y] = score;
-            if(score <= 1) return;
+            //if(score <= 1) return;
             int x = locToCheck.x;
             int y = locToCheck.y;
             int toCompareHorizontal = map[x][map[0].length - 1 - y];
@@ -89,19 +89,19 @@ public class Symmetry {
 
     public static MapLocation opposite(MapLocation locToCheck) {
         return switch (knownSymmetry) {
-            case Horizontal -> new MapLocation(locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
+            case Horizontal -> new MapLocation(locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
             case Rotational ->
-                    new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
-            case Vertical -> new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
+                    new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
+            case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
             case Unknown -> null;
         };
     }
     public static MapLocation opposite(MapLocation locToCheck, SymmetryType symmetryType) {
         return switch (symmetryType) {
-            case Horizontal -> new MapLocation(locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
+            case Horizontal -> new MapLocation(locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
             case Rotational ->
-                    new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, rc.getMapHeight() - 1 - locToCheck.y);
-            case Vertical -> new MapLocation(rc.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
+                    new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, staticRC.getMapHeight() - 1 - locToCheck.y);
+            case Vertical -> new MapLocation(staticRC.getMapWidth() - 1 - locToCheck.x, locToCheck.y);
             case Unknown -> null;
         };
     }
@@ -153,7 +153,7 @@ public class Symmetry {
     {
         int closestDistance = Integer.MAX_VALUE;
         MapLocation closestPossible = null;
-        MapLocation currentLocation = rc.getLocation();
+        MapLocation currentLocation = staticRC.getLocation();
 
         SymmetryType[] possibleSymmetries = possibleSymmetry();
         for(SymmetryType symmetryType : possibleSymmetries)
@@ -177,7 +177,7 @@ public class Symmetry {
         MapLocation curRuin = null;
         int bestIndex = -1;
         int minDist = Integer.MAX_VALUE;
-        MapLocation curLoc = rc.getLocation();
+        MapLocation curLoc = staticRC.getLocation();
         unseenRuins.updateIterable();
         for(int i = 0; i < unseenRuins.size; i++) {
             curRuin = unseenRuins.get(i);
